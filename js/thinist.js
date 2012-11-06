@@ -78,15 +78,10 @@
 
       declare a new global variables:
       
-          $G('current_user', initval);
+          $G('current_user', initval, [builder]);
  
-      While the setter is undefined, setter will be default. While
-      it is false, set this val will raise an exception. While the
-      getter is undefined, getter will be default. Otherwise,
-      should be a function.
-
-      If arguments[2] is not a function, it will treat as return
-      [undefined, undefined]
+      builder is a function or object that contain `set` and `get`
+      (use as property)
       
       i.e. :
           $G('current_user', 'LTaoist');
@@ -142,7 +137,6 @@
                   'get' : function(){ return counter; },
               }
           });
-          // ModBuilder is function than return a object
 
       access the module:
           $MOD.Counter.delta(20)
