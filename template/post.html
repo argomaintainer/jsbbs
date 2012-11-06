@@ -1,0 +1,21 @@
+<div data-index="${ index }" id="post-${filename}" class="cell cell-in">
+  <div class="post-header">
+    <img src="${ url_for_avatar(userid) }"/>
+    <div class="post-info">
+      <h3>${title}</h3>
+      <div>
+        发信人：<a href="${ url_for_user(userid) }">${userid}</a>
+        <time>${post_time}</time>
+      </div>
+    </div>
+    <div class="post-content">
+      {{html content}}
+      <div class="post-signature">{{html signature }}</div>
+    </div>
+    <div class="text-right">
+      <ul class="inline-list">
+        <li><a> 回复 </a></li>
+      </ul>
+    </div>
+  </div>
+</div>      

@@ -1,0 +1,40 @@
+{{if authed }}
+<div class="widget">
+  <button type="button" data-submit="logout" class="close">&times;</button>
+  <div class="widget-padding">
+    <div class="avatar">
+      <img class="img-rounded" src="${url_for_avatar(u.userid)}"/>
+      <div class="avatar-content">
+        <div class="big-font">${u.userid}</div>
+        <div>${u.username}</div>
+      </div>
+    </div>
+  </div>
+  <ul class="nav nav-pills">
+    <li><a href="#!"><i class="icon-home"></i></a></li>
+    <li><a href="#!mail"><i class="icon-envelope"></i></a></li>
+    <li><a href="#!profile"><i class="icon-wrench"></i></a></li>
+    <li><a href="#!profile"><i class="icon-folder-close"></i></a></li>
+  </ul>
+</div>
+
+<div id="userfav"></div>
+
+{{else}}
+<div class="widget">
+  <div class="widget-header">
+    <h4>登录</h4>
+  </div>
+  <form id="f-login" class="form-center" data-submit="login">
+    <input type="text" tabindex="1"  class="focus span12" name="userid" placeholder="输入你的帐号 ：-） ">
+    <input type="password" tabindex="2" class="span9" name="password" placeholder="以及密码...">
+    <button type="submit" tabindex="3" class="span3 fix-margin-right pull-right btn btn-small btn-success">登陆</button>
+    <label class="checkbox small-font">
+      <input type="checkbox" checked> 记住我 ·
+      <span>
+        <a href="#!/register">注册</a> · <a>联系帐号管理员</a>
+      </span>
+    </label>
+  </form>
+</div>
+{{/if}}

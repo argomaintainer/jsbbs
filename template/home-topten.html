@@ -1,0 +1,39 @@
+<div class="cell cell-in">
+  <div class="cell-header">
+    <h3>今日十大</h3>
+  </div>
+  <div class="cell-content">
+    <table class="table-topten odd-even">
+      <tbody>
+        {{each(i, p) posts}}
+        <tr>
+          <td class="text-center"><span class="t10-number t10-${i}">${i+1}</span></td>
+          <td class="topten-title">
+            <div>
+              <a href="${ url_for_post(p.filename, p.board) }">
+                ${p.title}
+              </a>
+              <span class="metainfo">
+                <span class="meta-board">
+                  &nbsp » 
+                  <a href="#!board?boardname=${p.board}">
+                    ${p.board} 
+                  </a>
+                </span>&nbsp • &nbsp
+                <span class="meta-time">
+                  <time>${p.time}</time>
+                </span>
+              </span>
+            </div>
+          </td>
+          <td class="text-center">
+            <span class="label label-${ format_number(p.num) }">
+              ${p.num} 
+            </span>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>

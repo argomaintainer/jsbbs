@@ -1,0 +1,656 @@
+body{
+    min-width:1200px;
+    background:#e4e4e4;
+}
+
+.g-container{
+    width:960px;
+    margin: 0 auto;
+}
+
+.userbox{
+    position:relative;
+}
+
+.userbox-img{
+    position:absolute;
+    width:48px;
+    height:48px;
+    left: -60px;
+    top: 10px;
+}
+
+#main{
+    background:#f8f8f8;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+#board-head{
+    position:relative;
+    border-bottom: 1px solid silver;
+}
+
+#board-head-inner h1{
+    margin: 20px 40px;    
+}
+
+#board-info{
+    float:left;
+}
+
+#board-info>.pull-left{
+    margin-left: 1em;
+}
+
+#input-submit-title{
+    margin:1em;
+}
+
+#board-body{
+    padding: 1em;
+}
+
+#board-list-nav{
+    margin-bottom:0;
+    border-bottom:none;
+}
+
+#board-content{
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    border-top-left-radius: 0;
+}
+
+#board-content-inner{
+    width:100%;
+    margin: 1em 0;
+    font-size: 12px;
+}
+
+#board-content-inner td{
+    padding-top: 6px;
+    padding-bottom: 6px;
+    vertical-align: middle;    
+}    
+
+.tb-title{
+    width: auto;
+    padding-left: 1em;
+}
+
+.tb-user{
+    width: 90px;
+    font-size: 10px;
+    color: #888;
+    text-align:left;
+    padding-left:1em;
+}
+
+.tb-time{
+    color: #999;
+    width: 100px;
+    text-align:right;
+    padding-right: 1em;
+}
+
+.tb-img{
+    width: 30px;
+    padding-left:2em;
+}
+
+.tb-img img{
+    width:24px;
+    height:24px;
+}
+
+.tb-user a{
+    color : #666;
+}
+
+#board-content-inner tr:nth-child(even){
+    background:#f8f8f8;
+}
+
+i.read{
+    width:14px;
+    height:16px;
+    line-height:14px;
+    vertical-align:middle;
+    background-image: url('../img/read.png');
+    background-repeat: no-repeat;
+    margin-top: 1px;
+    display:inline-block;
+}
+
+i.unread{
+    width:14px;
+    height:16px;
+    line-height:14px;
+    vertical-align:middle;
+    background-image: url('../img/unread.png');
+    background-repeat: no-repeat;
+    margin-top: 1px;
+    display:inline-block;
+}
+
+#second{
+    background:#fdfdfd;
+    border:1px solid #eee;
+    border-radius: 5px;
+}
+
+#second-inner{
+    margin:1em;
+}
+
+.widget{
+    color:#777;
+    font-size:12px;
+    position:relative;
+    margin-bottom: 2em;
+}
+
+.widget>h4{
+    /* background:-webkit-linear-gradient(#fff, #e0e0e0); */
+    color:#284;
+    border-bottom: 1px dashed #ccc;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding:7px;
+    margin:0;
+    /* color:; */
+    font-size: 1.2em;
+}
+
+.widget>div{
+    padding:1em;
+}
+
+#fixed-nav{
+    position:fixed;
+    right:50%;
+    margin-right:500px;
+    top:60px;
+    text-align:right;
+}
+
+#fixed-nav li{
+    /* border-bottom: 1px solid #284; */
+    padding-left:1em;
+    padding-right:.618em;
+    height:1.5em;
+}
+
+#fixed-nav a{
+    color:#d0d0d0;
+    /* text-shadow: 0 0 1px #888; */
+    text-decoration:none;
+}
+
+#fixed-nav a.new{
+    color:#999 ;
+}
+
+#fixed-nav a:hover{
+    color:#777;
+    text-shadow:0 0 3px #fff;
+}
+
+#admin-book-link{
+    font-size: .8em;
+    display:block;
+    padding:10px;
+    color:#bbb !important;
+}
+
+#footer{
+    border-top:1px solid grey;
+    padding-top: 2em;
+    margin: 3em 0;
+}
+
+#fav{
+    max-height:450px;
+    overflow:hidden;
+}
+
+#input-submit-title{
+    position:relative;
+}
+
+#board-hint{
+    position:absolute;
+    right:0;
+    bottom:0;
+    color:#777;
+    font-size:12px;
+}
+
+#board-content{
+    position:relative;
+    min-height:566px;
+}
+
+#boardlist-nav{
+    position:absolute;
+    height:100%;
+    top:0;
+    right:-10px;
+    background:#f0f0f0;
+    width:10px;
+    list-style-type:none;
+}
+
+#boardlist-nav li{
+    box-shadow:0 0 2px #bbb;
+    position:relative;
+    cursor: pointer;
+}
+
+#boardlist-nav li:hover{
+    background:#f8f8f8;
+}
+
+#boardlist-nav a{
+    display: block;
+    visibility :hidden;
+}
+
+#go-first{
+    height:5%;
+}
+
+#go-prev{
+    height:45%;
+}
+
+#go-next{
+    height:45%;
+}
+
+#go-last{
+    height:5%;
+}
+
+#post-counter{
+    position:absolute;
+    top:1em;
+    right:0;
+    z-index:2;
+    color:#287;
+    font-size:12px;
+}
+
+#post-counter:before{
+    content:"第";
+}
+
+#post-counter:after{
+    content:"篇帖子开始";
+}
+
+#board-list{
+    position:relative;
+}
+
+#boardlist-nav i{
+    height:12px;
+    width:8px;
+    display:inline-block;
+    position:absolute;
+    top:50%;
+    margin:-6px auto auto 1px;
+}    
+
+.arrow-up-bar{
+    background-image:url("../img/arrow-up-bar.gif");
+}
+
+.arrow-down-bar{
+    background-image:url("../img/arrow-down-bar.gif");
+}
+.arrow-up{
+    background-image:url("../img/arrow-up.gif");
+}
+.arrow-down{
+    background-image:url("../img/arrow-down.gif");
+}
+
+#message{
+    position:fixed;
+    top:38%;
+    left:50%;
+    width:100px;
+    padding:1em 2em;
+    text-align:center;
+    margin-left:-50px;
+    border-radius:5px;
+    background-color: #d9edf7;
+    box-shadow:0 2px 2px #ccc;
+    color: #3a87ad;
+    border: 1px solid #bce8f1;
+    opacity:.61;
+}
+
+.message-success{   
+    background-color: #dff0d8 !important;
+    border-color: #d6e9c6 !important;
+    color: #468847 !important;
+}
+
+.message-danger{
+    background-color: #f2dede !important;
+    border-color: #eed3d7 !important;
+    color: #b94a48 !important;
+}
+
+.message-wranning{
+    border-color:#fbeed5 !important;
+    background-color: #fcf8e3 !important;
+    color: #c09853 !important;
+}
+
+.page-header{
+    padding-left:2em;
+    padding-top:.5em;
+}
+
+.newpost-wrap{
+    background:#fcfcfc;
+}
+
+.newpost-wrap form{
+    width:61.8%;
+    margin:0 auto;
+    padding: 2em 0;
+}
+
+.newpost-wrap textarea{
+    font-size: 14px;
+    font-family: monospace;
+}
+
+#page-head{
+    padding-left:2em;
+    padding-top:1em;
+    color:#483;
+}
+
+.post-header{
+    padding-top: 1em;
+}
+
+.post-container{
+    border-radius:4px;
+}
+
+.post-header img{
+    position:absolute;
+    width:36px;
+    height:36px;
+    margin-left:8px;
+    margin-top:10px;
+}
+
+.post-info{
+    margin-left:55px;
+    height:56px;
+    border-bottom:1px solid #ccc;
+    padding-top:8px;
+}
+
+.post-info div{
+        background:#eee;
+}
+
+.post-info a{
+    /* color: black; */
+}
+
+.post-header h3{
+    font-size:1em;
+    line-height:1.5em;
+    font-weight:normal;
+    margin:0;
+    padding:0;
+}
+
+.post-content{
+    margin: 20px 30px 40px 60px;
+}
+
+.post-wrapper{
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-bottom: 3px solid #ccc;
+    border-radius: 5px;
+    background:#fff;
+    margin-left: 1em;
+}
+
+.post #main{
+    background:#fcfcfc;
+}
+
+.format-telnet{
+    font-family: "文泉驿等宽正黑", "WenQuanYi Zen Hei Mono", "Courier New 12", "宋体", monospace;
+}
+
+.postquote{
+    font-size: .9em;
+    color:#777;
+    border-left: 2px solid #eee;
+    margin-top:1em;
+    padding:1em;
+}
+
+#post-wrapper{
+    position:relative;
+}
+
+.meta-list{
+    list-style-type:none;
+    text-align:right;
+    padding-right:1em;
+    /* background:#f8f8f8; */
+    margin:0 0 1em 0;
+}
+
+.meta-list li{
+    display:inline-block;
+    margin: 0 .5em;
+}
+
+.meta-list a{
+    color:#47a;
+    font-size: .9em;
+}
+
+.post-nav{
+    text-align:right;
+    margin: 0 .5em 1em .5em;
+    font-size: .9em;
+}
+
+.post-nav a{
+    display:inline-block;
+    margin: 0 .5em;
+    color:#483;
+    text-decoration:none;
+    cursor:pointer;
+}
+
+.post-nav a:hover{
+    color:#2a6;
+}
+
+a.disable{
+    color:#777;
+    text-decoration:none;
+    cursor:default;
+}
+
+a.disable:hover{
+    color:#777;
+    text-decoration:none;
+}
+
+.reply-form form{
+    margin:2em;
+}
+
+.user-info{
+    text-align:right;
+    padding-right:2em;
+    margin-top: 2em;
+    border-right:1px dashed #aaa;
+}
+
+.user-info>div{
+    /* border-bottom:1px dashed #aaa; */
+}
+
+.user-info img{
+    width:100px;
+    height:100px;
+}
+
+.user-text{
+    margin-top: 2em;
+    padding-top: 1em;
+}
+
+.user-text h3{
+    padding:0;
+    margin:0;
+    line-height:2em;
+    font-size:1.4em;
+    margin-top:5px;
+    color:#484;
+}
+
+#user-page-wrapper{
+    background:#fcfcfc;
+    padding-bottom:40px;
+    border-radius:5px;
+    border-bottom:5px solid #ccc;
+}
+
+.ac30{
+    color:#333;
+}
+.ac31{
+    color:#f22;
+}
+.ac32{
+    color:#22c83d;
+}
+.ac33{
+    color:#e9aa20;
+}
+.ac34{
+    color:#22f;
+}
+.ac35{
+    color:#f2f;
+}
+.ac36{
+    color:#209cff;
+}
+.ac37{
+    color:#eee;
+}
+
+.ac40{
+    background-color:#333;
+}
+.ac41{
+    background-color:#f22;
+}
+.ac42{
+    background-color:#22c83d;
+}
+.ac43{
+    background-color:#e9aa20;
+}
+.ac44{
+    background-color:#22f;
+}
+.ac45{
+    background-color:#f2f;
+}
+.ac46{
+    background-color:#209cff;
+}
+.ac47{
+    background-color:#eee;
+}
+.ac1{
+    font-weight:bold;
+}
+.ac4{
+    text-decoration:underline;
+}
+.ac5{
+    text-decoration: blink;
+}
+
+#maillist-holder{
+    border-top:1px solid #bbb;
+    padding-top:.5em;
+}
+
+#maillist-holder>li{
+    cursor:pointer;
+    padding-left:1em;
+    border-left:2px solid transparent;
+}
+
+#maillist-holder>li.read0{
+    font-weight:bold;
+}
+
+#maillist-holder>li:nth-child(even){
+    background:#f0f0f0;
+}
+
+#mail-container{
+    padding:0 2em 2em 2em;
+}
+
+time{
+    display:inline-block;
+    color:#777;
+    font-size:.8em;
+}
+
+#maillist-holder>li.selected{
+    border-left:2px solid #488;
+}
+
+#editor-holder-inner{
+    background:#f0f0f0;
+    padding:2em;
+    border-top:1px solid #bbb;
+}
+
+.cell-inner{
+    margin:1em;
+}
+
+.cell{
+    background:#fcfcfc;
+    border:1px solid #ccc;
+    border-radius: 5px;
+    border-bottom:3px solid #bbb;
+}
+
+#board-nav{
+    margin:2em;
+}
+
+#user-box{
+    margin:2em;
+}

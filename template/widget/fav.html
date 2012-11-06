@@ -1,0 +1,17 @@
+<div class="widget">  
+  <div class="widget-header">
+    <h4>收藏夹</h4>
+  </div>
+  {{if fav}}
+  <div class="favbox scrollbar">
+    <ul class="unstyled">
+      {{each(i, v) fav }}
+      <li{{if v.unread }}class="unread"{{/if}}><a href="${ url_for_board(v.filename) }">${v.filename}</a></li>
+      {{/each}}
+    </ul>
+  </div>
+  {{else}}
+  <span class="big-font">目前您没有收藏任何版块哟！</span><br>
+  收藏一个版块，请进入该版并点击“预订该版”！
+  {{/if}}
+</div>

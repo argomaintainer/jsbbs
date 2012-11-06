@@ -1,0 +1,116 @@
+/****** 鐢ㄦ埛璁剧疆鐣岄潰 *******/
+
+#setting-banner{ 
+    background: #EEFFEE;
+    color: #444;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+    padding-top: 7px;
+    padding-bottom: 5px;
+}
+#setting-column { margin-top: 40px; float:left; }
+#setting-column .return-bg { background:  url(/images/icons.png) 0px -236px no-repeat;}
+#setting-column .bg-item {     background: url(/images/icons.png) 0px -188px no-repeat; }
+#setting-column .setting-item {
+    margin-left: 10px;    
+    line-height: 14px;
+    font-size: 14px;    
+    color: #333;
+    display: block;
+    border-bottom: 1px solid white;    
+    padding: 3px 8px 4px 28px;
+    position: relative;
+    text-decoration: none;
+}
+
+#setting-button{ 
+    margin-top: 10px;
+    border-top: 4px solid #EEFFEE;
+ }
+#id_save_button {
+    color: #0C7823;
+    padding: 3px 5px;
+    margin: 10px 0px 0px 5px;
+}
+
+#setting-content {
+    margin: 20px 0px 0px 181px;
+    color: #666;
+}
+#setting-content input[type="text"], 
+#setting-content input[type="password"],
+#setting-content textarea {
+    border-color:#C4C7BD #EFEFEF #F2F2F2 #D2D5CA;
+    border-style:solid;
+    border-width:1px;
+    padding: 3px 2px 1px;
+}
+
+#setting-content input[type="text"],
+#setting-content input[type="password"] {
+    height: 20px;
+    padding-top: 5px;
+    width: 220px;
+    font-size: 14px;
+}
+
+#setting-content textarea {
+    font-size: 13px;
+}
+
+#setting-content .user-icon {
+    width: 55px;
+    height: 50px;
+    margin-right: 7px;
+    float: left;
+}
+
+#setting-content li {
+    padding-bottom: 17px;
+}
+#setting-content .uicon {
+    padding-bottom: 0px;
+}
+
+#setting-content table th {
+    font-weight:normal;
+    width: 150px;
+    vertical-align: top;
+    line-height: 26px;
+    white-space: nowrap;
+}
+#setting-content table td { padding-bottom: 17px;}
+
+#override-setting .override-title {
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    color: #444;
+    background: #EEFFEE;
+    padding-top: 7px;
+    padding-bottom: 5px;
+}
+#override-setting .override-table{ 
+    margin: 7px 5px;
+    border-top:  3px solid #EEFFEE;
+    border-bottom:  3px solid #EEFFEE;
+    width: 100%;
+}
+#override-setting tr{
+    border-top: 1px solid #EEFFEE;
+    height: 25px; 
+}
+#override-setting .override-head{ background: #F6F6F6;}
+#override-setting .id-head { width: 20%;  padding-left: 10px; }
+#override-setting .id { width: 20%;  padding-left: 10px; }
+#override-setting .exp-head{  width: 50%; }
+#override-setting .override-bottom{ margin: 7px 4px; }
+#override-setting .hover{ background: #F6F6F6;}
+
+/*  info-setting */
+#info-setting { 
+    padding: 7px 7px;
+}
