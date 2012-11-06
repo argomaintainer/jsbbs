@@ -50,5 +50,12 @@ phpbbs(as server)
   3. jsbbs.js 是整个系统的必要模块和启动模块。
   4. index.html 描述画面的基本结构。
 
+原型&&截图(未完成)
+------------------
 
- 
+![版块](https://raw.github.com/argolab/jsbbs/master/screenshot/board\(unfinish\).png)
+
+![首页](https://raw.github.com/argolab/jsbbs/master/screenshot/home\(unfinish\).png)
+
+![用户](https://raw.github.com/argolab/jsbbs/master/screenshot/user\(unfinish\).png)
+
