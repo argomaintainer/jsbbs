@@ -47,6 +47,57 @@ $MOD('jsbbs.load_lib', function(){
     }
 })
 
+$MOD('jsbbs.hook', function(){
+
+    /*
+      jsbbs.hook
+      ~~~~~~~~~~~
+
+      Yet another hook system for plugin.
+
+      trigger_hooks(hookname, [] args):
+          Trigger the `hookname` hook with $args as arguments.
+          And you can also trigger it directly:
+              $G.hooks[hookname](arg1, arg2 ...)
+
+      register_hook(hookname):
+          register the `hookname` as hook. A hook MUST be
+            registered before using.
+
+      bind_hook(hookanem, fun):
+          Push the `fun` to the hook.
+
+    */
+    
+    $G('hooks', {});
+    function trigger_hooks(hookname, args){
+        if(!(hookname in $G.hooks)){
+            throw "No such hook";
+        }
+        var funs = $G.hooks[hookname].__funs__;
+        if(!funs){
+            return;
+        }
+        for(i in funs){
+            funs[i].apply(this, args);
+        }
+    }
+    return {
+        trigger_hooks: trigger_hooks,
+        register_hook: function(hookname){
+            var funs = [];
+            $G.hooks[hookname] = function(){
+                trigger_hooks(hookname, arguments);
+            }
+            $G.hooks[hookname].__funs__ = funs;
+            return $G.hooks[hookname];
+        },
+        bind_hook: function(hookname, fun){
+            $G.hooks[hookname].__funs__.push(fun);
+        },
+    };
+});
+
 $MOD('jsbbs.frame', function(){
 
     function merge_args(href, kwargs){            
@@ -106,6 +157,7 @@ $MOD('jsbbs.frame', function(){
             $G.local.__frame__.__leave__(t[0], t[1]);
         }
         $('#main').empty();
+        $('#dy-widgets').empty();
         $G.local = {}
         $G.local.__frame__ = $MOD[libname];
         $MOD[libname].__enter__(t[1]);
@@ -173,7 +225,9 @@ $MOD('jsbbs.template', function(){
         if(!(tplname in $G.template)){
             loading_template(tplname);
         }
-    }        
+    }
+
+    $MOD['jsbbs.hook'].register_hook('after_render');    
 
     NULL_DATA = {}
     function render_template(tplname, data, selector){
@@ -184,6 +238,7 @@ $MOD('jsbbs.template', function(){
         if(typeof data == "undefined")
             data = NULL_DATA;
         $.tmpl(tplname, data).appendTo(selector);
+        $G.hooks.after_render();
     }
 
     function render_template_prepend(tplname, data, selector){
@@ -194,6 +249,15 @@ $MOD('jsbbs.template', function(){
         if(typeof data == "undefined")
             data = NULL_DATA;
         $.tmpl(tplname, data).prependTo(selector);
+        $G.hooks.after_render();
+    }
+
+    function load_widgets(widgets){
+        var w, v;
+        for(w in widgets){
+            v = widgets[w];
+            render_template('widget/' + v.type, v, '#dy-widgets');
+        }
     }
 
     function set_pos_mark(pos){
@@ -214,6 +278,7 @@ $MOD('jsbbs.template', function(){
         "render_template": render_template,
         "render_template_prepend": render_template_prepend,
         "set_pos_mark": set_pos_mark,
+        'load_widgets': load_widgets,
         'json_encode': JSON.stringify,
     };
 
@@ -223,6 +288,7 @@ $MOD('jsbbs.url_for', {
     'avatar': function(userid){ return '/avatar/' + userid },
     'board': function(boardname){ return '#!board?boardname=' + boardname},
     'user': function(userid){ return '#!user?userid=' + userid},
+    'img' : function(path){ return 'img/' + path },
     'post': function(filename, boardname){
         return '#!post?filename=' + filename + '&&boardname='
             + boardname;
@@ -250,7 +316,8 @@ $MOD('jsbbs.html_trick', function(){
         var target=$(e.target),
         href=target.attr('href'),
         action=target.attr('data-submit'),
-        args;
+        args, parent;
+        last = target;
         if(href=='#'){
             e.preventDefault();
         }
@@ -269,6 +336,27 @@ $MOD('jsbbs.html_trick', function(){
         }
     });
 
+    function scroll_to(selector){
+        var container = $("body"),
+        scrollTo = $(selector);
+        container.scrollTop(
+            scrollTo.offset().top - container.offset().top + container.scrollTop()
+        );
+        container.animate({
+            scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
+        });
+    }
+
+    function nice_size(filesize){
+        if(filesize > 1024*1024)
+            return Math.round(filesize/1024/1024) + 'M';
+        else if(filesize > 1024)
+            return Math.round(filesize/1024) + 'K';
+        else if(filesize>0)
+            return filesize + 'B';
+        else return '0';
+    }
+
     var _, _v, _h=[];
     _ = function(a){
         console.log(a);
@@ -278,6 +366,8 @@ $MOD('jsbbs.html_trick', function(){
 
     return {
         "collect_para": collect_para,
+        "scroll_to" : scroll_to,
+        "nice_size" : nice_size,
         "_": _,
         "_h": _h,
     }
@@ -301,22 +391,31 @@ $MOD('jsbbs.userbox', function(){
             }
         })
     }
+    function sort_favitem(a, b){
+        if(a.unread == b.unread)
+            return a.total - b.total;
+        return a.unread?0:1;
+    }        
     function refresh_fav(){
         $api.get_self_fav(function(data){
             if(data.success){
                 $('#userfav').empty();
-                console.log(data.data);
+                data.data.sort(sort_favitem);
                 render_template('widget/fav', { fav: data.data }, '#userfav');
             }
         });
-    }        
+    }
+
+    $G('authed', false);
     function refresh_userbox(){
         var fav;
         $api.get_self_info(function(data){
             if(data.success){
+                $G.authed = true;
                 data = { u: data.data, authed: true};
             }
             else{
+                $G.authed = false;
                 data = { authed: false };
             }
             $('#userbox').empty();
@@ -337,7 +436,9 @@ do_while_load(function(){
     using('jsbbs.html_trick');
     using('jsbbs.userbox');
     using('jsbbs.url_for', 'url_for_');
+    using('jsbbs.hook');
     require_jslib('argo_api');
+    require_jslib('scrollbar');
     import_module('argo_api', '$api');
     $G('refresh', true);
     function set_hash_static(hash){
@@ -354,8 +455,10 @@ do_while_load(function(){
             $G.refresh = true;
         };
     };
+
     window.set_hash_static = set_hash_static;
     window.onhashchange();
+
 })
 
 $MOD['jsbbs.frame'].FRAME_LIB = {

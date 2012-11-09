@@ -4,13 +4,17 @@ body{
 
 #container{
     width:1024px;
-    margin: 0 auto;
-    padding:0 30px;
+    margin: 0 auto 20px;
+    padding:0 20px ;
 }
 
 #main-wrapper{
     border: 3px solid #ccc;
     background: -webkit-linear-gradient(top,#f8f8f8 0, #f0f0f0 100%);
+    background: -moz-linear-gradient(top,#f8f8f8 0, #f0f0f0 100%);
+    background: -ms-linear-gradient(top,#f8f8f8 0, #f0f0f0 100%);
+    background: -o-linear-gradient(top,#f8f8f8 0, #f0f0f0 100%);
+    background: linear-gradient(top,#f8f8f8 0, #f0f0f0 100%);
     border-bottom : none;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -62,11 +66,15 @@ ul.inline-list>li{
 }
 
 .scrollbar{
-    overflow: auto;
+    /* overflow: auto; */
+}
+
+.scrollbaring{
+    /* overflow: auto; */
 }
 
 .favbox{
-    height:118px;
+    max-height:118px;
     font-size: 12px;
 }
 
@@ -168,6 +176,18 @@ ul.inline-list>li{
     font-weight: bold;
 }
 
+.light-font{
+    color: #222;
+    font-size: 12px;
+    line-height: 25px;
+    text-shadow: 0 0 4px #fff;
+}
+
+.absolute-fluid{
+    width: 100%;
+    position: absolute;
+}
+
 /*
   Board
   ~~~~~
@@ -244,6 +264,10 @@ i.unread{
     display:inline-block;
 }
 
+li.unread{
+    font-weight: bold;
+}
+
 .over-hidden{
     overflow:hidden;
 }
@@ -251,6 +275,10 @@ i.unread{
 .content-wrapper{
     padding: 0 1em;
     position:relative;
+}
+
+.text{
+    padding: 1em;
 }
 
 .mCSB_dark .mCSB_scrollTools .mCSB_draggerRail{
@@ -298,7 +326,6 @@ i.unread{
 
 .cell{
     background: -webkit-linear-gradient(left,#f9f9f9 0, #fcfcfc 100%);
-    border-radius: 9px;
     position:relative;
     border: 1px solid #ccc;
     box-shadow: 0 0 3px #e0e0e0;
@@ -308,8 +335,8 @@ i.unread{
 }
 
 .cell-in{
-    margin-left: 15px;
-    margin-right: 15px;
+    margin-left: 25px;
+    margin-right: 25px;
 }
 
 .cell-content.cell-content-padding{
@@ -317,7 +344,7 @@ i.unread{
 }
 
 .cell-header{
-    background: -webkit-linear-gradient(top,#eee 0, #c9c9c9 100%);
+    /* background: -webkit-linear-gradient(top,#eee 0, #c9c9c9 100%); */
     color: #777;
     border-bottom: 1px solid #fff;
     margin-bottom: 8px;
@@ -435,6 +462,10 @@ i.unread{
 
 .tb-align-bottom{
     vertical-align: bottom;
+}
+
+.tb-align-mid{
+    vertical-align: middle;
 }
 
 .padding-side{
@@ -672,4 +703,114 @@ i.unread{
 
 .avatar .big-font{
     text-shadow: 0 0 3px #eee;
+}
+
+/* .page-img:after{ */
+/*     content: ""; */
+/*     display: block; */
+/*     border-left: 10px solid transparent; */
+/*     border-right: 10px solid transparent; */
+/*     border-top: 5px solid #e0e0e0; */
+/*     z-index: 200; */
+/* } */
+
+/* .page-img:before{ */
+/*     content: ""; */
+/*     display: block; */
+/*     border-left: 10px solid transparent; */
+/*     border-right: 10px solid transparent; */
+/*     border-bottom: 3px solid #eee; */
+/*     z-index: 200; */
+/* }     */
+
+.page-img{
+    margin: 5px 20px 20px 20px;
+}
+
+.page-img .carousel{
+    margin-bottom: 0;
+}
+
+.page-img img{
+    border-radius: 4px;
+}
+
+.page-img .carousel-caption{
+    border-radius: 4px;
+}
+
+.selectable{
+    border-left: 2px solid transparent;
+    border-right: 2px solid transparent;
+}
+
+.selectable:hover{
+    border-left: 2px solid orange !important;
+    border-right: 2px solid orange !important;
+}
+
+#maillist-wrapper{
+    height:180px;
+    padding-left: 10px;
+    /* border-bottom: 1px solid #aaa; */
+    margin-bottom : 20px;
+    padding-bottom: 10px;
+}
+
+a[data-submit],
+button[data-submit]{
+    cursor: pointer;
+}
+
+.replied{
+}
+
+.relative{
+    position: relative;
+}
+
+.absolute{
+    position: absolute;
+}
+
+.padding1em{
+    padding: 1em;
+}
+
+.top2em{
+    padding-top: 2em;
+}
+
+.inverse{
+    background: -webkit-linear-gradient(top,#f0f0f0 0, #eee 100%);
+}
+
+.nomargin{
+    margin: 0;
+}
+
+#colophon{
+    border-top: 1px solid #eee;
+    background: #aaa;
+    background: -webkit-linear-gradient(top,#aaa 0, #a0a0a0 100%);
+    background: -moz-linear-gradient(top,#aaa 0, #a0a0a0 100%);
+    background: -ms-linear-gradient(top,#aaa 0, #a0a0a0 100%);
+    background: -o-linear-gradient(top,#aaa 0, #a0a0a0 100%);
+    background: linear-gradient(top,#aaa 0, #a0a0a0 100%);
+    font-size: 12px;
+}
+
+#colophon-inner{
+    border-top: 10px solid #ddd;
+    padding: 1em 2em;
+    color: #e0e0e0;
+    text-align: center;
+}
+
+#colophon-inner a{
+    color: #f4f4f4;
+}
+
+#colophon-inner p{
+    margin: 0;
 }

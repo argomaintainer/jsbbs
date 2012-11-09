@@ -160,10 +160,19 @@ $MOD('argo_api', function(){
             $.get('/ajax/mail/mailbox', callback);
         },
 
-        'get_mail_list': function(start, callback){
+        'get_maillist': function(start, callback){
             $.get('/ajax/mail/list',
                   {
                       start: start,
+                  },
+                  callback);
+        },
+
+        'get_maillist_limit': function(start, limit, callback){
+            $.get('/ajax/mail/list',
+                  {
+                      start: start,
+                      limit: limit,
                   },
                   callback);
         },
@@ -176,20 +185,22 @@ $MOD('argo_api', function(){
                   callback);
         },
 
-        'send_mail': function(title, content, callback){
+        'send_mail': function(title, content, receiver, callback){
             $.post('/ajax/mail/send',
                    {
                        title: title,
                        content: content,
+                       receiver: receiver,
                    },
                    callback);
         },
 
-        'reply_mail': function(title, content, articleid, callback){
+        'reply_mail': function(title, content, receiver, articleid, callback){
             $.post('/ajax/mail/send',
                    {
                        title: title,
                        content: content,
+                       receiver: receiver,
                        articleid: articleid,
                    },
                    callback);

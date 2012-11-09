@@ -7,6 +7,7 @@
     <script src="js/lib/jquery.js"></script>
     <script src="js/lib/jquery-ui.js"></script>
     <script src="js/lib/bootstrap.js"></script>
+    <script src="data.js"></script>
     <script src="js/thinist.js"></script>
     <script src="js/jsbbs.js"></script>
     <link href="css/jquery.mCustomScrollbar.css" rel="stylesheet"
@@ -15,7 +16,7 @@
   <body>
     <div id="container">
       <div class="row-fluid">
-        <div class="span9">
+        <div id="primary" class="span9">
           <div id="topbar" class="row-fluid">
             <div id="topbar-inner">
               <a id="brand" class="pull-left" href="#!">逸仙时空</a>
@@ -27,7 +28,7 @@
               </div>
             </div>
           </div>
-          <div id="primary" class="row-fluid">
+          <div class="row-fluid">
             <div id="main-wrapper">
               <div id="main">
               </div>
@@ -40,6 +41,7 @@
               <div class="widget">
                 <div id="userbox"></div>
               </div>
+              <div id="dy-widgets"></div>
             </div>
           </div>
         </div>
@@ -50,5 +52,11 @@
         </a>
       </div>
     </div>
+      <footer id="colophon">
+        <div id="colophon-inner">
+          <p>逸仙时空是一个半官方的，非盈利性的旨在帮助校园沟通交流bbs站。</p>
+          <p>Powerby <a href="https://github.com/argolab/jsbbs">jsbbs</a>, &nbsp; all the honour (c) <a href="http://argolab.org/">argolab</a> .</p>
+        </div>
+      </footer>
   </body>
 </html>

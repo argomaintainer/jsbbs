@@ -10,7 +10,8 @@ $MOD('frame::home', function(){
     }
     return {
         __enter__ : function(){
-            init_frame_page(['topten', 'boardnav', 'wish']);
+            render_template('home-framework');
+            load_widgets(DATA_WIDGETS.home);
             $api.get_all_boards(function(data){
                 var s;
                 if(data.success){
@@ -201,8 +202,75 @@ $MOD('frame::user', function(){
                             
                             
 $MOD('frame::mail', function(){
+
+    $Type('MailRange', ['start', 'end']);
+    
+    $G.local.cur_range = null;
+    
+    function append_next(tolast){
+        var arr, start;
+        start = $G.local.cur_range.end==NaN ? 0 :
+            $G.local.cur_range.end + 1;
+        $api.get_maillist(start, function(data){
+            if(data.success && (arr=data.data)){
+                render_template('mail-li', arr, '#maillist-container');
+                $G.local.cur_range.end = arr[arr.length-1].index;
+                if(tolast){
+                    $('#maillist-ctrl').mCustomScrollbar("scrollTo", "last");
+                }
+            }
+        });
+    }
+
+    function prepend_prev(){
+        var arr, start;
+        start = $G.local.cur_range.start==NaN ? 0 :
+            $G.local.cur_range.start - 20;
+        $api.get_maillist(start, function(data){
+            if(data.success && (arr = data.data)){                
+                render_template_prepend('mail-li', arr, '#maillist-container');
+                $G.local.cur_range.start = arr[0].index;
+            }
+        })
+    }
+
+    require_jslib('format');
+
+    function read_mail(index){
+        var content;
+        $api.get_mail(index, function(data){
+            if(data.success){
+                content = data.data;
+                // content = $MOD.format.format(content);
+                $('#mail-contentbox').empty();
+                render_template('mail-content', { data: content },
+                                '#mail-contentbox');
+                $('#mail-' + index).find('i.unread').removeClass('unread').addClass('read');
+            }
+        });
+    }
+
+    $G.submit.read_mail = function(e){
+        var target = $(e.target),
+        index = target.attr('data-index');
+        read_mail(index);
+    }
+
     return {
         __enter__ : function(kwargs){
+            $api.get_mailbox_info(function(data){
+                $G.local.cur_range = $Type.MailRange([NaN, NaN]);
+                if(data.success){
+                    render_template('mail-framework', { mailbox: data.data });
+                    append_next(true);
+                }
+                else{
+                    show_alert(data.error);
+                }
+            })
         },
+        append_next: append_next,
+        prepend_prev: prepend_prev,
+        read_mail: read_mail,
     }
 })

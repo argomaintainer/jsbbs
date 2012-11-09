@@ -1,0 +1,35 @@
+<div class="inverse">
+  <div class="padding-side">
+    <table width="100%">
+      <tbody class="padding-side">
+        <tr>
+          <td class="tb-align-mid" width="61%">
+            <div class="btn-toolbar">
+              <button class="btn btn-small btn-success"> 写信 </button>
+              <button class="btn btn-small"> 全选 </button>
+              <button class="btn btn-small"> 删除选中信件 </button>
+            </div>
+          </td>
+          <td class="tb-align-mid relative">
+            <div class="progress nomargin">
+              <div class="bar" style="width: ${mailbox.used_size/mailbox.total_size*100}%;"></div>
+              <div class="absolute-fluid light-font text-center">
+                共 ${mailbox.total} 封信，${nice_size(mailbox.used_size)} / ${nice_size(mailbox.total_size)}
+              </div>
+            </div>
+          </td>
+        </tr>
+    </table>
+  </div>
+</div>
+<div class="padding1em top2em">
+  <div id="maillist-wrapper" class="mCSB_dark">
+    <div id="maillist-ctrl" class="scrollbar">
+      <table class="fluid-table">
+        <tbody id="maillist-container">
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div id="mail-contentbox" class="text"></div>

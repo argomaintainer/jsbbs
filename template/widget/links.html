@@ -1,0 +1,20 @@
+<div class="widget">
+  {{if title }}
+  <div class="widget-header">
+    <h4>${title}</h4>
+  </div>
+  {{/if}}
+  <ul class="nav nav-list">
+    {{each(i, v) links}}
+    {{if v == '----'}}
+    <li class="divider"></li>
+    {{else}}
+    {{if typeof v == 'string'}}
+    <li class="nav-header">${v}</li>
+    {{else}}
+    <li><a href="${v[1]}">${v[0]}</a></li>
+    {{/if}}
+    {{/if}}
+    {{/each}}
+  </ul>
+</div>

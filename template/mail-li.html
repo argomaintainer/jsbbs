@@ -1,0 +1,15 @@
+<tr id="mail-${index}">
+  <td class="text-center">${index}</td>
+  <td class="tb-img">
+    <img class="img-small" src="${ url_for_avatar(owner) }"/>
+  </td>
+  <td class="tb-user"><a href="${url_for_user(owner)}">${owner}</a></td>
+  <td>
+    <span class="mail-reply">{{if flag > 31}}&crarr;{{/if}}</span>
+  </td>        
+  <td class="tb-title">
+    <i class="${(flag=='0')?'unread':'read'}"></i>
+    <a data-submit="read_mail" data-index="${index}">${title}</a>
+  </td>
+  <td class="tb-time"><time>${filetime}</time></td>
+</tr>

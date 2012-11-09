@@ -6,7 +6,7 @@
   <div class="favbox scrollbar">
     <ul class="unstyled">
       {{each(i, v) fav }}
-      <li{{if v.unread }}class="unread"{{/if}}><a href="${ url_for_board(v.filename) }">${v.filename}</a></li>
+      <li{{if v.unread }} class="unread"{{/if}}><a href="${ url_for_board(v.filename) }">${v.filename}</a></li>
       {{/each}}
     </ul>
   </div>
