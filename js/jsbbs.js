@@ -46,6 +46,7 @@ $MOD('jsbbs.load_lib', function(){
         "drop_jslib": drop_jslib,
     }
 })
+using('jsbbs.load_lib');
 
 $MOD('jsbbs.hook', function(){
 
@@ -93,16 +94,18 @@ $MOD('jsbbs.hook', function(){
             return $G.hooks[hookname];
         },
         bind_hook: function(hookname, fun){
+            if(!(hookname in $G.hooks)){
+                console.error('Bind wrong hook[' + hookname + ']');
+            }
             $G.hooks[hookname].__funs__.push(fun);
         },
     };
 });
+using('jsbbs.hook');
 
-$MOD('jsbbs.frame', function(){
+$MOD('jsbbs.func', {
 
-    $Type('Frame', ['enter', 'basetpl', 'local', 'pos', 'level']);
-
-    function merge_args(href, kwargs){            
+    merge_args : function(href, kwargs){            
         var hash = href, k, buf;
         if(kwargs){
             buf = [];
@@ -114,9 +117,9 @@ $MOD('jsbbs.frame', function(){
         else{
             return href;
         }
-    }
-    
-    function parse_args(args){
+    },
+        
+    parse_args: function(args){
         if(!args){
             return '';
         }
@@ -127,52 +130,9 @@ $MOD('jsbbs.frame', function(){
             kwargs[t[0]] = t[1];
         }
         return kwargs;
-    }
+    },
 
-    FRAME_LIB = {}
-
-    MAIN_CONTAINER = '#frame';
-
-    $G('local', {});
-
-    function refresh_frame(){
-        var hash = location.hash, t, libname;
-        if(hash && (hash.length>2)){
-            if(hash.substr(0,2)!='#!'){
-                console.warn('Refresh an illegal frame.');
-                return;
-            }
-            hash = hash.substr(2);
-        }
-        else{
-            hash = 'home';
-        }
-        t = hash.split('?');
-        t[1] = t[1]?parse_args(t[1]):NULL_DATA;
-        console.log('Enter [' + t[0] + ']');
-        libname = 'frame::' + t[0];
-        if(t[0] in FRAME_LIB){
-            require_jslib(FRAME_LIB[t[0]]);
-        }
-        require_module(libname);
-        if(('__frame__' in $G.local)&&('__leave__' in $G.local.__frame__)){
-            $G.local.__frame__.__leave__(t[0], t[1]);
-        }
-        $('#main').empty();
-        $('#dy-widgets').empty();
-        $G.local = {}
-        $G.local.__frame__ = $MOD[libname];
-        $MOD[libname].__enter__(t[1]);
-    }
-
-    function init_frame_page(parts){
-        parts.forEach(function(ele, index, self){
-            self[index] = '<div id="part-' + ele + '"></div>';
-        });
-        $('#main').html(parts.join(''));
-    }
-
-    function show_alert(messsage, type){
+    show_alert: function(messsage, type){
         if($('#message').length)
             return;
         var tag = $('<div id="message">');
@@ -186,24 +146,80 @@ $MOD('jsbbs.frame', function(){
                 tag.remove();
             });
         }, 1000);              
+    },
+    
+    get_current_hash: function(){
+        var hash = location.hash, t;
+        if(hash && (hash.length>2)){
+            if(hash.substr(0,2)!='#!'){
+                return;
+            }
+            hash = hash.substr(2);
+        }
+        else{
+            hash = 'home';
+        }
+        t = hash.split('?');
+        t[1] = t[1]?parse_args(t[1]):NULL_DATA;
+        return $Type.FrameHash(t);
+    },
+
+    set_pos_mark: function(pos){
+        if(!pos.length) return;
+        var buf='',
+        html;
+        pos.slice(0,-1).forEach(function(element){
+            buf += '<li><a href="' + element[1] + '">' + element[0] +
+                '</a><span class="divider">›</span></li>';
+            console.log(buf);
+        });
+        buf += '<li class="active">' + pos[pos.length-1][0] + '</li>';
+        console.log(buf);
+        $('#pos-inner').html(buf);
+    },
+
+    collect_para: function(){
+        var kwargs={};
+        $('[name]').each(function(){
+            var self=$(this);
+            kwargs[self.attr('name')] = self.val();
+        });
+        return kwargs;
+    },
+
+    scroll_to: function(selector){
+        var container = $("body"),
+        scrollTo = $(selector);
+        container.scrollTop(
+            scrollTo.offset().top - container.offset().top
+                + container.scrollTop()
+        );
+        container.animate({
+            scrollTop: scrollTo.offset().top - container.offset().top
+                + container.scrollTop()
+        });
+    },
+
+    nice_size: function(filesize){
+        if(filesize > 1024*1024)
+            return Math.round(filesize/1024/1024) + 'M';
+        else if(filesize > 1024)
+            return Math.round(filesize/1024) + 'K';
+        else if(filesize>0)
+            return filesize + 'B';
+        else return '0';
     }
 
-    return {
-        "parse_args" : parse_args,
-        "merge_args" : merge_args,
-        "init_frame_page" : init_frame_page,
-        "refresh_frame": refresh_frame,
-        "FRAME_LIB" : FRAME_LIB,
-        "MAIN_CONTAINER" : MAIN_CONTAINER,
-        "show_alert" : show_alert,
-    }
-
-});
+})
+using('jsbbs.func');
 
 $MOD('jsbbs.template', function(){
 
     $MOD['jsbbs.load_lib'].require_jslib('jquery.tmpl');
-    $G('template', $.template);
+    $G('template', $.template);    
+    $MOD['jsbbs.hook'].register_hook('after_render');    
+    NULL_DATA = {}
+
     function loading_template(tplname){
         if(tplname in $G.template){
             console.log('Template[' + tplname + '] loaded.');
@@ -228,10 +244,6 @@ $MOD('jsbbs.template', function(){
             loading_template(tplname);
         }
     }
-
-    $MOD['jsbbs.hook'].register_hook('after_render');    
-
-    NULL_DATA = {}
     function render_template(tplname, data, selector){
         if(!selector){
             selector="#main";
@@ -242,7 +254,6 @@ $MOD('jsbbs.template', function(){
         $.tmpl(tplname, data).appendTo(selector);
         $G.hooks.after_render();
     }
-
     function render_template_prepend(tplname, data, selector){
         if(!selector){
             selector="#main";
@@ -261,59 +272,133 @@ $MOD('jsbbs.template', function(){
             render_template('widget/' + v.type, v, '#dy-widgets');
         }
     }
-
-    function set_pos_mark(pos){
-        if(!pos.length) return;
-        var buf='',
-        html;
-        pos.slice(0,-1).forEach(function(element){
-            buf += '<li><a href="' + element[1] + '">' + element[0] +
-                '</a><span class="divider">›</span></li>';
-            console.log(buf);
-        });
-        buf += '<li class="active">' + pos[pos.length-1][0] + '</li>';
-        console.log(buf);
-        $('#pos-inner').html(buf);
-    };            
     
     return {
         "require_template": require_template,
         "render_template": render_template,
         "render_template_prepend": render_template_prepend,
-        "set_pos_mark": set_pos_mark,
         'load_widgets': load_widgets,
         'json_encode': JSON.stringify,
     };
 
 });
+using('jsbbs.template');
 
-$MOD('jsbbs.url_for', {
-    'avatar': function(userid){ return '/avatar/' + userid },
-    'board': function(boardname){ return '#!board?boardname=' + boardname},
-    'user': function(userid){ return '#!user?userid=' + userid},
-    'img' : function(path){ return 'img/' + path },
-    'post': function(filename, boardname){
-        return '#!post?filename=' + filename + '&&boardname='
-            + boardname;
-    },
-})
+$MOD('jsbbs.frame', function(){
 
-$MOD('jsbbs.html_trick', function(){
+    $Type('Frame', ['mark',
+                    'enter',
+                    'basetpl',
+                    'local',
+                    'pos',
+                    'leave',
+                    'isnew',
+                    'submit',
+                    'ajax',
+                    'keep_widgets']);
 
-    require_module('jsbbs.frame');
+    $Type('FrameHash', ['hash', 'args']);
 
-    var refresh_frame = $MOD['jsbbs.frame'].refresh_frame;
+    $G('frames', {});
+    $G('current', undefined);
+    $G('submit', {});
 
-    function collect_para(){
-        var kwargs={};
-        $('[name]').each(function(){
-            var self=$(this);
-            kwargs[self.attr('name')] = self.val();
+    MAIN_CONTAINER = '#main';
+
+    $.fn.ajax_data = function(){
+        $(this).each(function(){
+            var self = $(this);
+            action = self.attr('data-ajax');
+            if(action in $G.current.ajax){
+                $G.current.ajax[self.attr('data-ajax')](self);
+            }
+            else if(action in $G.ajax){
+                $G.ajax[action](self);
+            }
+            else{
+                console.error('Wrong ajax[' + action + ']');
+            }
         });
-        return kwargs;
     }
 
-    $G('submit', {});
+    function declare_frame(args){
+        if(!args.mark){
+            console.error('Frame must has a mark.');
+        }
+        if(!args.submit)
+            args.submit = {};
+        if(!args.ajax)
+            args.ajax = {};
+        if(args.isnew != false)
+            args.isnew = true;
+        if(!args.local)
+            args.local = {};        
+        if(args.keep_widgets != false)
+            args.keep_widgets = true;
+        $G.frames[args.mark] = $Type.Frame(args);
+    }
+
+    function refresh_frame(){
+        var curhash = get_current_hash(),
+        frame;
+
+        if(!curhash){
+            console.warn('Refresh an illegal frame.');
+            return;
+        }
+
+        if(!(curhash.hash in $G.frames)){
+            console.error('Enter wrong frame. [' + curhash.hash + ']');
+            return
+        }
+
+        console.log('ENTER frame[' + json_encode(curhash) + ']');
+
+        if($G.current && $G.current.leave){
+            $G.current.leave(curhash.hash, curhash.args);
+        }
+
+        $G.current = frame = $G.frames[curhash.hash];
+        $G.local = frame.local;
+        $G.local.__frame__ = frame;
+
+        if(frame.isnew){
+            $('#main').empty();
+        }
+
+        if(!frame.keep_widgets){
+            $('#dy-widgets').empty();
+        }
+
+        if(frame.pos){
+            set_pos_mark(frame.pos);
+        }
+
+        if(frame.basetpl){
+            console.log('Use basetpl :' + frame.basetpl
+                        + '[' + frame.mark + ']');
+            console.log(['bb', frame.basetpl, {args: curhash.args },
+                         MAIN_CONTAINER]);
+            render_template(frame.basetpl, { args: curhash.args },
+                            MAIN_CONTAINER);
+            $('[data-ajax]').ajax_data();
+        }
+
+        frame.enter(curhash.args);
+
+    }
+
+    function submit_action(action, args, event){
+        if($G.current.submit && action in $G.current.submit){
+            $G.current.submit[action](args, event);
+            return false;
+        }
+        if(action in $G.submit){
+            $G.submit[action](args, event);
+            return false;
+        }
+        console.error('Wrong action[' + action + ']');
+    }
 
     $(document).click(function(e){
         var target=$(e.target),
@@ -325,8 +410,7 @@ $MOD('jsbbs.html_trick', function(){
             e.preventDefault();
         }
         if(action){
-            $G.submit[action](e);
-            return false;
+            submit_action(action, collect_para(), e);
         }
     });
 
@@ -334,37 +418,39 @@ $MOD('jsbbs.html_trick', function(){
         var target=$(e.target),
         action=target.attr('data-submit'), args;
         if(action){
-            $G.submit[action](collect_para(), e);
+            submit_action(collect_para(), e);
             return false;
         }
     });
-
-    function scroll_to(selector){
-        var container = $("body"),
-        scrollTo = $(selector);
-        container.scrollTop(
-            scrollTo.offset().top - container.offset().top + container.scrollTop()
-        );
-        container.animate({
-            scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
-        });
-    }
-
-    function nice_size(filesize){
-        if(filesize > 1024*1024)
-            return Math.round(filesize/1024/1024) + 'M';
-        else if(filesize > 1024)
-            return Math.round(filesize/1024) + 'K';
-        else if(filesize>0)
-            return filesize + 'B';
-        else return '0';
-    }
 
     $.fn.hempty = function(msg){
         this.html('<div class="hint-empty">' + msg + '</div>');
     }
 
+    return {
+        "declare_frame": declare_frame,
+        "refresh_frame": refresh_frame,
+    }
+
+});
+using('jsbbs.frame');
+
+$MOD('jsbbs.url_for', {
+    'avatar': function(userid){ return '/avatar/' + userid },
+    'board': function(boardname){ return '#!board?boardname=' + boardname},
+    'user': function(userid){ return '#!user?userid=' + userid},
+    'img' : function(path){ return 'img/' + path },
+    'post': function(filename, boardname){
+        return '#!post?filename=' + filename + '&&boardname='
+            + boardname;
+    },
+})
+using('jsbbs.url_for', 'url_for_');
+
+$MOD('jsbbs.debug', function(){
+
     var _, _v, _h=[];
+
     _ = function(a){
         console.log(a);
         _h.push(a);
@@ -372,116 +458,29 @@ $MOD('jsbbs.html_trick', function(){
     }
 
     return {
-        "collect_para": collect_para,
-        "scroll_to" : scroll_to,
-        "nice_size" : nice_size,
+        "_v" : _v,
         "_": _,
         "_h": _h,
     }
 
 });
 
-$MOD('jsbbs.userbox', function(){
-    $G.submit.logout = function(){
-        $api.user_logout(refresh_userbox);
-    }
-    $G.submit.login = function(kwargs){
-        console.log(kwargs);
-        $api.user_login(kwargs.userid, kwargs.password, function(data){
-            if(data.success){
-                $('#userbox').empty();
-                refresh_userbox();
-                show_alert('登录成功！', 'success');
-            }
-            else{
-                show_alert(data.error, 'danger');
-            }
-        })
-    }
-    function sort_favitem(a, b){
-        if(a.unread == b.unread)
-            return a.total - b.total;
-        return a.unread?0:1;
-    }
+require_jslib('argo_api');
+import_module('argo_api', '$api');
 
-    $MOD['jsbbs.hook'].register_hook('after_refresh_fav');
-    function refresh_fav(){
-        $('[data-submit=refresh_fav]').addClass('refreshing');
-        $api.get_self_fav(function(data){
-            if(data.success){
-                $('#favbox').hempty('努力地读取收藏夹中...');
-                setTimeout(function(){
-                    $('#favbox').empty();
-                    data.data.sort(sort_favitem);
-                    render_template('widget/fav', { fav: data.data },
-                                    '#favbox');
-                    $('[data-submit=refresh_fav]').removeClass('refreshing');
-                    $G.hooks.after_refresh_fav();
-                }, 500);
-            }
-        });
-    }                             
-    $G.submit.refresh_fav = refresh_fav;
+require_jslib('scrollbar');
+require_jslib('userbox');
+using('jsbbs.userbox');
 
-    $G('authed', false);
-    function refresh_userbox(){
-        var fav;
-        $api.get_self_info(function(data){
-            if(data.success){
-                $G.authed = true;
-                data = { u: data.data, authed: true};
-            }
-            else{
-                $G.authed = false;
-                data = { authed: false };
-            }
-            $('#userbox').empty();
-            render_template('userbox', data, '#userbox');
-            refresh_fav();
-        });
-    }                           
-    return {
-        'refresh_fav': refresh_fav,
-        'refresh_userbox' : refresh_userbox,
-    }
-})
+require_jslib('handler');
 
 do_while_load(function(){
-    using('jsbbs.load_lib');
-    using('jsbbs.frame');
-    using('jsbbs.template');
-    using('jsbbs.html_trick');
-    using('jsbbs.userbox');
-    using('jsbbs.url_for', 'url_for_');
-    using('jsbbs.hook');
-    require_jslib('argo_api');
-    require_jslib('scrollbar');
-    import_module('argo_api', '$api');
-    $G('refresh', true);
-    function set_hash_static(hash){
-        $G.refresh = false;
-        location.hash = hash;
-    }
-    refresh_userbox();
+
     window.onhashchange = function(){
-        console.log($G.refresh);
-        if($G.refresh){        
-            refresh_frame();
-        }
-        else{
-            $G.refresh = true;
-        };
+        refresh_frame();
     };
 
-    window.set_hash_static = set_hash_static;
-    window.onhashchange();
+    refresh_userbox();
+    refresh_frame();
 
 })
-
-$MOD['jsbbs.frame'].FRAME_LIB = {
-    "home" : "handler",
-    'board' : 'handler',
-    'post' : 'handler',
-    'user' : 'handler',
-    'mail' : 'handler',
-}

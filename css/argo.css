@@ -79,7 +79,7 @@ ul.inline-list>li{
 }
 
 #userfav li{
-    padding: 0 15px;
+    padding: 0 10px;
 }    
 
 #favbox{
@@ -851,7 +851,16 @@ button[data-submit]{
     -webkit-animation-timing-function:  linear;
 }
 
+i.icon-refreshing{
+    background-position: -240px -24px;
+    -webkit-animation-name:             rotate; 
+    -webkit-animation-duration:         3s; 
+    -webkit-animation-iteration-count:  infinite;
+    -webkit-animation-timing-function:  linear;
+}    
+
 .hint-empty{
     font-size: 1.2em;
     color: #aaa;
+    padding: 1em;
 }
