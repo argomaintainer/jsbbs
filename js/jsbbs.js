@@ -100,6 +100,8 @@ $MOD('jsbbs.hook', function(){
 
 $MOD('jsbbs.frame', function(){
 
+    $Type('Frame', ['enter', 'basetpl', 'local', 'pos', 'level']);
+
     function merge_args(href, kwargs){            
         var hash = href, k, buf;
         if(kwargs){
@@ -261,6 +263,7 @@ $MOD('jsbbs.template', function(){
     }
 
     function set_pos_mark(pos){
+        if(!pos.length) return;
         var buf='',
         html;
         pos.slice(0,-1).forEach(function(element){
@@ -357,6 +360,10 @@ $MOD('jsbbs.html_trick', function(){
         else return '0';
     }
 
+    $.fn.hempty = function(msg){
+        this.html('<div class="hint-empty">' + msg + '</div>');
+    }
+
     var _, _v, _h=[];
     _ = function(a){
         console.log(a);
@@ -395,16 +402,26 @@ $MOD('jsbbs.userbox', function(){
         if(a.unread == b.unread)
             return a.total - b.total;
         return a.unread?0:1;
-    }        
+    }
+
+    $MOD['jsbbs.hook'].register_hook('after_refresh_fav');
     function refresh_fav(){
+        $('[data-submit=refresh_fav]').addClass('refreshing');
         $api.get_self_fav(function(data){
             if(data.success){
-                $('#userfav').empty();
-                data.data.sort(sort_favitem);
-                render_template('widget/fav', { fav: data.data }, '#userfav');
+                $('#favbox').hempty('努力地读取收藏夹中...');
+                setTimeout(function(){
+                    $('#favbox').empty();
+                    data.data.sort(sort_favitem);
+                    render_template('widget/fav', { fav: data.data },
+                                    '#favbox');
+                    $('[data-submit=refresh_fav]').removeClass('refreshing');
+                    $G.hooks.after_refresh_fav();
+                }, 500);
             }
         });
-    }
+    }                             
+    $G.submit.refresh_fav = refresh_fav;
 
     $G('authed', false);
     function refresh_userbox(){

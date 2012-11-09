@@ -73,9 +73,17 @@ ul.inline-list>li{
     /* overflow: auto; */
 }
 
-.favbox{
-    max-height:118px;
+#userfav{
+    height:158px;
     font-size: 12px;
+}
+
+#userfav li{
+    padding: 0 15px;
+}    
+
+#favbox{
+    height: 118px;
 }
 
 #footer{
@@ -813,4 +821,37 @@ button[data-submit]{
 
 #colophon-inner p{
     margin: 0;
+}
+
+.btn-widget{
+    background: transparent;
+    border: 0;
+    float:right;
+    opacity: 0.3;
+    height: 28px;
+}
+
+.btn-widget:hover{
+    opacity: .55;
+}
+
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to { 
+    -webkit-transform: rotate(360deg);
+  }
+}
+.refreshing
+{
+    -webkit-animation-name:             rotate; 
+    -webkit-animation-duration:         3s; 
+    -webkit-animation-iteration-count:  infinite;
+    -webkit-animation-timing-function:  linear;
+}
+
+.hint-empty{
+    font-size: 1.2em;
+    color: #aaa;
 }

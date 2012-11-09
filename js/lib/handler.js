@@ -8,9 +8,13 @@ $MOD('frame::home', function(){
         else if(x < 80) return 'warning';
         else return 'important';
     }
+
+    var cur_pos = [];
+        
     return {
         __enter__ : function(){
             render_template('home-framework');
+            set_pos_mark(cur_pos);
             load_widgets(DATA_WIDGETS.home);
             $api.get_all_boards(function(data){
                 var s;
