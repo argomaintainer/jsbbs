@@ -1,10 +1,10 @@
 <div class="frame-header">
-  <div class="frame-header-inner">
+  <div class="frame-header-inner">    
     <div class="padding-side">
       <table>
         <tbody>
           <tr>
-            <td width="52%">
+            <td width="50%">
               <h2 class="board-title">${board.title} <small> ${board.filename}</small></h2>
               {{if board.BM.length}}
               <ul class="small-font inline-list">
@@ -23,19 +23,21 @@
             <td class="tb-align-bottom">
               <div class="btn-toolbar">
                 <a class="btn btn-small btn-success" href="#!new-post?boardname=${board.filename}">发表话题</a>
-                <a class="btn btn-small" data-submit="clear-unread">清除未读标记</a>
-                <div class="btn-group">
+                <a class="btn btn-small" data-submit="clear_unread">清除未读标记</a>
+                <div class="btn-group">                  
                   <a class="btn btn-small dropdown-toggle" data-toggle="dropdown">
-                    一帖一栏
+                    过滤器
                     <span class="caret"></span>
                   </a>
                   <ul class="dropdown-menu">
-                    <li><a href="#" data-submit="only-topic">只看主题</a></li>
-                    <li><a href="#" data-submit="only-g">只看文摘</a></li>
+                    <li><a href="#" data-submit="set_topic_loader">只看主题</a></li>
+                    <li><a href="#" data-submit="set_digest_loader">只看文摘</a></li>
+                    <li><a href="#" data-submit="set_normal_loader">查看全部</a></li>
                   </ul>
                 </div>
-                <button data-submit="book_fav" class="btn btn-mini btn-info">收藏该版</button>
-              </div>              
+                <button data-submit="book_fav" class="btn btn-mini btn-info">预订该版</button>
+                <button data-submit="refresh_frame" class="btn btn-mini">&nbsp;<i data-submit="refresh_frame" class="icon-refresh"></i>&nbsp;</button>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -43,15 +45,15 @@
     </div>
   </div>
 </div>
-<div class="cell cell-in">
-  <a class="btn-posts-table" data-submit="prepend_postlist_li">
-    <i data-submit="append_postlist_li" class="icon-chevron-up icon-white"></i>
-  </a>
-  <table class="fluid-table">
-    <tbody id="postlist-container">
-    </tbody>
-  </table>
-  <a class="btn-posts-table" data-submit="append_postlist_li">
-    <i data-submit="append_postlist_li" class="icon-chevron-down icon-white"></i>
-  </a>
+<div id="postlistbox" class="cell cell-in">
+  <div id="postlist-container" class="relative">
+    <div class="vpagination">
+      <input type="text" data-max-page="${ Math.ceil((board.total)/20) }" />
+      <a href="#" class="first" data-action="first"><i class="arrow-up-bar"></i></a>
+      <a href="#" class="previous" data-action="previous"><i class="arrow-up"></i></a>
+      <a href="#" class="next" data-action="next"><i class="arrow-down"></i></a>
+      <a href="#" class="last" data-action="last"><i class="arrow-down-bar"></i></a>
+    </div>    
+    <div id="postlist-content"> <i class="icon-refreshing"></i> 努力地抓取数据中…… </div>
+  </div>
 </div>

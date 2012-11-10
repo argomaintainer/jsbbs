@@ -48,139 +48,14 @@ $MOD('frame.home', function(){
         ajax: ajax,
         local: {
             format_number: format_number,
-        }
+        },
+        widgets_loader : function(){
+            return DATA_WIDGETS.home;
+        },
     });
+
+    
 });
-
-// $MOD('frame::board', function(){
-
-//     $Type('BoardStatus', ['type', 'boardname', 'start', 'end']);
-
-//     $G.local.cur_board = null;
-
-//     var TPL_NORMAL = 'board-postlist-normal';
-
-//     function fix_board_status(kwargs){
-//         if(!kwargs.boardname){
-//             throw "Unvail boardname";
-//         }        
-//         kwargs.type = kwargs.type || "normal";
-//         if(NaN == (kwargs.start = Number(kwargs.start))){
-//             kwargs.start = 0;
-//         }
-//         return {
-//             'type': kwargs.type,
-//             'boardname': kwargs.boardname,
-//             'start': kwargs.start,
-//         };
-//     }
-
-//     function handler_posts(start, handler){
-//         var cur_board = $G.local.cur_board;
-//         $api.get_postindex(
-//             cur_board.boardname, cur_board.type,
-//             start, function(data){
-//                 var arr;
-//                 if(data.success){
-//                     arr = data.data;
-//                     handler(TPLTOR[cur_board.type],
-//                             {
-//                                 posts: arr,
-//                                 boardname:
-//                                 cur_board.boardname,
-//                             },
-//                             '#postlist-container');
-//                     if(arr){
-//                         start = Number(arr[0].index);
-//                         if(!($G.local.cur_range.start < start)){
-//                             $G.local.cur_range.start = start;
-//                         }
-//                         var lastindex = Number(arr[arr.length-1].index);
-//                         if(!($G.local.cur_range.end > lastindex)){
-//                             $G.local.cur_range.end = lastindex;
-//                         }
-//                     }
-//                 }
-//                 else{
-//                     if(data.status == 1){
-//                         show_alert("没有新数据啦！");
-//                     }
-//                 }
-//             });
-//     }
-
-//     function append_postlist_li(){
-//         handler_posts($G.local.cur_range.end + 1, render_template);
-//     }
-
-//     function prepend_postlist_li(){
-//         if(!$G.local.cur_range.start || $G.local.cur_range.start==1 ){
-//             show_alert('上面没有帖子了！');
-//             return;
-//         }
-//         handler_posts($G.local.cur_range.start - 19, render_template_prepend);
-//     }
-
-//     function book_fav(){
-//         var boardname;
-//         if($G.local.cur_board && (boardname=$G.local.cur_board.boardname)){
-//             $api.add_self_fav(boardname, function(data){
-//                 if(data.success){
-//                     show_alert('收藏' + boardname + '版成功！', 'success');
-//                 }
-//                 else{
-//                     show_alert(data.error);
-//                 }
-//             });
-//         };
-//     }
-
-//     $G.submit['book_fav'] = book_fav;
-
-//     $G.submit['append_postlist_li'] = append_postlist_li;
-//     $G.submit['prepend_postlist_li'] = prepend_postlist_li;
-//     $G('default_board_start', {});
-
-//     declare_frame({
-//         mark: 'board',
-//         enter : function(kwargs){
-//             if(!('start' in kwargs)){
-//                 if(kwargs.boardname in $G.default_board_start){
-//                     kwargs.start = $G.default_board_start[kwargs.boardname];
-//                     kwargs.start -= (kwargs.start % 20);
-//                 }
-//             }
-//             var cur_board = $G.local.cur_board
-//                 = $Type.BoardStatus(fix_board_status(kwargs));
-//             $G.local.cur_range = $Type.BoardPostRange([NaN, NaN]);
-//             init_frame_page(['boardinfo']);
-//             console.log(['cbs', cur_board.start]);
-//             $api.get_board_info(cur_board.boardname, function(data){
-//                 if(data.success){
-//                     render_template('board-boardinfo',
-//                                     {
-//                                         board: data.data
-//                                     },
-//                                     '#part-boardinfo');
-//                     handler_posts(cur_board.start, render_template);
-//                 }
-//             });
-//         },
-//         leave : function(hash, kwargs){
-//             if(hash == 'post'){
-//                 last = kwargs;
-//                 $G.default_board_start[$G.local.cur_board.boardname] =
-//                     Number(kwargs.index);
-//             }
-//         },
-//     });        
-
-//     return {
-//         append_postlist_li: append_postlist_li,
-//         prepend_postlist_li: prepend_postlist_li,
-//     };
-
-// })
 
 // $MOD('frame::post', function(){
 //     require_jslib('format');
@@ -287,3 +162,176 @@ $MOD('frame::user', function(){
 //         read_mail: read_mail,
 //     }
 // })
+
+
+$MOD('frame::board', function(){
+
+    require_jslib('jquery.jqpagination');
+
+    // var Range = $MOD.range.Range,
+    BoardStatus = $Type('BoardStatus', ['boardname',
+                                        'loader',
+                                        'render',
+                                        'start',
+                                        'isnull']);
+    
+    var cur_board = BoardStatus({ isnull: true }),
+    ajax,
+    submit = {};
+
+    // get_range_start = $MOD.range.range_start;
+    // range_update = $MOD.range.range_update;
+
+    function get_current_board(){
+        return cur_board;
+    }
+
+    // function get_first_unread_range(boardname){
+    //     return PostRange(0, 20);
+    // }
+
+    function new_api_loader(type){
+        return function(boardname, start, success, failed){
+            $api.get_postindex(boardname, type, start,
+                               function(data){
+                                   if(data.success){
+                                       success(data.data);
+                                   }
+                               });
+        }
+    }
+
+    load_normal_post = new_api_loader('normal');
+    load_topic_post = new_api_loader('topic');
+    load_digest_post = new_api_loader('digest');
+
+    function new_postlist_render(tpler){
+        return function(boardname, data){
+            $('#postlist-content').remove();
+            render_template(tpler, { posts: data, boardname: boardname},
+                            '#postlist-container');
+        }
+    }
+
+    render_normal_post = new_postlist_render('board-postlist-normal'); 
+
+    function trim_pagenum(number){
+        number = Number(number);
+        if(!(number >0))
+            number = 0;
+        return Math.floor(number / 20) + 1;
+    }
+
+    function set_page(pagenum){
+        var start = pagenum * 20 - 19;
+        cur_board.loader(cur_board.boardname, start, function(data){
+            cur_board.render(cur_board.boardname, data);
+            // range_update(cur_board.range, data[0].index,
+            //              data[data.length-1].index);
+        });
+    }
+
+    function new_wrapper_loader(loader){
+        return function(){
+            loader(cur_board.boardname, 0, function(data){
+                var total = data[data.length-1].index,
+                pagetotal = Math.ceil(total / 20),
+                curnum = (total % 20) || 20;
+                data = data.slice(-curnum);
+                cur_board.loader = loader;
+                $('.vpagination').jqPagination('option', 'current_page',
+                                               pagetotal);
+                $('.vpagination').jqPagination('option', 'max_page',
+                                               pagetotal);
+            });
+        }
+    }
+
+    submit['set_normal_loader'] = set_normal_loader
+        = new_wrapper_loader(load_normal_post);
+    submit['set_digest_loader'] = set_digest_loader
+        = new_wrapper_loader(load_digest_post);
+    submit['set_topic_loader'] =  set_topic_loader
+        = new_wrapper_loader(load_topic_post);
+
+    function set_page_anim(pagenum){
+        $('#postlist-content').fadeTo(200, 0.61, function(){
+            set_page(pagenum);
+        });
+    }
+
+    function get_default_postloader(){
+        return load_normal_post;
+    }
+
+    // function get_default_range(){
+    //     return $Type.Range([0, NaN]);
+    // }
+
+    function enter_board(kwargs){
+
+        var boardname = kwargs.boardname, pagenum;
+        cur_board.boardname = boardname;
+        cur_board.loader = get_default_postloader();
+        cur_board.render = render_normal_post;
+        // cur_board.range = Range({isnull: true});
+        cur_board.isnull = false;
+        
+        $api.get_board_info(boardname, function(data){
+            if(data.success){
+                cur_board.data = data.data;
+                render_template('board-boardinfo',
+                                {
+                                    board: data.data,
+                                });
+                $('.vpagination').jqPagination({
+		            page_string	: '第 {current_page} 页 / 共 {max_page} 页',
+		            paged		: set_page_anim,
+                    current_page: 1,
+		        });
+                set_page(1);
+            };
+        });                                
+    }
+
+    function book_fav(){
+        var boardname;
+        if(cur_board && (boardname = cur_board.boardname)){
+            $api.add_self_fav(boardname, function(data){
+                if(data.success){
+                    show_alert('收藏' + boardname + '版成功！', 'success');
+                }
+                else{
+                    show_alert(data.error);
+                }
+            });
+        };
+    }
+    submit['book_fav'] = book_fav;
+
+    function clear_board_unread(){
+        var boardname;
+        if(cur_board && (boardname = cur_board.boardname)){
+            $api.clear_board_unread(boardname, function(data){
+                refresh_frame();
+            });
+        };
+    }
+    submit['clear_unread'] = clear_board_unread;
+
+    declare_frame({
+        mark: 'board',
+        isnew: true,
+        keep_widgets: false,
+        enter : enter_board,
+        ajax : ajax,
+        submit: submit,
+        local: {
+            cur_board: cur_board,
+        }
+    });
+
+    return {
+    }
+
+})

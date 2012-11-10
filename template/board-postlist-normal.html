@@ -1,17 +1,32 @@
-{{each(i, p) posts}}
-<tr data-index="post-${p.index}">
-  <td class="tb-img">
-    <img src="${ url_for_avatar(p.owner) }" />
-  </td>
-  <td class="tb-user">
-    <a href="${ url_for_user(p.owner) }">${p.owner}</a>
-  </td>
-  <td class="tb-title">
-    <i class="${(p.unread!='0')?'unread':'read'}"></i>
-    <a href="${ url_for_post(p.filename, boardname) }&&index=${p.index}">${p.title}</a>
-  </td>
-  <td class="tb-time">
-    <time>${p.update}</time>
-  </td> 
-</tr>
-{{/each}}
+<div id="postlist-content">
+  <div id="postlist-content-inner">
+    <table class="fluid-table">
+      <tbody>
+        {{each(i, p) posts}}
+        <tr data-index="post-${p.index}">
+          <td class="tb-grid1 text-center">${p.index}</td>
+          <td class="tb-img">
+            <img class="img-small" src="${ url_for_avatar(p.owner) }" />
+          </td>
+          <td class="tb-user">
+            <a href="${ url_for_user(p.owner) }">${p.owner}</a>
+          </td>
+          <td class="tb-title">
+            <i class="${(p.unread!='0')?'unread':'read'}"></i>
+            <a href="${ url_for_post(p.filename, boardname) }&&index=${p.index}">${p.title}</a>
+          </td>
+          <td class="tb-mark">
+            {{if p.mark.indexOf('g') != -1 }}<i class="icon-mark-g"></i>{{/if}}
+            {{if p.mark.indexOf('m') != -1 }}<i class="icon-mark-m"></i>{{/if}}
+            {{if p.mark.indexOf('@') != -1 }}<i class="icon-mark-a"></i>{{/if}}
+            {{if p.mark.indexOf('x') != -1 }}<i class="icon-mark-x"></i>{{/if}}
+          </td>
+          <td class="tb-time">
+            <time>${ tf_timestamp(p.update) }</time>
+          </td> 
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -42,6 +42,7 @@
 
     */
     var $Type;
+
     $Type = function(typename, attrnames){
         var Typer = function(){
             return typename;
@@ -64,7 +65,10 @@
         }
         Typer.prototype.create.Typer = Typer;
         $Type[typename] = Typer.prototype.create;
-        return Typer;
+        $Type[typename].istyper = function(obj){
+            return obj.__type__ == typename;
+        }
+        return Typer.prototype.create;
     }
     window.$Type = $Type;
 

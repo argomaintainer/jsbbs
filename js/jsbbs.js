@@ -171,10 +171,8 @@ $MOD('jsbbs.func', {
         pos.slice(0,-1).forEach(function(element){
             buf += '<li><a href="' + element[1] + '">' + element[0] +
                 '</a><span class="divider">›</span></li>';
-            console.log(buf);
         });
         buf += '<li class="active">' + pos[pos.length-1][0] + '</li>';
-        console.log(buf);
         $('#pos-inner').html(buf);
     },
 
@@ -208,7 +206,15 @@ $MOD('jsbbs.func', {
         else if(filesize>0)
             return filesize + 'B';
         else return '0';
-    }
+    },
+
+    parts_div: function(parts){
+        var buf;
+        parts.forEach(function(ele, index, self){
+            buf.push('<div id="part-' + ele + '"></div>');
+        });
+        return buf.join('\n');
+    },    
 
 })
 using('jsbbs.func');
@@ -219,6 +225,8 @@ $MOD('jsbbs.template', function(){
     $G('template', $.template);    
     $MOD['jsbbs.hook'].register_hook('after_render');    
     NULL_DATA = {}
+
+    require_jslib('timeformat');
 
     function loading_template(tplname){
         if(tplname in $G.template){
@@ -279,6 +287,7 @@ $MOD('jsbbs.template', function(){
         "render_template_prepend": render_template_prepend,
         'load_widgets': load_widgets,
         'json_encode': JSON.stringify,
+        'tf_timestamp': $MOD.timeformat.nice_timestamp,
     };
 
 });
@@ -295,6 +304,8 @@ $MOD('jsbbs.frame', function(){
                     'isnew',
                     'submit',
                     'ajax',
+                    'prepare',
+                    'widgets_loader',
                     'keep_widgets']);
 
     $Type('FrameHash', ['hash', 'args']);
@@ -374,19 +385,36 @@ $MOD('jsbbs.frame', function(){
             set_pos_mark(frame.pos);
         }
 
+        if(frame.prepare){
+            frame.prepare(curhash.args);
+        }
+
         if(frame.basetpl){
             console.log('Use basetpl :' + frame.basetpl
                         + '[' + frame.mark + ']');
-            console.log(['bb', frame.basetpl, {args: curhash.args },
-                         MAIN_CONTAINER]);
             render_template(frame.basetpl, { args: curhash.args },
                             MAIN_CONTAINER);
             $('[data-ajax]').ajax_data();
         }
-
+ 
         frame.enter(curhash.args);
 
+        if(frame.widgets_loader){
+            if(typeof frame.widgets_loader == "function"){
+                frame.widgets_loader(curhash.args).forEach(function(v){
+                    render_template('widget/' + v.type, v, '#dy-widgets');
+                });
+            }
+            else{
+                frame.widgets_loader.forEach(function(ele){
+                    var v = ele(curhash.args);
+                    render_template('widget/' + v.type, v, '#dy-widgets');
+                });
+            }
+        }
+
     }
+    $G.submit['refresh_frame'] = refresh_frame;
 
     function submit_action(action, args, event){
         if($G.current.submit && action in $G.current.submit){
@@ -418,7 +446,7 @@ $MOD('jsbbs.frame', function(){
         var target=$(e.target),
         action=target.attr('data-submit'), args;
         if(action){
-            submit_action(collect_para(), e);
+            submit_action(action, collect_para(), e);
             return false;
         }
     });
@@ -464,6 +492,7 @@ $MOD('jsbbs.debug', function(){
     }
 
 });
+using('jsbbs.debug');
 
 require_jslib('argo_api');
 import_module('argo_api', '$api');
@@ -483,4 +512,30 @@ do_while_load(function(){
     refresh_userbox();
     refresh_frame();
 
+})
+
+
+$MOD('range', function(){
+
+    var Range = $Type('Range', ['start', 'end', 'isnull']);
+
+    return {
+        'Range': Range,
+        'new_range': function(start, end){
+            if(start == null)
+                return Range({isnull: true});
+            return $Type.Range([start, end]);
+        },
+        'range_start': function(range){
+            return (range.isnull) ? 0 : (range.start);
+        },
+        'range_update': function(range, start, end){
+            if(range.isnull){
+                range.isnull = false;
+            }
+            range.start = start;
+            range.end = end;
+        }
+    }
+    
 })

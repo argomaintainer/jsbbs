@@ -191,6 +191,10 @@ ul.inline-list>li{
     text-shadow: 0 0 4px #fff;
 }
 
+.fade-font{
+    color: #999;
+}
+
 .absolute-fluid{
     width: 100%;
     position: absolute;
@@ -207,14 +211,13 @@ ul.inline-list>li{
 }
 
 .fluid-table td{
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding-top: 4px;
+    padding-bottom: 3px;
     vertical-align: middle;    
 }    
 
 .tb-title{
     width: auto;
-    padding-left: 1em;
 }
 
 .tb-user{
@@ -234,12 +237,10 @@ ul.inline-list>li{
 
 .tb-img{
     width: 30px;
-    padding-left:2em;
 }
 
-.tb-img img{
-    width:24px;
-    height:24px;
+.tb-grid1{
+    width: 72px;
 }
 
 .tb-user a{
@@ -798,7 +799,7 @@ button[data-submit]{
 }
 
 #colophon{
-    border-top: 1px solid #eee;
+    border-top: 1px solid #f0f0f0;
     background: #aaa;
     background: -webkit-linear-gradient(top,#aaa 0, #a0a0a0 100%);
     background: -moz-linear-gradient(top,#aaa 0, #a0a0a0 100%);
@@ -863,4 +864,116 @@ i.icon-refreshing{
     font-size: 1.2em;
     color: #aaa;
     padding: 1em;
+}
+
+#postlist-wrapper{
+    height: 720px;
+}
+
+.vpagination{
+    position:absolute;
+    height:100%;
+    top:-1px;
+    right:-12px;
+    border:1px solid #bbb;
+    border-radius:1px solid #c0c0c0;
+    width:10px;
+}    
+
+.vpagination a{
+    display: block;
+    position: relative;
+}
+
+.vpagination a:hover{
+    box-shadow: 0 0 7px #47a;
+}
+
+.vpagination a.disabled{
+    opacity: .25;
+}
+
+.vpagination a.disabled:hover{
+    cursor: default;
+}
+
+.vpagination i{
+    height:12px;
+    width:8px;
+    display:inline-block;
+    position:absolute;
+    top:50%;
+    margin:-6px auto auto 1px;
+}    
+
+.vpagination input{
+    position: absolute;
+    top: -26px;
+    right: 0;
+    width: 180px;
+    line-height: 18px;
+    height: 20px;
+    padding: 0;
+    border: none;
+    /* border-radius: 0; */
+    background: transparent;
+    /* box-shadow: none; */
+    font-size: 12px;
+    text-align: center;
+    margin: 0;
+}
+
+.vpagination .first{
+    height:5%;
+}
+
+.vpagination .previous{
+    height:45%;
+}
+
+.vpagination .next{
+    height:45%;
+}
+
+.vpagination .last{
+    height:5%;
+}
+
+.arrow-up-bar{
+    background-image:url("../img/arrow-up-bar.gif");
+}
+
+.arrow-down-bar{
+    background-image:url("../img/arrow-down-bar.gif");
+}
+.arrow-up{
+    background-image:url("../img/arrow-up.gif");
+}
+.arrow-down{
+    background-image:url("../img/arrow-down.gif");
+}
+
+i[class^="icon-mark-"]:after,
+i[class*=" icon-mark-"]:after {
+    width: 10px;
+    line-height: 16px;
+    margin-top: -2px;
+    color: #fff;
+    display: inline-block;
+    text-align: center;
+    font-size: 10px;
+    border-bottom-right-radius: 5px;
+    box-shadow: 0 0 3px #eee;
+    vertical-align: text-top;
+    font-style: normal;
+}
+
+.icon-mark-g:after{
+    background: #b22;
+    content: "g";
+}
+
+.icon-mark-m:after{
+    background: #47a;
+    content: "m";
 }
