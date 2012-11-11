@@ -72,7 +72,7 @@ $MOD('argo_api', function(){
         },
         'get_near_postname': function(boardname, filename, direction, callback){
             // direction = prev | next
-            $.get('/ajax/post/near',
+            $.get('/ajax/post/nearname',
                   {
                       boardname: boardname,
                       filename: filename,

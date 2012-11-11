@@ -15,7 +15,6 @@ body{
     background: -ms-linear-gradient(top,#f8f8f8 0, #f0f0f0 100%);
     background: -o-linear-gradient(top,#f8f8f8 0, #f0f0f0 100%);
     background: linear-gradient(top,#f8f8f8 0, #f0f0f0 100%);
-    border-bottom : none;
     padding-top: 10px;
     padding-bottom: 10px;
     box-shadow: 0 0 5px silver;
@@ -308,21 +307,27 @@ li.unread{
 	filter:"alpha(opacity=85)"; -ms-filter:"alpha(opacity=85)"; /* old ie */
 }
 
-.table-btn{
-    padding: 1em 2em;
+.page-btn{
     color: #4a7;
     border: 1px solid transparent;
+    text-align: center;
+    -moz-user-select: none;
+    -khtml-user-select: none;    
+    -webkit-user-select: none;    
+    -ms-user-select: none;    
+    -o-user-select: none;
+    cursor: default;
+}
+
+.page-btn a{
+    padding: 3px 1em;
+    display:block;
+    color: #4a7;
     cursor: pointer;
 }
 
-.table-btn a{
-    display:block;
-    color: #4a7;
-}
-
-.table-btn:hover{
-    background:#f4f4f4;
-    border: 1px solid orange;
+.page-btn:hover{
+    background:#eee;
 }
     
 .selected:after{
@@ -522,94 +527,6 @@ li.unread{
     cursor: pointer;
     text-align: center;
     background: #cecece;
-}
-
-/*
-  Post
-  */
-
-.post-header{
-    padding-top: 1em;
-}
-
-.post-container{
-    border-radius:4px;
-}
-
-.post-header img{
-    position:absolute;
-    width:36px;
-    height:36px;
-    margin-left:8px;
-    margin-top:10px;
-}
-
-.post-info{
-    margin-left:55px;
-    height:56px;
-    border-bottom:1px solid #ccc;
-    padding-top:8px;
-}
-
-.post-info div{
-        background:#eee;
-}
-
-.post-info a{
-    /* color: black; */
-}
-
-.post-header h3{
-    font-size:1em;
-    line-height:2em;
-    font-weight:bold;
-    margin:0;
-    padding:0;
-    color: #444;
-}
-
-.post-content{
-    margin: 0 30px 0px 60px;
-}
-
-.postquote{
-    font-size: .9em;
-    color:#777;
-    border-left: 2px solid #eee;
-    margin-top:1em;
-    padding:0;
-    line-height: 20px;
-    max-height: 100px;
-    overflow: auto;
-    background: #eee;
-}
-
-.post-signature{
-    border-top: 2px dotted #ddd;
-    margin-top: 20px;
-    padding-top: 10px;
-}
-
-.info-text{
-    color: #777;
-}
-
-.info-text em{
-    color: #222;
-    text-shadow: 0 0 3px #ccc;
-}
-
-.padding-24px{
-    padding-left: 24px;
-    padding-right: 24px;
-}
-
-.tag{
-    padding: 0 10px;
-    border-radius: 5px;
-    font-size: 10px;
-    line-height: 18px;
-    display: inline-block;
 }
 
 .mcolor{
@@ -976,4 +893,100 @@ i[class*=" icon-mark-"]:after {
 .icon-mark-m:after{
     background: #47a;
     content: "m";
+}
+
+.inline{
+    display: inline-block;
+}
+
+.blur{
+    opacity: .15;
+}
+
+.post-content{
+    font-size: 14px;
+    color: #444;
+}
+    
+.postquote-content{
+    color:#777;
+    padding-left: 1em;
+}
+
+.postquote-header{
+    color: #4a7;
+}
+
+.post-header{
+    padding: 1em 2em;
+    border-bottom: 1px solid #eee;
+}
+
+.post-header h3{
+    font-size: 16px;
+    line-height: 28px;
+    /* font-weight: normal; */
+    /* text-shadow: 0 0 2px silver; */
+    padding-top: 5px;
+    margin: 0;
+}
+
+.post-info{
+    padding-bottom: 2px;
+}
+
+.post-wrapper{
+    margin: 1em 1em 3em 1em;
+    border: 1px solid #ccc;
+    background: #fff;
+    box-shadow: 0 0 3px #ccc;
+    position: relative;
+    border-radius: 3px;
+}
+
+.post-wrapper>img{
+    right: 2em;
+    top: 20px;
+}
+
+.post-content{
+    padding: 0 3em;
+}
+
+.post-signature{
+    border-top: 1px dashed #474;
+    margin-top: 10px;
+    padding-top: 10px;
+}
+
+.post-toolbar{
+    background: #fff;
+    background: -webkit-linear-gradient(top,#fcfcfc 0, #f5f5f5 100%);
+    box-shadow: 0 0 1px #ccc;
+    border-top: 1px solid #ccc;
+    padding: 0 1em;
+    margin-top: 30px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.post-toolbar ul li{
+    font-size: 14px;
+    line-height: 30px;
+}    
+
+.page-toolbar{
+    background: -webkit-linear-gradient(top,#fcfcfc 0, #f8f8f8 100%);
+    box-shadow: 0 0 2px #ccc;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+.withborderbottom{
+    border-bottom: 1px solid #fff;
+}
+
+.withborderbottom>div{
+    padding-bottom : 1em;
+    border-bottom: 1px solid #ccc;
 }

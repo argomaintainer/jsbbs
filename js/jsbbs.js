@@ -176,9 +176,19 @@ $MOD('jsbbs.func', {
         $('#pos-inner').html(buf);
     },
 
-    collect_para: function(){
+    collect_para: function(group){
+        if(!group) return;
         var kwargs={};
-        $('[name]').each(function(){
+        $('[data-group=' + group + '][name]').each(function(){
+            var self=$(this);
+            kwargs[self.attr('name')] = self.val();
+        });
+        return kwargs;
+    },
+
+    collect_form_para : function(form){
+        var kwargs = {};
+        form.find('[name]').each(function(){
             var self=$(this);
             kwargs[self.attr('name')] = self.val();
         });
@@ -344,8 +354,8 @@ $MOD('jsbbs.frame', function(){
             args.isnew = true;
         if(!args.local)
             args.local = {};        
-        if(args.keep_widgets != false)
-            args.keep_widgets = true;
+        if(args.keep_widgets != true)
+            args.keep_widgets = false;
         $G.frames[args.mark] = $Type.Frame(args);
     }
 
@@ -432,21 +442,29 @@ $MOD('jsbbs.frame', function(){
         var target=$(e.target),
         href=target.attr('href'),
         action=target.attr('data-submit'),
-        args, parent;
+        group, args, parent;
         last = target;
         if(href=='#'){
             e.preventDefault();
         }
         if(action){
-            submit_action(action, collect_para(), e);
+            group = target.attr('data-group');
+            submit_action(action, collect_para(group), e);
         }
     });
 
     $(document).submit(function(e){
         var target=$(e.target),
-        action=target.attr('data-submit'), args;
+        action=target.attr('data-submit'), args, group, para;
         if(action){
-            submit_action(action, collect_para(), e);
+            group = target.attr('data-group');
+            if(group){
+                para = collect_para(group);
+            }
+            else{
+                para = collect_form_para(target);
+            }
+            submit_action(action, para, e);
             return false;
         }
     });
@@ -469,7 +487,7 @@ $MOD('jsbbs.url_for', {
     'user': function(userid){ return '#!user?userid=' + userid},
     'img' : function(path){ return 'img/' + path },
     'post': function(filename, boardname){
-        return '#!post?filename=' + filename + '&&boardname='
+        return '#!flow?filename=' + filename + '&&boardname='
             + boardname;
     },
 })
@@ -538,4 +556,85 @@ $MOD('range', function(){
         }
     }
     
+})
+
+$MOD('frame::post', function(){
+
+    require_jslib('format');
+
+    var local = {},
+    submit = {},
+    cur_boardname = null;
+    
+    function handler_post(post){
+        post.content = $MOD.format.format(post.rawcontent);
+        post.signature = $MOD.format.format(post.rawsignature);
+        return post;
+    }
+
+    function _load_post(){
+        $api.get_post(
+            cur_boardname, local.last_filename,
+            function(data){
+                render_template(
+                    'post',
+                    handler_post(data.data),
+                    '#post-container');
+            });
+    }
+
+    function new_post_loader(direct, ref, handler, failed){
+        return function(){
+            $api.get_near_postname(
+                cur_boardname, local[ref], direct,
+                function(data){
+                    if(data.success){
+                        local[ref] = data.data;
+                        $api.get_post(
+                            cur_boardname, local[ref],
+                            function(data){
+                                handler(
+                                    'post',
+                                    handler_post(data.data),
+                                    '#post-container');
+                            });
+                    }
+                    else{
+                        failed();
+                    }
+                }
+            );
+        }
+    }
+    
+    submit['load_prev'] = new_post_loader(
+        'prev', 'oldest_filename',
+        render_template_prepend,
+        function(){
+            show_alert('o(∩_∩)o <br\> 已经是第一篇了', 'success');
+        }
+    );
+    submit['load_next'] = new_post_loader(
+        'next', 'last_filename',
+        render_template,
+        function(){
+            $('#post-down [data-submit]').remove();
+            $('#post-down .hidden').removeClass('hidden');
+        }
+    );
+
+    declare_frame({
+        mark : 'flow',
+        basetpl : 'post-framework',
+        submit : submit,
+        prepare : function(kwargs){
+            local.boardname = cur_boardname = kwargs.boardname;
+            local.oldest_filename = local.last_filename = kwargs.filename;
+        },
+        enter : function(kwargs){
+            _load_post();
+        },
+        local : local,
+    });
+
 })

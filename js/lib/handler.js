@@ -53,27 +53,8 @@ $MOD('frame.home', function(){
             return DATA_WIDGETS.home;
         },
     });
-
     
 });
-
-// $MOD('frame::post', function(){
-//     require_jslib('format');
-//     function handler_post(post){
-//         post.content = $MOD.format.format(post.rawcontent);
-//         post.signature = $MOD.format.format(post.rawsignature);
-//         return post;
-//     }
-//     declare_frame({
-//         mark : 'post',
-//         enter : function(kwargs){
-//             $api.get_post(kwargs.boardname, kwargs.filename,
-//                           function(data){
-//                               render_template('post', handler_post(data.data));
-//                           });
-//         },
-//     });
-// })
 
 $MOD('frame::user', function(){
     declare_frame({

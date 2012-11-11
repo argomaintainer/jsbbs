@@ -25,10 +25,14 @@ $MOD('format', function(){
         return s.replace(/\n/gm, '<br\>\n');
     }
     format_quote = function(s){
-        last = s;
-        return s.replace(/^【&nbsp;在.*的大作中提到:&nbsp;】(\n[:：].*)*/gm, function(s){
-            return '<div class="postquote">' + s.replace(/^:/gm, '') + '</div>';
-            });
+        return s.replace(/^(【&nbsp;在.*的大作中提到:&nbsp;】)?(\n[:：].*)+/gm, function(s){
+            return '<div class="postquote">' +
+                s.replace(/^【&nbsp;在.*的大作中提到:&nbsp;】/, function(t){
+                    return '<div class="postquote-header">' + t + '</div>';
+                }).replace(/(\n[:：].*)+/gm, function(t){
+                    return '<div class="postquote-content">' + t + '</div>';
+                }) + '</div>';
+        });
     }
     format_color = function(s){
         return s.replace(/\[%\d+(;\d+)*#\]/gm, function(s){
