@@ -59,3 +59,4 @@ phpbbs(as server)
 
 ![用户](https://raw.github.com/argolab/jsbbs/master/screenshot/user\(unfinish\).png)
 
+![帖子流](https://raw.github.com/argolab/jsbbs/master/screenshot/readflow\(unfinish\).png)
