@@ -990,3 +990,85 @@ i[class*=" icon-mark-"]:after {
     padding-bottom : 1em;
     border-bottom: 1px solid #ccc;
 }
+
+.hover-li{
+    border-left: 2px solid orange;
+    margin-left: -2px;
+}
+
+#pop-window{
+    max-height: 100%;
+    position: fixed;
+    width: 660px;
+    left: 50%;
+    box-shadow : 0 0 8px silver;
+    bottom: 0;
+    margin-left: -330px;
+    background: #f8f8f8;
+    overflow: auto;
+}
+
+#pop-content{
+    /* margin-top: 1em; */
+    padding: 0 2em;
+}
+
+#pop-title{
+    color: #666;
+    text-align: center;
+}    
+
+#pop-title h3{
+    font-size: 14px;
+    line-height: 20px;
+    margin: 1em;
+    text-shadow: 0 1px 2px #fff;
+}
+
+.editor{
+    font-size: 12px;
+}
+
+.editor input{
+    font-size: 14px;
+}
+.editor textarea{
+    font-size: 14px;
+    line-height: 17px;
+}
+    
+.editor input,
+.editor textarea{
+    border: 0;
+    /* margin: 0; */
+    padding: 10px;
+    border-radius: 0;
+    border: 1px solid #ccc;
+    /* margin-top: -2px; */
+}
+
+#pop-bar{
+    /* background: #eee; */
+    border-top: 1px solid #ccc;
+    /* margin: 0; */
+    padding: 8px 25px;
+}
+
+.btn-v{
+    background: transparent;
+    border: none;
+    /* border: 1px solid #ccc; */
+}
+
+.item-attach{
+    display: inline-block;
+    background: url(/images/icons.png) 0px -97px no-repeat;
+    width: 22px;
+    height: 22px;
+    vertical-align: middle;    
+}
+
+.close.pull-right{
+    margin-right: 1em;
+    margin-top: 10px;
+}

@@ -62,7 +62,6 @@ $MOD('frame::user', function(){
         enter : function(args){
             $api.query_user(args.userid, function(data){
                 if(data.success){
-                    console.log(data.data);
                     render_template('user', { u: data.data, data: data.data });
                 }
             });
@@ -157,8 +156,10 @@ $MOD('frame::board', function(){
                                         'isnull']);
     
     var cur_board = BoardStatus({ isnull: true }),
-    ajax,
+    ajax, local = {}, 
     submit = {};
+
+    local.cur_board = cur_board;
 
     // get_range_start = $MOD.range.range_start;
     // range_update = $MOD.range.range_update;
@@ -200,11 +201,12 @@ $MOD('frame::board', function(){
         number = Number(number);
         if(!(number >0))
             number = 0;
-        return Math.floor(number / 20) + 1;
+        return Math.ceil(number / 20);
     }
 
     function set_page(pagenum){
         var start = pagenum * 20 - 19;
+        local.pagenum = pagenum;
         cur_board.loader(cur_board.boardname, start, function(data){
             cur_board.render(cur_board.boardname, data);
             // range_update(cur_board.range, data[0].index,
@@ -241,6 +243,31 @@ $MOD('frame::board', function(){
         });
     }
 
+    function refresh_current_page(){
+        set_page_anim(local.pagenum);
+    }
+    submit['refresh_current_page'] = refresh_current_page;
+
+    submit['newpost'] = function(){
+        init_popwindow('popwindow/newpost');
+    }
+
+    submit['publish_post'] = function(kwargs, e){
+        $api.new_post(cur_board.boardname,
+                      kwargs.title,
+                      kwargs.content,
+                      function(data){
+                          if(data.success){
+                              show_alert('发表成功！', 'success');
+                              close_popwindow();
+                              refresh_current_page();
+                          }
+                          else{
+                              show_alert(data.error, 'danger');
+                          }
+                      });
+    }
+
     function get_default_postloader(){
         return load_normal_post;
     }
@@ -259,18 +286,25 @@ $MOD('frame::board', function(){
         cur_board.isnull = false;
         
         $api.get_board_info(boardname, function(data){
+            var start_page;
             if(data.success){
                 cur_board.data = data.data;
                 render_template('board-boardinfo',
                                 {
                                     board: data.data,
                                 });
+                if(local.hover = kwargs.index){
+                    start_page = trim_pagenum(local.hover);
+                }
+                else{
+                    start_page = Math.ceil(data.data.total / 20);
+                }
                 $('.vpagination').jqPagination({
 		            page_string	: '第 {current_page} 页 / 共 {max_page} 页',
 		            paged		: set_page_anim,
-                    current_page: 1,
+                    current_page: start_page,
 		        });
-                set_page(1);
+                set_page(start_page);
             };
         });                                
     }
@@ -307,9 +341,7 @@ $MOD('frame::board', function(){
         enter : enter_board,
         ajax : ajax,
         submit: submit,
-        local: {
-            cur_board: cur_board,
-        }
+        local: local,
     });
 
     return {

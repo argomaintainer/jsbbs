@@ -3,7 +3,7 @@
     <table class="fluid-table">
       <tbody>
         {{each(i, p) posts}}
-        <tr data-index="post-${p.index}">
+        <tr data-index="post-${p.index}"{{if index == $G.local.hover }} class="hover-li"{{/if}}>
           <td class="tb-grid1 text-center">${p.index}</td>
           <td class="tb-img">
             <img class="img-small" src="${ url_for_avatar(p.owner) }" />

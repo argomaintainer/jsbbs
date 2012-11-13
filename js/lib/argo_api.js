@@ -43,17 +43,39 @@ $MOD('argo_api', function(){
                   },
                   callback);
         },
-        'new_post': function(boardname, title, content, type, callback){
+        'new_post': function(boardname, title, content,  callback){
             // type = new | reply | update
             $.post('/ajax/post/add',
                    {
                        boardname: boardname,
                        title: title,
                        content: content,
-                       type: type,
+                       type: 'new',
                    },
                    callback);
         },
+        'reply_post': function(boardname, title, content, refname, callback){
+            $.post('/ajax/post/add',
+                   {
+                       boardname: boardname,
+                       title: title,
+                       articleid: refname,
+                       content: content,
+                       type: 'reply',
+                   },
+                   callback);
+        },
+        'update_post': function(boardname, title, content, upfname, callback){
+            $.post('/ajax/post/add',
+                   {
+                       boardname: boardname,
+                       title: title,
+                       articleid: upfname,
+                       content: content,
+                       type: 'update',
+                   },
+                   callback);
+        },            
         'delete_post': function(boardname, filename, callback){
             $.post('/ajax/post/del',
                    {

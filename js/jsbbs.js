@@ -5,12 +5,12 @@ $MOD('jsbbs.load_lib', function(){
       ~~~~~~~~~~~~~~~
 
       Some method for manager js lib(jsfile).
- 
+      
       require_jslib(libname):
-        Load '/js/lib/$libname.js' file if this lib has not been loaded.
+      Load '/js/lib/$libname.js' file if this lib has not been loaded.
 
       drop_jslib(libname):
-        Drop a loaded lib. (so you can reload it.)
+      Drop a loaded lib. (so you can reload it.)
 
       --
 
@@ -57,16 +57,16 @@ $MOD('jsbbs.hook', function(){
       Yet another hook system for plugin.
 
       trigger_hooks(hookname, [] args):
-          Trigger the `hookname` hook with $args as arguments.
-          And you can also trigger it directly:
-              $G.hooks[hookname](arg1, arg2 ...)
+      Trigger the `hookname` hook with $args as arguments.
+      And you can also trigger it directly:
+      $G.hooks[hookname](arg1, arg2 ...)
 
       register_hook(hookname):
-          register the `hookname` as hook. A hook MUST be
-            registered before using.
+      register the `hookname` as hook. A hook MUST be
+      registered before using.
 
       bind_hook(hookanem, fun):
-          Push the `fun` to the hook.
+      Push the `fun` to the hook.
 
     */
     
@@ -118,7 +118,7 @@ $MOD('jsbbs.func', {
             return href;
         }
     },
-        
+    
     parse_args: function(args){
         if(!args){
             return '';
@@ -406,7 +406,7 @@ $MOD('jsbbs.frame', function(){
                             MAIN_CONTAINER);
             $('[data-ajax]').ajax_data();
         }
- 
+        
         frame.enter(curhash.args);
 
         if(frame.widgets_loader){
@@ -425,6 +425,22 @@ $MOD('jsbbs.frame', function(){
 
     }
     $G.submit['refresh_frame'] = refresh_frame;
+
+    function close_popwindow(){
+        $('#pop-window').addClass('hidden');
+    }
+    $G.submit['close_popwindow'] = close_popwindow;
+
+    function show_popwindow(){
+        $('#pop-window').removeClass('hidden');
+    }
+    $G.submit['show_popwindow'] = show_popwindow;
+
+    function init_popwindow(template, data){
+        $('#pop-window').empty();
+        render_template(template, data, '#pop-window');
+        $('#pop-window').removeClass('hidden');
+    }
 
     function submit_action(action, args, event){
         if($G.current.submit && action in $G.current.submit){
@@ -474,8 +490,11 @@ $MOD('jsbbs.frame', function(){
     }
 
     return {
-        "declare_frame": declare_frame,
-        "refresh_frame": refresh_frame,
+        declare_frame: declare_frame,
+        refresh_frame: refresh_frame,
+        init_popwindow: init_popwindow,
+        close_popwindow: close_popwindow,
+        show_popwindow: show_popwindow,
     }
 
 });
@@ -484,11 +503,17 @@ using('jsbbs.frame');
 $MOD('jsbbs.url_for', {
     'avatar': function(userid){ return '/avatar/' + userid },
     'board': function(boardname){ return '#!board?boardname=' + boardname},
+    'board_i': function(index, boardname){
+        return '#!board?boardname=' + boardname + '&&index=' + index;
+    },
     'user': function(userid){ return '#!user?userid=' + userid},
     'img' : function(path){ return 'img/' + path },
     'post': function(filename, boardname){
         return '#!flow?filename=' + filename + '&&boardname='
             + boardname;
+    },
+    'topic' : function(filename, boardname){
+        return '#!topic?filename=' + filename + '&&boardname=' + boardname;
     },
 })
 using('jsbbs.url_for', 'url_for_');
@@ -521,17 +546,36 @@ using('jsbbs.userbox');
 
 require_jslib('handler');
 
-do_while_load(function(){
+$MOD('main', function(){
 
-    window.onhashchange = function(){
+    function quite_set_hash(hash){
+        $G.refresh = false;
+        location.hash = hash;
+    }
+    
+    do_while_load(function(){
+
+        $G('refresh', true);  // auto refresh in hashchange
+
+        window.onhashchange = function(){
+            if($G.refresh){
+                refresh_frame();
+            }
+            else{
+                $G.refresh = true;
+            }
+        };
+
+        refresh_userbox();
         refresh_frame();
-    };
 
-    refresh_userbox();
-    refresh_frame();
+    })
 
+    return {
+        quite_set_hash: quite_set_hash,
+    }
 })
-
+using('main');
 
 $MOD('range', function(){
 
@@ -583,20 +627,28 @@ $MOD('frame::post', function(){
             });
     }
 
-    function new_post_loader(direct, ref, handler, failed){
+    function update_hash(data){
+        quite_set_hash(url_for_post(data.data, cur_boardname));
+    }
+
+    function new_post_loader(direct, ref, handler, render, failed, callback){
         return function(){
             $api.get_near_postname(
                 cur_boardname, local[ref], direct,
                 function(data){
                     if(data.success){
+                        handler(data);
                         local[ref] = data.data;
                         $api.get_post(
                             cur_boardname, local[ref],
                             function(data){
-                                handler(
+                                render(
                                     'post',
                                     handler_post(data.data),
                                     '#post-container');
+                                if(callback){
+                                    callback(data);
+                                }
                             });
                     }
                     else{
@@ -609,6 +661,7 @@ $MOD('frame::post', function(){
     
     submit['load_prev'] = new_post_loader(
         'prev', 'oldest_filename',
+        update_hash,
         render_template_prepend,
         function(){
             show_alert('o(∩_∩)o <br\> 已经是第一篇了', 'success');
@@ -616,6 +669,7 @@ $MOD('frame::post', function(){
     );
     submit['load_next'] = new_post_loader(
         'next', 'last_filename',
+        update_hash,
         render_template,
         function(){
             $('#post-down [data-submit]').remove();
@@ -635,6 +689,105 @@ $MOD('frame::post', function(){
             _load_post();
         },
         local : local,
+    });
+
+    return {
+        handler_post: handler_post,
+    }
+
+})
+
+$MOD('frame::topic', function(){
+    
+    var submit = {},
+    local = {};
+
+    var handler_post = $MOD['frame::post'].handler_post;
+
+    var lock = false;
+
+    function new_loader(init, finish, get_filename, render, error){
+        function load(counter){
+            var filename;
+            if(counter){
+                if(filename = get_filename(counter)){
+                    $api.get_post(cur_boardname, filename, function(data){
+                        if(data.success){
+                            render('topic',
+                                   handler_post(data.data),
+                                   '#post-container');
+                            if(--counter){
+                                load(--counter);
+                            }
+                            else{
+                                quite_set_hash(url_for_topic(filename,
+                                                             cur_boardname));
+                                lock = false;
+                            }                                
+                        }
+                        else{
+                            lock = false;
+                            error();
+                        }
+                    });
+                }
+                else{
+                    lock = false;
+                    finish();
+                }
+            }
+            else{
+                lock = false;
+            }
+        }
+        return function(){
+            if(lock)
+                return;
+            lock = true;
+            load(init);
+        }
+    }    
+    
+    submit['load_next'] = new_loader(
+        20, function(){
+        $('#post-down [data-submit]').remove();
+        $('#post-down .hidden').removeClass('hidden');
+    }, function(){
+        return (local.last_index < local.topiclist.length)?
+            local.topiclist[local.last_index++] : false;
+    }, render_template);
+
+    submit['load_prev'] = new_loader(
+        20, function(){
+            $('#post-up [data-submit]').remove();
+            $('#post-up .hidden').removeClass('hidden');
+        }, function(){
+            return (local.oldest_index>=0) ?
+                local.topiclist[local.oldest_index--] : false;
+    }, render_template_prepend);
+
+    declare_frame({
+        mark: 'topic',
+        submit : submit,
+        enter : function(kwargs){
+            $api.get_post_topiclist(
+                kwargs.boardname, kwargs.filename, function(data){
+                    if(data.success){
+                        local.boardname = cur_boardname = kwargs.boardname;
+                        local.from_filename = kwargs.filename;
+                        local.topiclist = data.data;
+                        local.last_index = local.from_index =
+                            local.oldest_index = 
+                            local.topiclist.indexOf(kwargs.filename);
+                    }
+                    else{
+                        console.log(data);
+                    }
+                    render_template('topic-framework');
+                    submit.load_next();
+                })
+        },
+        local: local,
     });
 
 })
