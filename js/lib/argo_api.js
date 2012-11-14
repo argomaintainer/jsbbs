@@ -112,7 +112,6 @@ $MOD('argo_api', function(){
         },
 
         'user_login': function(userid, password, callback){
-            console.log([userid, password]);
             $.post('/ajax/login',
                   {
                       userid: userid,
