@@ -1,5 +1,5 @@
 body{
-    background: url("/images/bg.jpg");
+    background: url("../images/bg.jpg");
 }
 
 #container{
@@ -1062,7 +1062,7 @@ i[class*=" icon-mark-"]:after {
 
 .item-attach{
     display: inline-block;
-    background: url(/images/icons.png) 0px -97px no-repeat;
+    background: url(../images/icons.png) 0px -97px no-repeat;
     width: 22px;
     height: 22px;
     vertical-align: middle;    
