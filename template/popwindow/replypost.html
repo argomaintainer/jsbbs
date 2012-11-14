@@ -1,0 +1,26 @@
+<button type="button" class="close pull-right" data-submit="close_popwindow">×</button>    
+<div id="pop-title">
+  <h3>回复文章</h3>
+</div>
+<div id="pop-content">
+  <div class="editor">
+    <div class="editor-group">
+      <input data-group="replypost" name="title" class="input-block-level" type="text" placeholder="标题 ..." value="${title}"/>
+    </div>
+    <div class="editor-group">
+      <textarea data-group="replypost" name="content" rows="22" placeholder="好心情 ：-）" class="input-block-level">${ '\n\n' }【 在 ${userid} (${username}) 的大作中提到: 】${quote}</textarea>
+    </div>
+    <input data-group="replypost" type="hidden" name="toreply" value="${filename}" />
+  </div>
+</div>
+<div id="pop-bar">
+  <div>
+    <button data-submit="publish_reply" data-group="replypost" class="btn btn-success">发表回复</button>
+    <span class="help-inline">Ctrl+Enter快速发表</span>
+    <ul class="pull-right inline-list">
+      <li><button class="btn btn-small btn-v">
+          <i class="item-attach"></li></i>
+      <li><a href="#">发帖须知</a></li>
+    </ul>
+  </div>
+</div>

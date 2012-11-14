@@ -432,14 +432,21 @@ $MOD('jsbbs.frame', function(){
     $G.submit['close_popwindow'] = close_popwindow;
 
     function show_popwindow(){
+        var hover=$('#pop-window input');
         $('#pop-window').removeClass('hidden');
+        if(hover.val()){
+            $('#pop-window textarea').focus();
+        }
+        else{
+            hover.focus();
+        }
     }
     $G.submit['show_popwindow'] = show_popwindow;
 
     function init_popwindow(template, data){
         $('#pop-window').empty();
         render_template(template, data, '#pop-window');
-        $('#pop-window').removeClass('hidden');
+        show_popwindow();
     }
 
     function submit_action(action, args, event){
@@ -676,7 +683,28 @@ $MOD('frame::post', function(){
             $('#post-down .hidden').removeClass('hidden');
         }
     );
+    require_jslib('format');
+    submit['reply_post'] = function(kwargs, e){
+        $api.get_post(local.boardname, kwargs.filename,
+                      function(data){
+                          if(data.success){
+                              var quote = $MOD.format.gen_quote(data.data);
+                              init_popwindow('popwindow/replypost', quote);
+                          }
+                      });                       
+    }
 
+    submit['publish_reply'] = function(kwargs, e){
+        $api.reply_post(local.boardname, kwargs.title, kwargs.content,
+                      kwargs.toreply, function(data){
+                          console.log(['re2', data]);
+                          if(data.success){
+                              show_alert('回复成功！', 'success');
+                              close_popwindow();
+                          }
+                      });
+    }
+    
     declare_frame({
         mark : 'flow',
         basetpl : 'post-framework',

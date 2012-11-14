@@ -55,7 +55,24 @@ $MOD('format', function(){
             self.html(text);
         })
     }
+
+    function gen_quote(post){
+        var title = post.title, quote;
+        if(title.substr(0, 4) != 'Re: '){
+            title = 'Re: ' + title;
+        }
+        quote = post.rawcontent.split('\n').slice(0, 5).join('\n:')
+        return {
+            title: title,
+            quote: quote,
+            userid: post.userid,
+            username: post.username,
+            filename: post.filename,
+        }
+    }
+    
     return {
         'format': format,
+        gen_quote: gen_quote,
     };
 })
