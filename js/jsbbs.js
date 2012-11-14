@@ -697,7 +697,6 @@ $MOD('frame::post', function(){
     submit['publish_reply'] = function(kwargs, e){
         $api.reply_post(local.boardname, kwargs.title, kwargs.content,
                       kwargs.toreply, function(data){
-                          console.log(['re2', data]);
                           if(data.success){
                               show_alert('回复成功！', 'success');
                               close_popwindow();

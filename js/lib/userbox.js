@@ -3,7 +3,6 @@ $MOD('jsbbs.userbox', function(){
         $api.user_logout(refresh_userbox);
     }
     $G.submit.login = function(kwargs){
-        console.log(kwargs);
         $api.user_login(kwargs.userid, kwargs.password, function(data){
             if(data.success){
                 $('#userbox').empty();
