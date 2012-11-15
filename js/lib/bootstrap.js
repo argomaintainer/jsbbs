@@ -1,5 +1,5 @@
 /* ===================================================
- * bootstrap-transition.js v2.2.0
+ * bootstrap-transition.js v2.2.1
  * http://twitter.github.com/bootstrap/javascript.html#transitions
  * ===================================================
  * Copyright 2012 Twitter, Inc.
@@ -59,7 +59,7 @@
 
 }(window.jQuery);
 /* =========================================================
- * bootstrap-modal.js v2.2.0
+ * bootstrap-modal.js v2.2.1
  * http://twitter.github.com/bootstrap/javascript.html#modals
  * =========================================================
  * Copyright 2012 Twitter, Inc.
@@ -294,7 +294,7 @@
 }(window.jQuery);
 
 /* ============================================================
- * bootstrap-dropdown.js v2.2.0
+ * bootstrap-dropdown.js v2.2.1
  * http://twitter.github.com/bootstrap/javascript.html#dropdowns
  * ============================================================
  * Copyright 2012 Twitter, Inc.
@@ -442,7 +442,7 @@
 
 }(window.jQuery);
 /* =============================================================
- * bootstrap-scrollspy.js v2.2.0
+ * bootstrap-scrollspy.js v2.2.1
  * http://twitter.github.com/bootstrap/javascript.html#scrollspy
  * =============================================================
  * Copyright 2012 Twitter, Inc.
@@ -593,7 +593,7 @@
 
 }(window.jQuery);
 /* ========================================================
- * bootstrap-tab.js v2.2.0
+ * bootstrap-tab.js v2.2.1
  * http://twitter.github.com/bootstrap/javascript.html#tabs
  * ========================================================
  * Copyright 2012 Twitter, Inc.
@@ -726,7 +726,7 @@
 
 }(window.jQuery);
 /* ===========================================================
- * bootstrap-tooltip.js v2.2.0
+ * bootstrap-tooltip.js v2.2.1
  * http://twitter.github.com/bootstrap/javascript.html#tooltips
  * Inspired by the original jQuery.tipsy by Jason Frame
  * ===========================================================
@@ -1002,7 +1002,7 @@
 
 }(window.jQuery);
 /* ===========================================================
- * bootstrap-popover.js v2.2.0
+ * bootstrap-popover.js v2.2.1
  * http://twitter.github.com/bootstrap/javascript.html#popovers
  * ===========================================================
  * Copyright 2012 Twitter, Inc.
@@ -1105,7 +1105,7 @@
 
 }(window.jQuery);
 /* ==========================================================
- * bootstrap-affix.js v2.2.0
+ * bootstrap-affix.js v2.2.1
  * http://twitter.github.com/bootstrap/javascript.html#affix
  * ==========================================================
  * Copyright 2012 Twitter, Inc.
@@ -1211,7 +1211,7 @@
 
 }(window.jQuery);
 /* ==========================================================
- * bootstrap-alert.js v2.2.0
+ * bootstrap-alert.js v2.2.1
  * http://twitter.github.com/bootstrap/javascript.html#alerts
  * ==========================================================
  * Copyright 2012 Twitter, Inc.
@@ -1299,7 +1299,7 @@
 
 }(window.jQuery);
 /* ============================================================
- * bootstrap-button.js v2.2.0
+ * bootstrap-button.js v2.2.1
  * http://twitter.github.com/bootstrap/javascript.html#buttons
  * ============================================================
  * Copyright 2012 Twitter, Inc.
@@ -1393,7 +1393,7 @@
 
 }(window.jQuery);
 /* =============================================================
- * bootstrap-collapse.js v2.2.0
+ * bootstrap-collapse.js v2.2.1
  * http://twitter.github.com/bootstrap/javascript.html#collapse
  * =============================================================
  * Copyright 2012 Twitter, Inc.
@@ -1549,7 +1549,7 @@
 
 }(window.jQuery);
 /* ==========================================================
- * bootstrap-carousel.js v2.2.0
+ * bootstrap-carousel.js v2.2.1
  * http://twitter.github.com/bootstrap/javascript.html#carousel
  * ==========================================================
  * Copyright 2012 Twitter, Inc.
@@ -1718,14 +1718,14 @@
   $(document).on('click.carousel.data-api', '[data-slide]', function (e) {
     var $this = $(this), href
       , $target = $($this.attr('data-target') || (href = $this.attr('href')) && href.replace(/.*(?=#[^\s]+$)/, '')) //strip for ie7
-      , options = !$target.data('carousel') && $.extend({}, $target.data(), $this.data())
+      , options = $.extend({}, $target.data(), $this.data())
     $target.carousel(options)
     e.preventDefault()
   })
 
 }(window.jQuery);
 /* =============================================================
- * bootstrap-typeahead.js v2.2.0
+ * bootstrap-typeahead.js v2.2.1
  * http://twitter.github.com/bootstrap/javascript.html#typeahead
  * =============================================================
  * Copyright 2012 Twitter, Inc.

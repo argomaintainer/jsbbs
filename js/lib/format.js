@@ -39,7 +39,17 @@ $MOD('format', function(){
             return s.replace('[%', '<span class="ac').replace(/;/gm, ' ac').replace('#]', '">');
         }).replace(/\[#%\]/gm, '</span>');
     }
+
+    require_jslib('markdown');
     function format(text){
+        if(text[0] == '\n')
+            text = text.slice(1);
+        if(text[0] == '#' ){
+            if(text.substr(0, 9) == '#markdown'){
+                return '<div class="markdown">' +
+                    markdown.toHTML(text.substr(9)) + '</div>';
+            }
+        }            
         text = format_escape(text);
         text = format_blank(text);
         text = format_cr(text);

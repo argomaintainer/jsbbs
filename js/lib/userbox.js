@@ -20,7 +20,7 @@ $MOD('jsbbs.userbox', function(){
         return a.unread?0:1;
     }
 
-    $MOD['jsbbs.hook'].register_hook('after_refresh_fav');
+    register_hook('after_refresh_fav');
     function refresh_fav(){
         $('[data-submit=refresh_fav]').addClass('refreshing');
         $api.get_self_fav(function(data){

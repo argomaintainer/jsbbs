@@ -379,6 +379,7 @@ li.unread{
     color: #555;
     border-bottom: 1px dashed #ccc;
     padding: 5px;
+    font-size: 12px;
 }
 
 .board-group-head{
@@ -898,11 +899,6 @@ i[class*=" icon-mark-"]:after {
 .blur{
     opacity: .15;
 }
-
-.post-content{
-    font-size: 14px;
-    color: #444;
-}
     
 .postquote-content{
     color:#777;
@@ -946,7 +942,7 @@ i[class*=" icon-mark-"]:after {
 }
 
 .post-content{
-    padding: 0 3em;
+    padding: 2em 3em;
 }
 
 .post-signature{
