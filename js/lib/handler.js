@@ -583,40 +583,36 @@ $MOD('page_func', function(){
     }
 });
 
-$MOD('reading', function(){
+// $MOD('reading', function(){
 
-    if(!location.hash){
-        location.hash = '#!page?path=index';
-    }
+//     require_jslib('format');
 
-    require_jslib('format');
+//     var parse_text = $MOD.page_func.parse_text,
+//     format = $MOD.format.format;
 
-    var parse_text = $MOD.page_func.parse_text,
-    format = $MOD.format.format;
+//     declare_frame({
+//         mark: 'page',
+//         enter : function(kwargs){
+//             var path = kwargs.path;
+//             if(path.match(/[\w-\/]*/).length = path.length){
+//                 $.ajax({
+//                     url: 'page/' + path,
+//                     dataType: 'text',
+//                     success : function(text){
+//                         var obj = parse_text(text);
+//                         if(!obj.html){
+//                             obj.text = format(obj.text);
+//                         }
+//                         render_template('page', { page : obj});
+//                     }
+//                 });
+//             }
+//             else{
+//             }
+//         }
+//     })
 
-    declare_frame({
-        mark: 'page',
-        enter : function(kwargs){
-            var path = kwargs.path;
-            if(path.match(/[\w-\/]*/).length = path.length){
-                $.ajax({
-                    url: 'page/' + path,
-                    dataType: 'text',
-                    success : function(text){
-                        var obj = parse_text(text);
-                        if(!obj.html){
-                            obj.text = format(obj.text);
-                        }
-                        render_template('page', { page : obj});
-                    }
-                });
-            }
-            else{
-            }
-        }
-    })
-
-});
+// });
 
 $MOD('frame::profile', function(){
 
