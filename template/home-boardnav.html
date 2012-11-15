@@ -5,6 +5,7 @@
     </div>
     <div class="cell-content">
       {{each(isec, ssec) boards }}
+      {{if ssec.boards.length }}
       <div class="board-group">
         <div class="board-group-head">
           <h4>${ssec.secname}</h4>
@@ -17,6 +18,7 @@
           {{/each}}
         </ul>
       </div>
+      {{/if}}
       {{/each}}
     </div>
   </div>
