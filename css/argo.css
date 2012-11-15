@@ -1064,3 +1064,13 @@ i[class*=" icon-mark-"]:after {
     margin-right: 1em;
     margin-top: 10px;
 }
+
+.page-container{
+    margin: 0 2em;
+}
+
+.quick-btn{
+    position: absolute;
+    bottom: 0;
+    left : 490px;
+}

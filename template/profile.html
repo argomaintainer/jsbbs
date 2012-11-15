@@ -1,0 +1,88 @@
+<div class="frame-header">
+  <div class="frame-header-inner">
+    <div class="padding-side">
+      <h3>${self.userid} 的个人信息</h3>
+    </div>
+  </div>
+</div>
+
+<div>
+
+  <div class="text-right padding-side">
+    <a class="btn btn-info" href="${url_for_user(self.userid)}">预览</a>
+  </div>
+  
+  <!-- <form data-submit="update-user" class="form-horizontal"> -->
+  <!--   <div class="control-group"> -->
+  <!--     <label class="control-label" name="avatar" for="input-avatar">头像</label> -->
+  <!--     <div class="controls"> -->
+  <!--       <input type="file" id="input-avatar"> -->
+  <!--       <button type="submit" class="btn btn-small">保存</button> -->
+  <!--     </div> -->
+  <!--   </div> -->
+  <!-- </form> -->
+
+  <form data-submit="update-user" class="form-horizontal">
+    <div class="control-group">
+      <label class="control-label" for="input-username">昵称</label>
+      <div class="controls">
+        <input type="text" name="username" id="input-username"
+               value="${self.username}">
+        <button type="submit" class="btn btn-small">保存</button>
+      </div>
+    </div>
+  </form>
+
+  <form data-submit="update-user" class="form-horizontal">
+    <div class="control-group">
+      <label class="control-label" for="input-plan">个人说明</label>
+      <div class="controls">
+        <textarea rows="10" class="input-xxlarge"
+                  name="plan">${self.plan}</textarea>
+        <button type="submit" class="btn btn-small">保存</button>
+      </div>
+    </div>
+  </form>
+
+  <form data-submit="update-user" class="form-horizontal">
+    <div class="control-group">
+      <label class="control-label" for="input-signature">签名档</label>
+      <div class="controls">
+        <textarea rows="12" class="input-xxlarge"
+                  name="signature">${self.signature}</textarea>
+        <button type="submit" class="btn btn-small">保存</button>
+      </div>
+    </div>
+  </form>
+
+  <form data-submit="update-user" class="form-horizontal">
+    <div class="control-group">
+      <label class="control-label">性别</label>
+      <div class="controls">
+        <label class="radio inline">
+          <input type="radio" name="gender" value="M" {{if self.gender == '77' }}checked{{/if}}>男
+        </label>
+        <label class="radio inline">
+          <input type="radio" name="gender" value="F" {{if self.gender != '77' }}checked{{/if}}>女
+        </label>
+        <button type="submit" class="btn btn-small">保存</button>
+      </div>
+    </div>
+  </form>
+
+  <form data-submit="update-user" class="form-horizontal">
+    <div class="control-group">
+      <label class="control-label">生日</label>
+      <div class="controls">      
+        <!-- <select id="id_birthyear" name="birthyear"> -->
+        <!--   {{each(i, v) range(1999, 1910)}} -->
+        <!--   <option value="${v}">${v}</option> -->
+        <!--   {{/each}} -->
+        <!-- </select>       -->
+        <input type="date" name="birthday" />
+        <button type="submit" class="btn btn-small">保存</button>
+      </div>
+    </div>
+  </form>
+
+</div>

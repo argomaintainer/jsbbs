@@ -61,6 +61,7 @@ $MOD('frame::user', function(){
         mark : 'user',
         enter : function(args){
             $api.query_user(args.userid, function(data){
+                data.data.htmlplan = $MOD.format.format(data.data.plan);
                 if(data.success){
                     render_template('user', { u: data.data, data: data.data });
                 }
@@ -558,4 +559,108 @@ $MOD('frame::topic', function(){
         local: local,
     });
 
+})
+
+$MOD('page_func', function(){
+    function parse_kw(text){
+        var s = text.split('\n'),
+        kw = {};
+        s.forEach(function(ele){
+            var t = ele.split(' : ');
+            kw[t[0]] = t[1];
+        });
+        return kw;
+    }
+    function parse_text(text){
+        var s = text.split('\n---\n'),
+        obj = parse_kw(s[0]);
+        obj.text = s[1];
+        return obj;
+    }
+    return {
+        parse_kw : parse_kw,
+        parse_text : parse_text,
+    }
+});
+
+$MOD('reading', function(){
+
+    if(!location.hash){
+        location.hash = '#!page?path=index';
+    }
+
+    require_jslib('format');
+
+    var parse_text = $MOD.page_func.parse_text,
+    format = $MOD.format.format;
+
+    declare_frame({
+        mark: 'page',
+        enter : function(kwargs){
+            var path = kwargs.path;
+            if(path.match(/[\w-\/]*/).length = path.length){
+                $.ajax({
+                    url: 'page/' + path,
+                    dataType: 'text',
+                    success : function(text){
+                        var obj = parse_text(text);
+                        if(!obj.html){
+                            obj.text = format(obj.text);
+                        }
+                        render_template('page', { page : obj});
+                    }
+                });
+            }
+            else{
+            }
+        }
+    })
+
+});
+
+$MOD('frame::profile', function(){
+
+    submit = {}
+
+    submit['update-user'] = function(kwargs, e){
+        if(kwargs.birthday){
+            $api.update_user_info({
+                birthyear: kwargs.birthday.substr(0, 4),
+                birthmonth: kwargs.birthday.substr(5, 7),
+                birthday: kwargs.birthday.substr(8),
+            }, function(data){
+                if(data.success){
+                    show_alert('更新成功！', 'success');
+                    refresh_frame();
+                }
+                else{
+                    show_alert(data.error);
+                }
+            });
+        }
+        else{
+            $api.update_user_info(
+                kwargs, function(data){
+                if(data.success){
+                    show_alert('更新成功！', 'success');
+                    refresh_frame();
+                }
+                else{
+                    show_alert(data.error);
+                }
+            });
+        };            
+    }
+    
+    declare_frame({
+        mark: 'profile',
+        enter: function(){
+            $api.get_self_info(function(data){
+                if(data.success){
+                    render_template('profile', { self: data.data });
+                }
+            });
+        },
+        submit: submit,
+    });
 })
