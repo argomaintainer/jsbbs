@@ -6,6 +6,7 @@ body{
     width:1024px;
     margin: 0 auto 20px;
     padding:0 20px ;
+    min-height: 100%;
 }
 
 #main-wrapper{
@@ -701,7 +702,7 @@ button[data-submit]{
 }
 
 .top2em{
-    padding-top: 2em;
+    margin-top: 2em;
 }
 
 .inverse{

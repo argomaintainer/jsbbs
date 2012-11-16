@@ -13,4 +13,13 @@ $MOD('frame.url_for', {
     'topic' : function(filename, boardname){
         return '#!topic?filename=' + filename + '&&boardname=' + boardname;
     },
+    'mailbox': function(index){
+        if(index){
+            return '#!mail?index=' + index;
+        }
+        else{
+            return '#!mail';
+        }
+    },
+    'readmail': function(index){ return '#!readmail?index=' + index; },
 })

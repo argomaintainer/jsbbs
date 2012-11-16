@@ -5,9 +5,9 @@
         <tr>
           <td class="tb-align-mid" width="61%">
             <div class="btn-toolbar">
-              <button class="btn btn-small btn-success"> 写信 </button>
-              <button class="btn btn-small"> 全选 </button>
-              <button class="btn btn-small"> 删除选中信件 </button>
+              <button data-submit="pop_new_mail" class="btn btn-small btn-success"> 写信 </button>
+              <!-- <button class="btn btn-small"> 全选 </button> -->
+              <!-- <button class="btn btn-small"> 删除选中信件 </button> -->
             </div>
           </td>
           <td class="tb-align-mid relative">
@@ -22,14 +22,21 @@
     </table>
   </div>
 </div>
-<div class="padding1em top2em">
-  <div id="maillist-wrapper" class="mCSB_dark">
-    <div id="maillist-ctrl" class="scrollbar">
-      <table class="fluid-table">
-        <tbody id="maillist-container">
-        </tbody>
-      </table>
+<div id="maillistbox" class="top2em cell cell-in">
+  <div class="relative">
+    <div class="vpagination">
+      <input type="text" data-max-page="${ Math.ceil((mailbox.total)/20) }" />
+      <a href="#" class="first" data-action="first"><i class="arrow-up-bar"></i></a>
+      <a href="#" class="previous" data-action="previous"><i class="arrow-up"></i></a>
+      <a href="#" class="next" data-action="next"><i class="arrow-down"></i></a>
+      <a href="#" class="last" data-action="last"><i class="arrow-down-bar"></i></a>
+    </div>    
+    <div id="maillist-container">
+      <div id="maillist-content">
+        <i class="icon-refreshing"></i> 努力地抓取数据中……
+      </div>
     </div>
   </div>
 </div>
-<div id="mail-contentbox" class="text"></div>
+<div id="mail-contentbox">
+</div>

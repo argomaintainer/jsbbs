@@ -69,81 +69,6 @@ $MOD('frame::user', function(){
         },
     });
 });
-                            
-// $MOD('frame::mail', function(){
-
-//     $Type('MailRange', ['start', 'end']);
-    
-//     $G.local.cur_range = null;
-    
-//     function append_next(tolast){
-//         var arr, start;
-//         start = $G.local.cur_range.end==NaN ? 0 :
-//             $G.local.cur_range.end + 1;
-//         $api.get_maillist(start, function(data){
-//             if(data.success && (arr=data.data)){
-//                 render_template('mail-li', arr, '#maillist-container');
-//                 $G.local.cur_range.end = arr[arr.length-1].index;
-//                 if(tolast){
-//                     $('#maillist-ctrl').mCustomScrollbar("scrollTo", "last");
-//                 }
-//             }
-//         });
-//     }
-
-//     function prepend_prev(){
-//         var arr, start;
-//         start = $G.local.cur_range.start==NaN ? 0 :
-//             $G.local.cur_range.start - 20;
-//         $api.get_maillist(start, function(data){
-//             if(data.success && (arr = data.data)){                
-//                 render_template_prepend('mail-li', arr, '#maillist-container');
-//                 $G.local.cur_range.start = arr[0].index;
-//             }
-//         })
-//     }
-
-//     require_jslib('format');
-
-//     function read_mail(index){
-//         var content;
-//         $api.get_mail(index, function(data){
-//             if(data.success){
-//                 content = data.data;
-//                 // content = $MOD.format.format(content);
-//                 $('#mail-contentbox').empty();
-//                 render_template('mail-content', { data: content },
-//                                 '#mail-contentbox');
-//                 $('#mail-' + index).find('i.unread').removeClass('unread').addClass('read');
-//             }
-//         });
-//     }
-
-//     $G.submit.read_mail = function(e){
-//         var target = $(e.target),
-//         index = target.attr('data-index');
-//         read_mail(index);
-//     }
-
-//     return {
-//         __enter__ : function(kwargs){
-//             $api.get_mailbox_info(function(data){
-//                 $G.local.cur_range = $Type.MailRange([NaN, NaN]);
-//                 if(data.success){
-//                     render_template('mail-framework', { mailbox: data.data });
-//                     append_next(true);
-//                 }
-//                 else{
-//                     show_alert(data.error);
-//                 }
-//             })
-//         },
-//         append_next: append_next,
-//         prepend_prev: prepend_prev,
-//         read_mail: read_mail,
-//     }
-// })
-
 
 $MOD('frame::board', function(){
 
@@ -548,12 +473,11 @@ $MOD('frame::topic', function(){
                         local.last_index = local.from_index =
                             local.oldest_index = 
                             local.topiclist.indexOf(kwargs.filename);
+                        render_template('topic-framework');
+                        submit.load_next();
                     }
                     else{
-                        console.log(data);
                     }
-                    render_template('topic-framework');
-                    submit.load_next();
                 })
         },
         local: local,
@@ -562,6 +486,7 @@ $MOD('frame::topic', function(){
 })
 
 $MOD('page_func', function(){
+
     function parse_kw(text){
         var s = text.split('\n'),
         kw = {};
@@ -571,6 +496,7 @@ $MOD('page_func', function(){
         });
         return kw;
     }
+
     function parse_text(text){
         var s = text.split('\n---\n'),
         obj = parse_kw(s[0]);
@@ -582,37 +508,6 @@ $MOD('page_func', function(){
         parse_text : parse_text,
     }
 });
-
-// $MOD('reading', function(){
-
-//     require_jslib('format');
-
-//     var parse_text = $MOD.page_func.parse_text,
-//     format = $MOD.format.format;
-
-//     declare_frame({
-//         mark: 'page',
-//         enter : function(kwargs){
-//             var path = kwargs.path;
-//             if(path.match(/[\w-\/]*/).length = path.length){
-//                 $.ajax({
-//                     url: 'page/' + path,
-//                     dataType: 'text',
-//                     success : function(text){
-//                         var obj = parse_text(text);
-//                         if(!obj.html){
-//                             obj.text = format(obj.text);
-//                         }
-//                         render_template('page', { page : obj});
-//                     }
-//                 });
-//             }
-//             else{
-//             }
-//         }
-//     })
-
-// });
 
 $MOD('frame::profile', function(){
 
@@ -647,7 +542,33 @@ $MOD('frame::profile', function(){
             });
         };            
     }
-    
+
+    submit['update-avatar'] = function(kwargs, e){
+
+        var file = $('[name=avatar]')[0].files[0],
+        name = file.name,
+        size = file.size,
+        type = file.type;
+
+        if(file.name.length < 1) {
+            show_alert('不是有效的文件！', 'danger');
+        }
+        else if(file.size > 100000) {
+            show_alert('文件太大了！', 'danger');
+        }
+        else if(file.type != 'image/jpg' && file.type != 'image/jpeg'){
+            show_alert('目前只支持jpg文件 ：-（', 'danger');
+        }
+        else {
+            $api.update_user_avatar(
+                '[data-submit=update-avatar]', function(data){
+                    if(data.success){
+                        show_alert('更新成功！');
+                    };
+                });
+        };
+    }
+
     declare_frame({
         mark: 'profile',
         enter: function(){
@@ -660,3 +581,175 @@ $MOD('frame::profile', function(){
         submit: submit,
     });
 })
+
+$MOD('frame::mail', function(){
+
+    var submit = {},
+    local = {};
+
+    function pop_new_mail(){
+        init_popwindow('popwindow/newmail');
+    }
+    submit.pop_new_mail = pop_new_mail;
+
+    function set_page(pagenum){
+        var start = pagenum * 20 - 19;
+        console.log(start);
+        $api.get_maillist(start, function(data){
+            if(data.success){
+                console.log(data);
+                $('#maillist-content').remove();
+                render_template('mail-li', { mails: data.data},
+                                '#maillist-container');
+                local.start = data.data[0].index + 1;
+            }
+            else{
+                console.error(data);
+            }
+        });
+    }
+
+    function set_page_anim(pagenum){
+        $('#maillist-content').fadeTo(200, 0.61, function(){
+            set_page(pagenum);
+        });
+    }
+
+    submit.send_mail = function(kwargs, e){
+        $api.send_mail(kwargs.title,
+                       kwargs.content,
+                       kwargs.receiver,
+                       function(data){
+                           if(data.success){
+                               show_alert('发表成功！', 'success');
+                               close_popwindow();
+                               refresh_frame();
+                           }
+                           else{
+                               console.log(data);
+                               show_alert(data.error, 'danger');
+                           }
+                       });
+    }                       
+
+    declare_frame({
+        mark: 'mail',
+        enter : function(kwargs){
+            $api.get_mailbox_info(function(data){
+                var index;
+                if(kwargs.index){
+                    local.hover = index = kwargs.index;
+                }
+                else{
+                    index = data.data.total;
+                }
+                if(data.success){
+                    render_template('mail-framework', { mailbox: data.data });
+                    local.index = index;
+                    var pagenum = Math.ceil(index / 20);
+                    $('.vpagination').jqPagination({
+		                page_string	: '第 {current_page} 页 / 共 {max_page} 页',
+		                paged		: set_page_anim,
+                        current_page: pagenum,
+		            });
+                    set_page(pagenum);
+                }
+                else{
+                    show_alert(data.error);
+                }               
+            });
+        },
+        submit: submit,
+        local: local,
+    });
+
+})
+
+$MOD('frame::readmail', function(){
+
+    var local = {},
+    submit = {};
+
+    function pop_reply_mail(kwargs){
+        console.log(['mm', local.mail]);
+        var quote = $MOD.format.gen_quote_mail(local.mail);
+        init_popwindow('popwindow/replymail', quote);
+    }
+    submit.pop_reply_mail = pop_reply_mail;
+
+    function reply_mail(kwargs){
+        $api.reply_mail(kwargs.title,
+                        kwargs.content,
+                        kwargs.receiver,
+                        kwargs.toreply,
+                        function(data){
+                            if(data.success){
+                               show_alert('信件已经寄出！', 'success');
+                               close_popwindow();
+                               refresh_frame();
+                           }
+                           else{
+                               console.log(data);
+                               show_alert(data.error, 'danger');
+                           }
+                        });
+    }
+    submit.reply_mail = reply_mail;
+
+    function set_mail(index, success, failed){
+        $api.get_mail(index, function(data){
+            console.log(data.data);
+            if(data.success){
+                var text = $MOD.format.format(data.data);
+                local.index = index;
+                local.mail = data.data;
+                $('#main').empty();
+                data.data.htmlcontent = $MOD.format.format(data.data.content);
+                render_template('readmail', {
+                    mail: data.data,
+                });
+                if(success)
+                    success();
+            }
+            else{
+                failed();
+            }
+        });
+    }
+
+    function new_no_mail_alerter(msg){
+        return function(){
+            show_alert(msg, 'success');
+            $('.post-wrapper').fadeTo(255, 1);
+        }
+    }
+
+    var last_alerter = new_no_mail_alerter('没有新的邮件了！'),
+    oldest_alerter = new_no_mail_alerter('已经是第一封了哟！');
+
+    submit.next_mail = function(){
+        $('.post-wrapper').fadeTo(200, 0.61, function(){
+            set_mail(local.index + 1, function(){
+                quite_set_hash(url_for_readmail(local.index));
+            }, last_alerter);
+        });
+    }
+
+    submit.prev_mail = function(){
+        $('.post-wrapper').fadeTo(200, 0.61, function(){
+            set_mail(local.index - 1, function(){
+                quite_set_hash(url_for_readmail(local.index));
+            }, oldest_alerter);
+        });
+    }
+
+    declare_frame({
+        mark: 'readmail',
+        enter: function(kwargs){
+            set_mail(kwargs.index);
+        },
+        local: local,
+        submit: submit,
+    })
+    
+});

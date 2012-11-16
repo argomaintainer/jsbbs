@@ -153,6 +153,28 @@ $MOD('argo_api', function(){
             $.post('/ajax/user/update', newval, callback);
         },
 
+        'update_user_avatar': function(selector, callback){
+            var formData = new FormData($(selector)[0]);
+            $.ajax({
+                url: '/ajax/user/update',
+                type: 'POST',
+                xhr: function(){
+                    var myXhr = $.ajaxSettings.xhr();
+                    // if(myXhr.upload){
+                    //     myXhr.upload.addEventListener(
+                    //         'progress', progressHandlingFunction, false
+                    //     );
+                    // };
+                    return myXhr;
+                },
+                success : callback,
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false,
+            }, 'json');
+        },
+
         'get_self_info': function(callback){
             $.get('/ajax/user/info', callback);
         },

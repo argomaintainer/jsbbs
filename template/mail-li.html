@@ -1,15 +1,27 @@
-<tr id="mail-${index}">
-  <td class="text-center">${index}</td>
-  <td class="tb-img">
-    <img class="img-small" src="${ url_for_avatar(owner) }"/>
-  </td>
-  <td class="tb-user"><a href="${url_for_user(owner)}">${owner}</a></td>
-  <td>
-    <span class="mail-reply">{{if flag > 31}}&crarr;{{/if}}</span>
-  </td>        
-  <td class="tb-title">
-    <i class="${(flag=='0')?'unread':'read'}"></i>
-    <a data-submit="read_mail" data-index="${index}">${title}</a>
-  </td>
-  <td class="tb-time"><time>${filetime}</time></td>
-</tr>
+<div id="maillist-content">
+  <div id="maillist-content-inner">
+    <table class="fluid-table">
+      <tbody>
+        {{each(i, m) mails}}
+        <tr id="mail-${m.index}"{{if m.index == $G.local.hover }} class="hover-li"{{/if}}>
+          <td class="text-center">${m.index}</td>
+          <td class="tb-img">
+            <img class="img-small" src="${ url_for_avatar(m.owner) }"/>
+          </td>
+          <td class="tb-user"><a href="${url_for_user(m.owner)}">
+              ${m.owner}</a></td>
+          <td>
+            <span class="mail-reply">{{if m.flag > 31}}&crarr;{{/if}}</span>
+          </td>        
+          <td class="tb-title">
+            <i class="${(m.flag=='0')?'unread':'read'}"></i>
+            <a href="${url_for_readmail(m.index)}"
+               data-index="${m.index}">${m.title}</a>
+          </td>
+          <td class="tb-time"><time>${m.filetime}</time></td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</div>

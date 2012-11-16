@@ -4,9 +4,11 @@
     <a href="${url_for_board($G.local.boardname)}"> « 回到版块</a>
   </div>
 </div>
+{{if $G.local.oldest_index }}
 <div id="post-up" class="page-btn">
-  <a data-submit="load_prev"><i data-submit="load_prev" class="blur icon-arrow-up"></i></a>
+  <a href="${ url_for_topic($G.local.topiclist[0], $G.local.boardname) }"><i class="blur icon-arrow-up"></i></a>
 </div>
+{{/if}}
 <div class="padding-side">
   <div id="post-container"></div>
 </div>

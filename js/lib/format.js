@@ -80,9 +80,24 @@ $MOD('format', function(){
             filename: post.filename,
         }
     }
+
+    function gen_quote_mail(mail){
+        var title = mail.title, quote;
+        if(title.substr(0, 4) != 'Re: '){
+            title = 'Re: ' + title;
+        }
+        quote = mail.content.split('\n').slice(4, 15).join('\n:');
+        return {
+            title: title,
+            quote: quote,
+            from: mail.owner,
+            index: mail.index,
+        }
+    }
     
     return {
         'format': format,
         gen_quote: gen_quote,
+        gen_quote_mail: gen_quote_mail,
     };
 })

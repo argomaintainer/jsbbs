@@ -469,7 +469,7 @@ $MOD('frame.frame', function(){
     $G.submit['close_popwindow'] = close_popwindow;
 
     function show_popwindow(){
-        var hover=$('#pop-window input');
+        var hover=$('#pop-window input').first();
         $('#pop-window').removeClass('hidden');
         if(hover.val()){
             $('#pop-window textarea').focus();
