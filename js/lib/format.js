@@ -57,7 +57,7 @@ $MOD('format', function(){
         text = format_br(text);
         return text;
     }
-    $.fn.telnet = function(){
+    $.fn.format = function(){
         $(this).each(function(){
             var self=$(this);
             var text=self.text();

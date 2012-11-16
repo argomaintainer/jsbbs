@@ -1075,3 +1075,13 @@ i[class*=" icon-mark-"]:after {
     bottom: 0;
     left : 490px;
 }
+
+.page-content{
+    padding: 1em 2em;
+    font-size: 13px;
+    background: #fff;
+}
+
+.page-thin{
+    padding-right: 150px;
+}

@@ -4,10 +4,8 @@ DATA_WIDGETS = {
             title: '文章导读',
             type: 'links',
             links : [
-                ['argo小礼堂', '#'],
-                ['本站精华区', '#'],
-                ['个人文集区', '#'],
-                ['常见问题', '#'],
+                ['argo小礼堂', '#!page?path=hull.html'],
+                ['常见问题', '#!page?path=faq.html'],
             ],
         },
         {

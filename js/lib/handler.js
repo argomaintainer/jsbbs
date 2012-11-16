@@ -753,3 +753,18 @@ $MOD('frame::readmail', function(){
     })
     
 });
+
+$MOD('frame::page', function(){
+    declare_frame({
+        mark: 'page',
+        enter: function(kwargs){
+            var path = kwargs.path;
+            $.get('page/' + path,
+                  function(data){
+                      $('#main').html(data);
+                      $('.format').format();
+                  });
+        },
+    });
+});                   
+                   
