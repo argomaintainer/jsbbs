@@ -484,6 +484,10 @@ li.unread{
     padding: 0 2em;
 }
 
+.padding-bottom{
+    padding-bottom: 2em;
+}
+
 .frame-header-inner{
     border-bottom: 2px solid #DDD;
 }
@@ -1084,4 +1088,8 @@ i[class*=" icon-mark-"]:after {
 
 .page-thin{
     padding-right: 150px;
+}
+
+.post-toolbar>p.pull-left{
+    line-height: 30px;
 }

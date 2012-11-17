@@ -14,9 +14,14 @@
     <div class="post-signature">{{html signature }}</div>
   </div>
   <div class="post-toolbar text-right">
+    <p class="pull-left fade-font">同主题</p>
     <ul class="inline-list">
-      <li><a><i class="icon-pencil"></i> 回复 </a></li>
+      <li><a href="#" data-group="post-${filename}" data-submit="reply_post">
+          <i data-group="post-${filename}" data-submit="reply_post"
+             class="icon-pencil"></i> 回复 </a></li>
       <li><a href="${url_for_board_i(index, board)}"><i class="icon-th-list"></i> 回到版块 </a></li>
     </ul>
   </div>
+  <input type="hidden" name="filename" data-group="post-${filename}"
+         value="${filename}"/>
 </div>      

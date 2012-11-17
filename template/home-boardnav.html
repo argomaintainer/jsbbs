@@ -4,22 +4,24 @@
       <h3>讨论区导航</h3>
     </div>
     <div class="cell-content">
-      {{each(isec, ssec) boards }}
-      {{if ssec.boards.length }}
-      <div class="board-group">
-        <div class="board-group-head">
-          <h4>${ssec.secname}</h4>
+      <div class="padding-bottom">
+        {{each(isec, ssec) boards }}
+        {{if ssec.boards.length }}
+        <div class="board-group">
+          <div class="board-group-head">
+            <h4>${ssec.secname}</h4>
+          </div>
+          <ul class="board-group-content">
+            {{each(iboard, sboard) ssec.boards }}
+            <li>
+              <a href="#!board?boardname=${sboard.boardname}">${sboard.title}</a>
+            </li>
+            {{/each}}
+          </ul>
         </div>
-        <ul class="board-group-content">
-          {{each(iboard, sboard) ssec.boards }}
-          <li>
-            <a href="#!board?boardname=${sboard.boardname}">${sboard.title}</a>
-          </li>
-          {{/each}}
-        </ul>
+        {{/if}}
+        {{/each}}
       </div>
-      {{/if}}
-      {{/each}}
     </div>
   </div>
 </div>

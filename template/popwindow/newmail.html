@@ -5,10 +5,11 @@
 <div id="pop-content">
   <div class="editor">
     <div class="editor-group">
-      <input data-group="newmail" name="title" class="input-block-level" type="text" placeholder="标题 ..." />
+      <input data-group="newmail" name="receiver" class="input-block-level"
+             type="text" placeholder="收件人 ..."{{if touserid }} value="${touserid}"{{/if}} />
     </div>
     <div class="editor-group">
-      <input data-group="newmail" name="receiver" class="input-block-level" type="text" placeholder="收件人 ..." />
+      <input data-group="newmail" name="title" class="input-block-level" type="text" placeholder="标题 ..." />
     </div>
     <div class="editor-group">
       <textarea data-group="newmail" name="content" rows="22" placeholder="好心情 ：-）" class="input-block-level"></textarea>
@@ -17,7 +18,7 @@
 </div>
 <div id="pop-bar">
   <div>
-    <button data-submit="send_mail" data-group="newmail" class="btn btn-success">发表文章</button>
+    <button data-submit="send_mail" data-group="newmail" class="btn btn-success">寄出</button>
     <span class="help-inline">Ctrl+Enter快速发表</span>
   </div>
 </div>

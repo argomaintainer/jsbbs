@@ -327,6 +327,11 @@ $MOD('frame.template', function(){
             render_template('widget/' + v.type, v, '#dy-widgets');
         }
     }
+
+    function raise404(msg){
+        $('#main').empty();
+        render_template('404', { msg: msg});
+    }
     
     return {
         "require_template": require_template,
@@ -335,6 +340,7 @@ $MOD('frame.template', function(){
         'load_widgets': load_widgets,
         'json_encode': JSON.stringify,
         'tf_timestamp': $MOD.timeformat.nice_timestamp,
+        'raise404': raise404,
     };
 
 });
@@ -469,14 +475,19 @@ $MOD('frame.frame', function(){
     $G.submit['close_popwindow'] = close_popwindow;
 
     function show_popwindow(){
-        var hover=$('#pop-window input').first();
+        var hover = null;
+        $('#pop-window input').each(function(){
+            var tmp = $(this);
+            if(!tmp.val()){
+                hover = tmp;
+                return false;
+            }
+        });
+        if(!hover){
+            hover = $('#pop-window textarea').first();
+        }
         $('#pop-window').removeClass('hidden');
-        if(hover.val()){
-            $('#pop-window textarea').focus();
-        }
-        else{
-            hover.focus();
-        }
+        hover.focus();
     }
     $G.submit['show_popwindow'] = show_popwindow;
 

@@ -26,16 +26,24 @@ $MOD('frame.home', function(){
                     render_template(TPL_BOARDNAV, { boards : data.data },
                                     container);
                 }
+                else{
+                    show_alert('发生错误，读取讨论区失败！');
+                }
             });
         },
         topten : function(container){
             $api.get_topten(function(data){
-                $(container).empty();
-                render_template(TPL_TOPTEN,
-                                {
-                                    posts: data.data,
-                                },
-                                container);
+                if(data.success){
+                    $(container).empty();
+                    render_template(TPL_TOPTEN,
+                                    {
+                                        posts: data.data,
+                                    },
+                                    container);
+                }
+                else{
+                    show_alert('发生错误，读取十大信息失败！');
+                }
             });
         },            
     }
@@ -57,16 +65,50 @@ $MOD('frame.home', function(){
 });
 
 $MOD('frame::user', function(){
+
+    var submit = {},
+    local = {};
+
+    function pop_new_mail(){
+        console.log(['touser', local.userid]);
+        init_popwindow('popwindow/newmail', {touserid: local.userid });
+    }
+    submit.pop_new_mail = pop_new_mail;
+
+    submit.send_mail = function(kwargs, e){
+        $api.send_mail(kwargs.title,
+                       kwargs.content,
+                       kwargs.receiver,
+                       function(data){
+                           if(data.success){
+                               show_alert('发表成功！', 'success');
+                               close_popwindow();
+                               refresh_frame();
+                           }
+                           else{
+                               show_alert(ERROR[data.code], 'danger');
+                               console.log(data);
+                           }
+                       });
+    }                       
+    
     declare_frame({
         mark : 'user',
         enter : function(args){
             $api.query_user(args.userid, function(data){
-                data.data.htmlplan = $MOD.format.format(data.data.plan);
                 if(data.success){
+                    local.userid = args.userid;
+                    data.data.htmlplan = $MOD.format.format(data.data.plan);
                     render_template('user', { u: data.data, data: data.data });
+                }
+                else{
+                    raise404(ERROR[data.code])
+                    console.error(data);
                 }
             });
         },
+        local: local,
+        submit: submit,
     });
 });
 
@@ -104,6 +146,9 @@ $MOD('frame::board', function(){
                                function(data){
                                    if(data.success){
                                        success(data.data);
+                                   }
+                                   else{
+                                       failed();
                                    }
                                });
         }
@@ -189,7 +234,7 @@ $MOD('frame::board', function(){
                               refresh_current_page();
                           }
                           else{
-                              show_alert(data.error, 'danger');
+                              show_alert(ERROR[data.code], 'danger');
                           }
                       });
     }
@@ -231,7 +276,11 @@ $MOD('frame::board', function(){
                     current_page: start_page,
 		        });
                 set_page(start_page);
-            };
+            }
+            else{
+                raise404(ERROR[data.code]);
+                console.error(data);
+            }
         });                                
     }
 
@@ -243,7 +292,7 @@ $MOD('frame::board', function(){
                     show_alert('收藏' + boardname + '版成功！', 'success');
                 }
                 else{
-                    show_alert(data.error);
+                    show_alert(ERROR[data.code]);
                 }
             });
         };
@@ -350,23 +399,33 @@ $MOD('frame::post', function(){
             $('#post-down .hidden').removeClass('hidden');
         }
     );
+
     require_jslib('format');
-    submit['reply_post'] = function(kwargs, e){
+    var reply_post, publish_reply;
+    submit['reply_post'] = reply_post = function(kwargs, e){
         $api.get_post(local.boardname, kwargs.filename,
                       function(data){
                           if(data.success){
                               var quote = $MOD.format.gen_quote(data.data);
                               init_popwindow('popwindow/replypost', quote);
                           }
+                          else{
+                              show_alert(ERROR[data.code], 'danger');
+                              console.error(data);
+                          }                              
                       });                       
     }
 
-    submit['publish_reply'] = function(kwargs, e){
+    submit['publish_reply'] = publish_reply = function(kwargs, e){
         $api.reply_post(local.boardname, kwargs.title, kwargs.content,
                       kwargs.toreply, function(data){
                           if(data.success){
                               show_alert('回复成功！', 'success');
                               close_popwindow();
+                          }
+                          else{
+                              show_alert(ERROR[data.code], 'danger');
+                              console.error(data);
                           }
                       });
     }
@@ -387,6 +446,8 @@ $MOD('frame::post', function(){
 
     return {
         handler_post: handler_post,
+        reply_post: reply_post,
+        publish_reply: publish_reply,
     }
 
 })
@@ -460,6 +521,33 @@ $MOD('frame::topic', function(){
                 local.topiclist[local.oldest_index--] : false;
     }, render_template_prepend);
 
+    submit.reply_post = function(kwargs, e){
+        $api.get_post(local.boardname, kwargs.filename,
+                      function(data){
+                          if(data.success){
+                              var quote = $MOD.format.gen_quote(data.data);
+                              init_popwindow('popwindow/replypost', quote);
+                          }
+                          else{
+                              show_alert(ERROR[data.code], 'danger');
+                              console.error(data);
+                          }                              
+                      });                       
+    }
+    submit.publish_reply = function(kwargs, e){
+        $api.reply_post(local.boardname, kwargs.title, kwargs.content,
+                      kwargs.toreply, function(data){
+                          if(data.success){
+                              show_alert('回复成功！', 'success');
+                              close_popwindow();
+                          }
+                          else{
+                              show_alert(ERROR[data.code], 'danger');
+                              console.error(data);
+                          }
+                      });
+    }
+
     declare_frame({
         mark: 'topic',
         submit : submit,
@@ -477,6 +565,8 @@ $MOD('frame::topic', function(){
                         submit.load_next();
                     }
                     else{
+                        raise404(ERROR[data.code]);
+                        console.error(data);
                     }
                 })
         },
@@ -525,7 +615,7 @@ $MOD('frame::profile', function(){
                     refresh_frame();
                 }
                 else{
-                    show_alert(data.error);
+                    show_alert(ERROR[data.code]);
                 }
             });
         }
@@ -537,7 +627,7 @@ $MOD('frame::profile', function(){
                     refresh_frame();
                 }
                 else{
-                    show_alert(data.error);
+                    show_alert(ERROR[data.code]);
                 }
             });
         };            
@@ -564,7 +654,10 @@ $MOD('frame::profile', function(){
                 '[data-submit=update-avatar]', function(data){
                     if(data.success){
                         show_alert('更新成功！');
-                    };
+                    }
+                    else{
+                        show_alert(ERROR[data.code], 'danger');
+                    }
                 });
         };
     }
@@ -575,6 +668,9 @@ $MOD('frame::profile', function(){
             $api.get_self_info(function(data){
                 if(data.success){
                     render_template('profile', { self: data.data });
+                }
+                else{
+                    raise404(ERROR[data.code], 'danger');
                 }
             });
         },
@@ -591,6 +687,23 @@ $MOD('frame::mail', function(){
         init_popwindow('popwindow/newmail');
     }
     submit.pop_new_mail = pop_new_mail;
+
+    submit.send_mail = function(kwargs, e){
+        $api.send_mail(kwargs.title,
+                       kwargs.content,
+                       kwargs.receiver,
+                       function(data){
+                           if(data.success){
+                               show_alert('发表成功！', 'success');
+                               close_popwindow();
+                               refresh_frame();
+                           }
+                           else{
+                               console.log(data);
+                               show_alert(ERROR[data.code], 'danger');
+                           }
+                       });
+    }                       
 
     function set_page(pagenum){
         var start = pagenum * 20 - 19;
@@ -615,23 +728,6 @@ $MOD('frame::mail', function(){
         });
     }
 
-    submit.send_mail = function(kwargs, e){
-        $api.send_mail(kwargs.title,
-                       kwargs.content,
-                       kwargs.receiver,
-                       function(data){
-                           if(data.success){
-                               show_alert('发表成功！', 'success');
-                               close_popwindow();
-                               refresh_frame();
-                           }
-                           else{
-                               console.log(data);
-                               show_alert(data.error, 'danger');
-                           }
-                       });
-    }                       
-
     declare_frame({
         mark: 'mail',
         enter : function(kwargs){
@@ -655,7 +751,8 @@ $MOD('frame::mail', function(){
                     set_page(pagenum);
                 }
                 else{
-                    show_alert(data.error);
+                    raise404(ERROR[data.code]);
+                    console.error(data);
                 }               
             });
         },
@@ -690,7 +787,7 @@ $MOD('frame::readmail', function(){
                            }
                            else{
                                console.log(data);
-                               show_alert(data.error, 'danger');
+                               show_alert(ERROR[data.code], 'danger');
                            }
                         });
     }
