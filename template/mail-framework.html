@@ -10,11 +10,13 @@
               <!-- <button class="btn btn-small"> 删除选中信件 </button> -->
             </div>
           </td>
-          <td class="tb-align-mid relative">
-            <div class="progress nomargin">
-              <div class="bar" style="width: ${mailbox.used_size/mailbox.total_size*100}%;"></div>
-              <div class="absolute-fluid light-font text-center">
-                共 ${mailbox.total} 封信，${nice_size(mailbox.used_size)} / ${nice_size(mailbox.total_size)}
+          <td class="tb-align-mid">
+            <div class="relative">
+              <div class="progress nomargin">
+                <div class="bar" style="width: ${mailbox.used_size/mailbox.total_size*100}%;"></div>
+                <div class="absolute-fluid light-font text-center">
+                  共 ${mailbox.total} 封信，${nice_size(mailbox.used_size)} / ${nice_size(mailbox.total_size)}
+                </div>
               </div>
             </div>
           </td>
