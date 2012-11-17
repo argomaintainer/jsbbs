@@ -134,6 +134,10 @@ ul.inline-list>li{
 
 #main.frame-login{
     background: -webkit-linear-gradient(top,#fff 0, #f0f0f0 100%);
+    background: -webkit-moz-gradient(top,#fff 0, #f0f0f0 100%);
+    background: -webkit-ms-gradient(top,#fff 0, #f0f0f0 100%);
+    background: -webkit-o-gradient(top,#fff 0, #f0f0f0 100%);
+    background: linear-gradient(top,#fff 0, #f0f0f0 100%);
 }
 
 #message{
@@ -313,6 +317,7 @@ li.unread{
     -webkit-user-select: none;    
     -ms-user-select: none;    
     -o-user-select: none;
+    user-select: none;
     cursor: default;
 }
 
@@ -337,6 +342,10 @@ li.unread{
 
 .cell{
     background: -webkit-linear-gradient(left,#f9f9f9 0, #fcfcfc 100%);
+    background: -moz-linear-gradient(left,#f9f9f9 0, #fcfcfc 100%);
+    background: -ms-linear-gradient(left,#f9f9f9 0, #fcfcfc 100%);
+    background: -o-linear-gradient(left,#f9f9f9 0, #fcfcfc 100%);
+    background: linear-gradient(left,#f9f9f9 0, #fcfcfc 100%);
     position:relative;
     border: 1px solid #ccc;
     box-shadow: 0 0 3px #e0e0e0;
@@ -449,6 +458,10 @@ li.unread{
     display: block;
     background: #bbb;
     background: -webkit-linear-gradient(top, #bbb 0, #777 100%);
+    background: -moz-linear-gradient(top, #bbb 0, #777 100%);
+    background: -ms-linear-gradient(top, #bbb 0, #777 100%);
+    background: -o-linear-gradient(top, #bbb 0, #777 100%);
+    background: linear-gradient(top, #bbb 0, #777 100%);
     color: #fff;
     font-weight: bold;
     text-align: center;
@@ -464,6 +477,10 @@ li.unread{
 .t10-0,.t10-1,.t10-2{
     background: #e44;
     background: -webkit-linear-gradient(top, #e44 0, #f62 100%);
+    background: -moz-linear-gradient(top, #e44 0, #f62 100%);
+    background: -ms-linear-gradient(top, #e44 0, #f62 100%);
+    background: -o-linear-gradient(top, #e44 0, #f62 100%);
+    background: linear-gradient(top, #e44 0, #f62 100%);
     border: 1px solid #f62;
     border-bottom: 2px solid #fa0;
 }
@@ -716,6 +733,10 @@ button[data-submit]{
 
 .inverse{
     background: -webkit-linear-gradient(top,#f0f0f0 0, #eee 100%);
+    background: -moz-linear-gradient(top,#f0f0f0 0, #eee 100%);
+    background: -ms-linear-gradient(top,#f0f0f0 0, #eee 100%);
+    background: -o-linear-gradient(top,#f0f0f0 0, #eee 100%);
+    background: linear-gradient(top,#f0f0f0 0, #eee 100%);
 }
 
 .nomargin{
@@ -768,20 +789,70 @@ button[data-submit]{
     -webkit-transform: rotate(360deg);
   }
 }
-.refreshing
+
+@-moz-keyframes rotate {
+  from {
+    -moz-transform: rotate(0deg);
+  }
+  to { 
+    -moz-transform: rotate(360deg);
+  }
+}
+
+@-ms-keyframes rotate {
+  from {
+    -ms-transform: rotate(0deg);
+  }
+  to { 
+    -ms-transform: rotate(360deg);
+  }
+}
+
+@-o-keyframes rotate {
+  from {
+    -o-transform: rotate(0deg);
+  }
+  to { 
+    -o-transform: rotate(360deg);
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to { 
+    transform: rotate(360deg);
+  }
+}
+
+.refreshing,
+i.icon-refreshing
 {
     -webkit-animation-name:             rotate; 
     -webkit-animation-duration:         3s; 
     -webkit-animation-iteration-count:  infinite;
     -webkit-animation-timing-function:  linear;
+    -moz-animation-name:             rotate; 
+    -moz-animation-duration:         3s; 
+    -moz-animation-iteration-count:  infinite;
+    -moz-animation-timing-function:  linear;
+    -ms-animation-name:             rotate; 
+    -ms-animation-duration:         3s; 
+    -ms-animation-iteration-count:  infinite;
+    -ms-animation-timing-function:  linear;    
+    -o-animation-name:             rotate; 
+    -o-animation-duration:         3s; 
+    -o-animation-iteration-count:  infinite;
+    -o-animation-timing-function:  linear;
+    animation-name:             rotate; 
+    animation-duration:         3s; 
+    animation-iteration-count:  infinite;
+    animation-timing-function:  linear;
 }
 
 i.icon-refreshing{
     background-position: -240px -24px;
-    -webkit-animation-name:             rotate; 
-    -webkit-animation-duration:         3s; 
-    -webkit-animation-iteration-count:  infinite;
-    -webkit-animation-timing-function:  linear;
 }    
 
 .hint-empty{
@@ -964,6 +1035,10 @@ i[class*=" icon-mark-"]:after {
 .post-toolbar{
     background: #fff;
     background: -webkit-linear-gradient(top,#fcfcfc 0, #f5f5f5 100%);
+    background: -moz-linear-gradient(top,#fcfcfc 0, #f5f5f5 100%);
+    background: -ms-linear-gradient(top,#fcfcfc 0, #f5f5f5 100%);
+    background: -o-linear-gradient(top,#fcfcfc 0, #f5f5f5 100%);
+    background: linear-gradient(top,#fcfcfc 0, #f5f5f5 100%);
     box-shadow: 0 0 1px #ccc;
     border-top: 1px solid #ccc;
     padding: 0 1em;
@@ -979,6 +1054,10 @@ i[class*=" icon-mark-"]:after {
 
 .page-toolbar{
     background: -webkit-linear-gradient(top,#fcfcfc 0, #f8f8f8 100%);
+    background: -moz-linear-gradient(top,#fcfcfc 0, #f8f8f8 100%);
+    background: -ms-linear-gradient(top,#fcfcfc 0, #f8f8f8 100%);
+    background: -o-linear-gradient(top,#fcfcfc 0, #f8f8f8 100%);
+    background: linear-gradient(top,#fcfcfc 0, #f8f8f8 100%);
     box-shadow: 0 0 2px #ccc;
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
@@ -1097,4 +1176,33 @@ i[class*=" icon-mark-"]:after {
 
 .post-toolbar>p.pull-left{
     line-height: 30px;
+}
+
+/* telnet format */
+.c1{
+    font-size: 14px;
+}
+.c30{
+color:#808080;
+}
+.c31{
+color:#f00;
+}
+.c32{
+color:#02b82d;
+}
+.c33{
+color:#e9aa00;
+}
+.c34{
+color:#00f;
+}
+.c35{
+color:#f0f;
+}
+.c36{
+color:#009cff;
+}
+.c37{
+color:#000;
 }
