@@ -412,7 +412,7 @@ li.unread{
 }
 
 .board-group-content ul{
-    margin: .5em 1em;
+    margin: .5em 1em .5em 0;
 }
 
 .text-right-align{
