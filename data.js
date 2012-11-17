@@ -5,7 +5,7 @@ DATA_WIDGETS = {
             type: 'links',
             links : [
                 ['argo小礼堂', '#!page?path=hull.html'],
-                ['常见问题', '#!page?path=faq.html'],
+                ['常见问题', '#!topic?filename=M.1353172024.A&&boardname=sysop'],
             ],
         },
         {
