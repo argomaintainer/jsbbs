@@ -27,7 +27,7 @@ $MOD('frame.home', function(){
                                     container);
                 }
                 else{
-                    show_alert('发生错误，读取讨论区失败！');
+                    show_alert('发生错误，读取讨论区失败！', 'danger');
                 }
             });
         },
@@ -42,7 +42,7 @@ $MOD('frame.home', function(){
                                     container);
                 }
                 else{
-                    show_alert('发生错误，读取十大信息失败！');
+                    show_alert('发生错误，读取十大信息失败！', 'danger');
                 }
             });
         },            

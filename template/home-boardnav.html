@@ -5,23 +5,32 @@
     </div>
     <div class="cell-content">
       <div class="padding-bottom">
-        {{each(isec, ssec) boards }}
-        {{if ssec.boards.length }}
-        <div class="board-group">
-          <div class="board-group-head">
-            <h4>${ssec.secname}</h4>
-          </div>
-          <ul class="board-group-content">
-            {{each(iboard, sboard) ssec.boards }}
-            <li>
-              <a href="#!board?boardname=${sboard.boardname}">${sboard.title}</a>
-            </li>
+        <table>
+          <tbody>
+            {{each(isec, ssec) boards }}
+            {{if ssec.boards.length }}
+            <tr class="board-group">
+              <td class="board-group-head">
+                <h4>${ssec.secname}</h4>
+              </td>
+              <td class="board-group-content">
+                <ul>
+                  {{each(iboard, sboard) ssec.boards }}
+                  <li>
+                    <a href="${url_for_board(sboard.boardname)}">
+                      ${sboard.title}
+                    </a>
+                  </li>
+                  {{/each}}
+                </ul>
+              </td>
+            </tr>
+            {{/if}}
             {{/each}}
-          </ul>
-        </div>
-        {{/if}}
-        {{/each}}
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
+</div>
 </div>

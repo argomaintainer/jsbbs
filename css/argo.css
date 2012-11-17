@@ -384,10 +384,10 @@ li.unread{
 }
 
 .board-group-head{
-    width: 10%;
+    width: 80px;
     display: table-cell;
     text-align:right;
-    padding-right: 1em;
+    /* padding-right: 1em; */
     vertical-align: middle;
 }
 
@@ -395,10 +395,11 @@ li.unread{
     font-size: 1em;
     line-height: 1.5em;
     font-weight: normal;
+    margin: .5em 1em;
 }
 
 .board-group-content{
-    width: 85%;
+    /* width: 85%; */
     display: table-cell;
     list-style-type: none;
     margin: 0;
@@ -408,6 +409,10 @@ li.unread{
 .board-group-content li{
     display: inline-block;
     margin: 0 .5em;
+}
+
+.board-group-content ul{
+    margin: .5em 1em;
 }
 
 .text-right-align{
