@@ -386,7 +386,7 @@ li.unread{
 .board-group-head{
     width: 80px;
     display: table-cell;
-    text-align:right;
+    text-align:center;
     /* padding-right: 1em; */
     vertical-align: middle;
 }
