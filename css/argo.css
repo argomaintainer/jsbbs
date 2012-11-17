@@ -1127,7 +1127,7 @@ i[class*=" icon-mark-"]:after {
 .editor textarea{
     border: 0;
     /* margin: 0; */
-    padding: 10px;
+    padding-left: 10px;
     border-radius: 0;
     border: 1px solid #ccc;
     /* margin-top: -2px; */
