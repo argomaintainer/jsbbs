@@ -20,6 +20,12 @@
           <i data-group="post-${filename}" data-submit="reply_post"
              class="icon-pencil"></i> 回复 </a></li>
       <li><a href="${url_for_board_i(index, board)}"><i class="icon-th-list"></i> 回到版块 </a></li>
+      {{if perm_del }}
+      <li><a href="#" data-group="post-${filename}" data-submit="delete_post">
+          <i data-group="post-${filename}" data-submit="reply_post"
+             class="icon-trash"></i> 删除 </a>
+      </li>
+      {{/if}}
     </ul>
   </div>
   <input type="hidden" name="filename" data-group="post-${filename}"

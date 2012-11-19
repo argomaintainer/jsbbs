@@ -1,6 +1,9 @@
 $MOD('jsbbs.userbox', function(){
     $G.submit.logout = function(){
-        $api.user_logout(refresh_userbox);
+        modal_confirm('登出帐号', '你确认要取消登录？',
+                      function(){
+                          $api.user_logout(refresh_userbox);
+                      });
     }
     $G.submit.login = function(kwargs){
         $api.user_login(kwargs.userid, kwargs.password, function(data){

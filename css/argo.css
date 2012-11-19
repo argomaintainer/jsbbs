@@ -520,6 +520,7 @@ li.unread{
 .frame-header{
     border-bottom: 2px solid #fff;
     margin-bottom: 30px;
+    /* background: url("../images/bgt.jpg"); */
 }
 
 .frame-header-inner{

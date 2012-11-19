@@ -497,6 +497,18 @@ $MOD('frame.frame', function(){
         show_popwindow();
     }
 
+    var _modal_yes;        
+    $G.submit['modal_yes'] = function(){
+        $('#modal').modal('hide');
+        setTimeout(_modal_yes, 450);
+    }        
+    function modal_confirm(header, content, confirm){
+        $('#modal-header-content').text(header);
+        $('#modal-content').html(content);
+        _modal_yes = confirm;
+        $('#modal').modal('show');
+    }
+    
     function submit_action(action, args, event){
         if($G.current.submit && action in $G.current.submit){
             $G.current.submit[action](args, event);
@@ -550,6 +562,7 @@ $MOD('frame.frame', function(){
         init_popwindow: init_popwindow,
         close_popwindow: close_popwindow,
         show_popwindow: show_popwindow,
+        modal_confirm: modal_confirm,
     }
 
 });

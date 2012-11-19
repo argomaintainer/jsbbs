@@ -400,6 +400,23 @@ $MOD('frame::post', function(){
         }
     );
 
+    submit['delete_post'] = function(kwargs, e){
+        modal_confirm('删除文章', '删除的文章将无法恢复，你真的要删除本文吗?',
+                      function(){
+                          $api.delete_post(
+                              local.boardname, kwargs.filename,
+                              function(data){                                  
+                                  console.log(data);
+                                  if(data.success){
+                                      show_alert('删除文章成功！', 'success');
+                                  }
+                                  else{
+                                      show_alert(ERROR[data.code], 'danger');
+                                  }
+                              });
+                      });
+    }
+
     require_jslib('format');
     var reply_post, publish_reply;
     submit['reply_post'] = reply_post = function(kwargs, e){
@@ -416,6 +433,7 @@ $MOD('frame::post', function(){
                       });                       
     }
 
+    // submit['
     submit['publish_reply'] = publish_reply = function(kwargs, e){
         $api.reply_post(local.boardname, kwargs.title, kwargs.content,
                       kwargs.toreply, function(data){
@@ -545,6 +563,22 @@ $MOD('frame::topic', function(){
                               show_alert(ERROR[data.code], 'danger');
                               console.error(data);
                           }
+                      });
+    }
+
+    submit['delete_post'] = function(kwargs, e){
+        modal_confirm('删除文章', '删除的文章将无法恢复，你真的要删除本文吗?',
+                      function(){
+                          $api.delete_post(
+                              local.boardname, kwargs.filename,
+                              function(data){
+                                  if(data.success){
+                                      show_alert('删除文章成功！', 'success');
+                                  }
+                                  else{
+                                      show_alert(ERROR[data.code], 'danger');
+                                  }
+                              });
                       });
     }
 
