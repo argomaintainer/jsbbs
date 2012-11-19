@@ -290,6 +290,7 @@ $MOD('frame::board', function(){
             $api.add_self_fav(boardname, function(data){
                 if(data.success){
                     show_alert('收藏' + boardname + '版成功！', 'success');
+                    refresh_fav();
                 }
                 else{
                     show_alert(ERROR[data.code]);
@@ -304,6 +305,7 @@ $MOD('frame::board', function(){
         if(cur_board && (boardname = cur_board.boardname)){
             $api.clear_board_unread(boardname, function(data){
                 refresh_frame();
+                refresh_fav();
             });
         };
     }

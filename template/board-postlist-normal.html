@@ -1,16 +1,26 @@
 <div id="postlist-content">
   <div id="postlist-content-inner">
     <table class="fluid-table">
+      <thead>
+        <tr>
+          <th class="th-center">序号</th>
+          <th>刊登者</th>
+          <th>日期</th>
+          <th>标题</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
       <tbody>
         {{each(i, p) posts}}
         <tr data-index="post-${p.index}"{{if index == $G.local.hover }} class="hover-li"{{/if}}>
           <td class="tb-grid1 text-center">${p.index}</td>
-          <td class="tb-img">
-            <img class="img-small" src="${ url_for_avatar(p.owner) }" />
-          </td>
           <td class="tb-user">
             <a href="${ url_for_user(p.owner) }">${p.owner}</a>
           </td>
+          <td class="tb-time">
+            <time>${ tf_timestamp(p.update) }</time>
+          </td> 
           <td class="tb-title">
             <i class="${(p.unread!='0')?'unread':'read'}"></i>
             <a href="${ url_for_post(p.filename, boardname) }&&index=${p.index}">${p.title}</a>
@@ -21,9 +31,9 @@
             {{if p.mark.indexOf('@') != -1 }}<i class="icon-mark-a"></i>{{/if}}
             {{if p.mark.indexOf('x') != -1 }}<i class="icon-mark-x"></i>{{/if}}
           </td>
-          <td class="tb-time">
-            <time>${ tf_timestamp(p.update) }</time>
-          </td> 
+          <td class="tb-img">
+            <img class="img-small" src="${ url_for_avatar(p.owner) }" />
+          </td>
         </tr>
         {{/each}}
       </tbody>

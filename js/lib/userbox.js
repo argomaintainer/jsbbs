@@ -20,7 +20,7 @@ $MOD('jsbbs.userbox', function(){
     function sort_favitem(a, b){
         if(a.unread == b.unread)
             return a.total - b.total;
-        return a.unread?0:1;
+        return a.unread?-1:1;
     }
 
     register_hook('after_refresh_fav');

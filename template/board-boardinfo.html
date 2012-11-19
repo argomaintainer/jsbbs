@@ -1,51 +1,39 @@
-<div class="frame-header">
-  <div class="frame-header-inner">    
-    <div class="padding-side">
-      <table>
-        <tbody>
-          <tr>
-            <td width="50%">
-              <h2 class="board-title">${board.title} <small> ${board.filename}</small></h2>
-              {{if board.BM.length}}
-              <ul class="small-font inline-list">
-                版主：
-                {{each(i, v) board.BM}}
-                <li><a href="${ url_for_user(v) }">${v}</a></li>
-                {{/each}}
-              </ul>
-              {{else}}
-              <div class="alert alert-danger small-font">
-                <strong>诚征版主中！</strong><br/>
-                如果你希望参与本版的管理为本版做点事情，请申请成为版主！
-              </div>
-              {{/if}}
-            </td>
-            <td class="tb-align-bottom">
-              <div class="btn-toolbar">
-                <a class="btn btn-small btn-success" data-submit="newpost">发表话题</a>
-                <a class="btn btn-small" data-submit="clear_unread">清除未读标记</a>
-                <div class="btn-group">                  
-                  <a class="btn btn-small dropdown-toggle" data-toggle="dropdown">
-                    过滤器
-                    <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#" data-submit="set_topic_loader">只看主题</a></li>
-                    <li><a href="#" data-submit="set_digest_loader">只看文摘</a></li>
-                    <li><a href="#" data-submit="set_normal_loader">查看全部</a></li>
-                  </ul>
-                </div>
-                <button data-submit="book_fav" class="btn btn-mini btn-info">预订该版</button>
-                <button data-submit="refresh_frame" class="btn btn-mini">&nbsp;<i data-submit="refresh_frame" class="icon-refresh"></i>&nbsp;</button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+<div class="padding-side relative" id="board-header">
+  <div id="board-title">
+    <h2 class="board-title">${board.title} <small> ${board.filename}</small></h2>
+    {{if board.BM.length}}
+    <ul class="small-font inline-list">
+      版主：
+      {{each(i, v) board.BM}}
+      <li><a href="${ url_for_user(v) }">${v}</a></li>
+      {{/each}}
+    </ul>
+    {{else}}
+    <div class="alert alert-danger small-font">
+      <strong>诚征版主中！</strong><br/>
+      如果你希望参与本版的管理为本版做点事情，请申请成为版主！
+    </div>
+    {{/if}}
+  </div>
+  <div id="board-toolbar">
+    <a class="btn btn-small btn-success" data-submit="newpost">发表话题</a>
+    <a class="btn btn-small" data-submit="clear_unread">清除未读标记</a>
+    <button data-submit="book_fav" class="btn btn-mini btn-info">预订该版</button>
+    <button data-submit="refresh_frame" class="btn btn-mini">&nbsp;<i data-submit="refresh_frame" class="icon-refresh"></i>&nbsp;</button>
+    <div class="btn-group">                  
+      <a class="btn btn-small dropdown-toggle" data-toggle="dropdown">
+        过滤器
+        <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="#" data-submit="set_topic_loader">只看主题</a></li>
+        <li><a href="#" data-submit="set_digest_loader">只看文摘</a></li>
+        <li><a href="#" data-submit="set_normal_loader">查看全部</a></li>
+      </ul>
     </div>
   </div>
 </div>
-<div id="postlistbox" class="cell cell-in">
+<div id="postlistbox">
   <div id="postlist-container" class="relative">
     <div class="vpagination">
       <input type="text" data-max-page="${ Math.ceil((board.total)/20) }" />

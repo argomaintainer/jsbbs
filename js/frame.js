@@ -452,6 +452,8 @@ $MOD('frame.frame', function(){
         
         frame.enter(curhash.args);
 
+        $('body').attr('class', 'frame-' + curhash.hash);
+
         if(frame.widgets_loader){
             if(typeof frame.widgets_loader == "function"){
                 frame.widgets_loader(curhash.args).forEach(function(v){
