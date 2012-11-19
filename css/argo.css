@@ -1023,6 +1023,8 @@ i[class*=" icon-mark-"]:after {
     border-top: 1px dashed #474;
     margin-top: 10px;
     padding-top: 10px;
+    font-size: 12px;
+    color: #555;
 }
 
 .post-toolbar{
