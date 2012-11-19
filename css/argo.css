@@ -1188,15 +1188,22 @@ color:#000;
 
 .frame-board #main-wrapper{
     /* margin: 0 1em; */
-    padding: 0;
+    border-radius: 4px;
+    padding: 0 0 10px 0;
+    /* border-radius: 8px; */
 }
 
 #board-header{
-    border-top: 2px solid #aaa;
+    padding: 0;
     margin-bottom: 10px;
+    border-bottom: 2px solid #fff;
+}
+
+#board-header-inner{
     background: url("../images/bht.jpg");
-    box-shadow: 0 1px 4px #ccc;
+    /* box-shadow: 0 1px 4px #ccc; */
     height: 128px;
+    border-bottom: 3px solid #666;
 }
 
 .fluid-table th{
@@ -1214,6 +1221,7 @@ th.th-center{
 #board-title{
     position: absolute;
     top: 10px;
+    left: 20px;
     color: #eee;
 }
 
