@@ -449,6 +449,45 @@ $MOD('frame::post', function(){
                           }
                       });
     }
+
+    submit['editpost'] = function(kwargs, e){
+        $api.get_post(local.boardname, kwargs.filename,
+                      function(data){
+                          if(data.success){
+                              var post = data.data;
+                              init_popwindow('popwindow/editpost',
+                                            {
+                                                title: post.title,
+                                                content: post.rawcontent,
+                                                filename: post.filename,
+                                            });
+                          }
+                          else{
+                              show_alert(ERROR[data.code], 'danger');
+                          }
+                      });
+    }
+
+    submit['publish_edit'] = function(kwargs){
+        console.log(['kw', local.boardname,
+                         kwargs.title,
+                         kwargs.content,
+                         kwargs.toedit]);                         
+        $api.update_post(local.boardname,
+                         kwargs.title,
+                         kwargs.content,
+                         kwargs.toedit,
+                         function(data){
+                             console.log([data]);
+                             if(data.success){
+                                 show_alert('修改文章成功！', 'success');
+                                 close_popwindow();
+                             }
+                             else{
+                                 show_alert(ERROR[data.code], 'danger');
+                             }
+                         });
+    }
     
     declare_frame({
         mark : 'flow',
@@ -582,6 +621,45 @@ $MOD('frame::topic', function(){
                                   }
                               });
                       });
+    }
+
+    submit['editpost'] = function(kwargs, e){
+        $api.get_post(local.boardname, kwargs.filename,
+                      function(data){
+                          if(data.success){
+                              var post = data.data;
+                              init_popwindow('popwindow/editpost',
+                                            {
+                                                title: post.title,
+                                                content: post.rawcontent,
+                                                filename: post.filename,
+                                            });
+                          }
+                          else{
+                              show_alert(ERROR[data.code], 'danger');
+                          }
+                      });
+    }
+
+    submit['publish_edit'] = function(kwargs){
+        console.log(['kw', local.boardname,
+                         kwargs.title,
+                         kwargs.content,
+                         kwargs.toedit]);                         
+        $api.update_post(local.boardname,
+                         kwargs.title,
+                         kwargs.content,
+                         kwargs.toedit,
+                         function(data){
+                             console.log([data]);
+                             if(data.success){
+                                 show_alert('修改文章成功！', 'success');
+                                 close_popwindow();
+                             }
+                             else{
+                                 show_alert(ERROR[data.code], 'danger');
+                             }
+                         });
     }
 
     declare_frame({

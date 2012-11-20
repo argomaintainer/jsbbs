@@ -1,24 +1,35 @@
 <div id="maillist-content">
   <div id="maillist-content-inner">
     <table class="fluid-table">
+      <thead>
+        <tr>
+          <th class="th-center">序号</th>
+          <th>发信者</th>
+          <th>日期</th>
+          <th>标题</th>
+          <th>&nbsp;</th>
+          <th>&nbsp;</th>
+        </tr>
+      </thead>
       <tbody>
         {{each(i, m) mails}}
         <tr id="mail-${m.index}"{{if m.index == $G.local.hover }} class="hover-li"{{/if}}>
           <td class="text-center">${m.index}</td>
-          <td class="tb-img">
-            <img class="img-small" src="${ url_for_avatar(m.owner) }"/>
-          </td>
           <td class="tb-user"><a href="${url_for_user(m.owner)}">
-              ${m.owner}</a></td>
-          <td>
-            <span class="mail-reply">{{if m.flag > 31}}&crarr;{{/if}}</span>
-          </td>        
+              ${m.owner}</a>
+          </td>
+          <td class="tb-time"><time>${m.filetime}</time></td>
           <td class="tb-title">
             <i class="${(m.flag=='0')?'unread':'read'}"></i>
             <a href="${url_for_readmail(m.index)}"
                data-index="${m.index}">${m.title}</a>
           </td>
-          <td class="tb-time"><time>${m.filetime}</time></td>
+          <td>
+            <span class="mail-reply">{{if m.flag > 31}}&crarr;{{/if}}</span>
+          </td>        
+          <td class="tb-img">
+            <img class="img-small" src="${ url_for_avatar(m.owner) }"/>
+          </td>
         </tr>
         {{/each}}
       </tbody>

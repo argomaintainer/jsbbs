@@ -975,7 +975,7 @@ i[class*=" icon-mark-"]:after {
 }
     
 .postquote-content{
-    color:#777;
+    color:#999;
     padding-left: 1em;
 }
 
@@ -1240,4 +1240,22 @@ th.th-center{
 
 #board-title .alert{
     padding-right: 20px;
+}
+
+.hasnewmail #userbox-mail a{
+    box-shadow: 0 0 4px aaa;
+    background: #eee;
+    color: red;
+}
+
+.hasnewmail #userbox-mail a:hover{
+    background: #fff;
+}
+
+.display-on-newmail{
+    display: none;
+}
+
+.hasnewmail .display-on-newmail{
+    display: inline;
 }

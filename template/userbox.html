@@ -1,5 +1,5 @@
 {{if authed }}
-<div class="widget">
+<div id="userbox" class="widget">
   <button type="button" data-submit="logout" class="close">&times;</button>
   <div class="widget-padding">
     <div class="avatar">
@@ -12,7 +12,7 @@
   </div>
   <ul class="nav nav-pills">
     <li><a href="#!"><i class="icon-home"></i></a></li>
-    <li><a href="#!mail"><i class="icon-envelope"></i></a></li>
+    <li id="userbox-mail"><a href="#!mail"><i class="icon-envelope"></i><span class="display-on-newmail">(新!)</span></a></li>
     <li><a href="#!profile"><i class="icon-wrench"></i></a></li>
     <!-- <li><a href="#!profile"><i class="icon-folder-close"></i></a></li> -->
   </ul>

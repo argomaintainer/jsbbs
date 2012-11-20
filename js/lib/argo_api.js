@@ -203,6 +203,10 @@ $MOD('argo_api', function(){
             $.get('/ajax/mail/mailbox', callback);
         },
 
+        'check_has_new_mail': function(callback){
+            $.get('/ajax/mail/check', callback);
+        },
+
         'get_maillist': function(start, callback){
             $.get('/ajax/mail/list',
                   {

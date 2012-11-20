@@ -23,4 +23,5 @@ $MOD('frame.url_for', {
     },
     'readmail': function(index){ return '#!readmail?index=' + index; },
     'page': function(path){ return '#!page?path=' + path;},
+    'root': function(path){ return DATA_ROOT + path },
 })
