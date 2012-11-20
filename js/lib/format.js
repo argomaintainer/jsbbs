@@ -9,6 +9,26 @@ $MOD('format', function(){
         "/": '&#x2F;'
     };
 
+    var urls = [
+
+  // 1. jpg|png|gif pic to <img> tag, class from link
+  [/(http:&#x2F;&#x2F;.+?\.)(jpg|png|gif)/ig, '<img src="$1$2" class="" alt="" />'],
+  [/(http:&#x2F;&#x2F;.+\.)(mp3)/g, 
+    '<audio src="$1$2" controls="controls" />'],
+
+  // 2. (http://)v.youku.com... to <embed> tag
+  //[/(http:&#x2F;&#x2F;)?v\.youku\.com&#x2F;v_show&#x2F;id_(\w+)\.(html|htm)/g,
+  //'$1<embed wmode="opaque" src="http://player.youku.com/player.php/sid/$3/v.swf" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>'],
+
+  // url
+	[/(^|\s|<br>|&nbsp;|\n|>)(www\..+?\..+?)(\s|$|<br>|&nbsp;|<)/g,		'$1<a href="http://$2">$2</a>$3'],
+	[/(^|\s|<br>|&nbsp;|\n|>)(((https?|ftp):&#x2F;&#x2F;).+?)(\s|$|<br>|&nbsp;|<)/g,	'$1<a href="$2">$2</a>$5'],
+   //@gcc
+  [/(^|&nbsp;|<br>|\n)@([a-zA-Z]{2,12})/g,	'$1<a href="#!user?userid=$2">@$2</a>'],
+  
+  ];
+  
+
     function format_escape(string) {
         return String(string).replace(/[&<>"'\/]/g, function (s) {
             return entityMap[s];
@@ -40,15 +60,23 @@ $MOD('format', function(){
         }).replace(/\[#%\]/gm, '</span>');
     }
 
-    // format_esc = function(s){
-    //     return s.replace(/\x1b\[[\d;]+m/gm, function(t){
-    //         console.log(['zz', t.substring(2, t.length-1)]);
-    //         return '<span class="c' +
-    //             t.substring(2, t.length-1).replace(';', ' c')
-    //             + '">';
-    //     }).replace(/\x1b\[m/gm, '</span>');
-    // }
-
+    format_esc = function(s) {
+      return s.replace(/\x1b\[(?:\d{1,2};?)+m/gm, function(t) {
+        console.log(['zz', t.substring(2, t.length-1)]);
+        return '<span class="c' +
+        t.substring(2, t.length-1).replace(';', ' c')
+        + '">';
+      }).replace(/\x1b\[m/gm, '</span>');
+    }
+  
+    format_linkify = function(s) {
+      var before = s;
+        for (u in urls)  {
+          var s = s.replace(urls[u][0], urls[u][1]);
+        }
+        console.log(["debug-linkify", before, s]);
+        return s;
+    }
     require_jslib('markdown');
     function format(text){
         if(text[0] == '\n')
@@ -58,14 +86,15 @@ $MOD('format', function(){
                 return '<div class="markdown">' +
                     markdown.toHTML(text.substr(9)) + '</div>';
             }
-        }            
+    }            
         text = format_escape(text);
         text = format_blank(text);
         text = format_cr(text);
         text = format_quote(text);
         text = format_br(text);
         last = text;
-        // text = format_esc(text);
+        text = format_esc(text);
+        text = format_linkify(text);
         return text;
     }
     $.fn.format = function(){
