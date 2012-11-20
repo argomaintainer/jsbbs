@@ -78,18 +78,18 @@ $MOD('jsbbs.userbox', function(){
 
     $G('authed', false);
     function refresh_userbox(){
-        var fav;
         $api.get_self_info(function(data){
             var udata;
             if(data.success){
                 $G.authed = true;
                 udata = { u: data.data, authed: true};
-                $('#userbox').empty();
-                render_template('userbox', udata, '#userbox');
+                $G.hooks.after_login_success();
             }
             else{
                 $G.authed = false;
             }
+            $('#userbox').empty();
+            render_template('userbox', udata, '#userbox');
             $G.hooks.after_refresh_userbox(data);
         });
     }                           
