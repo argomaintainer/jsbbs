@@ -40,14 +40,14 @@ $MOD('format', function(){
         }).replace(/\[#%\]/gm, '</span>');
     }
 
-    // format_esc = function(s){
-    //     return s.replace(/\x1b\[[\d;]+m/gm, function(t){
-    //         console.log(['zz', t.substring(2, t.length-1)]);
-    //         return '<span class="c' +
-    //             t.substring(2, t.length-1).replace(';', ' c')
-    //             + '">';
-    //     }).replace(/\x1b\[m/gm, '</span>');
-    // }
+    format_esc = function(s) {
+      return s.replace(/\x1b\[(?:\d{1,2};?)+m/gm, function(t) {
+        console.log(['zz', t.substring(2, t.length-1)]);
+        return '<span class="c' +
+        t.substring(2, t.length-1).replace(';', ' c')
+        + '">';
+      }).replace(/\x1b\[m/gm, '</span>');
+    }
 
     require_jslib('markdown');
     function format(text){
@@ -65,7 +65,7 @@ $MOD('format', function(){
         text = format_quote(text);
         text = format_br(text);
         last = text;
-        // text = format_esc(text);
+        text = format_esc(text);
         return text;
     }
     $.fn.format = function(){
