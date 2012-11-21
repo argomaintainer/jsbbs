@@ -81,8 +81,8 @@ $MOD('jsbbs.userbox', function(){
         $api.get_self_info(function(data){
             var udata;
             if(data.success){
-                $G.authed = true;
                 udata = { u: data.data, authed: true};
+                $G.authed = udata;
                 $G.hooks.after_login_success();
             }
             else{
@@ -97,4 +97,5 @@ $MOD('jsbbs.userbox', function(){
         'refresh_fav': refresh_fav,
         'refresh_userbox' : refresh_userbox,
     }
+
 })

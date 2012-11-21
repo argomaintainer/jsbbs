@@ -32,6 +32,9 @@
           <li><a href="#" data-submit="set_normal_loader">查看全部</a></li>
         </ul>
       </div>
+      {{if board.isadmin }}
+      <a class="btn btn-mini" href="${url_for_admin_board(board.filename)}">管理</a>
+      {{/if}}
     </div>
   </div>
 </div>

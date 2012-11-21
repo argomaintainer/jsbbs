@@ -1202,11 +1202,14 @@ color:#000;
 }
 
 #board-header-inner{
-    background: url("../images/bht.jpg");
     /* box-shadow: 0 1px 4px #ccc; */
     height: 128px;
     border-bottom: 3px solid #666;
 }
+
+#board-header{
+    background: url("../images/bht.jpg");
+}    
 
 .fluid-table th{
     text-align: left;
@@ -1224,7 +1227,7 @@ th.th-center{
     position: absolute;
     top: 10px;
     left: 20px;
-    color: #eee;
+    color: #f0f0f0;
 }
 
 #board-title a{

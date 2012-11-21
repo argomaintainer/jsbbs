@@ -70,7 +70,6 @@ $MOD('frame::user', function(){
     local = {};
 
     function pop_new_mail(){
-        console.log(['touser', local.userid]);
         init_popwindow('popwindow/newmail', {touserid: local.userid });
     }
     submit.pop_new_mail = pop_new_mail;
@@ -278,6 +277,11 @@ $MOD('frame::board', function(){
                 set_page(start_page);
                 if(data.data.www.widgets){
                     load_widgets(data.data.www.widgets);
+                }
+                if(data.data.www.brand_url){
+                    $('#board-header-inner').css(
+                        'background-image',
+                        'url("' + data.data.www.brand_url +'")');
                 }
             }
             else{
@@ -982,3 +986,123 @@ $MOD('frame::page', function(){
     });
 });                   
                    
+$MOD('frame::admin_board', function(){
+
+    var submit = {};
+
+    function links2str(links){
+        var buf='';
+        links.forEach(function(element){
+            console.log(['ll', element]);
+            if(typeof element == "string"){
+                buf.concat(element +'\n');
+                return;
+            }
+            buf.concat(element[0] + ',' + element[1]);
+        });
+        return buf;
+    }
+    
+    function get_simple_setting(kwargs){
+        var ret={}, widgets=kwargs.widgets;
+        if(kwargs.brand_url){
+            ret.logo = kwargs.brand_url;
+        }
+        if(!widgets){
+            return ret;
+        }
+        if(widgets.length < 2){
+            widgets.length = 2;
+        }
+        if(widgets[0] && (widgets[0].title=="版块介绍")){
+            ret.intro = widgets[0].text;
+        }
+        else{
+            ret.intro = "这是一个充满爱的版块！";
+        }
+        if(widgets[1] && (widgets[1].title=="一些链接")){
+            ret.links = links2str(widgets[1].links);
+        }
+        return ret;
+    }
+
+    function parse_links(text){
+        var a = text.split('\n');
+        var links = [];
+        a.forEach(function(ele){
+            if(ele.indexOf(',')!=-1){
+                links.push(ele.split(',').slice(0, 2));
+            }
+            else{
+                links.push(ele);
+            }
+        });
+        return links;
+    }
+    
+    function built_simple_setting(kwargs){
+        var t = {}, widgets=[], w;
+        if(kwargs.logo)
+            t.brand_url = kwargs.logo;
+        if(kwargs.intro)
+            widgets.push({
+                type: 'text',
+                title: '版块介绍',
+                text: kwargs.intro,
+            });
+        if(kwargs.links)
+            widgets.push({
+                type: 'links',
+                title: '一些链接',
+                links: parse_links(kwargs.links),
+            });
+        if(widgets.length)
+            t.widgets = widgets;
+        return t;
+    }
+
+    submit['update_board_setting'] = function(kwargs){
+        var t = built_simple_setting(kwargs);
+        if($.isEmptyObject(t)){
+            t = '';
+        }
+        console.log(['tttttt', t]);
+        $api.set_board_www_etc(kwargs.boardname, t, function(data){
+            console.log(['zzww', data]);
+            if(data.success){
+                show_alert('更新版块设定成功！');
+            }
+            else{
+                show_alert(ERROR[data.code], 'danger');
+            }
+        });
+    }
+    
+    declare_frame({
+        mark: 'admin_board',
+        enter: function(kwargs){
+            $api.get_board_info(kwargs.boardname, function(data){
+                if(data.success && data.data.isadmin){
+                    var args = {}, boardname=kwargs.boardname;
+                    console.log(['wwwwwwww', data.data.www]);
+                    args = get_simple_setting(data.data.www);
+                    console.log(['qqqqqaaaaaaa', args]);
+                    render_template('admin_board', {
+                        boardname: boardname,
+                        args: args,
+                    });
+                }
+                else{
+                    console.log(['d', data]);
+                }
+            });
+        },
+        submit: submit,
+    });
+
+    return {
+        get_simple_setting: get_simple_setting,
+        built_simple_setting: built_simple_setting,
+    }
+    
+})
