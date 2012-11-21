@@ -12,9 +12,9 @@ $MOD('format', function(){
   var urls = [
 
   // 1. jpg|png|gif pic to <img> tag, class from link
-  [/(http:&#x2F;&#x2F;.+?\.)(jpg|png|gif|jpeg)/ig, '<img src="$1$2" class="" alt="" />'],
-  [/(http:&#x2F;&#x2F;.+\.)(mp3)/g, 
-    '<audio src="$1$2" controls="controls" />'],
+  [/(^|\s|<br>|&nbsp;|\n|>)(http:&#x2F;&#x2F;.+?\.)(jpg|png|gif|jpeg)/ig, '$1<img src="$2$3" class="" alt="" />'],
+  [/(^|\s|<br>|&nbsp;|\n|>)(http:&#x2F;&#x2F;.+\.)(mp3)/g, 
+    '<audio src="$2$3" controls="controls" />'],
 
   // 2. (http://)v.youku.com... to <embed> tag
   [/(http:&#x2F;&#x2F;)?v\.youku\.com&#x2F;v_show&#x2F;id_(\w+)\.(html|htm)/g,
