@@ -16,14 +16,14 @@ $MOD('argo_api', function(){
             $.get('/ajax/board/get',
                   {
                       boardname: boardname,
-                      www: true,
+                      www: true
                   },
                   callback);
         },
         "get_boards_by_section": function(sec_code, callback){
             $.get('/ajax/board/getbysec',
                   {
-                      sec_code: sec_code,
+                      sec_code: sec_code
                   },
                   callback);
         },
@@ -31,14 +31,14 @@ $MOD('argo_api', function(){
             $.post('/ajax/board/setwww',
                    {
                        boardname: boardname,
-                       data: data,
+                       data: data
                    },
                    callback);
         },
         'clear_board_unread': function(boardname, callback){
             $.post('/ajax/board/clear',
                    {
-                       boardname: boardname,
+                       boardname: boardname
                    },
                    callback);
         },
@@ -48,7 +48,7 @@ $MOD('argo_api', function(){
                   {
                       boardname: boardname,
                       type: type,
-                      start: start,
+                      start: start
                   },
                   callback);
         },
@@ -59,7 +59,7 @@ $MOD('argo_api', function(){
                        boardname: boardname,
                        title: title,
                        content: content,
-                       type: 'new',
+                       type: 'new'
                    },
                    callback);
         },
@@ -70,7 +70,7 @@ $MOD('argo_api', function(){
                        title: title,
                        articleid: refname,
                        content: content,
-                       type: 'reply',
+                       type: 'reply'
                    },
                    callback);
         },
@@ -81,7 +81,7 @@ $MOD('argo_api', function(){
                        title: title,
                        articleid: upfname,
                        content: content,
-                       type: 'update',
+                       type: 'update'
                    },
                    callback);
         },            
@@ -89,7 +89,7 @@ $MOD('argo_api', function(){
             $.post('/ajax/post/del',
                    {
                        boardname: boardname,
-                       filename: filename,
+                       filename: filename
                    },
                    callback);
         },
@@ -97,7 +97,7 @@ $MOD('argo_api', function(){
             $.get('/ajax/post/get',
                   {
                       boardname: boardname,
-                      filename: filename,
+                      filename: filename
                   },
                   callback);
         },
@@ -107,7 +107,7 @@ $MOD('argo_api', function(){
                   {
                       boardname: boardname,
                       filename: filename,
-                      direction: direction,
+                      direction: direction
                   },
                   callback);
         },
@@ -115,7 +115,7 @@ $MOD('argo_api', function(){
             $.get('/ajax/post/topiclist',
                   {
                       boardname: boardname,
-                      filename: filename,
+                      filename: filename
                   },
                   callback);
         },
@@ -124,7 +124,7 @@ $MOD('argo_api', function(){
             $.post('/ajax/login',
                   {
                       userid: userid,
-                      passwd: password,
+                      passwd: password
                   },
                   callback);
         },
@@ -136,7 +136,7 @@ $MOD('argo_api', function(){
         'query_user': function(userid, callback){
             $.get('/ajax/user/query',
                   {
-                      userid: userid,
+                      userid: userid
                   },
                   callback);
         },
@@ -180,7 +180,7 @@ $MOD('argo_api', function(){
                 data: formData,
                 cache: false,
                 contentType: false,
-                processData: false,
+                processData: false
             }, 'json');
         },
 
@@ -195,7 +195,7 @@ $MOD('argo_api', function(){
         'add_self_fav': function(boardname, callback){
             $.post('/ajax/user/addfav',
                    {
-                       boardname: boardname,
+                       boardname: boardname
                    },
                    callback);
         },
@@ -203,7 +203,7 @@ $MOD('argo_api', function(){
         'remove_self_fav': function(boardname, callback){
             $.post('/ajax/user/delfav',
                    {
-                       boardname: boardname,
+                       boardname: boardname
                    },
                    callback);
         },
@@ -219,7 +219,7 @@ $MOD('argo_api', function(){
         'get_maillist': function(start, callback){
             $.get('/ajax/mail/list',
                   {
-                      start: start,
+                      start: start
                   },
                   callback);
         },
@@ -228,7 +228,7 @@ $MOD('argo_api', function(){
             $.get('/ajax/mail/list',
                   {
                       start: start,
-                      limit: limit,
+                      limit: limit
                   },
                   callback);
         },
@@ -236,7 +236,7 @@ $MOD('argo_api', function(){
         'get_mail': function(index, callback){
             $.get('/ajax/mail/get',
                   {
-                      index: index,
+                      index: index
                   },
                   callback);
         },
@@ -246,7 +246,7 @@ $MOD('argo_api', function(){
                    {
                        title: title,
                        content: content,
-                       receiver: receiver,
+                       receiver: receiver
                    },
                    callback);
         },
@@ -257,7 +257,7 @@ $MOD('argo_api', function(){
                        title: title,
                        content: content,
                        receiver: receiver,
-                       articleid: articleid,
+                       articleid: articleid
                    },
                    callback);
         },
@@ -268,10 +268,10 @@ $MOD('argo_api', function(){
             }
             $.post('/ajax/mail/del',
                    {
-                       indexes: indexes,
+                       indexes: indexes
                    },
                    callback);
-        },
+        }
 
     }
 })

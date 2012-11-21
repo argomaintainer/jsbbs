@@ -95,7 +95,7 @@ $MOD('jsbbs.userbox', function(){
     }                           
     return {
         'refresh_fav': refresh_fav,
-        'refresh_userbox' : refresh_userbox,
+        'refresh_userbox' : refresh_userbox
     }
 
 })

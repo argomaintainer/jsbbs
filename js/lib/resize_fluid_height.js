@@ -20,7 +20,7 @@ $MOD('resize_fluid_height', function(){
     $(window).resize(resize_fluid_height);
 
     return {
-        "resize_fluid_height": resize_fluid_height,
+        "resize_fluid_height": resize_fluid_height
     }
     
 });

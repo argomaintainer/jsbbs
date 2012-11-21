@@ -203,7 +203,7 @@ $MOD('__buildin__', {
         return window[as] = $MOD[modname];
     },
 
-    require_module: $MOD.__require__,
+    require_module: $MOD.__require__
 
 })
 

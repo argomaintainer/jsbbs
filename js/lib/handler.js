@@ -37,7 +37,7 @@ $MOD('frame.home', function(){
                     $(container).empty();
                     render_template(TPL_TOPTEN,
                                     {
-                                        posts: data.data,
+                                        posts: data.data
                                     },
                                     container);
                 }
@@ -45,7 +45,7 @@ $MOD('frame.home', function(){
                     show_alert('发生错误，读取十大信息失败！', 'danger');
                 }
             });
-        },            
+        }
     }
     declare_frame({
         mark: 'home',
@@ -55,11 +55,11 @@ $MOD('frame.home', function(){
         enter: function(){},
         ajax: ajax,
         local: {
-            format_number: format_number,
+            format_number: format_number
         },
         widgets_loader : function(){
             return DATA_WIDGETS.home;
-        },
+        }
     });
     
 });
@@ -107,7 +107,7 @@ $MOD('frame::user', function(){
             });
         },
         local: local,
-        submit: submit,
+        submit: submit
     });
 });
 
@@ -261,7 +261,7 @@ $MOD('frame::board', function(){
                 cur_board.data = data.data;
                 render_template('board-boardinfo',
                                 {
-                                    board: data.data,
+                                    board: data.data
                                 });
                 if(local.hover = kwargs.index){
                     start_page = trim_pagenum(local.hover);
@@ -272,7 +272,7 @@ $MOD('frame::board', function(){
                 $('.vpagination').jqPagination({
 		            page_string	: '第 {current_page} 页 / 共 {max_page} 页',
 		            paged		: set_page_anim,
-                    current_page: start_page,
+                    current_page: start_page
 		        });
                 set_page(start_page);
                 if(data.data.www.widgets){
@@ -325,11 +325,8 @@ $MOD('frame::board', function(){
         enter : enter_board,
         ajax : ajax,
         submit: submit,
-        local: local,
+        local: local
     });
-
-    return {
-    }
 
 })
 
@@ -466,7 +463,7 @@ $MOD('frame::post', function(){
                                             {
                                                 title: post.title,
                                                 content: post.rawcontent,
-                                                filename: post.filename,
+                                                filename: post.filename
                                             });
                           }
                           else{
@@ -507,13 +504,13 @@ $MOD('frame::post', function(){
         enter : function(kwargs){
             _load_post();
         },
-        local : local,
+        local : local
     });
 
     return {
         handler_post: handler_post,
         reply_post: reply_post,
-        publish_reply: publish_reply,
+        publish_reply: publish_reply
     }
 
 })
@@ -639,7 +636,7 @@ $MOD('frame::topic', function(){
                                             {
                                                 title: post.title,
                                                 content: post.rawcontent,
-                                                filename: post.filename,
+                                                filename: post.filename
                                             });
                           }
                           else{
@@ -691,7 +688,7 @@ $MOD('frame::topic', function(){
                     }
                 })
         },
-        local: local,
+        local: local
     });
 
 })
@@ -701,7 +698,7 @@ $MOD('page_func', function(){
     function parse_kw(text){
         var s = text.split('\n'),
         kw = {};
-        s.forEach(function(ele){
+        for_each_array(s, function(ele){
             var t = ele.split(' : ');
             kw[t[0]] = t[1];
         });
@@ -716,7 +713,7 @@ $MOD('page_func', function(){
     }
     return {
         parse_kw : parse_kw,
-        parse_text : parse_text,
+        parse_text : parse_text
     }
 });
 
@@ -729,7 +726,7 @@ $MOD('frame::profile', function(){
             $api.update_user_info({
                 birthyear: kwargs.birthday.substr(0, 4),
                 birthmonth: kwargs.birthday.substr(5, 7),
-                birthday: kwargs.birthday.substr(8),
+                birthday: kwargs.birthday.substr(8)
             }, function(data){
                 if(data.success){
                     show_alert('更新成功！', 'success');
@@ -795,7 +792,7 @@ $MOD('frame::profile', function(){
                 }
             });
         },
-        submit: submit,
+        submit: submit
     });
 })
 
@@ -867,7 +864,7 @@ $MOD('frame::mail', function(){
                     $('.vpagination').jqPagination({
 		                page_string	: '第 {current_page} 页 / 共 {max_page} 页',
 		                paged		: set_page_anim,
-                        current_page: pagenum,
+                        current_page: pagenum
 		            });
                     set_page(pagenum);
                 }
@@ -878,7 +875,7 @@ $MOD('frame::mail', function(){
             });
         },
         submit: submit,
-        local: local,
+        local: local
     });
 
 })
@@ -924,7 +921,7 @@ $MOD('frame::readmail', function(){
                 $('#main').empty();
                 data.data.htmlcontent = $MOD.format.format(data.data.content);
                 render_template('readmail', {
-                    mail: data.data,
+                    mail: data.data
                 });
                 if(success)
                     success();
@@ -967,7 +964,7 @@ $MOD('frame::readmail', function(){
             set_mail(kwargs.index);
         },
         local: local,
-        submit: submit,
+        submit: submit
     })
     
 });
@@ -982,7 +979,7 @@ $MOD('frame::page', function(){
                       $('#main').html(data);
                       $('.format').format();
                   });
-        },
+        }
     });
 });                   
                    
@@ -992,7 +989,7 @@ $MOD('frame::admin_board', function(){
 
     function links2str(links){
         var buf='';
-        links.forEach(function(element){
+        for_each_array(links, function(element){
             console.log(['ll', element]);
             if(typeof element == "string"){
                 buf.concat(element +'\n');
@@ -1029,7 +1026,7 @@ $MOD('frame::admin_board', function(){
     function parse_links(text){
         var a = text.split('\n');
         var links = [];
-        a.forEach(function(ele){
+        for_each_array(a, function(ele){
             if(ele.indexOf(',')!=-1){
                 links.push(ele.split(',').slice(0, 2));
             }
@@ -1048,13 +1045,13 @@ $MOD('frame::admin_board', function(){
             widgets.push({
                 type: 'text',
                 title: '版块介绍',
-                text: kwargs.intro,
+                text: kwargs.intro
             });
         if(kwargs.links)
             widgets.push({
                 type: 'links',
                 title: '一些链接',
-                links: parse_links(kwargs.links),
+                links: parse_links(kwargs.links)
             });
         if(widgets.length)
             t.widgets = widgets;
@@ -1089,7 +1086,7 @@ $MOD('frame::admin_board', function(){
                     console.log(['qqqqqaaaaaaa', args]);
                     render_template('admin_board', {
                         boardname: boardname,
-                        args: args,
+                        args: args
                     });
                 }
                 else{
@@ -1097,12 +1094,12 @@ $MOD('frame::admin_board', function(){
                 }
             });
         },
-        submit: submit,
+        submit: submit
     });
 
     return {
         get_simple_setting: get_simple_setting,
-        built_simple_setting: built_simple_setting,
+        built_simple_setting: built_simple_setting
     }
     
 })

@@ -5,15 +5,15 @@ DATA_WIDGETS = {
             type: 'links',
             links : [
                 ['argo小礼堂', '#!page?path=hull.html'],
-                ['常见问题', '#!topic?filename=M.1353172024.A&&boardname=sysop'],
-            ],
+                ['常见问题', '#!topic?filename=M.1353172024.A&&boardname=sysop']
+            ]
         },
         {
             title: '近期活动',
             type: 'img',
-            src : 'img/cat1.jpeg',
-        },
-    ],
+            src : 'img/cat1.jpeg'
+        }
+    ]
 }
 
 ERROR = {
@@ -58,7 +58,7 @@ ERROR = {
     601: '没有该邮件',
     602: '收件人邮箱已经满了，发信失败',
     603: '错误的收件人或服务器发生错误，发送邮件失败',
-    604: '错误的收件人或服务器发生错误，删除邮件失败',    
+    604: '错误的收件人或服务器发生错误，删除邮件失败'
 }
 
 DATA_ROOT = 'http://argo.sysu.edu.cn';

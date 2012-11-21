@@ -741,6 +741,6 @@ $MOD('jquery.scrollbar', function(){
     bind_hook('after_render', update_scrollbar);
     // bind_hook('after_refresh_fav', update_scrollbar);
     return {
-        'update_scrollbar': update_scrollbar,
+        'update_scrollbar': update_scrollbar
     }
 });

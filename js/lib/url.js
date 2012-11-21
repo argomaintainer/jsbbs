@@ -26,5 +26,5 @@ $MOD('frame.url_for', {
     'root': function(path){ return DATA_ROOT + path },
     'admin_board': function(boardname){
         return '#!admin_board?boardname=' + boardname ;
-    },
+    }
 })

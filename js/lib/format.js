@@ -11,23 +11,23 @@ $MOD('format', function(){
 
     var urls = [
 
-  // 1. jpg|png|gif pic to <img> tag, class from link
-  [/(http:&#x2F;&#x2F;.+?\.)(jpg|png|gif)/ig, '<img src="$1$2" class="" alt="" />'],
-  [/(http:&#x2F;&#x2F;.+\.)(mp3)/g, 
-    '<audio src="$1$2" controls="controls" />'],
+        // 1. jpg|png|gif pic to <img> tag, class from link
+        [/(http:&#x2F;&#x2F;.+?\.)(jpg|png|gif)/ig, '<img src="$1$2" class="" alt="" />'],
+        [/(http:&#x2F;&#x2F;.+\.)(mp3)/g, 
+         '<audio src="$1$2" controls="controls" />'],
 
-  // 2. (http://)v.youku.com... to <embed> tag
-  [/(http:&#x2F;&#x2F;)?v\.youku\.com&#x2F;v_show&#x2F;id_(\w+)\.(html|htm)/g,
-  '<embed wmode="opaque" src="http://player.youku.com/player.php/sid/$2/v.swf" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>'],
+        // 2. (http://)v.youku.com... to <embed> tag
+        [/(http:&#x2F;&#x2F;)?v\.youku\.com&#x2F;v_show&#x2F;id_(\w+)\.(html|htm)/g,
+         '<embed wmode="opaque" src="http://player.youku.com/player.php/sid/$2/v.swf" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>'],
 
-  // url
-	[/(^|\s|<br>|&nbsp;|\n|>)(www\..+?\..+?)(\s|$|<br>|&nbsp;|<)/g,		'$1<a href="http://$2">$2</a>$3'],
-	[/(^|\s|<br>|&nbsp;|\n|>)(((https?|ftp):&#x2F;&#x2F;).+?)(\s|$|<br>|&nbsp;|<)/g,	'$1<a href="$2">$2</a>$5'],
-   //@gcc
-  [/(^|&nbsp;|<br>|\n)@([a-zA-Z]{2,12})/g,	'$1<a href="#!user?userid=$2">@$2</a>'],
-  
-  ];
-  
+        // url
+	    [/(^|\s|<br>|&nbsp;|\n|>)(www\..+?\..+?)(\s|$|<br>|&nbsp;|<)/g,		'$1<a href="http://$2">$2</a>$3'],
+	    [/(^|\s|<br>|&nbsp;|\n|>)(((https?|ftp):&#x2F;&#x2F;).+?)(\s|$|<br>|&nbsp;|<)/g,	'$1<a href="$2">$2</a>$5'],
+        //@gcc
+        [/(^|&nbsp;|<br>|\n)@([a-zA-Z]{2,12})/g,	'$1<a href="#!user?userid=$2">@$2</a>']
+        
+    ];
+    
 
     function format_escape(string) {
         return String(string).replace(/[&<>"'\/]/g, function (s) {
@@ -61,18 +61,18 @@ $MOD('format', function(){
     }
 
     format_esc = function(s) {
-      return s.replace(/\x1b\[(?:\d{1,2};?)+m/gm, function(t) {
-        console.log(['zz', t.substring(2, t.length-1)]);
-        return '<span class="c' +
-        t.substring(2, t.length-1).replace(';', ' c')
-        + '">';
-      }).replace(/\x1b\[m/gm, '</span>');
+        return s.replace(/\x1b\[(?:\d{1,2};?)+m/gm, function(t) {
+            console.log(['zz', t.substring(2, t.length-1)]);
+            return '<span class="c' +
+                t.substring(2, t.length-1).replace(';', ' c')
+                + '">';
+        }).replace(/\x1b\[m/gm, '</span>');
     }
-  
+    
     format_linkify = function(s) {
-      var before = s;
+        var before = s;
         for (u in urls)  {
-          var s = s.replace(urls[u][0], urls[u][1]);
+            var s = s.replace(urls[u][0], urls[u][1]);
         }
         console.log(["debug-linkify", before, s]);
         return s;
@@ -86,7 +86,7 @@ $MOD('format', function(){
                 return '<div class="markdown">' +
                     markdown.toHTML(text.substr(9)) + '</div>';
             }
-    }            
+        }            
         text = format_escape(text);
         text = format_blank(text);
         text = format_cr(text);
@@ -103,7 +103,7 @@ $MOD('format', function(){
             var text=self.text();
             text = format(text);
             self.html(text);
-        })
+        });
     }
 
     function gen_quote(post){
@@ -117,7 +117,7 @@ $MOD('format', function(){
             quote: quote,
             userid: post.userid,
             username: post.username,
-            filename: post.filename,
+            filename: post.filename
         }
     }
 
@@ -131,13 +131,13 @@ $MOD('format', function(){
             title: title,
             quote: quote,
             from: mail.owner,
-            index: mail.index,
+            index: mail.index
         }
     }
     
     return {
         'format': format,
         gen_quote: gen_quote,
-        gen_quote_mail: gen_quote_mail,
+        gen_quote_mail: gen_quote_mail
     };
 })

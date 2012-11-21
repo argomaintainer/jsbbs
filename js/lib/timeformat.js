@@ -91,7 +91,7 @@ $MOD('timeformat', function(){
 
     return {
         "nice_timestamp": niceTimestamp,
-        "nice_time": niceTimeWord,
+        "nice_time": niceTimeWord
     }
 
 })
