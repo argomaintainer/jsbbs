@@ -9,10 +9,10 @@ $MOD('format', function(){
         "/": '&#x2F;'
     };
 
-    var urls = [
+  var urls = [
 
   // 1. jpg|png|gif pic to <img> tag, class from link
-  [/(http:&#x2F;&#x2F;.+?\.)(jpg|png|gif)/ig, '<img src="$1$2" class="" alt="" />'],
+  [/(http:&#x2F;&#x2F;.+?\.)(jpg|png|gif|jpeg)/ig, '<img src="$1$2" class="" alt="" />'],
   [/(http:&#x2F;&#x2F;.+\.)(mp3)/g, 
     '<audio src="$1$2" controls="controls" />'],
 
@@ -21,8 +21,8 @@ $MOD('format', function(){
   //'$1<embed wmode="opaque" src="http://player.youku.com/player.php/sid/$3/v.swf" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>'],
 
   // url
-	[/(^|\s|<br>|&nbsp;|\n|>)(www\..+?\..+?)(\s|$|<br>|&nbsp;|<)/g,		'$1<a href="http://$2">$2</a>$3'],
-	[/(^|\s|<br>|&nbsp;|\n|>)(((https?|ftp):&#x2F;&#x2F;).+?)(\s|$|<br>|&nbsp;|<)/g,	'$1<a href="$2">$2</a>$5'],
+	[/(^|\s|<br>|&nbsp;|\n|>)(www\..+?\..+?)(\s|$|<br>|&nbsp;|<)/g,		'$1<a target="_blank" href="http://$2">$2</a>$3'],
+	[/(^|\s|<br>|&nbsp;|\n|>)(((https?|ftp):&#x2F;&#x2F;).+?)(\s|$|<br>|&nbsp;|<)/g,	'$1<a target="_blank" href="$2">$2</a>$5'],
    //@gcc
   [/(^|&nbsp;|<br>|\n)@([a-zA-Z]{2,12})/g,	'$1<a href="#!user?userid=$2">@$2</a>'],
   
