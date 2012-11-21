@@ -1,0 +1,26 @@
+<button type="button" class="close pull-right" data-submit="close_popwindow">×</button>    
+<div id="pop-title">
+  <h3>修改文章</h3>
+</div>
+<div id="pop-content">
+  <div class="editor">
+    <div class="editor-group">
+      <input data-group="editpost" name="title" class="input-block-level" type="text" placeholder="标题 ..." value="${title}"/>
+    </div>
+    <div class="editor-group">
+      <textarea data-group="editpost" name="content" rows="22" placeholder="好心情 ：-）" class="input-block-level">${content}</textarea>
+    </div>
+    <input data-group="editpost" type="hidden" name="toedit" value="${filename}" />
+  </div>
+</div>
+<div id="pop-bar">
+  <div>
+    <button data-submit="publish_edit" data-group="editpost" class="btn btn-success">确认修改</button>
+    <span class="help-inline">Ctrl+Enter快速发表</span>
+    <ul class="pull-right inline-list">
+      <li><button class="btn btn-small btn-v">
+          <i class="item-attach"></li></i>
+      <li><a href="#">发帖须知</a></li>
+    </ul>
+  </div>
+</div>

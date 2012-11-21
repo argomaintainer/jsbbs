@@ -18,6 +18,10 @@
       <div class="controls">
         <input type="file" name="avatar" id="input-avatar">
         <button type="submit" class="btn btn-small">保存</button>
+        <span class="help-block">
+          目前头像只支持 <em>jpg</em> 格式，建议最少为 72x72 像素<br/>
+          头像可以通过 <a href="${url_for_root(url_for_avatar(self.userid))}">
+            ${url_for_root(url_for_avatar(self.userid))}</a> 访问</span>
       </div>
     </div>
   </form>
@@ -29,6 +33,10 @@
         <input type="text" name="username" id="input-username"
                value="${self.username}">
         <button type="submit" class="btn btn-small">保存</button>
+        <span class="help-block">
+          对你的文章的引用会留下你的id和昵称<br/>
+          昵称最多9个汉字
+        </span>
       </div>
     </div>
   </form>
@@ -39,7 +47,10 @@
       <div class="controls">
         <textarea rows="10" class="input-xxlarge"
                   name="plan">${self.plan}</textarea>
-        <button type="submit" class="btn btn-small">保存</button>
+        <span class="help-inline">
+          个人说明档支持markdown和bbsdown
+        </span>
+        <button type="submit" class="btn btn-small">保存</button>        
       </div>
     </div>
   </form>
@@ -51,6 +62,9 @@
         <textarea rows="12" class="input-xxlarge"
                   name="signature">${self.signature}</textarea>
         <button type="submit" class="btn btn-small">保存</button>
+        <span class="help-inline">
+          六行一组，发文时随机加入
+        </span>
       </div>
     </div>
   </form>

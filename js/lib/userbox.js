@@ -42,25 +42,60 @@ $MOD('jsbbs.userbox', function(){
     }                             
     $G.submit.refresh_fav = refresh_fav;
 
+    function check_has_new_mail(callback){
+        $api.check_has_new_mail(function(data){
+            if(data.success){
+                if(data.data=='1'){
+                    $('#userbox').addClass('hasnewmail');
+                }
+                else{
+                    $('#userbox').removeClass('hasnewmail');
+                }
+                if(callback){
+                    callback();
+                }
+            }
+        });
+    }
+
+    var mail_checker;
+    function launch_mail_checker(enable){
+        if(mail_checker){
+            clearInterval(mail_checker);
+        }
+        if(enable){
+            check_has_new_mail();
+            mail_checker = setInterval(check_has_new_mail, 30000);
+        }
+    }
+
+    register_hook('after_login_success');
+    register_hook('after_refresh_userbox');
+    bind_hook('after_login_success', refresh_fav);
+    bind_hook('after_refresh_userbox', function(data){
+        launch_mail_checker(data.success);
+    });
+
     $G('authed', false);
     function refresh_userbox(){
-        var fav;
         $api.get_self_info(function(data){
+            var udata;
             if(data.success){
-                $G.authed = true;
-                data = { u: data.data, authed: true};
+                udata = { u: data.data, authed: true};
+                $G.authed = udata;
+                $G.hooks.after_login_success();
             }
             else{
                 $G.authed = false;
-                data = { authed: false };
             }
             $('#userbox').empty();
-            render_template('userbox', data, '#userbox');
-            refresh_fav();
+            render_template('userbox', udata, '#userbox');
+            $G.hooks.after_refresh_userbox(data);
         });
     }                           
     return {
         'refresh_fav': refresh_fav,
         'refresh_userbox' : refresh_userbox,
     }
+
 })
