@@ -276,6 +276,9 @@ $MOD('frame::board', function(){
                     current_page: start_page,
 		        });
                 set_page(start_page);
+                if(data.data.www.widgets){
+                    load_widgets(data.data.www.widgets);
+                }
             }
             else{
                 raise404(ERROR[data.code]);

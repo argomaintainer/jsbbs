@@ -16,6 +16,7 @@ $MOD('argo_api', function(){
             $.get('/ajax/board/get',
                   {
                       boardname: boardname,
+                      www: true,
                   },
                   callback);
         },
@@ -25,6 +26,14 @@ $MOD('argo_api', function(){
                       sec_code: sec_code,
                   },
                   callback);
+        },
+        'set_board_www_etc': function(boardname, data, callback){
+            $.post('/ajax/board/setwww',
+                   {
+                       boardname: boardname,
+                       data: data,
+                   },
+                   callback);
         },
         'clear_board_unread': function(boardname, callback){
             $.post('/ajax/board/clear',
