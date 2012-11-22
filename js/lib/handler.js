@@ -679,7 +679,7 @@ $MOD('frame::topic', function(){
                         local.topiclist = data.data;
                         local.last_index = local.from_index =
                             local.oldest_index = 
-                            local.topiclist.indexOf(kwargs.filename);
+                            $.inArray(kwargs.filename, local.topiclist);
                         render_template('topic-framework');
                         submit.load_next();
                     }
@@ -1026,7 +1026,7 @@ $MOD('frame::admin_board', function(){
         var a = text.split('\n');
         var links = [];
         for_each_array(a, function(ele){
-            if(ele.indexOf(',')!=-1){
+            if($.inArray(',', ele)!=-1){
                 links.push(ele.split(',').slice(0, 2));
             }
             else{
