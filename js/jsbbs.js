@@ -8,6 +8,8 @@ require_jslib('handler');
 require_jslib('url');
 using('frame.url_for', 'url_for_');
 
+require_jslib('jquery.jqPagination');
+
 $MOD('jsbbs.main', function(){    
     bind_hook('after_boot', refresh_userbox);
 })
