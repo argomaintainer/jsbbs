@@ -1167,6 +1167,9 @@ i[class*=" icon-mark-"]:after {
 }
 
 /* telnet format */
+.c0{
+    color: #333;
+}
 .c1{
     font-size: 13px;
     line-height: 1.5;
