@@ -11,7 +11,7 @@ $MOD('frame.url_for', {
             + boardname;
     },
     'topic' : function(filename, boardname){
-        return '#!topic?filename=' + filename + '&&boardname=' + boardname;
+        return '#!topic?boardname=' + boardname + '&&filename=' + filename;
     },
     'mailbox': function(index){
         if(index){

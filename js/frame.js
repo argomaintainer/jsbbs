@@ -600,37 +600,6 @@ using('frame.debug');
 
 $MOD('main', function(){
 
-    console.log([$MOD['frame.hook']]);
-
-    $MOD['frame.hook'].register_hook('after_boot');
-
-    function quite_set_hash(hash){
-        $G.refresh = false;
-        location.hash = hash;
-    }
-    
-    do_while_load(function(){
-
-        $G('refresh', true);  // auto refresh in hashchange
-
-        window.onhashchange = function(){
-            if($G.refresh){
-                refresh_frame();
-            }
-            else{
-                $G.refresh = true;
-            }
-        };
-
-        $G.hooks.after_boot();        
-        refresh_frame();
-
-    })
-
-    return {
-        quite_set_hash: quite_set_hash
-    }
-
 })
 using('main');
 
