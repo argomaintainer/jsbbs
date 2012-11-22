@@ -1,4 +1,4 @@
-<div class="post-wrapper" data-index="${ index }" id="post-${filename}">
+<div class="post-wrapper" data-index="${ index }" id="post-${index}">
   <img class="absolute  img-mid" src="${ url_for_avatar(userid) }"/>
   <div class="post-header">
     <div class="post-info">
@@ -16,22 +16,22 @@
   <div class="post-toolbar text-right">
     <p class="pull-left fade-font">同主题</p>
     <ul class="inline-list">
-      <li><a href="#" data-group="post-${filename}" data-submit="reply_post">
-          <i data-group="post-${filename}" data-submit="reply_post"
+      <li><a href="#" data-group="post-${index}" data-submit="reply_post">
+          <i data-group="post-${index}" data-submit="reply_post"
              class="icon-pencil"></i> 回复 </a></li>
       <li><a href="${url_for_board_i(index, board)}"><i class="icon-th-list"></i> 回到版块 </a></li>
       {{if perm_del }}
-      <li><a href="#" data-group="post-${filename}" data-submit="delete_post">
-          <i data-group="post-${filename}" data-submit="reply_post"
+      <li><a href="#" data-group="post-${index}" data-submit="delete_post">
+          <i data-group="post-${index}" data-submit="reply_post"
              class="icon-trash"></i> 删除 </a>
       </li>
-      <li><a href="#" data-group="post-${filename}" data-submit="editpost">
-          <i data-group="post-${filename}" data-submit="editpost"
+      <li><a href="#" data-group="post-${index}" data-submit="editpost">
+          <i data-group="post-${index}" data-submit="editpost"
              class="icon-edit"></i> 修改 </a>
       </li>
       {{/if}}
     </ul>
   </div>
-  <input type="hidden" name="filename" data-group="post-${filename}"
+  <input type="hidden" name="filename" data-group="post-${index}"
          value="${filename}"/>
 </div>      

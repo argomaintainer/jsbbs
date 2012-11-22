@@ -455,6 +455,7 @@ $MOD('frame::post', function(){
     }
 
     submit['editpost'] = function(kwargs, e){
+        console.log(['wk', kwargs, e]);
         $api.get_post(local.boardname, kwargs.filename,
                       function(data){
                           if(data.success){
