@@ -9,7 +9,7 @@ $MOD('argo_api', function(){
 		}
 
 		return jQuery.ajax({
-			type: method,
+			type: 'get',
 			url: url,
 			data: data,
 			success: callback,
