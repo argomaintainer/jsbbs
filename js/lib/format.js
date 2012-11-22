@@ -60,12 +60,24 @@ $MOD('format', function(){
     }
 
     format_esc = function(s) {
-        return s.replace(/\x1b\[(?:\d{1,2};?)+m/gm, function(t) {
+        var segments = s.replace(/\x1b\[(?:\d{1,2};?)+m/gm, function(t) {
             console.log(['zz', t.substring(2, t.length-1)]);
             return '<span class="c' +
                 t.substring(2, t.length-1).replace(';', ' c')
                 + '">';
-        }).replace(/\x1b\[m/gm, '</span>');
+        });
+        segments = segments.split(/\x1b\[m/gm);
+        var res = '';
+        for (var i = 0; i < segments.length; i++) {
+           var seg = segments[i];
+           var matches = seg.match(/<span class=\"(c\d{1,2}\s?)+\"/gm);
+           var cnt = 0;
+           if (matches) cnt = matches.length;
+           res += seg;
+           while(cnt--) res += '</span>';
+        }
+        //console.log(['split', s, segments, res]);
+        return res;
     }
     
     format_linkify = function(s) {
@@ -73,7 +85,7 @@ $MOD('format', function(){
         for (u in urls)  {
             var s = s.replace(urls[u][0], urls[u][1]);
         }
-        console.log(["debug-linkify", before, s]);
+        //console.log(["debug-linkify", before, s]);
         return s;
     }
     require_jslib('markdown');
