@@ -5,14 +5,17 @@
 <div id="pop-content">
   <div class="editor">
     <div class="editor-group">
-      <input data-group="newmail" name="receiver" class="input-block-level"
-             type="text" placeholder="收件人 ..."{{if touserid }} value="${touserid}"{{/if}} />
+      <div class="input-prepend">
+        <span class="add-on">@</span>
+        <input data-group="newmail" name="receiver" class="input-xlarge"
+               type="text" placeholder="收件人 ..."{{if touserid }} value="${touserid}"{{/if}} />
+      </div>
     </div>
     <div class="editor-group">
       <input data-group="newmail" name="title" class="input-block-level" type="text" placeholder="标题 ..." />
     </div>
     <div class="editor-group">
-      <textarea data-group="newmail" name="content" rows="22" placeholder="好心情 ：-）" class="input-block-level"></textarea>
+      <textarea data-group="newmail" name="content" rows="18" placeholder="好心情 ：-）" class="input-block-level"></textarea>
     </div>
   </div>
 </div>

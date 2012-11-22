@@ -1,4 +1,4 @@
-<div class="withborderbottom">
+<div class="small-page-header">
   <div class="padding-side">
     <h2 class="inline">${ $G.local.boardname }</h2> &nbsp;
     <a href="${url_for_board($G.local.boardname)}"> « 回到版块</a>
@@ -9,9 +9,7 @@
   <a href="${ url_for_topic($G.local.topiclist[0], $G.local.boardname) }"><i class="blur icon-arrow-up"></i></a>
 </div>
 {{/if}}
-<div class="padding-side">
-  <div id="post-container"></div>
-</div>
+<div id="post-container"></div>
 <div id="post-down" class="page-btn">
   <a data-submit="load_next"><i class="icon-arrow-down"></i></a>
   <div class="hidden">
