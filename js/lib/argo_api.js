@@ -1,8 +1,26 @@
 $MOD('argo_api', function(){
 
+    function get_nc( url, data, callback, type ) {
+        // ajax get no cache
+		if ( jQuery.isFunction( data ) ) {
+			type = type || callback;
+			callback = data;
+			data = undefined;
+		}
+
+		return jQuery.ajax({
+			type: method,
+			url: url,
+			data: data,
+			success: callback,
+            cache: false,
+			dataType: type
+		});
+	}
+
     function ajax_getor_nopara(url){
         return function(callback){
-            $.get(url, callback);
+            get_nc(url, callback);
         }
     }
         
@@ -13,7 +31,7 @@ $MOD('argo_api', function(){
         'get_all_boardsname': ajax_getor_nopara('/ajax/board/all'),
         'get_all_boards': ajax_getor_nopara('/ajax/board/alls'),
         'get_board_info': function(boardname, callback){
-            $.get('/ajax/board/get',
+            get_nc('/ajax/board/get',
                   {
                       boardname: boardname,
                       www: true
@@ -21,7 +39,7 @@ $MOD('argo_api', function(){
                   callback);
         },
         "get_boards_by_section": function(sec_code, callback){
-            $.get('/ajax/board/getbysec',
+            get_nc('/ajax/board/getbysec',
                   {
                       sec_code: sec_code
                   },
@@ -44,7 +62,7 @@ $MOD('argo_api', function(){
         },
         'get_postindex': function(boardname, type, start, callback){
             // type = normal | digest | topic
-            $.get('/ajax/post/list',
+            get_nc('/ajax/post/list',
                   {
                       boardname: boardname,
                       type: type,
@@ -94,7 +112,7 @@ $MOD('argo_api', function(){
                    callback);
         },
         'get_post': function(boardname, filename, callback){
-            $.get('/ajax/post/get',
+            get_nc('/ajax/post/get',
                   {
                       boardname: boardname,
                       filename: filename
@@ -103,7 +121,7 @@ $MOD('argo_api', function(){
         },
         'get_near_postname': function(boardname, filename, direction, callback){
             // direction = prev | next
-            $.get('/ajax/post/nearname',
+            get_nc('/ajax/post/nearname',
                   {
                       boardname: boardname,
                       filename: filename,
@@ -112,7 +130,7 @@ $MOD('argo_api', function(){
                   callback);
         },
         'get_post_topiclist': function(boardname, filename, callback){
-            $.get('/ajax/post/topiclist',
+            get_nc('/ajax/post/topiclist',
                   {
                       boardname: boardname,
                       filename: filename
@@ -134,7 +152,7 @@ $MOD('argo_api', function(){
         },
 
         'query_user': function(userid, callback){
-            $.get('/ajax/user/query',
+            get_nc('/ajax/user/query',
                   {
                       userid: userid
                   },
@@ -185,11 +203,11 @@ $MOD('argo_api', function(){
         },
 
         'get_self_info': function(callback){
-            $.get('/ajax/user/info', callback);
+            get_nc('/ajax/user/info', callback);
         },
 
         'get_self_fav': function(callback){
-            $.get('/ajax/user/fav', callback);
+            get_nc('/ajax/user/fav', callback);
         },
 
         'add_self_fav': function(boardname, callback){
@@ -209,15 +227,15 @@ $MOD('argo_api', function(){
         },
 
         'get_mailbox_info': function(callback){
-            $.get('/ajax/mail/mailbox', callback);
+            get_nc('/ajax/mail/mailbox', callback);
         },
 
         'check_has_new_mail': function(callback){
-            $.get('/ajax/mail/check', callback);
+            get_nc('/ajax/mail/check', callback);
         },
 
         'get_maillist': function(start, callback){
-            $.get('/ajax/mail/list',
+            get_nc('/ajax/mail/list',
                   {
                       start: start
                   },
@@ -225,7 +243,7 @@ $MOD('argo_api', function(){
         },
 
         'get_maillist_limit': function(start, limit, callback){
-            $.get('/ajax/mail/list',
+            get_nc('/ajax/mail/list',
                   {
                       start: start,
                       limit: limit
@@ -234,7 +252,7 @@ $MOD('argo_api', function(){
         },
 
         'get_mail': function(index, callback){
-            $.get('/ajax/mail/get',
+            get_nc('/ajax/mail/get',
                   {
                       index: index
                   },

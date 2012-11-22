@@ -1012,7 +1012,7 @@ $MOD('frame::admin_board', function(){
         if(widgets.length < 2){
             widgets.length = 2;
         }
-        if(widgets[0] && (widgets[0].title=="版块介绍")){
+        if(widgets[0] && (widgets[0].title=="版主的话")){
             ret.intro = widgets[0].text;
         }
         else{
@@ -1045,7 +1045,7 @@ $MOD('frame::admin_board', function(){
         if(kwargs.intro)
             widgets.push({
                 type: 'text',
-                title: '版块介绍',
+                title: '版主的话',
                 text: kwargs.intro
             });
         if(kwargs.links)
