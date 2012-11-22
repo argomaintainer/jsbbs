@@ -887,7 +887,6 @@ $MOD('frame::readmail', function(){
     submit = {};
 
     function pop_reply_mail(kwargs){
-        console.log(['mm', local.mail]);
         var quote = $MOD.format.gen_quote_mail(local.mail);
         init_popwindow('popwindow/replymail', quote);
     }
@@ -914,7 +913,6 @@ $MOD('frame::readmail', function(){
 
     function set_mail(index, success, failed){
         $api.get_mail(index, function(data){
-            console.log(data.data);
             if(data.success){
                 var text = $MOD.format.format(data.data);
                 local.index = index;
@@ -945,7 +943,7 @@ $MOD('frame::readmail', function(){
 
     submit.next_mail = function(){
         $('.post-wrapper').fadeTo(200, 0.61, function(){
-            set_mail(local.index + 1, function(){
+            set_mail(Number(local.index) + 1, function(){
                 quite_set_hash(url_for_readmail(local.index));
             }, last_alerter);
         });
@@ -953,7 +951,7 @@ $MOD('frame::readmail', function(){
 
     submit.prev_mail = function(){
         $('.post-wrapper').fadeTo(200, 0.61, function(){
-            set_mail(local.index - 1, function(){
+            set_mail(Number(local.index) - 1, function(){
                 quite_set_hash(url_for_readmail(local.index));
             }, oldest_alerter);
         });
