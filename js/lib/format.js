@@ -61,10 +61,13 @@ $MOD('format', function(){
 
     format_esc = function(s) {
         var segments = s.replace(/\x1b\[(?:\d{1,2};?)+m/gm, function(t) {
-            console.log(['zz', t.substring(2, t.length-1)]);
-            return '<span class="c' +
-                t.substring(2, t.length-1).replace(';', ' c')
-                + '">';
+            //console.log(['zz', t.substring(2, t.length-1)]);
+            var colors = t.substring(2, t.length-1).split(';');
+            console.log(colors);
+            for (var i = 0; i< colors.length; i++) {
+              colors[i] = 'c'+colors[i];
+            }
+            return '<span class="'+ colors.join(' ') + '">';
         });
         segments = segments.split(/\x1b\[m/gm);
         var res = '';
