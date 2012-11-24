@@ -4,8 +4,9 @@ DATA_WIDGETS = {
             title: '文章导读',
             type: 'links',
             links : [
-                ['argo小礼堂', '#!page?path=hull.html'],
-                ['常见问题', '#!topic?filename=M.1353172024.A&&boardname=sysop']
+                ['新版测试问题合集～～',
+                 '#!topic?boardname=BBS_Help&&filename=M.1353753687.A'],
+                ['argo小礼堂', '#!page?path=hull.html']
             ]
         },
         {
@@ -15,6 +16,8 @@ DATA_WIDGETS = {
         }
     ]
 }
+
+http://bbs.sysu.edu.cn:8080/n/index.html#!topic?boardname=Sale&&filename=M.1353753920.A
 
 ERROR = {
     101: '服务器发生错误',
