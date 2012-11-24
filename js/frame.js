@@ -1,10 +1,11 @@
 $MOD('console', function(){
 
-    if(typeof console == "undefine"){
-        console = {
+    if(typeof window.console == "undefined"){
+        window.console = {
             log: function(){}
         };
     };
+    
 })
 
 $MOD('frame.load_lib', function(){

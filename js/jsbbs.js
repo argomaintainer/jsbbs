@@ -4,6 +4,7 @@ $MOD('jsbbs.main', function(){
 
     require_jslib('userbox');
     using('jsbbs.userbox');
+
     require_jslib('argo_api');
     import_module('argo_api', '$api');
     require_jslib('scrollbar');
@@ -38,7 +39,7 @@ $MOD('jsbbs.main', function(){
             if(!$.support.objectAll){
                 raise_may_no_good_browser();
             }
-            
+
             console.log([$MOD['frame.hook']]);
             
             window.onhashchange = function(){
