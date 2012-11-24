@@ -1,16 +1,19 @@
-require_jslib('userbox');
-using('jsbbs.userbox');
-require_jslib('argo_api');
-import_module('argo_api', '$api');
-require_jslib('scrollbar');
-
-require_jslib('handler');
-require_jslib('url');
-using('frame.url_for', 'url_for_');
-
-require_jslib('jquery.jqpagination');
-
 $MOD('jsbbs.main', function(){
+    
+    $MOD['frame.hook'].register_hook('after_boot');
+
+    require_jslib('userbox');
+    using('jsbbs.userbox');
+    require_jslib('argo_api');
+    import_module('argo_api', '$api');
+    require_jslib('scrollbar');
+
+    require_jslib('handler');
+    require_jslib('url');
+    using('frame.url_for', 'url_for_');
+
+    require_jslib('jquery.jqpagination');
+
 
     function raise_too_old_browser(){
         location = "choose_modern_browsers.html";
@@ -30,8 +33,6 @@ $MOD('jsbbs.main', function(){
             }
             
             console.log([$MOD['frame.hook']]);
-
-            $MOD['frame.hook'].register_hook('after_boot');
 
             function quite_set_hash(hash){
                 $G.refresh = false;

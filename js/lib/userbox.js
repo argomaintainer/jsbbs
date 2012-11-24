@@ -75,7 +75,7 @@ $MOD('jsbbs.userbox', function(){
     bind_hook('after_refresh_userbox', function(data){
         launch_mail_checker(data.success);
     });
-
+    
     $G('authed', false);
     function refresh_userbox(){
         $api.get_self_info(function(data){
@@ -92,7 +92,8 @@ $MOD('jsbbs.userbox', function(){
             render_template('userbox', udata, '#userbox');
             $G.hooks.after_refresh_userbox(data);
         });
-    }                           
+    }
+    bind_hook('after_boot', refresh_userbox);
     return {
         'refresh_fav': refresh_fav,
         'refresh_userbox' : refresh_userbox
