@@ -21,7 +21,7 @@ body{
     /* background: linear-gradient(top, #f8f8f8 0, #fff 100%); */
     padding-top: 10px;
     padding-bottom: 10px;
-    box-shadow: 0 0 5px #666;
+    box-shadow: 0 0 8px #888;
 }
 
 #topbar{
@@ -875,6 +875,7 @@ i.icon-refreshing{
 .vpagination a{
     display: block;
     position: relative;
+    background: #eee;
 }
 
 .vpagination a:hover{

@@ -70,6 +70,10 @@ $MOD('frame::user', function(){
     local = {};
 
     function pop_new_mail(){
+        if(!$G.authed){
+            show_alert('请先登录再执行此操作：-）');
+            return;
+        }
         init_popwindow('popwindow/newmail', {touserid: local.userid });
     }
     submit.pop_new_mail = pop_new_mail;
@@ -219,6 +223,10 @@ $MOD('frame::board', function(){
     submit['refresh_current_page'] = refresh_current_page;
 
     submit['newpost'] = function(){
+        if(!$G.authed){
+            show_alert('请先登录再执行此操作：-）');
+            return;
+        }
         init_popwindow('popwindow/newpost');
     }
 
@@ -308,6 +316,10 @@ $MOD('frame::board', function(){
     submit['book_fav'] = book_fav;
 
     function clear_board_unread(){
+        if(!$G.authed){
+            show_alert('请先登录再执行此操作：-）');
+            return;
+        }
         var boardname;
         if(cur_board && (boardname = cur_board.boardname)){
             $api.clear_board_unread(boardname, function(data){
@@ -426,6 +438,10 @@ $MOD('frame::post', function(){
     require_jslib('format');
     var reply_post, publish_reply;
     submit['reply_post'] = reply_post = function(kwargs, e){
+        if(!$G.authed){
+            show_alert('请先登录再执行此操作：-）');
+            return;
+        }
         $api.get_post(local.boardname, kwargs.filename,
                       function(data){
                           if(data.success){
@@ -455,7 +471,10 @@ $MOD('frame::post', function(){
     }
 
     submit['editpost'] = function(kwargs, e){
-        console.log(['wk', kwargs, e]);
+        if(!$G.authed){
+            show_alert('请先登录再执行此操作：-）');
+            return;
+        }
         $api.get_post(local.boardname, kwargs.filename,
                       function(data){
                           if(data.success){
@@ -586,6 +605,10 @@ $MOD('frame::topic', function(){
     }, render_template_prepend);
 
     submit.reply_post = function(kwargs, e){
+        if(!$G.authed){
+            show_alert('请先登录再执行此操作：-）');
+            return;
+        }
         $api.get_post(local.boardname, kwargs.filename,
                       function(data){
                           if(data.success){
@@ -629,6 +652,10 @@ $MOD('frame::topic', function(){
     }
 
     submit['editpost'] = function(kwargs, e){
+        if(!$G.authed){
+            show_alert('请先登录再执行此操作：-）');
+            return;
+        }
         $api.get_post(local.boardname, kwargs.filename,
                       function(data){
                           if(data.success){
@@ -803,6 +830,10 @@ $MOD('frame::mail', function(){
     local = {};
 
     function pop_new_mail(){
+        if(!$G.authed){
+            show_alert('请先登录再执行此操作：-）');
+            return;
+        }
         init_popwindow('popwindow/newmail');
     }
     submit.pop_new_mail = pop_new_mail;
@@ -887,6 +918,10 @@ $MOD('frame::readmail', function(){
     submit = {};
 
     function pop_reply_mail(kwargs){
+        if(!$G.authed){
+            show_alert('请先登录再执行此操作：-）');
+            return;
+        }
         var quote = $MOD.format.gen_quote_mail(local.mail);
         init_popwindow('popwindow/replymail', quote);
     }

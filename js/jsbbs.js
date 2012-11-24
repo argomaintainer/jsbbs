@@ -21,6 +21,13 @@ $MOD('jsbbs.main', function(){
 
     function raise_may_no_good_browser(){
     }
+    
+    $G('refresh', true);  // auto refresh in hashchange
+
+    function quite_set_hash(hash){
+        $G.refresh = false;
+        location.hash = hash;
+    }
 
     do_while_load(function(){
 
@@ -33,14 +40,7 @@ $MOD('jsbbs.main', function(){
             }
             
             console.log([$MOD['frame.hook']]);
-
-            function quite_set_hash(hash){
-                $G.refresh = false;
-                location.hash = hash;
-            }
             
-            $G('refresh', true);  // auto refresh in hashchange
-
             window.onhashchange = function(){
                 if($G.refresh){
                     refresh_frame();
@@ -54,12 +54,13 @@ $MOD('jsbbs.main', function(){
             refresh_frame();
             
             bind_hook('after_boot', refresh_userbox);
-
-            return {
-                quite_set_hash: quite_set_hash
-            }
             
         }
     });
-    
+
+    return {
+        quite_set_hash: quite_set_hash
+    }
+
 })
+using('jsbbs.main');
