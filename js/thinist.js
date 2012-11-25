@@ -11,7 +11,7 @@
     var ready=false;
     $(document).ready(function(){
         ready=true;
-    })
+    });
     function do_while_load(fun){
         if(ready){
             return fun();
@@ -46,7 +46,7 @@
     $Type = function(typename, attrnames){
         var Typer = function(){
             return typename;
-        }
+        };
         Typer.prototype.__type__ = typename;
         Typer.prototype.__attrs__ = attrnames;
         Typer.prototype.create = function(vals){
@@ -62,14 +62,14 @@
                 }
             }
             return obj;
-        }
+        };
         Typer.prototype.create.Typer = Typer;
         $Type[typename] = Typer.prototype.create;
         $Type[typename].istyper = function(obj){
             return obj.__type__ == typename;
-        }
+        };
         return Typer.prototype.create;
-    }
+    };
     window.$Type = $Type;
 
     /*
@@ -99,7 +99,7 @@
 
     */
     var $G;
-    function Empty(){}
+    function Empty(){};
     $G = function(varname, initval, builder){
         if(typeof builder == "undefined"){
             $G[varname] = initval;
@@ -107,21 +107,23 @@
         }
         else{
             if(typeof builder == "object"){
-                if(builder.set==null)
+                if(builder.set==null){
                     builder.set = Empty;
+                }
                 Object.defineProperty($G, varname, builder);
             }
             else{
                 var obj = builder();
-                if(obj.set==null)
+                if(obj.set==null){
                     obj.set = Empty;
+                }
                 Object.defineProperty($G, varname, obj);
             }
             if(typeof initval != "undefined"){
                 $G[varname] = initval;
             }
         };
-    }
+    };
     window.$G = $G;
 
     /*
@@ -168,16 +170,16 @@
         else{
             $MOD[modname] = builder;
         }
-    }
+    };
     $MOD.__require__ = function(modname){
         if(!(modname in $MOD)){
             throw 'Require a unexists mod.[' + modname + ']';
         }
         return $MOD[modname];
-    }
-    window.$MOD = $MOD
+    };
+    window.$MOD = $MOD;
 
-})(window)
+})(window);
 
 $MOD('__buildin__', {
 
@@ -205,6 +207,6 @@ $MOD('__buildin__', {
 
     require_module: $MOD.__require__
 
-})
+});
 
 $MOD.__buildin__.using('__buildin__');
