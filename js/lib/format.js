@@ -25,7 +25,7 @@ $MOD('format', function(){
          '<embed wmode="opaque" src="$1" align="middle" width="257" height="33" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>'],
 
         // tudou
-        [/(http:&#x2F;&#x2F;www\.tudou\.com&#x2F;\w&#x2F;[\w\d]*(&#x2F;?)(&amp;[\w\d=_]*)*&#x2F;v\.swf)/g,
+        [/(http:&#x2F;&#x2F;www\.tudou\.com&#x2F;\w&#x2F;[\w\d\-]*(&#x2F;?)(&amp;[\w\d=_]*)*&#x2F;v\.swf)/g,
          '<embed src="$1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="opaque" width="480" height="400"></embed>'],        
 
         // url
