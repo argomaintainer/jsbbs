@@ -114,6 +114,10 @@ ul.inline-list>li{
     text-align: right;
 }
 
+.text-left{
+    text-align: left;
+}
+
 .form-center{
     padding:1em;
     color: #777;
@@ -1300,3 +1304,14 @@ th.th-center{
     line-height: 18px;
 }
 
+.nobtn{
+    box-shadow: none;
+    border: none;
+    background: transparent;
+}
+
+.btn-group > .btn, .btn-group > .dropdown-menu > .nobtn,
+a.nobtn{
+    color: #47a;
+    font-size: 12px;
+}    

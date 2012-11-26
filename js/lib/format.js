@@ -11,6 +11,10 @@ $MOD('format', function(){
 
     var urls = [
 
+        // 0. force url
+        [/(^|\s|<br>|&nbsp;|\n|>)&lt;(((https?|ftp):&#x2F;&#x2F;).+?)&gt;(\s|$|<br>|&nbsp;|<)/g,	'$1<a target="_blank" href="$2">$2</a>$5'],
+
+
         // 1. jpg|png|gif pic to <img> tag, class from link
         [/(^|\s|<br>|&nbsp;|\n|>)(http:&#x2F;&#x2F;.+?\.)(jpg|png|gif|jpeg)/ig, '$1<img src="$2$3" class="" alt="" />'],
         [/(^|\s|<br>|&nbsp;|\n|>)(http:&#x2F;&#x2F;.+\.)(mp3)/g, 

@@ -512,6 +512,15 @@ $MOD('frame::post', function(){
                              }
                          });
     }
+
+    submit['share-post'] = function(kwargs, e){
+        require_jslib('share_btn');
+        $MOD.share_btn.share_window(
+            url_for_url(url_for_topic(kwargs.filename, cur_boardname)),
+            $('#title-'+kwargs.index).text() + ' » '
+                + cur_boardname + ' - 逸仙时空',
+            $(e.target).attr('data-args'));            
+    }
     
     declare_frame({
         mark : 'flow',
@@ -692,6 +701,15 @@ $MOD('frame::topic', function(){
                                  show_alert(ERROR[data.code], 'danger');
                              }
                          });
+    }
+
+    submit['share-post'] = function(kwargs, e){
+        require_jslib('share_btn');
+        $MOD.share_btn.share_window(
+            url_for_url(url_for_topic(kwargs.filename, cur_boardname)),
+            $('#title-'+kwargs.index).text() + ' » '
+                + cur_boardname + ' - 逸仙时空',
+            $(e.target).attr('data-args'));            
     }
 
     declare_frame({

@@ -2,7 +2,7 @@
   <img class="absolute img-mid img-rounded" src="${ url_for_avatar(userid) }"/>
   <div class="post-header">
     <div class="post-info">
-      <h3>${title}</h3>
+      <h3 id="title-${index}">${title}</h3>
       <div>
         <i class="icon-user"></i> 发信人：<a href="${ url_for_user(userid) }">${userid}</a> (${username})
         <i class="icon-time"></i><time>${post_time}</time>
@@ -30,9 +30,28 @@
           <i data-group="post-${index}" data-submit="editpost"
              class="icon-edit"></i> 修改 </a>
       </li>
+      <li>
+        <div class="text-left btn-group">
+          <a class="btn nobtn dropdown-toggle" data-toggle="dropdown" href="#">
+            &nbsp;<span class="caret"></span>&nbsp;
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="#" data-args="sina" data-group="post-${index}"
+                   data-submit="share-post">分享到微博</a></li>
+            <li><a href="#" data-args="renren" data-group="post-${index}"
+                   data-submit="share-post">分享到人人</a></li>
+            <li><a href="#" data-args="qq" data-group="post-${index}"
+                   data-submit="share-post">分享到QQ</a></li>
+            <li><a href="#" data-args="douban" data-group="post-${index}"
+                   data-submit="share-post">分享到豆瓣</a></li>
+          </ul>
+        </div>
+      </li>
       {{/if}}
     </ul>
   </div>
   <input type="hidden" name="filename" data-group="post-${index}"
          value="${filename}"/>
+  <input type="hidden" name="index" data-group="post-${index}"
+         value="${index}"/>
 </div>      
