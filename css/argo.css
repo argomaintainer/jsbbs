@@ -872,7 +872,8 @@ i.icon-refreshing{
     top: 0;
     right:-12px;
     border:1px solid #bbb;
-    border-radius:1px solid #c0c0c0;
+    border-top-right-radius: 7px;
+    border-bottom-right-radius: 7px;
     width:10px;
 }    
 
@@ -922,6 +923,7 @@ i.icon-refreshing{
 
 .vpagination .first{
     height:5%;
+    border-top-right-radius: 7px;
 }
 
 .vpagination .previous{
@@ -934,6 +936,7 @@ i.icon-refreshing{
 
 .vpagination .last{
     height:5%;
+    border-bottom-right-radius: 7px;
 }
 
 .arrow-up-bar{
