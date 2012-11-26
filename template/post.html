@@ -15,34 +15,34 @@
   </div>
   <div class="post-toolbar text-right">
     <ul class="inline-list">
-      <li><a href="#" data-group="post-${index}" data-submit="reply_post">
+      <li><a href="javascript:void(0)" data-group="post-${index}" data-submit="reply_post">
           <i data-group="post-${index}" data-submit="reply_post"
              class="icon-pencil"></i> 回复 </a>
       </li>
       <li><a href="${url_for_board_i(index, board)}"><i class="icon-th-list"></i> 回到版块 </a></li>
       <li><a href="${url_for_topic(filename, board)}"><i class="icon-film"></i> 同主题阅读 </a></li>
       {{if perm_del }}
-      <li><a href="#" data-group="post-${index}" data-submit="delete_post">
+      <li><a href="javascript:void(0)" data-group="post-${index}" data-submit="delete_post">
           <i data-group="post-${index}" data-submit="reply_post"
              class="icon-trash"></i> 删除 </a>
       </li>
-      <li><a href="#" data-group="post-${index}" data-submit="editpost">
+      <li><a href="javascript:void(0)" data-group="post-${index}" data-submit="editpost">
           <i data-group="post-${index}" data-submit="editpost"
              class="icon-edit"></i> 修改 </a>
       </li>
       <li>
         <div class="text-left btn-group">
-          <a class="btn nobtn dropdown-toggle" data-toggle="dropdown" href="#">
+          <a class="btn nobtn dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)">
             &nbsp;<span class="caret"></span>&nbsp;
           </a>
           <ul class="dropdown-menu">
-            <li><a href="#" data-args="sina" data-group="post-${index}"
+            <li><a href="javascript:void(0)" data-args="sina" data-group="post-${index}"
                    data-submit="share-post">分享到微博</a></li>
-            <li><a href="#" data-args="renren" data-group="post-${index}"
+            <li><a href="javascript:void(0)" data-args="renren" data-group="post-${index}"
                    data-submit="share-post">分享到人人</a></li>
-            <li><a href="#" data-args="qq" data-group="post-${index}"
+            <li><a href="javascript:void(0)" data-args="qq" data-group="post-${index}"
                    data-submit="share-post">分享到QQ</a></li>
-            <li><a href="#" data-args="douban" data-group="post-${index}"
+            <li><a href="javascript:void(0)" data-args="douban" data-group="post-${index}"
                    data-submit="share-post">分享到豆瓣</a></li>
           </ul>
         </div>
