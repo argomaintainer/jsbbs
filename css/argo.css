@@ -1310,7 +1310,7 @@ th.th-center{
     background: transparent;
 }
 
-.btn-group > .btn, .btn-group > .dropdown-menu > .nobtn,
+.btn-group > .dropdown-menu > .nobtn,
 a.nobtn{
     color: #47a;
     font-size: 12px;
