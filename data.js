@@ -1,12 +1,13 @@
 DATA_WIDGETS = {
     home: [
         {
-            title: '文章导读',
+	    title: '通知公告',
             type: 'links',
             links : [
                 ['新版测试问题合集～～',
                  '#!topic?boardname=BBS_Help&&filename=M.1353753687.A'],
-                ['argo小礼堂', '#!page?path=hull.html']
+                ['argo小礼堂', '#!page?path=hull.html'],
+		['合作社团', '#!page?path=coorg.html']
             ]
         },
         {

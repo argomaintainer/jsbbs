@@ -106,6 +106,10 @@ ul.inline-list>li{
     margin-top: 8%;
 }
 
+.top2em{
+    margin-top: 2em;
+}
+
 .text-center{
     text-align: center;
 }
@@ -1318,3 +1322,17 @@ a.nobtn{
     color: #47a;
     font-size: 12px;
 }    
+
+.brand-ul{
+    list-style-type: none;
+    margin: 0;
+}
+
+.brand-ul img{
+    display: inline-block;
+    height: 48px;
+    width: 48px;
+    border-radius: 5px;
+    box-shadow: 0 0 3px #ccc;
+}
+    
