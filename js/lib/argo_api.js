@@ -60,6 +60,13 @@ $MOD('argo_api', function(){
                    },
                    callback);
         },
+        'get_readmark': function(boardname, callback){
+            get_nc('/ajax/board/readmark',
+                   {
+                       boardname: boardname
+                   },
+                   callback);
+        },
         'get_postindex': function(boardname, type, start, callback){
             // type = normal | digest | topic
             get_nc('/ajax/post/list',
@@ -70,6 +77,28 @@ $MOD('argo_api', function(){
                   },
                   callback);
         },
+        'get_postindex_limit': function(boardname, type, start,
+                                        limit, callback){
+            // type = normal | digest | topic
+            get_nc('/ajax/post/list',
+                  {
+                      boardname: boardname,
+                      type: type,
+                      start: start,
+                      limit: limit,
+                  },
+                  callback);
+        },
+        'get_last_postindex': function(boardname, type, limit, callback){
+            // type = normal | digest | topic
+            get_nc('/ajax/post/list',
+                   {
+                       boardname: boardname,
+                       type: type,
+                       limit: limit,
+                   },
+                   callback);
+        },                
         'new_post': function(boardname, title, content,  callback){
             // type = new | reply | update
             $.post('/ajax/post/add',
@@ -137,7 +166,6 @@ $MOD('argo_api', function(){
                   },
                   callback);
         },
-
         'user_login': function(userid, password, callback){
             $.post('/ajax/login',
                   {

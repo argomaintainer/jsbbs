@@ -16,37 +16,39 @@
       </div>
       {{/if}}
     </div>
-    <div id="board-toolbar">
-      <a class="btn btn-small btn-success" data-submit="newpost">发表话题</a>
-      <a class="btn btn-small" data-submit="clear_unread">清除未读标记</a>
-      <button data-submit="book_fav" class="btn btn-mini btn-info">预订该版</button>
-      <button data-submit="refresh_frame" class="btn btn-mini">&nbsp;<i data-submit="refresh_frame" class="icon-refresh"></i>&nbsp;</button>
-      <div class="btn-group">                  
-        <a class="btn btn-small dropdown-toggle" data-toggle="dropdown">
-          过滤器
-          <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-          <li><a href="#" data-submit="set_topic_loader">只看主题</a></li>
-          <li><a href="#" data-submit="set_digest_loader">只看文摘</a></li>
-          <li><a href="#" data-submit="set_normal_loader">查看全部</a></li>
-        </ul>
+    <div id="board-toolbar-outer">
+      <div id="board-toolbar">
+        <a class="btn btn-small btn-success" data-submit="newpost">发表话题</a>
+        <a class="btn btn-small" data-submit="clear_unread">清除未读标记</a>
+        <button data-submit="book_fav" class="btn btn-mini btn-info">预订该版</button>
+        <button data-submit="refresh_frame" class="btn btn-mini">&nbsp;<i data-submit="refresh_frame" class="icon-refresh"></i>&nbsp;</button>
+        <div class="btn-group">                  
+          <a class="btn btn-small dropdown-toggle" data-toggle="dropdown">
+            过滤器
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="#" data-submit="set_topic_loader">只看主题</a></li>
+            <li><a href="#" data-submit="set_digest_loader">只看文摘</a></li>
+            <li><a href="#" data-submit="set_normal_loader">查看全部</a></li>
+          </ul>
+        </div>
+        {{if board.isadmin }}
+        <a class="btn btn-mini" href="${url_for_admin_board(board.filename)}">管理</a>
+        {{/if}}
       </div>
-      {{if board.isadmin }}
-      <a class="btn btn-mini" href="${url_for_admin_board(board.filename)}">管理</a>
-      {{/if}}
-    </div>
-  </div>
-</div>
-<div id="postlistbox">
-  <div id="postlist-container" class="relative">
-    <div class="vpagination">
-      <input type="text" data-max-page="${ Math.ceil((board.total)/20) }" />
-      <a href="#" class="first" data-action="first"><i class="arrow-up-bar"></i></a>
-      <a href="#" class="previous" data-action="previous"><i class="arrow-up"></i></a>
-      <a href="#" class="next" data-action="next"><i class="arrow-down"></i></a>
-      <a href="#" class="last" data-action="last"><i class="arrow-down-bar"></i></a>
     </div>    
+  </div>  
+</div>
+<div id="postlistbox" class="relative">
+  <div id="postlist-container" class="relative">
     <div id="postlist-content"> <i class="icon-refreshing"></i> 努力地抓取数据中…… </div>
   </div>
+  <div class="vpagination">
+    <input type="text" data-max-page="${ Math.ceil((board.total)/PAGE_LIMIT) }" />
+    <a href="#" class="first" data-action="first"><i class="arrow-up-bar"></i></a>
+    <a href="#" class="previous" data-action="previous"><i class="arrow-up"></i></a>
+    <a href="#" class="next" data-action="next"><i class="arrow-down"></i></a>
+    <a href="#" class="last" data-action="last"><i class="arrow-down-bar"></i></a>
+  </div>    
 </div>

@@ -6,7 +6,7 @@
           <th class="th-center">序号</th>
           <th>刊登者</th>
           <th>日期</th>
-          <th>标题</th>
+          <th id="table-th-title">标题 {{if $G.local.mode_title }} [${$G.local.mode_title}]{{/if}}</th>
           <th>&nbsp;</th>
           <th>&nbsp;</th>
         </tr>
@@ -23,7 +23,7 @@
           </td> 
           <td class="tb-title">
             <i class="${(p.unread!='0')?'unread':'read'}"></i>
-            <a href="${ url_for_post(p.filename, boardname) }&&index=${p.index}">${p.title}</a>
+            <a data-submit="read_post" data-filename="${p.filename}">${p.title}</a>
           </td>
           <td class="tb-mark">
             {{if p.mark.indexOf('g') != -1 }}<i class="icon-mark-g"></i>{{/if}}

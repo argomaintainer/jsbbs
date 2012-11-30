@@ -117,6 +117,8 @@ $MOD('frame::user', function(){
 
 $MOD('frame::board', function(){
 
+    var PAGE_LIMIT = 25;
+
     require_jslib('jquery.jqpagination');
 
     // var Range = $MOD.range.Range,
@@ -145,7 +147,7 @@ $MOD('frame::board', function(){
 
     function new_api_loader(type){
         return function(boardname, start, success, failed){
-            $api.get_postindex(boardname, type, start,
+            $api.get_postindex_limit(boardname, type, start, PAGE_LIMIT,
                                function(data){
                                    if(data.success){
                                        success(data.data);
@@ -175,11 +177,11 @@ $MOD('frame::board', function(){
         number = Number(number);
         if(!(number >0))
             number = 0;
-        return Math.ceil(number / 20);
+        return Math.ceil(number / PAGE_LIMIT);
     }
 
     function set_page(pagenum){
-        var start = pagenum * 20 - 19;
+        var start = pagenum * PAGE_LIMIT - PAGE_LIMIT + 1;
         local.pagenum = pagenum;
         cur_board.loader(cur_board.boardname, start, function(data){
             cur_board.render(cur_board.boardname, data);
@@ -188,18 +190,19 @@ $MOD('frame::board', function(){
         });
     }
 
-    function new_wrapper_loader(loader){
+    function new_wrapper_loader(loader, desc){
         return function(){
             loader(cur_board.boardname, 0, function(data){
                 var total = data[data.length-1].index,
-                pagetotal = Math.ceil(total / 20),
-                curnum = (total % 20) || 20;
+                pagetotal = Math.ceil(total / PAGE_LIMIT),
+                curnum = (total % PAGE_LIMIT) || PAGE_LIMIT;
                 data = data.slice(-curnum);
                 cur_board.loader = loader;
                 $('.vpagination').jqPagination('option', 'current_page',
                                                pagetotal);
                 $('.vpagination').jqPagination('option', 'max_page',
                                                pagetotal);
+                local.mode_title = desc;
             });
         }
     }
@@ -207,9 +210,9 @@ $MOD('frame::board', function(){
     submit['set_normal_loader'] = set_normal_loader
         = new_wrapper_loader(load_normal_post);
     submit['set_digest_loader'] = set_digest_loader
-        = new_wrapper_loader(load_digest_post);
+        = new_wrapper_loader(load_digest_post, '只显示文摘');
     submit['set_topic_loader'] =  set_topic_loader
-        = new_wrapper_loader(load_topic_post);
+        = new_wrapper_loader(load_topic_post, '只显示主题第一贴');
 
     function set_page_anim(pagenum){
         $('#postlist-content').fadeTo(200, 0.61, function(){
@@ -250,6 +253,19 @@ $MOD('frame::board', function(){
         return load_normal_post;
     }
 
+    function read_post(kwargs, e){
+        var filename = $(e.target).attr('data-filename');
+        if(local.mode_title == '只显示主题第一贴'){
+            window.location = url_for_topic(filename,
+                                            cur_board.boardname);
+        }
+        else{
+            window.location = url_for_post(filename,
+                                           cur_board.boardname);
+        }
+    }
+    submit['read_post'] = read_post;
+
     // function get_default_range(){
     //     return $Type.Range([0, NaN]);
     // }
@@ -264,18 +280,27 @@ $MOD('frame::board', function(){
         cur_board.isnull = false;
         
         $api.get_board_info(boardname, function(data){
-            var start_page;
+            var start_page, last;
             if(data.success){
                 cur_board.data = data.data;
                 render_template('board-boardinfo',
                                 {
-                                    board: data.data
+                                    board: data.data,
+                                    PAGE_LIMIT: PAGE_LIMIT
                                 });
                 if(local.hover = kwargs.index){
                     start_page = trim_pagenum(local.hover);
                 }
                 else{
-                    start_page = Math.ceil(data.data.total / 20);
+                    last = data.data.lastread;
+                    if(last==-1){
+                        last = data.data.total;
+                    }
+                    else{
+                        local.hover = last;
+                        console.log(local.hover);
+                    }
+                    start_page = Math.ceil(last / PAGE_LIMIT);
                 }
                 $('.vpagination').jqPagination({
 		            page_string	: '第 {current_page} 页 / 共 {max_page} 页',
@@ -291,6 +316,28 @@ $MOD('frame::board', function(){
                         'background-image',
                         'url("' + data.data.www.brand_url +'")');
                 }
+                $api.get_last_postindex(boardname, 'digest', 5, function(data){
+                    if(data.success){
+                        var l = data.data.reverse();
+                        render_template('widget/postlist', {
+                            title: '最新文摘',
+                            posts: l,
+                            boardname: boardname,
+                            more: 'set_digest_loader',
+                        }, '#dy-widgets');
+                    }
+                });
+                $api.get_last_postindex(boardname, 'topic', 5, function(data){
+                    if(data.success){
+                        var l = data.data.reverse();
+                        render_template('widget/postlist', {
+                            title: '最新主题',
+                            boardname: boardname,
+                            posts: l,
+                            more: 'set_topic_loader',
+                        }, '#dy-widgets');
+                    }
+                });
             }
             else{
                 raise404(ERROR[data.code]);
@@ -545,6 +592,8 @@ $MOD('frame::post', function(){
 })
 
 $MOD('frame::topic', function(){
+
+    var PAGE_LIMIT = 20;
     
     var submit = {},
     local = {};
@@ -596,7 +645,7 @@ $MOD('frame::topic', function(){
     }    
     
     submit['load_next'] = new_loader(
-        20, function(){
+        PAGE_LIMIT, function(){
         $('#post-down [data-submit]').remove();
         $('#post-down .hidden').removeClass('hidden');
     }, function(){
@@ -605,7 +654,7 @@ $MOD('frame::topic', function(){
     }, render_template);
 
     submit['load_prev'] = new_loader(
-        20, function(){
+        PAGE_LIMIT, function(){
             $('#post-up [data-submit]').remove();
             $('#post-up .hidden').removeClass('hidden');
         }, function(){
@@ -844,6 +893,8 @@ $MOD('frame::profile', function(){
 
 $MOD('frame::mail', function(){
 
+    var PAGE_LIMIT = 20;
+
     var submit = {},
     local = {};
 
@@ -874,7 +925,7 @@ $MOD('frame::mail', function(){
     }                       
 
     function set_page(pagenum){
-        var start = pagenum * 20 - 19;
+        var start = pagenum * PAGE_LIMIT - PAGE_LIMIT;
         console.log(start);
         $api.get_maillist(start, function(data){
             if(data.success){
@@ -910,7 +961,7 @@ $MOD('frame::mail', function(){
                 if(data.success){
                     render_template('mail-framework', { mailbox: data.data });
                     local.index = index;
-                    var pagenum = Math.ceil(index / 20);
+                    var pagenum = Math.ceil(index / PAGE_LIMIT);
                     $('.vpagination').jqPagination({
 		                page_string	: '第 {current_page} 页 / 共 {max_page} 页',
 		                paged		: set_page_anim,

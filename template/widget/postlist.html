@@ -1,0 +1,15 @@
+<div class="widget">
+  {{if title }}
+  {{if more }}
+  <button data-submit="${ more }" class="btn-widget"><i class="icon-zoom-in" data-submit="${ more }"></i></button>
+  {{/if}}
+  <div class="widget-header">
+    <h4>${title}</h4>
+  </div>
+  {{/if}}
+  <ul class="small-list">
+    {{each(i, v) posts}}
+    <li><a href="${ url_for_topic(v.filename, boardname) }">${v.title}</a></li>
+    {{/each}}
+  </ul>
+</div>
