@@ -110,6 +110,23 @@ $MOD('argo_api', function(){
                    },
                    callback);
         },
+        'new_post_form': function(selector, callback){
+            // need boardname, title, content, type==new, and else
+            var formData = new FormData($(selector)[0]);
+            $.ajax({
+                url: '/ajax/post/add',
+                type: 'POST',
+                xhr: function(){
+                    var myXhr = $.ajaxSettings.xhr();
+                    return myXhr;
+                },
+                success: callback,
+                data: formData,
+                cache: false,
+                contentType: false,
+                processData: false
+            }, 'json');
+        },                   
         'reply_post': function(boardname, title, content, refname, callback){
             $.post('/ajax/post/add',
                    {

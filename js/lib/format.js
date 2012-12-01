@@ -141,7 +141,7 @@ $MOD('format', function(){
         if(title.substr(0, 4) != 'Re: '){
             title = 'Re: ' + title;
         }
-        quote = post.rawcontent.split('\n').slice(0, 5).join('\n:')
+        quote = post.rawcontent.split('\n').slice(0, 5).join('\n: ')
         return {
             title: title,
             quote: quote,
@@ -156,7 +156,7 @@ $MOD('format', function(){
         if(title.substr(0, 4) != 'Re: '){
             title = 'Re: ' + title;
         }
-        quote = mail.content.split('\n').slice(4, 15).join('\n:');
+        quote = mail.content.split('\n').slice(4, 15).join('\n: ');
         return {
             title: title,
             quote: quote,
@@ -170,4 +170,5 @@ $MOD('format', function(){
         gen_quote: gen_quote,
         gen_quote_mail: gen_quote_mail
     };
+
 })

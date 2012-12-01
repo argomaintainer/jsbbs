@@ -221,7 +221,8 @@ $MOD('frame::board', function(){
     }
 
     function refresh_current_page(){
-        location.hash = url_for_board(cur_board.boardname);
+        // location.hash = url_for_board(cur_board.boardname);
+        refresh_frame();
     }
     submit['refresh_current_page'] = refresh_current_page;
 
@@ -230,23 +231,27 @@ $MOD('frame::board', function(){
             show_alert('请先登录再执行此操作：-）');
             return;
         }
-        init_popwindow('popwindow/newpost');
+        init_popwindow('popwindow/newpost',
+                       { boardname: cur_board.boardname});
     }
 
     submit['publish_post'] = function(kwargs, e){
-        $api.new_post(cur_board.boardname,
-                      kwargs.title,
-                      kwargs.content,
-                      function(data){
-                          if(data.success){
-                              show_alert('发表成功！', 'success');
-                              close_popwindow();
-                              refresh_current_page();
-                          }
-                          else{
-                              show_alert(ERROR[data.code], 'danger');
-                          }
-                      });
+        if(e.target.tagName == 'FORM'){
+            $api.new_post_form('#new-post-form',
+                               // $api.new_post(cur_board.boardname,
+                               //               kwargs.title,
+                               //               kwargs.content,
+                               function(data){
+                                   if(data.success){
+                                       show_alert('发表成功！', 'success');
+                                       close_popwindow();
+                                       refresh_current_page();
+                                   }
+                                   else{
+                                       show_alert(ERROR[data.code], 'danger');
+                                   }
+                               });
+        }
     }
 
     function get_default_postloader(){

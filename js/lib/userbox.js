@@ -19,7 +19,7 @@ $MOD('jsbbs.userbox', function(){
     }
     function sort_favitem(a, b){
         if(a.unread == b.unread)
-            return a.total - b.total;
+            return b.lastpost - a.lastpost;
         return a.unread?-1:1;
     }
 
@@ -34,6 +34,11 @@ $MOD('jsbbs.userbox', function(){
                     data.data.sort(sort_favitem);
                     render_template('widget/fav', { fav: data.data },
                                     '#favbox');
+                    var height = 20 * data.data.length;
+                    if(height > 200){
+                        height = 200;
+                    }
+                    $('#favbox').height(height);
                     $('[data-submit=refresh_fav]').removeClass('refreshing');
                     $G.hooks.after_refresh_fav();
                 }, 500);

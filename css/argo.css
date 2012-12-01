@@ -68,16 +68,16 @@ ul.inline-list>li{
 }
 
 #userfav{
-    height:158px;
     font-size: 12px;
+    overflow: hidden;
 }
 
 #userfav li{
     padding: 0 10px;
 }    
 
-.favbox{
-    height: 118px;
+#favbox ul{
+    margin: 0;
 }
 
 #footer{
@@ -930,6 +930,8 @@ i.icon-refreshing{
 
 .vpagination .next{
     height:45%;
+    border-top: 1px solid #ccc;
+    background: #f4f4f4;
 }
 
 .vpagination .last{
@@ -1357,3 +1359,4 @@ a[data-submit]:hover{
 .title-g a{
     color: #b22;
 }
+
