@@ -221,7 +221,7 @@ $MOD('frame::board', function(){
     }
 
     function refresh_current_page(){
-        set_page_anim(local.pagenum);
+        location.hash = url_for_board(cur_board.boardname);
     }
     submit['refresh_current_page'] = refresh_current_page;
 
@@ -408,10 +408,15 @@ $MOD('frame::post', function(){
         $api.get_post(
             cur_boardname, local.last_filename,
             function(data){
-                render_template(
-                    'post',
-                    handler_post(data.data),
-                    '#post-container');
+                if(data.success){
+                    render_template(
+                        'post',
+                        handler_post(data.data),
+                        '#post-container');
+                }
+                else{
+                    raise404(ERROR[data.code]);
+                }
             });
     }
 

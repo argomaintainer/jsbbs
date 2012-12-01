@@ -21,7 +21,7 @@
           <td class="tb-time">
             <time>${ tf_timestamp(p.update) }</time>
           </td> 
-          <td class="tb-title">
+          <td class="tb-title{{if p.mark.indexOf('g') != -1 }} title-g{{/if}}{{if p.mark.indexOf('m') != -1 }} title-m{{/if}}">
             <i class="${(p.unread!='0')?'unread':'read'}"></i>
             <a data-submit="read_post" data-filename="${p.filename}">${p.title}</a>
           </td>

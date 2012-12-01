@@ -1220,7 +1220,7 @@ color:#222;
 
 #board-header-inner{
     /* box-shadow: 0 1px 4px #ccc; */
-    height: 128px;
+    height: 180px;
     border-bottom: 1px solid #777;
 }
 
@@ -1242,8 +1242,8 @@ th.th-center{
 
 #board-title{
     position: absolute;
-    top: 10px;
-    left: 20px;
+    top: 20px;
+    left: 32px;
     color: #f0f0f0;
 }
 
@@ -1254,7 +1254,7 @@ th.th-center{
 
 #board-toolbar-outer{
     position: absolute;
-    bottom: 6px;
+    bottom: 15px;
     right: 20px;
 }
 
@@ -1352,4 +1352,8 @@ a.nobtn{
 
 a[data-submit]:hover{
     text-decoration: underline;
+}
+
+.title-g a{
+    color: #b22;
 }
