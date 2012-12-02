@@ -1073,8 +1073,7 @@ $MOD('frame::anc', function(){
         enter: function(kwargs){
             $api.get_anc(kwargs.path, function(data){
                 if(data.success){
-                    $('#main').html(data.data);
-                    $('.format').format();
+                    $('#main').html($MOD.format.format(data.data));
                 }
             });
         }
