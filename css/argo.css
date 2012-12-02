@@ -174,7 +174,7 @@ ul.inline-list>li{
 }
 
 .small-font{
-    font-size: 12px;
+    font-size: .8em;
     line-height: 15px;
 }
 
@@ -188,6 +188,13 @@ ul.inline-list>li{
     font-size: 12px;
     line-height: 25px;
     text-shadow: 0 0 4px #fff;
+}
+
+.cell-help-block{
+    line-height: 25px;
+    text-indent: 1em;
+    font-size: 10px;
+    color: #888;
 }
 
 .fade-font{

@@ -17,7 +17,15 @@ $MOD('frame.home', function(){
         enter: function(){
             $.get('/ajax/comp/www_home',
                   function(data){
+                      var secg;
                       if(data.success){
+                          secg = data.data.boardnav;
+                          console.log(['sc', secg]);
+                          for(s in secg){
+                              secg[s].boards.sort(function(a, b){
+                                  return (b.lastpost - a.lastpost);
+                              });
+                          }
                           render_template('home', data.data);
                           load_widgets(data.data.www.widgets);
                       }
