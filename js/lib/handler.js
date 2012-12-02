@@ -12,56 +12,19 @@ $MOD('frame.home', function(){
     var TPL_BOARDNAV = 'home-boardnav',
     TPL_TOPTEN = 'home-topten';
 
-    var ajax = {
-        all_boards : function(container){
-            $api.get_all_boards(function(data){
-                var s;
-                if(data.success){
-                    for(s in data.data){
-                        data.data[s].boards.sort(function(a, b){
-                            return (Number(a.lastpost) - Number(b.lastpost));
-                        });
-                    }
-                    $(container).empty();
-                    render_template(TPL_BOARDNAV, { boards : data.data },
-                                    container);
-                }
-                else{
-                    show_alert('发生错误，读取讨论区失败！', 'danger');
-                }
-            });
-        },
-        topten : function(container){
-            $api.get_topten(function(data){
-                if(data.success){
-                    $(container).empty();
-                    render_template(TPL_TOPTEN,
-                                    {
-                                        posts: data.data
-                                    },
-                                    container);
-                }
-                else{
-                    show_alert('发生错误，读取十大信息失败！', 'danger');
-                }
-            });
-        }
-    }
     declare_frame({
         mark: 'home',
-        basetpl : 'home-framework',
-        isnew : true,
-        keep_widgets: false,
-        enter: function(){},
-        ajax: ajax,
-        local: {
-            format_number: format_number
-        },
-        widgets_loader : function(){
-            return DATA_WIDGETS.home;
+        enter: function(){
+            $.get('/ajax/comp/www_home',
+                  function(data){
+                      if(data.success){
+                          render_template('home', data.data);
+                          load_widgets(data.data.www.widgets);
+                      }
+                  });
         }
     });
-    
+
 });
 
 $MOD('frame::user', function(){
@@ -1216,3 +1179,39 @@ $MOD('frame::admin_board', function(){
     }
     
 })
+
+$MOD('frame::admin', function(){
+
+    var www
+    , submit = {};
+
+    submit['update-www'] = function(kwargs){        
+        var d = jQuery.parseJSON(kwargs.data);
+        console.log(['up', kwargs.data, d]);
+        $api.set_www_etc(d, function(data){
+            if(data.success){
+                show_alert('更新成功！', 'success');
+            }
+            else{
+                show_alert(ERROR[data.code], 'danger');
+            }
+        });
+    }
+
+    declare_frame({
+        mark: 'admin',
+        enter: function(kwargs){
+            $api.get_www_etc(function(data){
+                if(data.success){
+                    www = data.data;
+                    render_template('admin',  { d: json_encode(www) });
+                }
+                else{
+                    show_alert(ERROR[data.code], 'danger');
+                }
+            });
+        },
+        submit: submit
+    });
+
+});

@@ -334,7 +334,17 @@ $MOD('argo_api', function(){
                        indexes: indexes
                    },
                    callback);
-        }
+        },
 
+        'get_www_etc': ajax_getor_nopara('/ajax/www/get'),
+
+        'set_www_etc': function(data, callback){
+            $.post('/ajax/www/set',
+                   {
+                       data: data
+                   },
+                   callback);
+        }
+        
     }
 })

@@ -350,6 +350,7 @@ $MOD('frame.template', function(){
         'load_widgets': load_widgets,
         'json_encode': JSON.stringify,
         'tf_timestamp': $MOD.timeformat.nice_timestamp,
+        'tf_after_yesterday': $MOD.timeformat.afterYesterdayTS,
         'raise404': raise404
     };
 

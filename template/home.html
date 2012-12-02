@@ -1,0 +1,100 @@
+<div class="page-img">
+  <div class="carousel slide">
+    <!-- Carousel items -->
+    <div class="carousel-inner">
+      <div class="active item">
+        <img src="${url_for_img('brand.jpg')}"/>
+        <div class="carousel-caption">
+          <h4>${www.post.title}</h4>
+          <p>${www.post.text}</p>
+        </div>
+      </div>
+      <div class="item">…</div>
+      <div class="item">…</div>
+    </div>
+    <!-- Carousel nav -->
+    <!-- <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a> -->
+    <!-- <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a> -->
+  </div>
+</div>
+<div data-ajax="topten">
+  <div class="cell cell-in">
+    <div class="cell-header">
+      <h3>今日十大</h3>
+    </div>
+    <div class="cell-content">
+      <table class="table-topten odd-even">
+        <tbody>
+          {{each(i, p) topten}}
+          <tr>
+            <td class="text-center"><span class="t10-number t10-${i}">${i+1}</span></td>
+            <td class="topten-title">
+              <div>
+                <a href="${ url_for_topic(p.filename, p.board) }" data-ismain>
+                  ${p.title}
+                </a>
+                <span class="metainfo">
+                  <span class="meta-board">
+                    &nbsp » 
+                    <a href="#!board?boardname=${p.board}">
+                      ${p.board} 
+                    </a>
+                  </span>&nbsp • &nbsp
+                  <span class="meta-time">
+                    <time>${tf_timestamp(p.time)}</time>
+                  </span>
+                </span>
+              </div>
+            </td>
+            <td class="text-center">
+              <span class="label label-${ $G.local.format_number(p.num) }">
+                ${p.num} 
+              </span>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div id="part-wish"></div>
+{{if boardnav }}
+<div data-ajax="all_boards">
+  <div>
+    <div class="cell cell-in">
+      <div class="cell-header">
+        <h3>讨论区导航</h3>
+      </div>
+      <div class="cell-content">
+        <div class="padding-bottom">
+          <table>
+            <tbody>
+              {{each(isec, ssec) boardnav }}
+              {{if ssec.boards.length }}
+              <tr class="board-group">
+                <td class="board-group-head">
+                  <h4>${ssec.secname}</h4>
+                </td>
+                <td class="board-group-content">
+                  <ul>
+                    {{each(iboard, sboard) ssec.boards }}
+                    <li>
+                      <a{{if !(tf_after_yesterday(sboard.lastpost)) }} class="fade-font"{{/if}} href="${url_for_board(sboard.boardname)}">
+                        ${sboard.title}
+                      </a>
+                    </li>
+                    {{/each}}
+                  </ul>
+                </td>
+              </tr>
+              {{/if}}
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{/if}}

@@ -27,7 +27,8 @@ $MOD('timeformat', function(){
     , yesterday = new Date(now.getFullYear(),
                            now.getMonth(),
                            now.getDate()-1)
-    , thisYear = new Date(now.getFullYear(), 0, 0);
+    , thisYear = new Date(now.getFullYear(), 0, 0)
+    , TSYesterday = Math.ceil(Number(yesterday) / 1000);
 
     function toTwoBit(num){
         return (num<10?('0'+num):num);
@@ -81,6 +82,10 @@ $MOD('timeformat', function(){
         return niceTimeWord(time);
     }
 
+    function afterYesterdayTS(timestamp){
+        return timestamp > TSYesterday;
+    }
+
     $.fn.nicetime = function(options){
         return this.each(function(){
             var self = $(this);
@@ -91,7 +96,8 @@ $MOD('timeformat', function(){
 
     return {
         "nice_timestamp": niceTimestamp,
-        "nice_time": niceTimeWord
+        "nice_time": niceTimeWord,
+        afterYesterdayTS: afterYesterdayTS
     }
 
 })
