@@ -1066,6 +1066,20 @@ $MOD('frame::page', function(){
         }
     });
 });                   
+
+$MOD('frame::anc', function(){
+    declare_frame({
+        mark: 'anc',
+        enter: function(kwargs){
+            $api.get_anc(kwargs.path, function(data){
+                if(data.success){
+                    $('#main').html(data.data);
+                    $('.format').format();
+                }
+            });
+        }
+    });
+})
                    
 $MOD('frame::admin_board', function(){
 

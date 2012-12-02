@@ -3,7 +3,7 @@
     <div id="board-title">
       <h2 class="board-title">${board.title} <small> ${board.filename}</small></h2>
       {{if board.BM.length}}
-      <ul class="small-font inline-list">
+      <ul class="inline-list">
         版主：
         {{each(i, v) board.BM}}
         <li><a href="${ url_for_user(v) }">${v}</a></li>

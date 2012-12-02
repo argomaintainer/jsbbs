@@ -344,6 +344,14 @@ $MOD('argo_api', function(){
                        data: data
                    },
                    callback);
+        },
+
+        'get_anc': function(path, callback){
+            get_nc('/ajax/anc',
+                   {
+                       path: path,
+                   },
+                   callback);
         }
         
     }
