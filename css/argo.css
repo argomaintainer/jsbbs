@@ -538,19 +538,21 @@ li.unread{
     padding-bottom: 1em;
 }
 
-#btn-back{
+#fix-btns{
     position:fixed;
     bottom:2em;
-    margin-left: -60px;
-    border: 1px solid #47a;
+    left: 50%;
+    margin-left: -600px;
 }
 
-#btn-back a{
+#fix-btns a{
+    border: 1px solid #47a;
     display: block;
     font-size: 11px;
-    width: 42px;
+    width: 72px;
     text-align: center;
     text-decoration: none;
+    margin-bottom: 3px;
 }
 
 #btn-back a:hover{
