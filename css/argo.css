@@ -401,9 +401,14 @@ li.unread{
     font-size: 12px;
 }
 
+.board-group-num{
+    width: 50px;
+    text-align: center;
+    vertical-align: middle;
+}
+
 .board-group-head{
-    width: 80px;
-    display: table-cell;
+    width: 90px;
     text-align:center;
     /* padding-right: 1em; */
     vertical-align: middle;
@@ -726,6 +731,11 @@ button[data-submit]{
 
 .absolute{
     position: absolute;
+}
+
+.topleft{
+    top: 0;
+    left: 0;
 }
 
 .padding1em{

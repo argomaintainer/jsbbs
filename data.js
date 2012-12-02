@@ -1,25 +1,3 @@
-DATA_WIDGETS = {
-    home: [
-        {
-	    title: '通知公告',
-            type: 'links',
-            links : [
-                ['新版测试问题合集～～',
-                 '#!topic?boardname=BBS_Help&&filename=M.1353753687.A'],
-                ['argo小礼堂', '#!page?path=hull.html']
-//		        ['合作社团', '#!page?path=coorg.html']
-            ]
-        },
-        {
-            title: '近期活动',
-            type: 'img',
-            src : 'img/cat1.jpeg'
-        }
-    ]
-}
-
-http://bbs.sysu.edu.cn:8080/n/index.html#!topic?boardname=Sale&&filename=M.1353753920.A
-
 ERROR = {
     101: '服务器发生错误',
     102: '服务器生错误',
