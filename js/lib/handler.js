@@ -365,7 +365,6 @@ $MOD('frame::board', function(){
 
 })
 
-
 $MOD('frame::post', function(){
 
     require_jslib('format');

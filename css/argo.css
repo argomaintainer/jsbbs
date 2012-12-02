@@ -1377,3 +1377,20 @@ a[data-submit]:hover{
     color: #b22;
 }
 
+.frame-anc #main,
+.frame-readmail .post-wrapper{
+    margin: 0 10px;
+    line-height: 22px;
+    background: #FEFEFE;
+    border: 1px solid #e4e4e4;
+    border-top: 5px solid #eee;
+    border-bottom: 2px solid #eee;
+}
+
+.frame-readmail .post-content{
+    padding: 40px 50px;
+}
+
+.frame-anc #main{
+    padding: 75px;
+}
