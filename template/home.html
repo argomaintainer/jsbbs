@@ -59,14 +59,14 @@
   </div>
 </div>
 <div id="part-wish"></div>
-{{if www.d.recom }}
+{{if (www) && (www.d) && (www.d.good_boards) }}
 <div class="cell cell-in">
   <div class="cell-header">
     <h3>精品讨论区</h3>
   </div>
   <div class="cell-content">
     <table class="boardlist odd-even clearfix">
-      {{each(i, b) www.d.recom }}
+      {{each(i, b) www.d.good_boards }}
       <tr class="clickable" data-submit="${url_for_board(b.boardname)}">
         <td class="text-center">${b.title} <span class="small-font">${b.boardname}</span></td>
         <td><span class="fade-font small-font">${tf_timestamp(b.lastpost)}</span></td>
