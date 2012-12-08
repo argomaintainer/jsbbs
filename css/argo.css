@@ -1412,3 +1412,11 @@ a[data-submit]:hover{
 .clickable{
     cursor: pointer;
 }
+
+.hoverable-icon{
+    cursor: pointer;
+}
+
+.hoverable-icon:hover{
+    background-color: rgba(0, 255, 0, .25);
+}

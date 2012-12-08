@@ -464,9 +464,6 @@ $MOD('frame::post', function(){
         if($('body').height() - $(window).height() - $(window).scrollTop() < 100){
             load_next();
         }
-        else{
-            console.log([$('body').height() - $(window).height() - $(window).scrollTop()]);
-        }
     });
 
     submit['delete_post'] = function(kwargs, e){
@@ -597,7 +594,7 @@ $MOD('frame::post', function(){
 
 $MOD('frame::topic', function(){
 
-    var PAGE_LIMIT = 20;
+    var PAGE_LIMIT = 5;
     
     var submit = {},
     local = {};
@@ -648,7 +645,7 @@ $MOD('frame::topic', function(){
         }
     }    
     
-    submit['load_next'] = new_loader(
+    var load_next = submit['load_next'] = new_loader(
         PAGE_LIMIT, function(){
         $('#post-down [data-submit]').remove();
         $('#post-down .hidden').removeClass('hidden');
@@ -657,6 +654,18 @@ $MOD('frame::topic', function(){
             local.topiclist[local.last_index++] : false;
     }, render_template);
 
+    bind_hook('after_scroll', function(){
+        if($G.current.mark != 'topic'){
+            return;
+        }
+        if(lock){
+            return;
+        }
+        if($('body').height() - $(window).height() - $(window).scrollTop() < 100){
+            load_next();
+        }
+    });
+    
     submit['load_prev'] = new_loader(
         PAGE_LIMIT, function(){
             $('#post-up [data-submit]').remove();
