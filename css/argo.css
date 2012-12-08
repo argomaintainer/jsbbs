@@ -540,24 +540,27 @@ li.unread{
 
 #fix-btns{
     position:fixed;
-    bottom:2em;
+    bottom:95px;
     left: 50%;
-    margin-left: -600px;
+    margin-left: 250px;
 }
 
 #fix-btns a{
-    border: 1px solid #47a;
     display: block;
     font-size: 11px;
-    width: 72px;
+    width: 18px;
+    background: rgba(255,255,255, .4);
     text-align: center;
     text-decoration: none;
     margin-bottom: 3px;
+    line-height: 1.2;
+    color: #666;
+    padding: 5px 0;
 }
 
-#btn-back a:hover{
-    box-shadow: 0 0 3px #47a;
-}
+.frame-board #fix-btns{
+    visibility: hidden;
+}    
 
 .btn-posts-table{
     display: block;
