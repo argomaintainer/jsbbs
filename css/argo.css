@@ -1396,3 +1396,14 @@ a[data-submit]:hover{
 .frame-anc #main{
     padding: 75px;
 }
+
+.boardlist{
+    list-style-type: none;
+    margin: 0;
+    position:relative;
+    width: 100%;
+    font-size: 12px;
+}
+
+.boardlist li{
+}
