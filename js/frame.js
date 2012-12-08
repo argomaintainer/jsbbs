@@ -558,10 +558,10 @@ $MOD('frame.frame', function(){
     $(document).click(function(e){
         var target=$(e.target), 
         group, args, parent,
-        action=target.attr('href') || get_action(target, 'data-submit');
-        if(action=='#'){
+        href=target.attr('href'),
+        action= (href && href!='#')?href:get_action(target, 'data-submit');
+        if(href=='#'){
             e.preventDefault();
-            return;
         }
         if(action){
             if(action[0] == '#'){
