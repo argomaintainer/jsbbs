@@ -1399,11 +1399,16 @@ a[data-submit]:hover{
 
 .boardlist{
     list-style-type: none;
-    margin: 0;
     position:relative;
     width: 100%;
-    font-size: 12px;
+    font-size: 14px;
+    line-height: 2;
 }
 
-.boardlist li{
+.boardlist tr:hover{
+    background: #e0e0e0;
+}
+
+.clickable{
+    cursor: pointer;
 }

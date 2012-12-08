@@ -65,14 +65,16 @@
     <h3>精品讨论区</h3>
   </div>
   <div class="cell-content">
-    <ul class="boardlist clearfix">
+    <table class="boardlist odd-even clearfix">
       {{each(i, b) www.d.recom }}
-      <li data-submit="${url_for_board(b.boardname)}">
-        ${b.title} <span class="small-font">${b.boardname}</span>
-        <span class="fade-font">最后更新: ${b.lastpostfile} ${tf_timestamp(b.lastpost)}
-      </li>
+      <tr class="clickable" data-submit="${url_for_board(b.boardname)}">
+        <td class="text-center">${b.title} <span class="small-font">${b.boardname}</span></td>
+        <td><span class="fade-font small-font">${tf_timestamp(b.lastpost)}</span></td>
+        <td><span class="fade-font small-font">最新: ${b.lastpostfile}</span></td>
+      </tr>
       {{/each}}
-    </ul>
+    </table>
+    <p class="cell-help-block"> * 可向站务组申请设置您的讨论区为精品讨论区。</p>
   </div>
 </div>
 {{/if}}
