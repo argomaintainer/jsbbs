@@ -400,7 +400,12 @@ $MOD('frame::post', function(){
     }
 
     function new_post_loader(direct, ref, handler, render, failed, callback){
-        return function(){
+        var lock = false;
+        var foo = function(){
+            if(lock){
+                return;
+            }
+            lock = true;
             $api.get_near_postname(
                 cur_boardname, local[ref], direct,
                 function(data){
@@ -414,6 +419,7 @@ $MOD('frame::post', function(){
                                     'post',
                                     handler_post(data.data),
                                     '#post-container');
+                                lock = false;
                                 if(callback){
                                     callback(data);
                                 }
@@ -422,9 +428,12 @@ $MOD('frame::post', function(){
                     else{
                         failed();
                     }
+                    lock = false;
                 }
             );
         }
+        foo.lock = lock;
+        return foo;
     }
     
     submit['load_prev'] = new_post_loader(
@@ -435,7 +444,7 @@ $MOD('frame::post', function(){
             show_alert('o(∩_∩)o <br\> 已经是第一篇了', 'success');
         }
     );
-    submit['load_next'] = new_post_loader(
+    var load_next = submit['load_next'] = new_post_loader(
         'next', 'last_filename',
         update_hash,
         render_template,
@@ -444,6 +453,21 @@ $MOD('frame::post', function(){
             $('#post-down .hidden').removeClass('hidden');
         }
     );
+
+    bind_hook('after_scroll', function(){
+        if($G.current.mark != 'flow'){
+            return;
+        }
+        if(load_next.lock){
+            return;
+        }
+        if($('body').height() - $(window).height() - $(window).scrollTop() < 100){
+            load_next();
+        }
+        else{
+            console.log([$('body').height() - $(window).height() - $(window).scrollTop()]);
+        }
+    });
 
     submit['delete_post'] = function(kwargs, e){
         modal_confirm('删除文章', '删除的文章将无法恢复，你真的要删除本文吗?',

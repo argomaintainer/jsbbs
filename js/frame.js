@@ -309,6 +309,10 @@ $MOD('frame.template', function(){
             loading_template(tplname);
         }
     }
+    function render_string(tplname, data){
+        require_template(tplname);
+        return $.tmpl(tplname, data);
+    }
     function render_template(tplname, data, selector){
         if(!selector){
             selector="#main";
@@ -347,6 +351,7 @@ $MOD('frame.template', function(){
         "require_template": require_template,
         "render_template": render_template,
         "render_template_prepend": render_template_prepend,
+        'render_string': render_string,
         'load_widgets': load_widgets,
         'json_encode': JSON.stringify,
         'tf_timestamp': $MOD.timeformat.nice_timestamp,
@@ -521,7 +526,11 @@ $MOD('frame.frame', function(){
         _modal_yes = confirm;
         $('#modal').modal('show');
     }
-    
+
+    function show_modal(html){
+        $('#big-modal').html(html).modal('show');
+    }
+
     function submit_action(action, args, event){
         if($G.current.submit && action in $G.current.submit){
             $G.current.submit[action](args, event);
@@ -566,7 +575,7 @@ $MOD('frame.frame', function(){
     });
 
     $.fn.hempty = function(msg){
-        this.html('<div class="hint-empty">' + msg + '</div>');
+        this.append('<div class="hint-empty">' + msg + '</div>');
     }
 
     return {
@@ -575,7 +584,9 @@ $MOD('frame.frame', function(){
         init_popwindow: init_popwindow,
         close_popwindow: close_popwindow,
         show_popwindow: show_popwindow,
-        modal_confirm: modal_confirm
+        modal_confirm: modal_confirm,
+        show_modal: show_modal
+        
     }
 
 });

@@ -17,6 +17,28 @@ $MOD('jsbbs.userbox', function(){
             }
         })
     }
+    $G.submit['add-more-fav'] = function(){
+        var a = $('#more-fav input');
+        a.each(function(){
+            if(this.checked){
+                var favname = $(this).attr('name');
+                $(document).queue('add-more-fav', function(){
+                    $api.add_self_fav(favname, function(data){
+                        if(data.success){
+                            $(document).dequeue('add-more-fav');
+                        }
+                    });
+                });
+            };
+        });
+        $(document).queue('add-more-fav', function(){
+            $('#big-modal').modal('hide').queue(function(){
+                show_alert('添加到收藏夹成功！');
+                $G.submit.refresh_fav();
+            });
+        });
+        $(document).dequeue('add-more-fav');
+    }
     function sort_favitem(a, b){
         if(a.unread == b.unread)
             return b.lastpost - a.lastpost;
@@ -41,6 +63,22 @@ $MOD('jsbbs.userbox', function(){
                     $('#favbox').height(height);
                     $('[data-submit=refresh_fav]').removeClass('refreshing');
                     $G.hooks.after_refresh_fav();
+                    if(data.data.length<5){
+                        $api.get_all_boards(function(data){
+                            var d;                            
+                            if(data.success){
+                                d = data.data;
+                                for(s in d){
+                                    d[s].boards.sort(function(a, b){
+                                        return (b.lastpost - a.lastpost);
+                                    });
+                                    d[s].boards = d[s].boards.slice(0, 5);
+                                }                                
+                                var html = render_string('morefav', {b: d});
+                                show_modal(html);
+                            };
+                        });
+                    }
                 }, 500);
             }
         });

@@ -1,6 +1,7 @@
 $MOD('jsbbs.main', function(){
     
     $MOD['frame.hook'].register_hook('after_boot');
+    register_hook('after_scroll');
 
     require_jslib('userbox');
     using('jsbbs.userbox');
@@ -55,6 +56,10 @@ $MOD('jsbbs.main', function(){
             refresh_frame();
             
             bind_hook('after_boot', refresh_userbox);
+
+            $(window).scroll(function(){
+                $G.hooks.after_scroll();
+            });
             
         }
     });

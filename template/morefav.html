@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h4>为什么不多参与多一些版块呢，亲～</h4>
+  <p>请参加至少5个版块吧～～</p>
+</div>
+<div id="more-fav" class="modal-body">
+  {{each(isec, ssec) b}}
+  {{if ssec.boards.length }}
+  <div>
+    <h5>${isec}区 ${ssec.secname}</h5>
+    {{each(iboard, sboard) ssec.boards }}
+    <label class="checkbox inline">
+      <input type="checkbox" name="${sboard.boardname}"> ${sboard.title} <span class="small-font">${sboard.boardname}</span>
+    </label>
+    {{/each}}
+  </div>
+  {{/if}}
+  {{/each}}
+</div>
+<div class="modal-footer">
+  <button data-submit="add-more-fav" class="btn btn-success">加入我的最爱</button>
+  <button class="btn" data-dismiss="modal" aria-hidden="true">结束</button>
+</div>
