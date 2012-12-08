@@ -309,10 +309,6 @@ $MOD('frame.template', function(){
             loading_template(tplname);
         }
     }
-    function render_string(tplname, data){
-        require_template(tplname);
-        return $.tmpl(tplname, data);
-    }
     function render_template(tplname, data, selector){
         if(!selector){
             selector="#main";
@@ -351,7 +347,6 @@ $MOD('frame.template', function(){
         "require_template": require_template,
         "render_template": render_template,
         "render_template_prepend": render_template_prepend,
-        'render_string': render_string,
         'load_widgets': load_widgets,
         'json_encode': JSON.stringify,
         'tf_timestamp': $MOD.timeformat.nice_timestamp,
@@ -413,8 +408,6 @@ $MOD('frame.frame', function(){
             args.isnew = true;
         if(!args.local)
             args.local = {};        
-        if(args.keep_widgets != true)
-            args.keep_widgets = false;
         $G.frames[args.mark] = $Type.Frame(args);
     }
 
@@ -446,10 +439,6 @@ $MOD('frame.frame', function(){
             $('#main').empty();
         }
 
-        if(!frame.keep_widgets){
-            $('#dy-widgets').empty();
-        }
-
         if(frame.pos){
             set_pos_mark(frame.pos);
         }
@@ -469,20 +458,6 @@ $MOD('frame.frame', function(){
         frame.enter(curhash.args);
 
         $('body').attr('class', 'frame-' + curhash.hash);
-
-        if(frame.widgets_loader){
-            if(typeof frame.widgets_loader == "function"){
-                for_each_array(frame.widgets_loader(curhash.args), function(v){
-                    render_template('widget/' + v.type, v, '#dy-widgets');
-                });
-            }
-            else{
-                for_each_array(frame.widgets_loader, function(ele){
-                    var v = ele(curhash.args);
-                    render_template('widget/' + v.type, v, '#dy-widgets');
-                });
-            }
-        }
 
     }
     $G.submit['refresh_frame'] = refresh_frame;
@@ -526,13 +501,9 @@ $MOD('frame.frame', function(){
         _modal_yes = confirm;
         $('#modal').modal('show');
     }
-
-    function show_modal(html){
-        $('#big-modal').html(html).modal('show');
-    }
-
+    
     function submit_action(action, args, event){
-        if($G.current.submit && action in $G.current.submit){
+        if($G.current.submit && (action in $G.current.submit)){
             $G.current.submit[action](args, event);
             return false;
         }
@@ -543,16 +514,31 @@ $MOD('frame.frame', function(){
         console.error('Wrong action[' + action + ']');
     }
 
+    function get_action(target, attrname){
+        var action, tmp;
+        if(action=target.attr(attrname)){
+            return action;
+        }
+        tmp = target.parents('[' + attrname + ']').first();
+        if(action=tmp.attr(attrname)){
+            return action;
+        }
+        return null;
+    }
+
     $(document).click(function(e){
-        var target=$(e.target),
-        href=target.attr('href'),
-        action=target.attr('data-submit'),
-        group, args, parent;
-        last = target;
-        if(href=='#'){
+        var target=$(e.target), 
+        group, args, parent,
+        action=target.attr('href') || get_action(target, 'data-submit');
+        if(action=='#'){
             e.preventDefault();
+            return;
         }
         if(action){
+            if(action[0] == '#'){
+                window.location = action;
+                return;
+            }                
             group = target.attr('data-group');
             submit_action(action, collect_para(group), e);
         }
@@ -575,7 +561,7 @@ $MOD('frame.frame', function(){
     });
 
     $.fn.hempty = function(msg){
-        this.append('<div class="hint-empty">' + msg + '</div>');
+        this.append('<div class="hint-loading">' + msg + '</div>');
     }
 
     return {
@@ -584,9 +570,7 @@ $MOD('frame.frame', function(){
         init_popwindow: init_popwindow,
         close_popwindow: close_popwindow,
         show_popwindow: show_popwindow,
-        modal_confirm: modal_confirm,
-        show_modal: show_modal
-        
+        modal_confirm: modal_confirm
     }
 
 });
