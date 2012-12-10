@@ -455,8 +455,7 @@ $MOD('frame::post', function(){
     );
 
     bind_hook('after_scroll', function(){
-        if($G.current.mark != 'flow' ||
-           load_next.lock || !local.topiclist){
+        if($G.current.mark != 'flow' || load_next.lock){
             return;
         }
         if($('body').height() - $(window).height() - $(window).scrollTop() < 100){
@@ -653,10 +652,7 @@ $MOD('frame::topic', function(){
     }, render_template);
 
     bind_hook('after_scroll', function(){
-        if($G.current.mark != 'topic'){
-            return;
-        }
-        if(lock){
+        if($G.current.mark != 'topic' || lock || !local.topiclist){
             return;
         }
         if($('body').height() - $(window).height() - $(window).scrollTop() < 100){
