@@ -455,10 +455,8 @@ $MOD('frame::post', function(){
     );
 
     bind_hook('after_scroll', function(){
-        if($G.current.mark != 'flow'){
-            return;
-        }
-        if(load_next.lock){
+        if($G.current.mark != 'flow' ||
+           load_next.lock || !local.topiclist){
             return;
         }
         if($('body').height() - $(window).height() - $(window).scrollTop() < 100){

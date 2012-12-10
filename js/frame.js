@@ -558,11 +558,14 @@ $MOD('frame.frame', function(){
     $(document).click(function(e){
         var target=$(e.target), 
         group, args, parent,
-        href=target.attr('href'),
-        action= (href && href!='#')?href:get_action(target, 'data-submit');
+        href=target.attr('href');
         if(href=='#'){
             e.preventDefault();
         }
+        if(href){
+            return;
+        }
+        var action= get_action(target, 'data-submit');
         if(action){
             if(action[0] == '#'){
                 window.location = action;
