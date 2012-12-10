@@ -562,6 +562,11 @@ $MOD('frame.frame', function(){
         if(href=='#'){
             e.preventDefault();
         }
+        if(href.substr(0, 11)=='javascript:'){
+            if(!confirm('这个链接请求执行一段js代码:\n' + href + '\n这可能并不安全。是否真的要执行？')){
+                return false;
+            }
+        }                
         if(href){
             return;
         }
