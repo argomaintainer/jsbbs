@@ -1423,3 +1423,8 @@ a[data-submit]:hover{
 .hoverable-icon:hover{
     background-color: rgba(0, 255, 0, .25);
 }
+
+.imglist img{
+    width: 220px;
+    height: 55px;
+}
