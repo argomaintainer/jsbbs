@@ -1424,7 +1424,14 @@ a[data-submit]:hover{
     background-color: rgba(0, 255, 0, .25);
 }
 
+.imglist li{
+    margin: 5px;
+    padding: 0;
+}
+
 .imglist img{
     width: 200px;
     height: 50px;
+    margin: 0;
+    border: 1px solid #e0e0e0;
 }
