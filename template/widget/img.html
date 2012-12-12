@@ -4,5 +4,9 @@
     <h4>${title}</h4>
   </div>
   {{/if}}
-  <img src="${src}"{{if alt}} alt="${alt}"{{/if}}{{if href}} href="${href}"{{/if}}/>
+  {{if href }}
+  <a href="${href}"><img src="${src}"{{if alt}} alt="${alt}"{{/if}}/></a>
+  {{else}}
+  <img src="${src}"{{if alt}} alt="${alt}"{{/if}}/>
+  {{/if}}
 </div>
