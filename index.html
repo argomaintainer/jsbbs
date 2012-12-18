@@ -16,23 +16,21 @@
           type="text/css" />
   </head>
   <body>
+    <div id="topbar" class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div id="topbar-container">
+          <a class="brand" href="#!home">逸仙时空</a>
+        </div>
+      </div>
+    </div>    
     <div id="container">
       <div class="row-fluid">
         <div id="primary" class="span9">
-          <div id="topbar" class="row-fluid">
-            <div id="topbar-inner">
-              <a id="brand" class="pull-left" href="#!">逸仙时空</a>
-              <div id="pos">
-                <ul id="pos-inner" class="inline-list">
-                </ul>
-              </div>
-            </div>
-          </div>
           <div class="row-fluid">
             <div id="main-wrapper">
-				<div id="main">
-					<p>内容正在载入中，若无法正常显示，请升级浏览器至IE9或以上，或使用其他浏览器（建议使用<a href="http://bbs.sysu.edu.cn:874/files/GoogleChromePortableBeta.zip">Chrome</a> 或者<a href="http://bbs.sysu.edu.cn:874/files/Mozilla_Firefox.rar">FireFox</a>）</p>
-					<p>我们的技术团队正在解决此类问题，带来的不便请各位站友见谅！</p>
+			  <div id="main">
+				<p>内容正在载入中，若无法正常显示，请升级浏览器至IE9或以上，或使用其他浏览器（建议使用<a href="http://bbs.sysu.edu.cn:874/files/GoogleChromePortableBeta.zip">Chrome</a> 或者<a href="http://bbs.sysu.edu.cn:874/files/Mozilla_Firefox.rar">FireFox</a>）</p>
+				<p>我们的技术团队正在解决此类问题，带来的不便请各位站友见谅！</p>
               </div>
             </div>
           </div>
@@ -42,6 +40,10 @@
             <div id="widgets-container" class="widgets">
               <div id="userbox"></div>
               <div id="dy-widgets"></div>
+              <div class="widget fade-font">
+                © 2012 逸仙时空
+                <a target="_blank" href="https://github.com/argolab/jsbbs">jsbbs</a> <a target="_blank" href="http://argolab.org/">argolab</a>
+              </div>
             </div>
           </div>
         </div>
@@ -50,13 +52,6 @@
         <a id="totop" href="#" onclick="window.scrollTo(0, 0)">返回顶部</a>
       </div>
     </div>
-    <div id="colophon">
-      <div id="colophon-inner">
-        <p>Rediscover your sysu. </p>
-        <p>Powerby <a target="_blank" href="https://github.com/argolab/jsbbs">jsbbs</a>, &nbsp; all the honour (c) <a target="_blank" href="http://argolab.org/">argolab</a> .</p>
-      </div>      
-    </div>
-
     <div id="pop-window">
     </div>
 
@@ -82,18 +77,18 @@
     </div>
     
 
-</body>
-<script type="text/javascript">
+  </body>
+  <script type="text/javascript">
 
 	var _gaq = _gaq || [];
 	_gaq.push(['_setAccount', 'UA-36510718-2']);
 	_gaq.push(['_trackPageview']);
 
 	(function() {
-	 var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-	 ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-	 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	 })();
+	var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+	ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+	})();
 
-</script>
+  </script>
 </html>
