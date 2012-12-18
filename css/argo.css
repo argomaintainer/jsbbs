@@ -90,11 +90,6 @@ ul.inline-list>li{
     text-align: left;
 }
 
-.form-center{
-    padding:1em;
-    color: #777;
-}
-
 .fix-margin-right{
     margin-right: -4px;
 }
@@ -108,7 +103,6 @@ ul.inline-list>li{
 .poem em{
     color: #772222;
     text-shadow: 0 1px 3px gray;
-    /* text-decoration: underline; */
 }
 
 #message{
@@ -327,6 +321,10 @@ li.unread{
     margin-bottom: 20px;
     border-radius: 8px;
     padding: 12px;
+}
+
+.cell.cell-loose{
+    padding: 0;
 }
 
 .cell ul:first-child li:first-child .list-link,
@@ -557,6 +555,10 @@ li.unread{
     margin-bottom: 10px;
     border-radius: 5px;
     padding: 12px;
+}
+
+.widget-loose-content{
+    margin: -12px;
 }
 
 .widget ul:first-child li:first-child .list-link,
@@ -1173,28 +1175,77 @@ color:#208ccf;
 color:#222;
 }
 
-.frame-board #main-wrapper{
-    /* margin: 0 1em; */
-    /* border-radius: 4px; */
-    padding: 0 0 10px 0;
-    /* border-radius: 8px; */
+.board-header{
+    padding: 12px;
+    background: url("../images/bht.jpg");    
+    border-radius: 8px;
+    color: #fff;
 }
 
-#board-header{
-    padding: 0;
-    margin-bottom: 10px;
-    border-bottom: 3px solid #666;
+.board-header-inner{
+    height: 108px;
 }
 
-#board-header-inner{
-    /* box-shadow: 0 1px 4px #ccc; */
-    height: 180px;
-    border-bottom: 1px solid #777;
+.board-header a{
+    color: #fff;
+    text-decoration: underline;
 }
 
-#board-header{
-    background: url("../images/bht.jpg");
-}    
+.board-header .alert{
+    padding-right: 20px;
+}
+
+.board-stats{
+    background: #fff;
+    list-style-type: none;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+}
+
+.board-stats li{
+    float: left;
+    border-right: 1px solid #e8e8e8;
+    font-size: 15px;
+    line-height: 1.54;
+}
+
+.board-stats a{
+    color: #333;
+    display: block;
+    padding: 8px 32px 8px 18px;
+}
+
+div.board-stats a:hover{
+    text-decoration: none;
+    color: #0084B4;
+}
+
+.board-stats small{
+    display: block;
+    font-size: 11;
+    line-height: 1;
+    color: #999;
+}
+
+.board-stats a:hover small{
+    color: #0084B4;
+}
+
+.board-toolbar-outer{
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+}
+
+.board-toolbar-outer .btn{
+    vertical-align: bottom;
+}
+
+.hasnewmail #userbox-mail a{
+    box-shadow: 0 0 4px aaa;
+    background: #eee;
+    color: red;
+}
 
 .fluid-table th{
     text-align: left;
@@ -1206,38 +1257,6 @@ color:#222;
 th.th-center{
     padding: 0;
     text-align: center;
-}
-
-#board-title{
-    position: absolute;
-    top: 20px;
-    left: 32px;
-    color: #f0f0f0;
-}
-
-#board-title a{
-    color: #fff;
-    text-decoration: underline;
-}
-
-#board-toolbar-outer{
-    position: absolute;
-    bottom: 15px;
-    right: 20px;
-}
-
-#board-toolbar-outer .btn{
-    vertical-align: bottom;
-}
-
-#board-title .alert{
-    padding-right: 20px;
-}
-
-.hasnewmail #userbox-mail a{
-    box-shadow: 0 0 4px aaa;
-    background: #eee;
-    color: red;
 }
 
 .hasnewmail #userbox-mail a:hover{
@@ -1392,4 +1411,15 @@ a[data-submit]:hover{
 
 #big-modal .modal-body{
     max-height: 220px;
+}
+
+.nomargin{
+    margin: 0;
+}
+
+.dark{
+    background: #f0f0f0;
+}
+   
+.btn-book{
 }

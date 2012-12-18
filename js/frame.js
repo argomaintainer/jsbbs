@@ -559,19 +559,25 @@ $MOD('frame.frame', function(){
         var target=$(e.target), 
         group, args, parent,
         href=target.attr('href');
-        if(href=='#'){
-            e.preventDefault();
-        }
-        if(href && href.substr(0, 11)=='javascript:'){
-            if(!confirm('这个链接请求执行一段js代码:\n' + href + '\n这可能并不安全。是否真的要执行？')){
-                return false;
-            }
-        }                
         if(href){
-            return;
+            if(href.substr(0, 11)=='javascript:'){
+                if(!confirm('这个链接请求执行一段js代码:\n' + href + '\n这可能并不安全。是否真的要执行？')){
+                return false;
+                }
+            }
+            else{
+                if(href != '#'){
+                    return;
+                }
+            }
         }
         var action= get_action(target, 'data-submit');
+        console.log(['#', target, href, action, e]);
+        if(action || href == '#'){
+            e.preventDefault();
+        }
         if(action){
+            e.preventDefault();
             if(action[0] == '#'){
                 window.location = action;
                 return;
