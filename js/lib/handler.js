@@ -169,9 +169,9 @@ $MOD('frame::board', function(){
                 curnum = (total % PAGE_LIMIT) || PAGE_LIMIT;
                 data = data.slice(-curnum);
                 cur_board.loader = loader;
-                $('.vpagination').jqPagination('option', 'current_page',
+                $('.pagination').jqPagination('option', 'current_page',
                                                pagetotal);
-                $('.vpagination').jqPagination('option', 'max_page',
+                $('.pagination').jqPagination('option', 'max_page',
                                                pagetotal);
                 local.mode_title = desc;
             });
@@ -278,7 +278,7 @@ $MOD('frame::board', function(){
                     }
                     start_page = Math.ceil(last / PAGE_LIMIT);
                 }
-                $('.vpagination').jqPagination({
+                $('.pagination').jqPagination({
 		            page_string	: '第 {current_page} 页 / 共 {max_page} 页',
 		            paged		: set_page_anim,
                     current_page: start_page
@@ -969,7 +969,7 @@ $MOD('frame::mail', function(){
                     render_template('mail-framework', { mailbox: data.data });
                     local.index = index;
                     var pagenum = Math.ceil(index / PAGE_LIMIT);
-                    $('.vpagination').jqPagination({
+                    $('.pagination').jqPagination({
 		                page_string	: '第 {current_page} 页 / 共 {max_page} 页',
 		                paged		: set_page_anim,
                         current_page: pagenum

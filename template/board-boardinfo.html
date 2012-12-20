@@ -23,47 +23,23 @@
 </div>
 <div class="cell cell-loose">
   <div class="clearfix">
-    <div class="board-stats pull-left">
-      <li>
-        <a data-submit="set_normal_loader" href="#">
-          发言
-          <small>${board.total}</small>
-        </a>
-      </li>
-      <li>
-        <a data-submit="set_topic_loader" href="#">
-          主题
-          <small>${board.total_topic}</small>
-        </a>
-      </li>
-      <li>
-        <a data-submit="set_digest_loader" href="#">
-          文摘
-          <small>${board.total_digest}</small>
-        </a>
-      </li>
-    </div>
-  <div id="board-toolbar-outer" class="pull-right">
-    <div id="board-toolbar">
-      <button class="btn btn-small" data-submit="clear_unread">清除未读标记</button>
-      <button class="btn btn-small btn-success" data-submit="newpost">发表话题</button>
-      <button data-submit="refresh_current_page" class="btn btn-mini">&nbsp;<i data-submit="refresh_current_page" class="icon-refresh"></i>&nbsp;</button>
-      {{if board.isadmin }}
-      <a class="btn btn-mini" href="${url_for_admin_board(board.filename)}">管理</a>
-      {{/if}}
-    </div>
-  </div>    
+    <ul class="nav nav-tabs">
+      <li id="normal-loader">
+        <a data-submit="set_normal_loader" href="#">发言<small>(${board.total})</small></a></li>
+      <li id="topic-loader"><a data-submit="set_topic_loader" href="#">主题<small>(${board.total_topic})</small></a></li>
+      <li id="digest-loader"><a data-submit="set_digest_loader" href="#">文摘<small>(${board.total_digest})</small></a></li>
+    </ul>
   </div>
   <div id="postlistbox" class="relative">
     <div id="postlist-container" class="relative">
       <div id="postlist-content"> <i class="icon-refreshing"></i> 努力地抓取数据中…… </div>
     </div>
-    <div class="vpagination">
-      <input type="text" data-max-page="${ Math.ceil((board.total)/PAGE_LIMIT) }" />
-      <a href="#" class="first" data-action="first"><i class="arrow-up-bar"></i></a>
-      <a href="#" class="previous" data-action="previous"><i class="arrow-up"></i></a>
-      <a href="#" class="next" data-action="next"><i class="arrow-down"></i></a>
-      <a href="#" class="last" data-action="last"><i class="arrow-down-bar"></i></a>
-    </div>    
   </div>
+  <div class="pagination">
+    <a href="#" class="first" data-action="first">&laquo;</a>
+    <a href="#" class="previous" data-action="previous">&lsaquo;</a>
+    <input type="text" data-max-page="${ Math.ceil((board.total)/PAGE_LIMIT) }" />
+    <a href="#" class="next" data-action="next">&rsaquo;</a>
+    <a href="#" class="last" data-action="last">&raquo;</a>
+  </div>      
 </div>

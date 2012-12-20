@@ -170,7 +170,7 @@ $MOD('frame.func', {
             hash = 'home';
         }
         t = hash.split('?');
-        t[1] = t[1]?parse_args(t[1]):NULL_DATA;
+        t[1] = t[1]?parse_args(t[1]):null_DATA;
         return $Type.FrameHash(t);
     },
 
@@ -281,7 +281,7 @@ $MOD('frame.template', function(){
     $MOD['frame.load_lib'].require_jslib('jquery.tmpl');
     $G('template', $.template);    
     $MOD['frame.hook'].register_hook('after_render');    
-    NULL_DATA = {}
+    null_DATA = {}
 
     require_jslib('timeformat');
 
@@ -319,7 +319,7 @@ $MOD('frame.template', function(){
         }
         require_template(tplname);
         if(typeof data == "undefined")
-            data = NULL_DATA;
+            data = null_DATA;
         $.tmpl(tplname, data).appendTo(selector);
         $G.hooks.after_render();
     }
@@ -329,7 +329,7 @@ $MOD('frame.template', function(){
         }
         require_template(tplname);
         if(typeof data == "undefined")
-            data = NULL_DATA;
+            data = null_DATA;
         $.tmpl(tplname, data).prependTo(selector);
         $G.hooks.after_render();
     }
@@ -543,14 +543,19 @@ $MOD('frame.frame', function(){
         console.error('Wrong action[' + action + ']');
     }
 
+    var BUBB = { 'SPAN': null,
+                 'I': null }
+
     function get_action(target, attrname){
         var action, tmp;
         if(action=target.attr(attrname)){
             return action;
         }
-        tmp = target.parents('[' + attrname + ']').first();
-        if(action=tmp.attr(attrname)){
-            return action;
+        if(target[0].tagName in BUBB){
+            tmp = target.parents('[' + attrname + ']').first();
+            if(action=tmp.attr(attrname)){
+                return action;
+            }
         }
         return null;
     }
@@ -571,8 +576,7 @@ $MOD('frame.frame', function(){
                 }
             }
         }
-        var action= get_action(target, 'data-submit');
-        console.log(['#', target, href, action, e]);
+        var action = get_action(target, 'data-submit');
         if(action || href == '#'){
             e.preventDefault();
         }
