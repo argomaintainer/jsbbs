@@ -26,8 +26,11 @@ $MOD('jsbbs.main', function(){
     
     $G('refresh', true);  // auto refresh in hashchange
 
-    function quite_set_hash(hash){
+    function quite_set_hash(hash, kwargs){
         $G.refresh = false;
+        if(typeof kwargs == 'object'){
+            console.log([hash = hash + '?' + merge_args(kwargs)]);
+        }
         location.hash = hash;
     }
 

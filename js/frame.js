@@ -115,18 +115,12 @@ using('frame.hook');
 
 $MOD('frame.func', {
 
-    merge_args : function(href, kwargs){            
-        var hash = href, k, buf;
-        if(kwargs){
-            buf = [];
-            for(k in kwargs){
-                buf.push(k + '=' + kwargs[k]);
-            }
-            return href + '?' + buf.join('&&');
+    merge_args : function(kwargs){            
+        var k, buf = [];
+        for(k in kwargs){
+            buf.push(k + '=' + kwargs[k]);
         }
-        else{
-            return href;
-        }
+        return buf.join('&&');
     },
     
     parse_args: function(args){
@@ -544,6 +538,7 @@ $MOD('frame.frame', function(){
     }
 
     var BUBB = { 'SPAN': null,
+                 'SMALL': null,
                  'I': null }
 
     function get_action(target, attrname){

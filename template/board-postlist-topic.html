@@ -1,0 +1,31 @@
+<div id="postlist-content" class="postlist-topic">
+  <div id="postlist-content-inner">
+    {{each(i, p) posts}}
+    <div data-index="topic-${p.index}" class="post-li-topic{{if index == $G.local.hover }} hover-li{{/if}}">
+      {{if i % 10 == 0}}
+      <span class="index">${p.index}</span>
+      {{/if}}
+      <img src="${url_for_avatar(p.owner)}">
+      <a class="title" href="${url_for_topic(p.filename, boardname)}">
+        <strong>${p.title}</strong>
+        <span class="mark">
+          {{if p.mark.indexOf('g') != -1 }}<i class="icon-mark-g"></i>{{/if}}
+          {{if p.mark.indexOf('m') != -1 }}<i class="icon-mark-m"></i>{{/if}}
+          {{if p.mark.indexOf('@') != -1 }}<i class="icon-mark-a"></i>{{/if}}
+          {{if p.mark.indexOf('x') != -1 }}<i class="icon-mark-x"></i>{{/if}}
+        </span>
+      </a>
+      <div>
+        <a class="owner" href="${url_for_user(p.owner)}">${p.owner}</a>
+        <span class="time"> • ${ tf_timestamp(p.update) }</span>
+      </div>
+      <span class="replynum">
+        <span class="badge{{if p.unread == 1}} badge-success{{/if}}">
+          ${p.total_reply}
+        </span>
+      </span>
+    </div>
+    {{/each}}
+  </div>
+  <div class="inner-scroll-top"><a href="#" onclick="window.scrollTo(0, 0)">回到顶部↑</a></div>
+</div>

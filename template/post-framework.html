@@ -1,16 +1,16 @@
-<div class="small-page-header">
-  <div class="padding-side">
-    <h2 class="inline">${ $G.local.boardname }</h2> &nbsp;
-    <a href="${url_for_board($G.local.boardname)}"> « 回到版块</a>
+<div class="cell cell-loose main-cell">
+  <div class="cell-header">
+    <h3>${ $G.local.boardname } 版</h3> &nbsp;
+    <a href="${url_for_board($G.local.boardname)}"> 回到版块</a>
   </div>
-</div>
-<div id="post-up" class="page-btn">
-  <a data-submit="load_prev"><i data-submit="load_prev" class="blur icon-arrow-up"></i></a>
-</div>
-<div id="post-container"></div>
-<div id="post-down" class="page-btn">
-  <a data-submit="load_next"><i data-submit="load_next" class="icon-arrow-down"></i></a>
-  <div class="hidden">
-    已经是最后一篇了 o(∩_∩)o <br/>
+  <div id="post-up" class="page-btn">
+    <a data-submit="load_prev">上一篇</a>
+  </div>
+  <div id="post-container"></div>
+  <div id="post-down" class="page-btn">
+    <a data-submit="load_next">下一篇</a>
+    <div class="hidden">
+      已经是最后一篇了 o(∩_∩)o <br/>
+    </div>
   </div>
 </div>

@@ -1,10 +1,10 @@
 <div class="widget">
   {{if title }}
-  {{if more }}
-  <button data-submit="${ more }" class="btn-widget"><i class="icon-zoom-in" data-submit="${ more }"></i></button>
-  {{/if}}
   <div class="widget-header">
     <h4>${title}</h4>
+    {{if more }}
+    <small><a href="#" data-submit="${ more }">更多</a></small>
+    {{/if}}
   </div>
   {{/if}}
   <ul class="small-list">

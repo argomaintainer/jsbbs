@@ -131,7 +131,20 @@ $MOD('frame::board', function(){
     }
 
     load_normal_post = new_api_loader('normal');
-    load_topic_post = new_api_loader('topic');
+    load_topic_post = function(boardname, start, success, failed){
+        $api.get_postindex_limit(
+            boardname, 'topic',
+            start,
+            PAGE_LIMIT,
+            function(data){
+                if(data.success){
+                    success(data.data);
+                }
+                else{
+                    failed();
+                }
+            });
+    }
     load_digest_post = new_api_loader('digest');
 
     function new_postlist_render(tpler){
@@ -143,6 +156,8 @@ $MOD('frame::board', function(){
     }
 
     render_normal_post = new_postlist_render('board-postlist-normal'); 
+    render_topic_post = new_postlist_render('board-postlist-topic'); 
+    render_digest_post = new_postlist_render('board-postlist-digest'); 
 
     function trim_pagenum(number){
         number = Number(number);
@@ -155,15 +170,17 @@ $MOD('frame::board', function(){
         var start = pagenum * PAGE_LIMIT - PAGE_LIMIT + 1;
         local.pagenum = pagenum;
         cur_board.loader(cur_board.boardname, start, function(data){
+            console.log(['render']);
             cur_board.render(cur_board.boardname, data);
             // range_update(cur_board.range, data[0].index,
             //              data[data.length-1].index);
         });
     }
 
-    function new_wrapper_loader(loader, desc){
+    function new_wrapper_loader(loader, callback){
         return function(){
             loader(cur_board.boardname, 0, function(data){
+                // console.log([data[data.length-1].index]);
                 var total = data[data.length-1].index,
                 pagetotal = Math.ceil(total / PAGE_LIMIT),
                 curnum = (total % PAGE_LIMIT) || PAGE_LIMIT;
@@ -173,18 +190,45 @@ $MOD('frame::board', function(){
                                                pagetotal);
                 $('.pagination').jqPagination('option', 'max_page',
                                                pagetotal);
-                local.mode_title = desc;
+                callback();
             });
         }
     }
 
     submit['set_normal_loader'] = set_normal_loader
-        = new_wrapper_loader(load_normal_post);
+        = new_wrapper_loader(load_normal_post, function(){
+            local.kwargs.view = 'normal';
+            $.cookie('boardview', 'normal');
+            quite_set_hash('#!board', local.kwargs);
+            delete local.kwargs['index'];
+            cur_board.render = render_normal_post;
+            delete cur_board.hover;
+            $('#loader-wrapper .active').removeClass('active');
+            $('#normal-loader').addClass('active');
+        });
     submit['set_digest_loader'] = set_digest_loader
-        = new_wrapper_loader(load_digest_post, '只显示文摘');
+        = new_wrapper_loader(load_digest_post, function(){
+            local.kwargs.view = 'digest';
+            $.cookie('boardview', 'digest');
+            delete local.kwargs['index'];
+            quite_set_hash('#!board', local.kwargs);
+            cur_board.render = render_digest_post;
+            delete cur_board.hover;
+            $('#loader-wrapper .active').removeClass('active');
+            $('#digest-loader').addClass('active');
+        });
     submit['set_topic_loader'] =  set_topic_loader
-        = new_wrapper_loader(load_topic_post, '只显示主题第一贴');
-
+        = new_wrapper_loader(load_topic_post, function(){
+            local.kwargs.view = 'topic';
+            $.cookie('boardview', 'topic');
+            delete local.kwargs['index'];
+            quite_set_hash('#!board', local.kwargs);
+            cur_board.render = render_topic_post;
+            delete cur_board.hover;
+            $('#loader-wrapper .active').removeClass('active');
+            $('#topic-loader').addClass('active');
+        });
+    
     function set_page_anim(pagenum){
         $('#postlist-content').fadeTo(200, 0.61, function(){
             set_page(pagenum);
@@ -225,8 +269,64 @@ $MOD('frame::board', function(){
         }
     }
 
-    function get_default_postloader(){
-        return load_normal_post;
+    var MAYBE_VIEW = { 'topic': true, 'digest': true, 'normal': true}
+
+    function set_default_loader(cur_board, kwargs){
+        var start_page, last;
+        if(typeof kwargs.view == "undefined"){
+            kwargs.view = $.cookie('boardview');
+            if(MAYBE_VIEW[kwargs.view]){
+                quite_set_hash('#!board', kwargs);
+            }else{
+                $.cookie('boardview', 'topic');
+                kwargs.view = 'topic';
+                quite_set_hash('#!board', kwargs);
+            }
+        }
+        if(!MAYBE_VIEW[kwargs.view]){
+            kwargs.view = 'normal';
+            quite_set_hash('#!board', kwargs);
+        }            
+        if(kwargs.view == 'topic'){
+            cur_board.loader = load_topic_post;
+            cur_board.render = render_topic_post;
+            $('#topic-loader').addClass('active');
+            last = cur_board.data.total_topic;
+        }
+        else if(kwargs.view == 'digest'){
+            cur_board.loader = load_digest_post;
+            cur_board.render = render_digest_post;
+            $('#digest-loader').addClass('active');
+            last = cur_board.data.total_digest;
+        }
+        else{
+            cur_board.loader = load_normal_post;
+            cur_board.render = render_normal_post;
+            $('#normal-loader').addClass('active');
+            last = cur_board.data.lastread;
+            if(last==-1){
+                last = cur_board.data.total;
+            }
+            else{
+                local.hover = last;
+                console.log(local.hover);
+            }
+        }
+        cur_board.isnull = false;
+        if(local.hover = kwargs.index){
+            start_page = trim_pagenum(local.hover);
+        }
+        else{
+            start_page = Math.ceil(last / PAGE_LIMIT);
+        }
+        $('.pagination').jqPagination({
+		    page_string	: '第 {current_page} 页 / 共 {max_page} 页',
+		    paged		: set_page_anim,
+            current_page: start_page,
+            max_page: Math.ceil(last / PAGE_LIMIT)
+		});
+        set_page(start_page);
+        local.kwargs = kwargs;
     }
 
     function read_post(kwargs, e){
@@ -250,10 +350,6 @@ $MOD('frame::board', function(){
 
         var boardname = kwargs.boardname, pagenum;
         cur_board.boardname = boardname;
-        cur_board.loader = get_default_postloader();
-        cur_board.render = render_normal_post;
-        // cur_board.range = Range({isnull: true});
-        cur_board.isnull = false;
         
         $api.get_board_info(boardname, function(data){
             var start_page, last;
@@ -264,26 +360,7 @@ $MOD('frame::board', function(){
                                     board: data.data,
                                     PAGE_LIMIT: PAGE_LIMIT
                                 });
-                if(local.hover = kwargs.index){
-                    start_page = trim_pagenum(local.hover);
-                }
-                else{
-                    last = data.data.lastread;
-                    if(last==-1){
-                        last = data.data.total;
-                    }
-                    else{
-                        local.hover = last;
-                        console.log(local.hover);
-                    }
-                    start_page = Math.ceil(last / PAGE_LIMIT);
-                }
-                $('.pagination').jqPagination({
-		            page_string	: '第 {current_page} 页 / 共 {max_page} 页',
-		            paged		: set_page_anim,
-                    current_page: start_page
-		        });
-                set_page(start_page);
+                set_default_loader(cur_board, kwargs);
                 if(data.data.www.widgets){
                     load_widgets(data.data.www.widgets);
                 }
@@ -303,23 +380,14 @@ $MOD('frame::board', function(){
                         }, '#dy-widgets');
                     }
                 });
-                $api.get_last_postindex(boardname, 'topic', 5, function(data){
-                    if(data.success){
-                        var l = data.data.reverse();
-                        render_template('widget/postlist', {
-                            title: '最新主题',
-                            boardname: boardname,
-                            posts: l,
-                            more: 'set_topic_loader',
-                        }, '#dy-widgets');
-                    }
-                });
             }
             else{
                 raise404(ERROR[data.code]);
                 console.error(data);
             }
-        });                                
+        });
+        return local;
+
     }
 
     function book_fav(){

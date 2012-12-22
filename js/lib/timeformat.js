@@ -38,6 +38,23 @@ $MOD('timeformat', function(){
         return toTwoBit(date.getHours()) + ":" + toTwoBit(date.getMinutes());
     }
 
+    function toThreeBit(n) {
+        if (n < 100) {
+            n = '0' + n;
+        }
+        if (n < 10) {
+            n = '0' + n;
+        }
+        return n;     
+    }    
+
+    function toISOString(d) {
+        return d.getUTCFullYear() + '-' +  toTwoBit(d.getUTCMonth() + 1)
+            + '-' + toTwoBit(d.getUTCDate()) + ' ' + toTwoBit(d.getUTCHours())
+            + ':' +  toTwoBit(d.getUTCMinutes()) + ':'
+            + toTwoBit(d.getUTCSeconds());
+    }        
+
     function niceTimeWord(time){
         var now = new Date() ,
         distance = Math.round((Math.abs(now - time) / 1000));
@@ -73,7 +90,7 @@ $MOD('timeformat', function(){
                 + toHoursMinutes(time);
         }
         else{
-            return time.toDateString().concat(' ', toHoursMinutes(time));
+            return toISOString(time);
         }
     }
 

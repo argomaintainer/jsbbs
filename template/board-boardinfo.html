@@ -1,5 +1,5 @@
-<div class="cell cell-loose">
-  <div class="board-header">
+<div class="cell main-cell cell-loose">
+  <div class="board-header relative">
     <div class="board-header-inner">
       <h3>${board.title}<small> ${board.filename}</small></h3>      
       {{if board.BM.length}}
@@ -18,28 +18,34 @@
         如果你希望参与本版的管理为本版做点事情，请申请成为版主！
       </div>
       {{/if}}
+      <ul id="loader-wrapper" class="board-nav">
+        <li id="normal-loader">
+          <a data-submit="set_normal_loader" href="#">发言<small>(${board.total})</small></a></li>
+        <li id="topic-loader"><a data-submit="set_topic_loader" href="#">主题<small>(${board.total_topic})</small></a></li>
+        <li id="digest-loader"><a data-submit="set_digest_loader" href="#">文摘<small>(${board.total_digest})</small></a></li>
+      </ul>
+    </div>    
+  </div>  
+  <div class="board-toolbar clearfix">
+    <div class="btn-toolbar pull-left">
+      <button class="btn btn-small btn-success" data-submit="newpost">发表话题</button>
+      <button class="btn btn-small" data-submit="clear_unread">清除未读标记</button>    
+    </div>    
+    <div class="pull-right">
+      <div class="bpagination pagination">
+        <ul>
+          <li><a href="#" class="first" data-action="first">&laquo;</a></li>
+          <li><a href="#" class="previous" data-action="previous">&lsaquo;</a></li>
+          <li><input type="text" /></li>
+          <li><a href="#" class="next" data-action="next">&rsaquo;</a></li>
+          <li><a href="#" class="last" data-action="last">&raquo;</a></li>
+        </ul>
+      </div>
     </div>
-  </div>
-</div>
-<div class="cell cell-loose">
-  <div class="clearfix">
-    <ul class="nav nav-tabs">
-      <li id="normal-loader">
-        <a data-submit="set_normal_loader" href="#">发言<small>(${board.total})</small></a></li>
-      <li id="topic-loader"><a data-submit="set_topic_loader" href="#">主题<small>(${board.total_topic})</small></a></li>
-      <li id="digest-loader"><a data-submit="set_digest_loader" href="#">文摘<small>(${board.total_digest})</small></a></li>
-    </ul>
   </div>
   <div id="postlistbox" class="relative">
     <div id="postlist-container" class="relative">
       <div id="postlist-content"> <i class="icon-refreshing"></i> 努力地抓取数据中…… </div>
     </div>
   </div>
-  <div class="pagination">
-    <a href="#" class="first" data-action="first">&laquo;</a>
-    <a href="#" class="previous" data-action="previous">&lsaquo;</a>
-    <input type="text" data-max-page="${ Math.ceil((board.total)/PAGE_LIMIT) }" />
-    <a href="#" class="next" data-action="next">&rsaquo;</a>
-    <a href="#" class="last" data-action="last">&raquo;</a>
-  </div>      
 </div>

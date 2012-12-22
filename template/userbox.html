@@ -1,6 +1,8 @@
 {{if authed }}
 <div id="userbox" class="widget">
-  <button type="button" data-submit="logout" class="close">&times;</button>
+  <div class="clearfix">
+    <button type="button" data-submit="logout" class="close">&times;</button>
+  </div>
   <div class="widget-padding">
     <div class="avatar">
       <img class="img-rounded" src="${url_for_avatar(u.userid)}"/>

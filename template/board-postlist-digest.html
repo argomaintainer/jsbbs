@@ -13,13 +13,12 @@
               <span>${p.owner}</span>
             </a>
           </td>
-          <td class="title{{if p.mark.indexOf('g') != -1 }} title-g{{/if}}{{if p.mark.indexOf('m') != -1 }} title-m{{/if}}">
+          <td class="title{{if p.mark.indexOf('m') != -1 }} title-m{{/if}}">
             <i data-submit="${url_for_post(p.filename, boardname)}" class="${(p.unread!='0')?'unread':'read'} hoverable-icon"></i>
             <a href="${url_for_topic(p.filename, boardname)}">${p.title}</a>
             <span class="time">${ tf_timestamp(p.update) }</span>
           </td>
           <td class="mark">
-            {{if p.mark.indexOf('g') != -1 }}<i class="icon-mark-g"></i>{{/if}}
             {{if p.mark.indexOf('m') != -1 }}<i class="icon-mark-m"></i>{{/if}}
             {{if p.mark.indexOf('@') != -1 }}<i class="icon-mark-a"></i>{{/if}}
             {{if p.mark.indexOf('x') != -1 }}<i class="icon-mark-x"></i>{{/if}}
