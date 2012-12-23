@@ -53,7 +53,7 @@ $MOD('jsbbs.userbox', function(){
         $('[data-submit=refresh_fav]').addClass('refreshing');
         $api.get_self_fav(function(data){
             if(data.success){
-                $('#favbox').hempty('努力地读取收藏夹中...');
+                $('#favbox').hempty('');
                 setTimeout(function(){
                     $('#favbox').empty();
                     data.data.sort(sort_favitem);
