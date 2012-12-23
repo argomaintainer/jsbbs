@@ -1,102 +1,100 @@
-<div class="frame-header">
-  <div class="frame-header-inner">
-    <div class="padding-side">
-      <h3>${self.userid} 的个人信息</h3>
-    </div>
+<div class="cell main-cell">
+  <div class="cell-header">
+    <h3>${self.userid} 的个人信息</h3>
   </div>
-</div>
 
-<div>
-
-  <div class="text-right padding-side">
-    <a class="btn btn-info" href="${url_for_user(self.userid)}">预览</a>
+  <div class="pull-right">
+    <a class="btn btn-info btn-mini" href="${url_for_user(self.userid)}">预览</a>
   </div>
-  
-  <form data-submit="update-avatar" class="form-horizontal">
-    <div class="control-group">
-      <label class="control-label" for="input-avatar">头像</label>
-      <div class="controls">
-        <input type="file" name="avatar" id="input-avatar">
-        <button type="submit" class="btn btn-small">保存</button>
-        <span class="help-block">
-          目前头像只支持 <em>jpg</em> 格式，建议最少为 72x72 像素<br/>
-          头像可以通过 <a href="${url_for_root(url_for_avatar(self.userid))}">
-            ${url_for_root(url_for_avatar(self.userid))}</a> 访问</span>
-      </div>
-    </div>
-  </form>
 
-  <form data-submit="update-user" class="form-horizontal">
-    <div class="control-group">
-      <label class="control-label" for="input-username">昵称</label>
-      <div class="controls">
-        <input type="text" name="username" id="input-username"
-               value="${self.username}">
-        <button type="submit" class="btn btn-small">保存</button>
-        <span class="help-block">
-          对你的文章的引用会留下你的id和昵称<br/>
-          昵称最多9个汉字
-        </span>
-      </div>
-    </div>
-  </form>
+  <div class="profile-form">
 
-  <form data-submit="update-user" class="form-horizontal">
-    <div class="control-group">
-      <label class="control-label" for="input-plan">个人说明</label>
-      <div class="controls">
-        <textarea rows="10" class="input-xxlarge"
-                  name="plan">${self.plan}</textarea>
-        <span class="help-inline">
-          个人说明档支持markdown和bbsdown
-        </span>
-        <button type="submit" class="btn btn-small">保存</button>        
+    <form data-submit="update-avatar" class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label" for="input-avatar">头像</label>
+        <div class="controls">
+          <input type="file" name="avatar" id="input-avatar">
+          <button type="submit" class="btn btn-small">保存</button>
+          <span class="help-block">
+            目前头像只支持 <em>jpg</em> 格式，建议最少为 72x72 像素<br/>
+            头像可以通过 <a href="${url_for_root(url_for_avatar(self.userid))}">
+              ${url_for_root(url_for_avatar(self.userid))}</a> 访问</span>
+        </div>
       </div>
-    </div>
-  </form>
+    </form>
 
-  <form data-submit="update-user" class="form-horizontal">
-    <div class="control-group">
-      <label class="control-label" for="input-signature">签名档</label>
-      <div class="controls">
-        <textarea rows="12" class="input-xxlarge"
-                  name="signature">${self.signature}</textarea>
-        <button type="submit" class="btn btn-small">保存</button>
-        <span class="help-inline">
-          六行一组，发文时随机加入
-        </span>
+    <form data-submit="update-user" class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label" for="input-username">昵称</label>
+        <div class="controls">
+          <input type="text" name="username" id="input-username"
+                 value="${self.username}">
+          <button type="submit" class="btn btn-small">保存</button>
+          <span class="help-block">
+            对你的文章的引用会留下你的id和昵称<br/>
+            昵称最多9个汉字
+          </span>
+        </div>
       </div>
-    </div>
-  </form>
+    </form>
 
-  <form data-submit="update-user" class="form-horizontal">
-    <div class="control-group">
-      <label class="control-label">性别</label>
-      <div class="controls">
-        <label class="radio inline">
-          <input type="radio" name="gender" value="M" {{if self.gender == '77' }}checked{{/if}}>男
-        </label>
-        <label class="radio inline">
-          <input type="radio" name="gender" value="F" {{if self.gender != '77' }}checked{{/if}}>女
-        </label>
-        <button type="submit" class="btn btn-small">保存</button>
+    <form data-submit="update-user" class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label" for="input-plan">个人说明</label>
+        <div class="controls">
+          <textarea rows="6" class="profile-textarea"
+                    name="plan">${self.plan}</textarea>
+          <span class="help-inline">
+            个人说明档支持markdown和bbsdown
+          </span>
+          <button type="submit" class="btn btn-small">保存</button>        
+        </div>
       </div>
-    </div>
-  </form>
+    </form>
 
-  <form data-submit="update-user" class="form-horizontal">
-    <div class="control-group">
-      <label class="control-label">生日</label>
-      <div class="controls">      
-        <!-- <select id="id_birthyear" name="birthyear"> -->
-        <!--   {{each(i, v) range(1999, 1910)}} -->
-        <!--   <option value="${v}">${v}</option> -->
-        <!--   {{/each}} -->
-        <!-- </select>       -->
-        <input type="date" name="birthday" />
-        <button type="submit" class="btn btn-small">保存</button>
+    <form data-submit="update-user" class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label" for="input-signature">签名档</label>
+        <div class="controls">
+          <textarea rows="6" class="profile-textarea"
+                    name="signature">${self.signature}</textarea>
+          <button type="submit" class="btn btn-small">保存</button>
+          <span class="help-inline">
+            六行一组，发文时随机加入
+          </span>
+        </div>
       </div>
-    </div>
-  </form>
+    </form>
 
+    <form data-submit="update-user" class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label">性别</label>
+        <div class="controls">
+          <label class="radio inline">
+            <input type="radio" name="gender" value="M" {{if self.gender == '77' }}checked{{/if}}>男
+          </label>
+          <label class="radio inline">
+            <input type="radio" name="gender" value="F" {{if self.gender != '77' }}checked{{/if}}>女
+          </label>
+          <button type="submit" class="btn btn-small">保存</button>
+        </div>
+      </div>
+    </form>
+
+    <form data-submit="update-user" class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label">生日</label>
+        <div class="controls">      
+          <!-- <select id="id_birthyear" name="birthyear"> -->
+          <!--   {{each(i, v) range(1999, 1910)}} -->
+          <!--   <option value="${v}">${v}</option> -->
+          <!--   {{/each}} -->
+          <!-- </select>       -->
+          <input type="date" name="birthday" />
+          <button type="submit" class="btn btn-small">保存</button>
+        </div>
+      </div>
+    </form>
+
+  </div>
 </div>

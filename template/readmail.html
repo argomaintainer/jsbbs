@@ -1,19 +1,17 @@
-<div class="post-wrapper">
-  <div class="post-content">
-    {{html mail.htmlcontent}}
-  </div>
-  <div class="post-toolbar text-right">
-    <ul class="inline-list">
-      <li><a data-group="mail-${mail.index}" data-submit="pop_reply_mail">
-          <i data-group="mail-${mail.index}" data-submit="pop_reply_mail"
-             class="icon-pencil"></i> 回复信笺 </a></li>
-      <li><a href="${url_for_mailbox(mail.index)}">
-          <i class="icon-th-list"></i> 返回收件箱 </a></li>
-      <li><a data-submit="prev_mail">
-          <i class="icon-backward"></i> 上一封 </a></li>
-      <li><a data-submit="next_mail">
-          <i class="icon-forward"></i> 下一封 </a></li>
-      <li><a href="${url_for_user(mail.owner)}">查询发信人</a></li>
-    </ul>
+<div class="main-cell cell">
+  <div class="post-wrapper mail-wrapper">
+    <div class="post-content">
+      {{html mail.htmlcontent}}
+    </div>
+    <div class="post-toolbar clearfix">
+      <ul>
+        <li><a data-group="mail-${mail.index}" data-submit="pop_reply_mail">
+            回复</a></li>
+        <li> • <a href="${url_for_mailbox(mail.index)}">返回收件箱</a></li>
+        <li> • <a data-submit="prev_mail">上一封</a></li>
+        <li> • <a data-submit="next_mail">下一封</a></li>
+        <li> • <a href="${url_for_user(mail.owner)}">查询发信人</a></li>
+      </ul>
+    </div>
   </div>
 </div>

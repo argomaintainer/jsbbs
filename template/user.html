@@ -1,38 +1,34 @@
-<div class="frame-header">
-  <div class="frame-header-inner">
-    <div class="padding-side">
-      <div class="row-fluid">
-        <div class="span2 text-center" style="padding-top:15px">
-          <img class="img-big img-rounded" src="${ url_for_avatar(u.userid) }" />
-          <div style="padding-top:10px">
-            <span class="tag {{if u.male}}mcolor{{else}}fcolor{{/if}}">${u.constellation}</span>
-          </div>
-        </div>
-        <div class="span8">
-          <div>
-            <h2>${u.userid} (${u.username})</h2>
-          </div>
-          <div class="info-text">
-            上站 <em>${u.numlogins}</em> 次，
-            发文 <em>${u.numposts}</em> 篇，
-            生命力 <em>${u.life_value}</em> ，
-            累计在线 <em>${u.stay}</em> <br/>
-            上次离站 <em>${tf_timestamp(u.lastlogout)}</em>
-          </div>
-        </div>
-        <div class="span2 text-right">
-          <div class="btn-toolbar">
-            <button data-submit="pop_new_mail" class="btn btn-small padding-24px btn-success">写信问候</button>
-          </div>
-        </div>
+<div class="cell">
+  <div class="row-fluid">
+    <div class="span2 text-center" style="padding-top:15px">
+      <img class="img-big img-rounded" src="${ url_for_avatar(u.userid) }" />
+      <div style="padding-top:10px">
+        <span class="tag {{if u.male}}mcolor{{else}}fcolor{{/if}}">${u.constellation}</span>
+      </div>
+    </div>
+    <div class="span8">
+      <div>
+        <h2>${u.userid} (${u.username})</h2>
+      </div>
+      <div class="info-text">
+        上站 <em>${u.numlogins}</em> 次，
+        发文 <em>${u.numposts}</em> 篇，
+        生命力 <em>${u.life_value}</em> ，
+        累计在线 <em>${u.stay}</em> <br/>
+        上次离站 <em>${tf_timestamp(u.lastlogout)}</em>
+      </div>
+    </div>
+    <div class="span2 text-right">
+      <div class="btn-toolbar">
+        <button data-submit="pop_new_mail" class="btn btn-small padding-24px btn-success">写信问候</button>
       </div>
     </div>
   </div>
 </div>
-<div class="cell cell-in">
+<div class="cell">
   <div class="cell-header">
     <h3>个人说明档</h3>
   </div>
-  <div class="cell-content cell-content-padding">{{if u.htmlplan }}{{html u.htmlplan }}{{else}}<h4>T_T 伤心啊，是不是单身{{if u.male }}他{{else}}她{{/if}}都没写！{{/if}}</h4></div>
+  <div>{{if u.htmlplan }}{{html u.htmlplan }}{{else}}<strong>T_T 伤心啊，是不是单身{{if u.male }}他{{else}}她{{/if}}都没写！{{/if}}</strong></div>
 </div>
 

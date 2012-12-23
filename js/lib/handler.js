@@ -275,17 +275,13 @@ $MOD('frame::board', function(){
         var start_page, last;
         if(typeof kwargs.view == "undefined"){
             kwargs.view = $.cookie('boardview');
-            if(MAYBE_VIEW[kwargs.view]){
-                quite_set_hash('#!board', kwargs);
-            }else{
-                $.cookie('boardview', 'topic');
-                kwargs.view = 'topic';
-                quite_set_hash('#!board', kwargs);
+            if(!MAYBE_VIEW[kwargs.view]){
+                $.cookie('boardview', 'normal');
+                kwargs.view = 'normal';
             }
         }
         if(!MAYBE_VIEW[kwargs.view]){
             kwargs.view = 'normal';
-            quite_set_hash('#!board', kwargs);
         }            
         if(kwargs.view == 'topic'){
             cur_board.loader = load_topic_post;
@@ -464,7 +460,8 @@ $MOD('frame::post', function(){
     }
 
     function update_hash(data){
-        quite_set_hash(url_for_post(data.data, cur_boardname));
+        local.kwargs.last = data.data;
+        quite_set_hash('#!flow', local.kwargs);
     }
 
     function new_post_loader(direct, ref, handler, render, failed, callback){
@@ -644,6 +641,7 @@ $MOD('frame::post', function(){
             local.oldest_filename = local.last_filename = kwargs.filename;
         },
         enter : function(kwargs){
+            local.kwargs = kwargs;
             _load_post();
         },
         local : local
@@ -682,8 +680,8 @@ $MOD('frame::topic', function(){
                                 load(--counter);
                             }
                             else{
-                                quite_set_hash(url_for_topic(filename,
-                                                             cur_boardname));
+                                local.kwargs.last = filename;
+                                quite_set_hash(local.kwargs);
                                 lock = false;
                             }                                
                         }
@@ -840,6 +838,7 @@ $MOD('frame::topic', function(){
         mark: 'topic',
         submit : submit,
         enter : function(kwargs){
+            local.kwargs = kwargs;
             $api.get_post_topiclist(
                 kwargs.boardname, kwargs.filename, function(data){
                     if(data.success){
