@@ -27,11 +27,13 @@ $MOD('jsbbs.main', function(){
     $G('refresh', true);  // auto refresh in hashchange
 
     function quite_set_hash(hash, kwargs){
-        $G.refresh = false;
-        if(typeof kwargs == 'object'){
-            console.log([hash = hash + '?' + merge_args(kwargs)]);
+        if($G.refresh){
+            $G.refresh = false;
+            if(typeof kwargs == 'object'){
+                console.log([hash = hash + '?' + merge_args(kwargs)]);
+            }
+            location.hash = hash;
         }
-        location.hash = hash;
     }
 
     do_while_load(function(){
