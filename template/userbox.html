@@ -1,32 +1,30 @@
 {{if authed }}
 <div id="userbox" class="widget">
-  <div class="clearfix">
-    <button type="button" data-submit="logout" class="close">&times;</button>
-  </div>
-  <div class="widget-padding">
-    <div class="avatar">
-      <img class="img-rounded" src="${url_for_avatar(u.userid)}"/>
-      <div class="avatar-content">
-        <div class="big-font">${u.userid}</div>
-        <div>${u.username}</div>
-      </div>
+  <div class="avatar">
+    <img class="img-rounded" src="${url_for_avatar(u.userid)}"/>
+    <div class="avatar-content">
+      <div class="big-font">${u.userid}</div>
+      <div>${u.username}</div>
     </div>
   </div>
   <ul class="nav nav-pills">
     <li><a href="#!"><i class="icon-home"></i></a></li>
     <li id="userbox-mail"><a href="#!mail"><i class="icon-envelope"></i><span class="display-on-newmail">(新!)</span></a></li>
-    <li><a href="#!profile"><i class="icon-wrench"></i></a></li>
-    <!-- <li><a href="#!profile"><i class="icon-folder-close"></i></a></li> -->
+    <li class="dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <i class="icon-wrench"></i>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href="#!profile">设置我的资料</a></li>
+        <li><a href="#" data-submit="logout">退出登录</a></li>
+      </ul>
+    </li>
   </ul>
-</div>
-<div id="userfav">
-  <div class="widget">
-    <div class="widget-header">
-      <h4>收藏夹</h4>
-      <small><a href="#" data-submit="refresh_fav">刷新</a></small>
-    </div>
-    <div id="favbox"></div>
+  <div class="widget-header">
+    <h4>收藏夹</h4>
+    <small><a href="#" data-submit="refresh_fav">刷新</a></small>
   </div>
+  <div id="favbox"></div>
 </div>
 {{else}}
 <div class="widget">

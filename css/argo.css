@@ -1653,3 +1653,8 @@ a[data-submit]:hover{
     line-height: 15px;
     font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
 }
+
+#favbox{
+    position: relative;
+    padding-left: 12px;
+}
