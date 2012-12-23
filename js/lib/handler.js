@@ -681,7 +681,7 @@ $MOD('frame::topic', function(){
                             }
                             else{
                                 local.kwargs.last = filename;
-                                quite_set_hash(local.kwargs);
+                                quite_set_hash('#!topic', local.kwargs);
                                 lock = false;
                             }                                
                         }

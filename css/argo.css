@@ -1523,7 +1523,7 @@ a[data-submit]:hover{
 /* } */
 
 .post-wrapper{
-    padding: 12px;
+    padding: 12px 24px 12px 12px;
     position: relative;
     border-bottom: 1px solid #e8e8e8;
 }
@@ -1569,14 +1569,14 @@ a[data-submit]:hover{
 .post-info .time{
     position: absolute;
     top: 12px;
-    right: 12px;
+    right: 24px;
     color: #999;
 }
 
 .post-wrapper .post-content{
     word-wrap: break-word;
     font-size: 14px;
-    line-height: 1.61;
+    line-height: 22px;
 }
 
 .hidden-ul > li{
@@ -1634,7 +1634,22 @@ a[data-submit]:hover{
 .post-signature{
     border-top: 1px dashed #474;
     font-size: 12px;
+    line-height: 15px;
     margin-top: 6px;
     padding-top: 6px;
+    font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+}
+
+.postquote{
+    color:#999;
+    font-size: 12px;
+    line-height: 15px;
+    margin: 6px;
+}
+
+.postquote-header{
+    color: #4a7;
+    font-size: 12px;
+    line-height: 15px;
     font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
 }
