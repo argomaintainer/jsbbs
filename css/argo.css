@@ -1012,34 +1012,66 @@ i[class*=" icon-mark-"]:after {
 /* telnet format */
 .c0{
     color: #333;
+    font-size: 1em;
 }
 .c1{
-    font-size: 13px;
-    line-height: 1.5;
+    text-shadow: 0 1px 2px #f0f0f0;
 }
 .c30{
-color:#707070;
+    color:#707070;
+}
+.c30 a{
+    color:#707070;
+    text-decoration: underline;
 }
 .c31{
-color:#d22;
+    color:#d22;
+}
+.c31 a{
+    color:#d22;
+    text-decoration: underline;
 }
 .c32{
-color:#22984d;
+    color:#22984d;
+}
+.c32 a{
+    color:#22984d;
+    text-decoration: underline;
 }
 .c33{
-color:#ffca27;
+    color:#ffca27;
+}
+.c33 a{
+    color:#ffca27;
+    text-decoration: underline;
 }
 .c34{
-color:#22d;
+    color:#22d;
+}
+.c34 a{
+    color:#22d;
+    text-decoration: underline;
 }
 .c35{
-color:#c2c;
+    color:#c2c;
+}
+.c35 a{
+    color:#c2c;
+    text-decoration: underline;
 }
 .c36{
-color:#208ccf;
+    color:#208ccf;
+}
+.c36 a{
+    color:#208ccf;
+    text-decoration: underline;
 }
 .c37{
-color:#222;
+    color:#222;
+}
+.c37 a{
+    color:#222;
+    text-decoration: underline;
 }
 
 .board-header{
@@ -1597,4 +1629,12 @@ a[data-submit]:hover{
 
 .board-header .alert{
     margin-right: 280px;
+}
+
+.post-signature{
+    border-top: 1px dashed #474;
+    font-size: 12px;
+    margin-top: 6px;
+    padding-top: 6px;
+    font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
 }
