@@ -63,7 +63,7 @@ $MOD('jsbbs.userbox', function(){
                     if(height > 200){
                         height = 200;
                     }
-                    $('#favbox').height(height);
+                    $('#favbox-outer').height(height);
                     $('[data-submit=refresh_fav]').removeClass('refreshing');
                     $G.hooks.after_refresh_fav();
                     var cookiename = 'hint-more@' + $G.authed.u.userid;

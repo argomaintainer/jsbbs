@@ -9,7 +9,7 @@ body{
     margin: 0 auto 20px;
     padding: 54px 20px 10px;
     min-height: 100%;
-    background: rgba(255, 255, 255, .45);
+    background-image: url("../images/alpha45.png");
 }
 
 #topbar-container{
@@ -318,7 +318,7 @@ li.unread{
 }
 
 .topten-title{
-    font-size: 12px;
+    font-size: 14px;
     line-height: 30px;
     padding-left: 1em;
 }
@@ -327,7 +327,7 @@ li.unread{
     width: 100%;
 }
 
-.odd-even tr:nth-child(even){
+.odd-even .odd{
     background:#eee;
 }
 
@@ -424,7 +424,7 @@ li.unread{
     display: block;
     font-size: 11px;
     width: 18px;
-    background: rgba(255,255,255, .4);
+    background-image: url("../images/alpha45.png");
     text-align: center;
     text-decoration: none;
     margin-bottom: 3px;
@@ -1017,6 +1017,13 @@ i[class*=" icon-mark-"]:after {
 .c1{
     text-shadow: 0 1px 2px #f0f0f0;
 }
+.c37{
+    color:#222;
+}
+.c37 a{
+    color:#222;
+    text-decoration: underline;
+}
 .c30{
     color:#707070;
 }
@@ -1064,13 +1071,6 @@ i[class*=" icon-mark-"]:after {
 }
 .c36 a{
     color:#208ccf;
-    text-decoration: underline;
-}
-.c37{
-    color:#222;
-}
-.c37 a{
-    color:#222;
     text-decoration: underline;
 }
 
@@ -1251,7 +1251,7 @@ a[data-submit]:hover{
 
 .hint-loading{
     position: absolute;
-    background: rgba(255, 255, 255, .4);
+    background-image: url("../images/alpha45.png");
     display: block;
     height: 100%;
     width: 100%;
@@ -1547,7 +1547,7 @@ a[data-submit]:hover{
     margin: 2px 0;
 }
 
-.post-info .owner{
+.post-wrapper .owner{
     font-size: 16px;
     line-height: 24px;
     display: block;
@@ -1556,17 +1556,17 @@ a[data-submit]:hover{
     border-bottom: 1px solid #f0f0f0;
 }
     
-.post-info .owner .username{
+.post-wrapper .owner .username{
     text-decoration: none;
     color: #999;
     font-size: 12px;
 }
     
-.post-info .owner:hover .userid{
+.post-wrapper .owner:hover .userid{
     text-decoration: underline;
 }
     
-.post-info .time{
+.post-wrapper .time{
     position: absolute;
     top: 12px;
     right: 24px;
@@ -1654,7 +1654,48 @@ a[data-submit]:hover{
     font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
 }
 
-#favbox{
+#favbox-outer{
     position: relative;
     padding-left: 12px;
+}
+
+.home-post-recom{
+    position: relative;
+    padding: 12px 22px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.home-post-recom h3{
+    font-size: 16px;
+    line-height: 1.61;
+}
+
+.home-post-recom .post-content{
+    padding-right: 100px;
+    padding-bottom: 40px;
+}
+
+.home-post-recom .post-info{
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+}
+
+.home-post-recom .user-avatar{
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+}
+
+.home-post-recom .userid{
+    color: #333;
+}
+
+.home-post-recom .time{
+    font-size: 12px;
+    color: #999;
+}
+
+.topten-wrapper{
+    padding-bottom: 12px;
 }

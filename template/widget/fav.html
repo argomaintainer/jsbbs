@@ -1,5 +1,5 @@
 {{if fav }}
-<div class="favbox scrollbar">
+<div class="favbox">
   <ul class="unstyled">
     {{each(i, v) fav }}
     <li{{if v.unread }} class="unread"{{/if}}><a href="${ url_for_board(v.boardname) }">${v.boardname}</a></li>

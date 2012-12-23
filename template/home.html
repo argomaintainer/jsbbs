@@ -19,67 +19,68 @@
     </div>
   </div>
 </div>
-<div data-ajax="topten">
-  <div class="cell cell-in">
-    <div class="cell-header">
-      <h3>今日十大</h3>
-    </div>
-    <div class="cell-content">
-      <table class="table-topten odd-even">
-        <tbody>
-          {{each(i, p) topten}}
-          <tr>
-            <td class="text-center"><span class="t10-number t10-${i}">${i+1}</span></td>
-            <td class="topten-title">
-              <div>
-                <a href="${ url_for_topic(p.filename, p.board) }" data-ismain>
-                  ${p.title}
-                </a>
-                <span class="metainfo">
-                  <span class="meta-board">
-                    &nbsp » 
-                    <a href="#!board?boardname=${p.board}">
-                      ${p.board} 
-                    </a>
-                  </span>&nbsp • &nbsp
-                  <span class="meta-time">
-                    <time>${tf_timestamp(p.time)}</time>
-                  </span>
-                </span>
-              </div>
-            </td>
-            <td class="text-center">
-              <span class="label label-${ $G.local.format_number(p.num) }">
-                ${p.num} 
-              </span>
-            </td>
-          </tr>
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
-<div id="part-wish"></div>
-{{if (www) && (www.d) && (www.d.good_boards) }}
-<div class="cell cell-in">
+<div class="cell cell-loose">
   <div class="cell-header">
-    <h3>精品讨论区</h3>
+    <h3>今日十大</h3>
   </div>
-  <div class="cell-content">
-    <table class="boardlist odd-even clearfix">
-      {{each(i, b) www.d.good_boards }}
-      <tr class="clickable" data-submit="${url_for_board(b.boardname)}">
-        <td class="text-center">${b.title} <span class="small-font">${b.boardname}</span></td>
-        <td><span class="fade-font small-font">${tf_timestamp(b.lastpost)}</span></td>
-        <td><span class="fade-font small-font">最新: ${b.lastpostfile}</span></td>
-      </tr>
-      {{/each}}
+  <div class="topten-wrapper">
+    <table class="table-topten odd-even">
+      <tbody>
+        {{each(i, p) topten}}
+        <tr{{if i % 2 == 1}} class="odd"{{/if}}>
+          <td class="topten-title">
+            <div>
+              <a href="${ url_for_topic(p.filename, p.board) }" data-ismain>
+                ${p.title}
+              </a>
+              <span class="metainfo">
+                <span class="meta-board">
+                  &nbsp » 
+                  <a href="#!board?boardname=${p.board}">
+                    ${p.board} 
+                  </a>
+                </span>&nbsp • &nbsp
+                <span class="meta-time">
+                  <time>${tf_timestamp(p.time)}</time>
+                </span>
+              </span>
+            </div>
+          </td>
+          <td class="text-center">
+            <span class="label label-${ $G.local.format_number(p.num) }">
+              ${p.num} 
+            </span>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
     </table>
-    <p class="cell-help-block"> * 可向站务组申请设置您的讨论区为精品讨论区。</p>
   </div>
 </div>
-{{/if}}
+<div class="cell cell-loose">
+  <div class="cell-header">
+    <h3>文章推荐</h3>
+  </div>
+  {{if (www.rempost) && (www.rempost.length) }}
+  {{each(i, p) www.rempost}}
+  <div class="home-post-recom">
+    <div class="post-content">
+      <h3><a href="${url_for_topic(p.filename, 'Recommend')}">${p.title}</a></h3>
+      ${p.content}
+    </div>
+    <div class="post-info">
+      <div>
+        <a class="owner" href="${url_for_user(p.owner)}">
+          <strong class="userid">${p.owner}</strong>
+        </a>
+        <span class="time">${tf_timestamp(p.update)}</span>
+        <img class="user-avatar" src="${url_for_avatar(p.owner)}"/>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+  {{/if}}
+</div>    
 {{if boardnav }}
 <div data-ajax="all_boards">
   <div>

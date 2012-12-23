@@ -40,7 +40,11 @@ $MOD('format', function(){
 	    [/(^|\s|<br>|&nbsp;|\n|>)(www\..+?\..+?)(\s|$|<br>|&nbsp;|<)/g,		'$1<a target="_blank" href="http://$2">$2</a>$3'],
 	    [/(^|\s|<br>|&nbsp;|\n|>)(((https?|ftp):&#x2F;&#x2F;).+?)(\s|$|<br>|&nbsp;|<)/g,	'$1<a target="_blank" href="$2">$2</a>$5'],
         //@gcc
-        [/(^|&nbsp;|<br>|\n)@([a-zA-Z]{2,12})/g,	'$1<a href="#!user?userid=$2">@$2</a>']
+        [/(^|&nbsp;|<br>|\n)@([a-zA-Z]{2,12})/g,	'$1<a href="#!user?userid=$2">@$2</a>'],
+
+        // xxx 讨论区
+        [/&nbsp;(<span class="c32">)?([a-zA-Z]{3,20})&nbsp;(<span class="c37">)?讨论区/g,
+         '&nbsp;$1<a href="#!board?boardname=$2">$2</a>&nbsp;$3讨论区']
         
     ];
 
@@ -122,9 +126,9 @@ $MOD('format', function(){
         text = format_cr(text);
         text = format_quote(text);
         text = format_br(text);
-        last = text;
         text = format_esc(text);
         text = format_linkify(text);
+        console.log(['zzzzzzzzz', text]);
         return text;
     }
     $.fn.format = function(){
