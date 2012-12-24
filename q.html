@@ -1,0 +1,102 @@
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=8" />    
+    <title>快速发文 -- 逸仙时空 Yat-sen Channel</title>
+    <script src="js/lib/jquery.js"></script>
+    <style>
+      *{margin: 0; padding: 0}
+      body{ background:#fff; line-height:20px; font-size: 14px; padding: 12px; border: 1px solid #e8e8e8;}
+      #submit-post table{ width: 100%; height: 100%;}
+      .block-level{display: block; width:100%; padding: 4px;}
+      .label-input{padding-left: 55px;}      
+      .label{ position: absolute; margin: 6px 0; padding: 0 8px; width: 32px; text-align: right; color: #999; font-size:12px; border-right: 1px solid #e8e8e8; line-height:20px;}
+      .line{height: 40px;}
+      textarea{ height: 100%;}
+      input, textarea{ font-size:14px; line-height: 20px; border: 1px solid #ccc;}
+      #tr-brand{ text-align: center}
+      .brand{ color:#777; font-weight: bold; text-decoration: none; display:block}
+      .brand:hover{ color:#999}
+      #btn-submit{ font-size: 14px;}
+      .msg{position: fixed; top:0; background: #444; color: #fff; font-size: 14px; padding: 2px 24px;border:1px solid #777;}
+      .msg.success{ background: #51a351; border: 1px solid #eee;}
+    </style>
+  </head>
+  <body>
+    <form id="submit-post">
+      <table>
+        <tr class="line" id="tr-brand">
+          <td>
+            <a class="brand" target="_blank" href="http://bbs.sysu.edu.cn">逸仙时空</a>
+          </td>
+        </tr>
+        <tr class="line" id="tr-boardname">
+          <td>
+            <span class="label">版块</span><input tabindex="1" id="input-boardname" class="block-level label-input" type="text" name="boardname" />
+          </td>
+        </tr>
+        <tr class="line" id="tr-title">
+          <td>
+            <span class="label">标题</span><input tabindex="2" id="input-title" class="block-level label-input" type="text" name="title" />
+          </td>
+        </tr>
+        <tr id="tr-content">
+          <td>
+            <textarea id="input-content" tabindex="3" class="block-level" name="content"></textarea>
+          </td>
+        </tr>
+        <tr class="line">
+          <td>
+            <input class="block-level" tabindex="4" id="btn-submit" type="submit" value="发表"/>
+          </td>
+        </tr>
+      </table>
+    </form>
+    <script>
+      function show_message(msg, cls){
+          cls = cls?('msg'+cls):'msg';
+          $('<div>').addClass(cls).text(msg).appendTo('body').delay(2000).fadeOut(1500, function(){ $(this).remove()});
+      }
+      $().ready(function(){
+          $('#input-boardname').focus();
+          function empty_form(){
+              $('#input-boardname').val('');
+              $('#input-title').val('');
+              $('#input-content').val('');
+          }
+          $('#submit-post').submit(function(){
+              var
+              boardname = $('#input-boardname').val()
+              , title = $('#input-title').val()
+              , content = $('#input-content').val();
+              if(!boardname){
+                  show_message('没有填写版块名称！');
+                  return false;
+              }
+              if(!title){
+                  show_message('没有填写标题！');
+                  return false;
+              }
+              $.post('/ajax/post/add',
+                     {
+                         boardname: boardname,
+                         title: title,
+                         content: content,
+                         type: 'new'
+                     },
+                     function(data){
+                         console.log(data);
+                         if(data.success){
+                             empty_form();
+                             show_message('撒花！发文成功！', ' success');
+                         }
+                         else{
+                             show_message('发文失败：' + '[' + data.code + '] ' + data.error);
+                         }
+                     });
+              return false;
+          });
+      });      
+    </script>
+  </body>
+</html>
