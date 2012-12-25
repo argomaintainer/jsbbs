@@ -188,20 +188,13 @@ $MOD('frame::board', function(){
                 local.max_page = pagetotal;
                 data = data.slice(-curnum);
                 cur_board.loader = loader;
-                if($('.pagination').jqPagination('option',
-                                                 'max_page') < pagetotal){
-                    $('.pagination').jqPagination('option', 'max_page', 
-                                               pagetotal);
-                    $('.pagination').jqPagination('option', 'current_page',
-                                                  pagetotal);
-                }
-                else{
-                    $('.pagination').jqPagination('option', 'current_page',
-                                                  pagetotal);
-                    $('.pagination').jqPagination('option', 'max_page', 
-                                               pagetotal);
-                }                    
-                set_page(local.max_page);
+                $('.pagination').jqPagination({
+		            page_string	: '第 {current_page} 页 / 共 {max_page} 页',
+		            paged		: set_page_anim,
+                    current_page: pagetotal,
+                    max_page: pagetotal
+		        });
+                cur_board.render(cur_board.boardname, data, pagetotal);
                 callback();
             });
         }

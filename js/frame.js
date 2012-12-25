@@ -308,7 +308,6 @@ $MOD('frame.template', function(){
         return $.tmpl(tplname, data);
     }
     function render_template(tplname, data, selector){
-        _(['zz', tplname, data, selector]);
         if(!selector){
             selector = "#main";
         }

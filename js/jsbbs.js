@@ -34,8 +34,6 @@ $MOD('jsbbs.main', function(){
                 raise_may_no_good_browser();
             }
 
-            console.log([$MOD['frame.hook']]);
-            
             window.onhashchange = onhashchange;
 
             $G.hooks.after_boot();        
