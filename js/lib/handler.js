@@ -179,7 +179,7 @@ $MOD('frame::board', function(){
         });
     }
 
-    function new_wrapper_loader(loader, callback){
+    function new_wrapper_loader(loader, init){
         return function(){
             loader(cur_board.boardname, 0, function(data){
                 var total = data[data.length-1].index,
@@ -194,8 +194,8 @@ $MOD('frame::board', function(){
                     current_page: pagetotal,
                     max_page: pagetotal
 		        });
+                init();
                 cur_board.render(cur_board.boardname, data, pagetotal);
-                callback();
             });
         }
     }
