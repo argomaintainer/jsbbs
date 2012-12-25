@@ -188,12 +188,11 @@ $MOD('frame::board', function(){
                 local.max_page = pagetotal;
                 data = data.slice(-curnum);
                 cur_board.loader = loader;
-                $('.pagination').jqPagination({
-		            page_string	: '第 {current_page} 页 / 共 {max_page} 页',
-		            paged		: set_page_anim,
-                    current_page: pagetotal,
-                    max_page: pagetotal
-		        });
+                // ugly a lot.
+                var base = $('.pagination').data('jqPagination');
+                base.options.current_page = pagetotal;
+                base.options.max_page = pagetotal;
+                base.updateInput(true);
                 init();
                 cur_board.render(cur_board.boardname, data, pagetotal);
             });
