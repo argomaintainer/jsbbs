@@ -1089,6 +1089,8 @@ i[class*=" icon-mark-"]:after {
 .board-header-inner{
     height: 108px;
     padding: 12px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;    
 }
 
 .board-header a{
@@ -1712,6 +1714,10 @@ a[data-submit]:hover{
     text-align: center;
 }
 
+#near-boards{
+    border-top: 1px solid #ccc;
+}
+
 .near-boards{
     list-style-type: none;
     padding: 0 12px 4px 12px;
@@ -1722,7 +1728,7 @@ a[data-submit]:hover{
     
 .near-boards li{
     display: inline-block;
-    margin: 1px;
+    margin-right: 12px;
 }
 
 .near-boards-header{
