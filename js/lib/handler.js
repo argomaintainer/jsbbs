@@ -148,10 +148,14 @@ $MOD('frame::board', function(){
     load_digest_post = new_api_loader('digest');
 
     function new_postlist_render(tpler){
-        return function(boardname, data){
+        return function(boardname, data, pagenum){
             $('#postlist-content').remove();
-            render_template(tpler, { posts: data, boardname: boardname},
-                            '#postlist-container');
+            render_template(tpler, {
+                posts: data,
+                boardname: boardname,
+                has_next_page: (pagenum < local.max_page),
+                has_prev_page: (pagenum > 1)
+            }, local.postlist_container);
         }
     }
 
@@ -170,8 +174,7 @@ $MOD('frame::board', function(){
         var start = pagenum * PAGE_LIMIT - PAGE_LIMIT + 1;
         local.pagenum = pagenum;
         cur_board.loader(cur_board.boardname, start, function(data){
-            console.log(['render']);
-            cur_board.render(cur_board.boardname, data);
+            cur_board.render(cur_board.boardname, data, pagenum);
             // range_update(cur_board.range, data[0].index,
             //              data[data.length-1].index);
         });
@@ -184,17 +187,40 @@ $MOD('frame::board', function(){
                 var total = data[data.length-1].index,
                 pagetotal = Math.ceil(total / PAGE_LIMIT),
                 curnum = (total % PAGE_LIMIT) || PAGE_LIMIT;
+                local.max_page = pagetotal;
                 data = data.slice(-curnum);
                 cur_board.loader = loader;
-                $('.pagination').jqPagination('option', 'current_page',
+                if($('.pagination').jqPagination('option',
+                                                 'max_page') < pagetotal){
+                    $('.pagination').jqPagination('option', 'max_page', 
                                                pagetotal);
-                $('.pagination').jqPagination('option', 'max_page',
+                    $('.pagination').jqPagination('option', 'current_page',
+                                                  pagetotal);
+                }
+                else{
+                    $('.pagination').jqPagination('option', 'current_page',
+                                                  pagetotal);
+                    $('.pagination').jqPagination('option', 'max_page', 
                                                pagetotal);
+                }                    
+                set_page(local.max_page);
                 callback();
             });
         }
     }
 
+    submit['next_page'] = function(){
+        window.scrollTo(0,0);
+        $('.pagination').jqPagination(
+            'option', 'current_page',
+            $('.pagination').jqPagination('option', 'current_page') + 1);
+    }
+    submit['prev_page'] = function(){
+        window.scrollTo(0,0);
+        $('.pagination').jqPagination(
+            'option', 'current_page',
+            $('.pagination').jqPagination('option', 'current_page') - 1);
+    }
     submit['set_normal_loader'] = set_normal_loader
         = new_wrapper_loader(load_normal_post, function(){
             local.kwargs.view = 'normal';
@@ -315,11 +341,12 @@ $MOD('frame::board', function(){
         else{
             start_page = Math.ceil(last / PAGE_LIMIT);
         }
+        local.max_page = Math.ceil(last / PAGE_LIMIT);
         $('.pagination').jqPagination({
 		    page_string	: '第 {current_page} 页 / 共 {max_page} 页',
 		    paged		: set_page_anim,
             current_page: start_page,
-            max_page: Math.ceil(last / PAGE_LIMIT)
+            max_page: local.max_page
 		});
         set_page(start_page);
         local.kwargs = kwargs;
@@ -356,6 +383,7 @@ $MOD('frame::board', function(){
                                     board: data.data,
                                     PAGE_LIMIT: PAGE_LIMIT
                                 });
+                local.postlist_container = $('#postlist-container');
                 set_default_loader(cur_board, kwargs);
                 if(data.data.www.widgets){
                     load_widgets(data.data.www.widgets);
@@ -376,6 +404,22 @@ $MOD('frame::board', function(){
                         }, '#dy-widgets');
                     }
                 });
+                var sec_con = $('#near-board');
+                $api.get_boards_by_section(
+                    cur_board.data.seccode,
+                    function(data){
+                        if(data.success){
+                            data.data.sort(function(a, b){
+                                return b.lastpost - a.lastpost;
+                            });
+                            render_template('board-near-board',
+                                            {
+                                                boards: data.data,
+                                                secnum : cur_board.data.secnum
+                                            },
+                                            sec_con);
+                        }
+                    });
             }
             else{
                 raise404(ERROR[data.code]);
@@ -444,6 +488,8 @@ $MOD('frame::post', function(){
     }
 
     function _load_post(){
+        var target = $('#post-container');
+        console.log(target);
         $api.get_post(
             cur_boardname, local.last_filename,
             function(data){
@@ -451,7 +497,7 @@ $MOD('frame::post', function(){
                     render_template(
                         'post',
                         handler_post(data.data),
-                        '#post-container');
+                        target);
                 }
                 else{
                     raise404(ERROR[data.code]);
@@ -1000,13 +1046,14 @@ $MOD('frame::mail', function(){
 
     function set_page(pagenum){
         var start = pagenum * PAGE_LIMIT - PAGE_LIMIT;
+        var target = $('#maillist-container');
         console.log(start);
         $api.get_maillist(start, function(data){
             if(data.success){
                 console.log(data);
                 $('#maillist-content').remove();
                 render_template('mail-li', { mails: data.data},
-                                '#maillist-container');
+                                target);
                 local.start = data.data[0].index + 1;
             }
             else{

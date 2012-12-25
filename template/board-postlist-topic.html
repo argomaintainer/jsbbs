@@ -27,5 +27,14 @@
     </div>
     {{/each}}
   </div>
-  <div class="inner-scroll-top"><a href="#" onclick="window.scrollTo(0, 0)">回到顶部↑</a></div>
+  <div class="meta-row">
+    {{if has_next_page }}
+    <ul class="pager">
+      <li{{if !has_prev_page}} class="disabled"{{/if}}><a href="#" data-submit="prev_page">上一页</a></li>
+      <li{{if !has_next_page}} class="disabled"{{/if}}><a href="#" data-submit="next_page">下一页</a></li>
+    </ul>
+    {{else}}
+    <a href="#" href="#" onclick="window.scrollTo(0, 0)">返回顶部</a>
+    {{/if}}
+  </div>
 </div>

@@ -1,0 +1,12 @@
+{{if boards }}
+<div class="cell cell-loose">
+  <div class="near-boards-header">
+    <strong>${secnum} 区</strong> 的版块还有：
+  </div>
+  <ul class="near-boards">
+    {{each(i, b) boards}}
+    <li><a href="${url_for_board(b.filename)}">${b.title}</a></li>
+    {{/each}}
+  </ul>
+</div>
+{{/if}}

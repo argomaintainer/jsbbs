@@ -24,18 +24,6 @@ $MOD('jsbbs.main', function(){
     function raise_may_no_good_browser(){
     }
     
-    $G('refresh', true);  // auto refresh in hashchange
-
-    function quite_set_hash(hash, kwargs){
-        if($G.refresh){
-            $G.refresh = false;
-            if(typeof kwargs == 'object'){
-                console.log([hash = hash + '?' + merge_args(kwargs)]);
-            }
-            location.hash = hash;
-        }
-    }
-
     do_while_load(function(){
 
         if(!$.support.boxModel){
@@ -48,14 +36,7 @@ $MOD('jsbbs.main', function(){
 
             console.log([$MOD['frame.hook']]);
             
-            window.onhashchange = function(){
-                if($G.refresh){
-                    refresh_frame();
-                }
-                else{
-                    $G.refresh = true;
-                }
-            };
+            window.onhashchange = onhashchange;
 
             $G.hooks.after_boot();        
             refresh_frame();
@@ -68,10 +49,6 @@ $MOD('jsbbs.main', function(){
             
         }
     });
-
-    return {
-        quite_set_hash: quite_set_hash
-    }
 
 })
 using('jsbbs.main');

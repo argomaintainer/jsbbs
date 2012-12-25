@@ -308,8 +308,9 @@ $MOD('frame.template', function(){
         return $.tmpl(tplname, data);
     }
     function render_template(tplname, data, selector){
+        _(['zz', tplname, data, selector]);
         if(!selector){
-            selector="#main";
+            selector = "#main";
         }
         require_template(tplname);
         if(typeof data == "undefined")
@@ -319,7 +320,7 @@ $MOD('frame.template', function(){
     }
     function render_template_prepend(tplname, data, selector){
         if(!selector){
-            selector="#main";
+            selector = "#main";
         }
         require_template(tplname);
         if(typeof data == "undefined")
@@ -555,6 +556,38 @@ $MOD('frame.frame', function(){
         return null;
     }
 
+    $G('refresh', true);  // auto refresh in hashchange
+
+    function quite_set_hash(hash, kwargs){
+        if($G.refresh){
+            $G.refresh = false;
+            if(typeof kwargs == 'object'){
+                console.log([hash = hash + '?' + merge_args(kwargs)]);
+            }
+            location.hash = hash;
+        }
+    }
+
+    function set_location(hash){
+        if($G.refresh){
+            window.location = hash;
+        }
+        else{
+            setTimeout(function(){
+                set_location(hash);
+            }, 500);
+        }
+    }
+
+    function onhashchange(){
+        if($G.refresh){
+            refresh_frame();
+        }
+        else{
+            $G.refresh = true;
+        }
+    };    
+
     $(document).click(function(e){
         var target=$(e.target), 
         group, args, parent,
@@ -578,7 +611,7 @@ $MOD('frame.frame', function(){
         if(action){
             e.preventDefault();
             if(action[0] == '#'){
-                window.location = action;
+                set_location(action);
                 return;
             }             
             group = target.attr('data-group');
@@ -613,8 +646,10 @@ $MOD('frame.frame', function(){
         close_popwindow: close_popwindow,
         show_popwindow: show_popwindow,
         modal_confirm: modal_confirm,
-        show_modal: show_modal
-        
+        show_modal: show_modal,
+        set_location: set_location,
+        onhashchange: onhashchange,
+        quite_set_hash: quite_set_hash        
     }
 
 });

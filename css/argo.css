@@ -273,14 +273,14 @@ li.unread{
     color: #555;
     border-bottom: 1px dashed #ccc;
     padding: 5px;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .board-group-num{
     width: 50px;
     text-align: center;
     vertical-align: middle;
-}
+} 
 
 .board-group-head{
     width: 90px;
@@ -320,7 +320,12 @@ li.unread{
 .topten-title{
     font-size: 14px;
     line-height: 30px;
-    padding-left: 1em;
+    padding-left: 12px;
+}
+
+.topten-replynum{
+    padding-right: 12px;
+    text-align: right;
 }
 
 .table-topten{
@@ -1698,4 +1703,28 @@ a[data-submit]:hover{
 
 .topten-wrapper{
     padding-bottom: 12px;
+}
+
+.meta-tr td > a,
+.meta-row > a{
+    display: block;
+    padding: 12px;
+    text-align: center;
+}
+
+.near-boards{
+    list-style-type: none;
+    padding: 0 12px 4px 12px;
+    margin: 0;
+    font-size: 12px;
+    line-height: 1;
+}
+    
+.near-boards li{
+    display: inline-block;
+    margin: 1px;
+}
+
+.near-boards-header{
+    padding: 4px 12px 0 12px;
 }
