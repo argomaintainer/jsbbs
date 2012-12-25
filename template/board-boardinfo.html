@@ -29,7 +29,10 @@
   <div class="board-toolbar clearfix">
     <div class="btn-toolbar pull-left">
       <button class="btn btn-small btn-success" data-submit="newpost">发表话题</button>
-      <button class="btn btn-small" data-submit="clear_unread">清除未读标记</button>    
+      <button class="btn btn-small" data-submit="clear_unread">清除未读标记</button>
+      {{if board.isadmin }}
+      <a class="btn btn-small" href="${url_for_admin_board(board.filename)}">管理</a>
+      {{/if}}
     </div>    
     <div class="pull-right">
       <div class="bpagination pagination">

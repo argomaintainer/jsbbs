@@ -1080,7 +1080,6 @@ i[class*=" icon-mark-"]:after {
 }
 
 .board-header{
-    padding: 12px;
     background: url("../images/bht.jpg");    
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
@@ -1089,6 +1088,7 @@ i[class*=" icon-mark-"]:after {
 
 .board-header-inner{
     height: 108px;
+    padding: 12px;
 }
 
 .board-header a{

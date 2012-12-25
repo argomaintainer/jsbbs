@@ -1,18 +1,13 @@
-<div class="frame-header">
-  <div class="frame-header-inner">
-    <div class="padding-side">
-      <h3>${boardname} - 管理</h3>
-      <a href="${url_for_board(boardname)}"> « 回到版块</a>
-    </div>
+<div class="cell">
+  <div class="cell-header-inner">
+    <h3>${boardname} - 管理</h3>
+    <small><a href="${url_for_board(boardname)}"> « 回到版块</a></small>
   </div>
-</div>
-
-<div class="cell cell-in padding-side">
   <form action="javascript:void(0)" class="top2em">
     <fieldset>
       <label>版块logo</label>
       <input data-group="boardwww" type="text" name="logo" placeholder="输入图片的地址..." value="${args.logo}"/>
-      <span class="help-block">建议为 <em>760x180</em> ，可先在版内发图</span>
+      <span class="help-block">建议为 <em>682x132</em> ，可先在版内发图</span>
       <hr/>
       <input data-group="boardwww" type="hidden" name="boardname" value="${boardname}"/>
       <label>版主的话</label>

@@ -25,6 +25,17 @@
           </td>
         </tr>
         {{/each}}
+        <tr class="meta-tr">
+          {{if has_next_page }}
+          <td colspan="5">
+            <ul class="pager">
+              <li{{if !has_prev_page}} class="disabled"{{/if}}><a href="#" data-submit="prev_page">上一页</a></li>
+              <li{{if !has_next_page}} class="disabled"{{/if}}><a href="#" data-submit="next_page">下一页</a></li>
+            </ul>
+          {{else}}
+          <td colspan="5"><a href="#" href="#" onclick="window.scrollTo(0, 0)">返回顶部</a></td>
+          {{/if}}
+        </tr>
       </tbody>
     </table>
   </div>
