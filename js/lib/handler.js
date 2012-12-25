@@ -20,7 +20,6 @@ $MOD('frame.home', function(){
                       var secg;
                       if(data.success){
                           secg = data.data.boardnav;
-                          console.log(['sc', secg]);
                           for(s in secg){
                               secg[s].boards.sort(function(a, b){
                                   return (b.lastpost - a.lastpost);
@@ -183,7 +182,6 @@ $MOD('frame::board', function(){
     function new_wrapper_loader(loader, callback){
         return function(){
             loader(cur_board.boardname, 0, function(data){
-                // console.log([data[data.length-1].index]);
                 var total = data[data.length-1].index,
                 pagetotal = Math.ceil(total / PAGE_LIMIT),
                 curnum = (total % PAGE_LIMIT) || PAGE_LIMIT;
@@ -298,7 +296,7 @@ $MOD('frame::board', function(){
     var MAYBE_VIEW = { 'topic': true, 'digest': true, 'normal': true}
 
     function set_default_loader(cur_board, kwargs){
-        var start_page, last;
+        var start_page, last, total;
         if(typeof kwargs.view == "undefined"){
             kwargs.view = $.cookie('boardview');
             if(!MAYBE_VIEW[kwargs.view]){
@@ -313,13 +311,13 @@ $MOD('frame::board', function(){
             cur_board.loader = load_topic_post;
             cur_board.render = render_topic_post;
             $('#topic-loader').addClass('active');
-            last = cur_board.data.total_topic;
+            total = last = cur_board.data.total_topic;
         }
         else if(kwargs.view == 'digest'){
             cur_board.loader = load_digest_post;
             cur_board.render = render_digest_post;
             $('#digest-loader').addClass('active');
-            last = cur_board.data.total_digest;
+            total = last = cur_board.data.total_digest;
         }
         else{
             cur_board.loader = load_normal_post;
@@ -330,9 +328,9 @@ $MOD('frame::board', function(){
                 last = cur_board.data.total;
             }
             else{
-                local.hover = last;
-                console.log(local.hover);
+                local.hover = Math.min(last+1, cur_board.data.total);
             }
+            total = cur_board.data.total;
         }
         cur_board.isnull = false;
         if(local.hover = kwargs.index){
@@ -341,7 +339,7 @@ $MOD('frame::board', function(){
         else{
             start_page = Math.ceil(last / PAGE_LIMIT);
         }
-        local.max_page = Math.ceil(last / PAGE_LIMIT);
+        local.max_page = Math.ceil(total / PAGE_LIMIT);
         $('.pagination').jqPagination({
 		    page_string	: '第 {current_page} 页 / 共 {max_page} 页',
 		    paged		: set_page_anim,
@@ -389,7 +387,7 @@ $MOD('frame::board', function(){
                     load_widgets(data.data.www.widgets);
                 }
                 if(data.data.www.brand_url){
-                    $('#board-header-inner').css(
+                    $('.board-header-inner').css(
                         'background-image',
                         'url("' + data.data.www.brand_url +'")');
                 }
@@ -489,7 +487,6 @@ $MOD('frame::post', function(){
 
     function _load_post(){
         var target = $('#post-container');
-        console.log(target);
         $api.get_post(
             cur_boardname, local.last_filename,
             function(data){
@@ -580,7 +577,6 @@ $MOD('frame::post', function(){
                           $api.delete_post(
                               local.boardname, kwargs.filename,
                               function(data){                                  
-                                  console.log(data);
                                   if(data.success){
                                       show_alert('删除文章成功！', 'success');
                                   }
@@ -649,16 +645,11 @@ $MOD('frame::post', function(){
     }
 
     submit['publish_edit'] = function(kwargs){
-        console.log(['kw', local.boardname,
-                         kwargs.title,
-                         kwargs.content,
-                         kwargs.toedit]);                         
         $api.update_post(local.boardname,
                          kwargs.title,
                          kwargs.content,
                          kwargs.toedit,
                          function(data){
-                             console.log([data]);
                              if(data.success){
                                  show_alert('修改文章成功！', 'success');
                                  close_popwindow();
@@ -851,16 +842,11 @@ $MOD('frame::topic', function(){
     }
 
     submit['publish_edit'] = function(kwargs){
-        console.log(['kw', local.boardname,
-                         kwargs.title,
-                         kwargs.content,
-                         kwargs.toedit]);                         
         $api.update_post(local.boardname,
                          kwargs.title,
                          kwargs.content,
                          kwargs.toedit,
                          function(data){
-                             console.log([data]);
                              if(data.success){
                                  show_alert('修改文章成功！', 'success');
                                  close_popwindow();
@@ -1047,10 +1033,8 @@ $MOD('frame::mail', function(){
     function set_page(pagenum){
         var start = pagenum * PAGE_LIMIT - PAGE_LIMIT;
         var target = $('#maillist-container');
-        console.log(start);
         $api.get_maillist(start, function(data){
             if(data.success){
-                console.log(data);
                 $('#maillist-content').remove();
                 render_template('mail-li', { mails: data.data},
                                 target);
@@ -1227,7 +1211,6 @@ $MOD('frame::admin_board', function(){
     function links2str(links){
         var buf='';
         for_each_array(links, function(element){
-            console.log(['ll', element]);
             if(typeof element == "string"){
                 buf.concat(element +'\n');
                 return;
@@ -1300,9 +1283,7 @@ $MOD('frame::admin_board', function(){
         if($.isEmptyObject(t)){
             t = '';
         }
-        console.log(['tttttt', t]);
         $api.set_board_www_etc(kwargs.boardname, t, function(data){
-            console.log(['zzww', data]);
             if(data.success){
                 show_alert('更新版块设定成功！');
             }
@@ -1318,16 +1299,13 @@ $MOD('frame::admin_board', function(){
             $api.get_board_info(kwargs.boardname, function(data){
                 if(data.success && data.data.isadmin){
                     var args = {}, boardname=kwargs.boardname;
-                    console.log(['wwwwwwww', data.data.www]);
                     args = get_simple_setting(data.data.www);
-                    console.log(['qqqqqaaaaaaa', args]);
                     render_template('admin_board', {
                         boardname: boardname,
                         args: args
                     });
                 }
                 else{
-                    console.log(['d', data]);
                 }
             });
         },
@@ -1348,7 +1326,6 @@ $MOD('frame::admin', function(){
 
     submit['update-www'] = function(kwargs){        
         var d = jQuery.parseJSON(kwargs.data);
-        console.log(['up', kwargs.data, d]);
         $api.set_www_etc(d, function(data){
             if(data.success){
                 show_alert('更新成功！', 'success');
