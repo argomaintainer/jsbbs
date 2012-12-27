@@ -478,7 +478,7 @@ $MOD('frame::post', function(){
     }
 
     function _load_post(){
-        var target = $('#post-container');
+        local.target = $('#post-container');
         $api.get_post(
             cur_boardname, local.last_filename,
             function(data){
@@ -486,7 +486,7 @@ $MOD('frame::post', function(){
                     render_template(
                         'post',
                         handler_post(data.data),
-                        target);
+                        local.target);
                 }
                 else{
                     raise404(ERROR[data.code]);
@@ -499,7 +499,8 @@ $MOD('frame::post', function(){
         quite_set_hash('#!flow', local.kwargs);
     }
 
-    function new_post_loader(direct, ref, handler, render, failed, callback){
+    function new_post_loader(direct, ref, handler, render,
+                             failed, callback){
         var lock = false;
         var foo = function(){
             if(lock){
@@ -518,7 +519,7 @@ $MOD('frame::post', function(){
                                 render(
                                     'post',
                                     handler_post(data.data),
-                                    '#post-container');
+                                    local.target);
                                 lock = false;
                                 if(callback){
                                     callback(data);
@@ -704,7 +705,7 @@ $MOD('frame::topic', function(){
                         if(data.success){
                             render('topic',
                                    handler_post(data.data),
-                                   '#post-container');
+                                   local.target);
                             if(--counter){
                                 load(--counter);
                             }
@@ -873,6 +874,7 @@ $MOD('frame::topic', function(){
                             local.oldest_index = 
                             $.inArray(kwargs.filename, local.topiclist);
                         render_template('topic-framework');
+                        local.target = $('#post-container');
                         submit.load_next();
                     }
                     else{

@@ -145,16 +145,18 @@
     border-right: 1px solid #ccc;
 }
 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar{
-	background:#bbb; /* rgba fallback */
+	background:#000; /* rgba fallback */
 	background:rgba(0,0,0,0.2);
 	filter:"alpha(opacity=20)"; -ms-filter:"alpha(opacity=20)"; /* old ie */
 }
 .mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar{
+    background:#000;
 	background:rgba(0,0,0,0.35);
 	filter:"alpha(opacity=35)"; -ms-filter:"alpha(opacity=35)"; /* old ie */
 }
 .mCSB_scrollTools .mCSB_dragger:active .mCSB_dragger_bar,
 .mCSB_scrollTools .mCSB_dragger.mCSB_dragger_onDrag .mCSB_dragger_bar{
+    background:#000;
 	background:rgba(0,0,0,.4);
 	filter:"alpha(opacity=40)"; -ms-filter:"alpha(opacity=40)"; /* old ie */
 }
