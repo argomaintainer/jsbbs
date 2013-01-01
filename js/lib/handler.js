@@ -325,7 +325,6 @@ $MOD('frame::board', function(){
         var filename = $('[type=file]').val().split('\\').pop(),
         file = ($('[type=file]')[0].files[0]),
         title = $('[name=title]').val();
-        console.log(filename, file.size);
         if(filename){
             if(file.size >= 1048576){            
                 show_alert('上传文件过大，只接受1MB以下的文件 ～');
@@ -344,6 +343,7 @@ $MOD('frame::board', function(){
     }
 
     submit['publish_post'] = function(kwargs, e){
+        e.preventDefault();
         if(e.target.tagName == 'FORM'){
             if(!check_pushlish(kwargs, e))
                 return false;
