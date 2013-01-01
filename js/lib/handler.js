@@ -321,8 +321,32 @@ $MOD('frame::board', function(){
         });
     }
 
+    function check_pushlish(kwargs, e){
+        var filename = $('[type=file]').val().split('\\').pop(),
+        file = ($('[type=file]')[0].files[0]),
+        title = $('[name=title]').val();
+        console.log(filename, file.size);
+        if(filename){
+            if(file.size >= 1048576){            
+                show_alert('上传文件过大，只接受1MB以下的文件 ～');
+                return;
+            }
+            if(!title){
+                title = '[文件]'+filename;
+                $('.editor [name=title]').val(title);
+            }
+        }
+        if(!title){
+            show_alert('没有填写标题！');
+            return false;
+        }
+        return true;
+    }
+
     submit['publish_post'] = function(kwargs, e){
         if(e.target.tagName == 'FORM'){
+            if(!check_pushlish(kwargs, e))
+                return false;
             $api.new_post_form('#new-post-form',
                                // $api.new_post(cur_board.boardname,
                                //               kwargs.title,
@@ -376,30 +400,22 @@ $MOD('frame::board', function(){
     submit['submit-as-file'] = function(kwargs, e){
         var filename = $('[type=file]').val().split('\\').pop(),
         file = ($('[type=file]')[0].files[0]);
-        if(!filename){
-            show_alert('你还没选择要上传的文件！');
-            return;
-        }
-        console.log(file.size);
-        if(file.size >= 10485760){            
-            show_alert('上传文件过大，只接受1MB以下的文件 ～');
-            return;
-        }
-        if(!kwargs.title){
-            $('.editor [name=title]').val('[文件]'+filename);
-        }
+        if(!check_pushlish(kwargs, e))
+            return false;
         $api.new_post_form('#new-post-form',
                            function(data){
                                if(data.success){
-                                   var link = url_for_root(url_for_attach(
-                                       cur_board.boardname,
-                                       data.data.substring(2, 12)
-                                           + '.'+ filename.split('.').pop()));
-                                   show_alert('上传成功！', 'success');
+                                   show_alert('发表成功！', 'success');
+                                   if(filename){
+                                       var link = url_for_root(url_for_attach(
+                                           cur_board.boardname,
+                                           data.data.substring(2, 12)
+                                               + '.'+ filename.split('.').pop()));
+                                       $('[type=file]').val('')
+                                       add_appender(filename, link);
+                                   }
                                    $('.editor [name=title]').val('').focus();
                                    $('.editor textarea').val('');
-                                   $('[type=file]').val('')
-                                   add_appender(filename, link);
                                }
                                else{
                                    show_alert(ERROR[data.code], 'danger');
@@ -1086,7 +1102,7 @@ $MOD('frame::profile', function(){
         if(file.name.length < 1) {
             show_alert('不是有效的文件！', 'danger');
         }
-        else if(file.size > 10485760) {
+        else if(file.size > 1048576) {
             show_alert('文件太大了！', 'danger');
         }
         else if(file.type != 'image/jpg' && file.type != 'image/jpeg'){
