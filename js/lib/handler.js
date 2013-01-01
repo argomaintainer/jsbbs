@@ -608,7 +608,7 @@ $MOD('frame::post', function(){
     }
 
     function _load_post(){
-        local.target = $('#post-container');
+        local.target = $($('#post-container')[0]);
         $api.get_post(
             cur_boardname, local.last_filename,
             function(data){
@@ -1004,7 +1004,7 @@ $MOD('frame::topic', function(){
                             local.oldest_index = 
                             $.inArray(kwargs.filename, local.topiclist);
                         render_template('topic-framework');
-                        local.target = $('#post-container');
+                        local.target = $($('#post-container')[0]);
                         submit.load_next();
                     }
                     else{
@@ -1156,7 +1156,7 @@ $MOD('frame::mail', function(){
 
     function set_page(pagenum){
         var start = pagenum * PAGE_LIMIT - PAGE_LIMIT;
-        var target = $('#maillist-container');
+        var target = $($('#maillist-container')[0]);
         $api.get_maillist(start, function(data){
             if(data.success){
                 $('#maillist-content').remove();
