@@ -1,6 +1,8 @@
 $MOD('jsbbs.userbox', function(){
 
     require_jslib('cookie');
+
+    $G('lastsection', 0);
     
     $G.submit.logout = function(){
         modal_confirm('登出帐号', '你确认要取消登录？',
@@ -48,49 +50,60 @@ $MOD('jsbbs.userbox', function(){
         return a.unread?-1:1;
     }
 
+    function handler_fav(data){
+        if(data.success){
+            $('#favbox').hempty('');
+            var myfav = data.data, t={};
+            for(x in myfav){
+                t[myfav[x].boardname] = true;
+            }
+            $G.userfav = t;                
+            setTimeout(function(){
+                $('#favbox').empty();
+                data.data.sort(sort_favitem);
+                render_template('widget/fav', { fav: data.data },
+                                '#favbox');
+                var height = 40 * data.data.length;
+                if(height > 200){
+                    height = 200;
+                }
+                $('#favbox-outer').height(height);
+                $('[data-submit=refresh_fav]').removeClass('refreshing');
+                $G.hooks.after_refresh_fav();
+                var cookiename = 'hint-more@' + $G.authed.u.userid;
+                if(!$.cookie(cookiename)){
+                    $.cookie(cookiename, 1);                        
+                    if(data.data.length<5){
+                        $api.get_all_boards(function(data){
+                            var d;                            
+                            if(data.success){
+                                d = data.data;
+                                for(s in d){
+                                    d[s].boards.sort(function(a, b){
+                                        return (b.lastpost - a.lastpost);
+                                    });
+                                    d[s].boards = d[s].boards.slice(0, 5);
+                                }                                
+                                var html = render_string('morefav', {b: d});
+                                show_modal(html);
+                            };
+                        });
+                    };
+                }
+            }, 500);
+        }
+    };
+
     register_hook('after_refresh_fav');
     function refresh_fav(){
         $('[data-submit=refresh_fav]').addClass('refreshing');
-        $api.get_self_fav(function(data){
-            if(data.success){
-                $('#favbox').hempty('');
-                setTimeout(function(){
-                    $('#favbox').empty();
-                    data.data.sort(sort_favitem);
-                    render_template('widget/fav', { fav: data.data },
-                                    '#favbox');
-                    var height = 20 * data.data.length;
-                    if(height > 200){
-                        height = 200;
-                    }
-                    $('#favbox-outer').height(height);
-                    $('[data-submit=refresh_fav]').removeClass('refreshing');
-                    $G.hooks.after_refresh_fav();
-                    var cookiename = 'hint-more@' + $G.authed.u.userid;
-                    if(!$.cookie(cookiename)){
-                        $.cookie(cookiename, 1);                        
-                        if(data.data.length<5){
-                            $api.get_all_boards(function(data){
-                                var d;                            
-                                if(data.success){
-                                    d = data.data;
-                                    for(s in d){
-                                        d[s].boards.sort(function(a, b){
-                                            return (b.lastpost - a.lastpost);
-                                        });
-                                        d[s].boards = d[s].boards.slice(0, 5);
-                                    }                                
-                                    var html = render_string('morefav', {b: d});
-                                    show_modal(html);
-                                };
-                            });
-                        };
-                    }
-                }, 500);
-            }
-        });
-    }                             
+        $api.get_self_fav(handler_fav)
+    }
     $G.submit.refresh_fav = refresh_fav;
+
+    function refresh_fav_sync(){
+        handler_fav($api.get_self_fav_aync());
+    }
 
     function check_has_new_mail(callback){
         $api.check_has_new_mail(function(data){
@@ -121,32 +134,54 @@ $MOD('jsbbs.userbox', function(){
 
     register_hook('after_login_success');
     register_hook('after_refresh_userbox');
-    bind_hook('after_login_success', refresh_fav);
+    bind_hook('after_login_success', refresh_fav_sync);
     bind_hook('after_refresh_userbox', function(data){
         launch_mail_checker(data.success);
     });
     
     $G('authed', false);
+    $G('userfav', {});
+
     function refresh_userbox(){
-        $api.get_self_info(function(data){
-            var udata;
+        var data = $api.get_self_info_aync();
+        var udata;
+        if(data.success){
+            udata = { u: data.data, authed: true};
+            $G.authed = udata;
+            $G.hooks.after_login_success();
+        }
+        else{
+            $G.authed = false;
+            $G.userfav = {};
+        }
+        $('#userbox').empty();
+        $('#userbox-nav').empty();
+        render_template('userbox', udata, '#userbox');
+        render_template('userbox-nav', udata, '#userbox-nav');
+        $G.hooks.after_refresh_userbox(data);
+    }
+    
+    bind_hook('before_boot', refresh_userbox);
+
+    function go_random_board(){
+        $api.get_random_boardname(function(data){
             if(data.success){
-                udata = { u: data.data, authed: true};
-                $G.authed = udata;
-                $G.hooks.after_login_success();
+                location = url_for_board(data.data);
             }
-            else{
-                $G.authed = false;
-            }
-            $('#userbox').empty();
-            render_template('userbox', udata, '#userbox');
-            $G.hooks.after_refresh_userbox(data);
         });
     }
-    bind_hook('after_boot', refresh_userbox);
+
+    function go_section(){
+        location.hash = '#!section?secnum=' + (Number($G.lastsection) || 0);
+    }
+
+    $G.submit['go-random-board'] = go_random_board;
+    $G.submit['go-section'] = go_section;
+        
     return {
         'refresh_fav': refresh_fav,
-        'refresh_userbox' : refresh_userbox
+        'refresh_userbox' : refresh_userbox,
+        'go_random_board': go_random_board
     }
 
 })

@@ -230,6 +230,13 @@ $MOD('frame.func', {
         return buf.join('\n');
     },
 
+    array_to_dict : function(arr){
+        var t = {};
+        for(x in arr)
+            t[arr[x]] = true;
+        return t;
+    },
+
     range : function(start, end, step) {
         var range = [];
         var typeofStart = typeof start;
@@ -363,12 +370,12 @@ $MOD('frame.frame', function(){
                     'basetpl',
                     'local',
                     'pos',
-                    'leave',
                     'isnew',
                     'submit',
                     'ajax',
                     'prepare',
                     'widgets_loader',
+                    'marktop',
                     'keep_widgets']);
 
     $Type('FrameHash', ['hash', 'args']);
@@ -428,13 +435,15 @@ $MOD('frame.frame', function(){
 
         console.log('ENTER frame[' + json_encode(curhash) + ']');
 
-        if($G.current && $G.current.leave){
-            $G.current.leave(curhash.hash, curhash.args);
-        }
-
         $G.current = frame = $G.frames[curhash.hash];
         $G.local = frame.local;
         $G.local.__frame__ = frame;
+
+        $('.markhash li.active').removeClass('active disabled').find('a').removeClass('onactive');
+
+        if(frame.marktop){
+            $('.markhash-' + frame.marktop).addClass('active disabled').find('a').addClass('onactive');
+        }
 
         if(frame.isnew){
             $('#main').empty();
@@ -443,6 +452,8 @@ $MOD('frame.frame', function(){
         if(!frame.keep_widgets){
             $('#dy-widgets').empty();
         }
+
+        $('.local-container').empty()
 
         if(frame.pos){
             set_pos_mark(frame.pos);
@@ -558,7 +569,7 @@ $MOD('frame.frame', function(){
     $G('refresh', true);  // auto refresh in hashchange
 
     function quite_set_hash(hash, kwargs){
-        if($G.refresh){
+        if($G.refresh && (location.hash != hash)){
             $G.refresh = false;
             if(typeof kwargs == 'object'){
                 console.log([hash = hash + '?' + merge_args(kwargs)]);
@@ -591,6 +602,10 @@ $MOD('frame.frame', function(){
         var target=$(e.target), 
         group, args, parent,
         href=target.attr('href');
+        if(target.hasClass('onactive')){
+            e.preventDefault();
+            return;
+        }
         if(href){
             if(href.substr(0, 11)=='javascript:'){
                 if(!confirm('这个链接请求执行一段js代码:\n' + href + '\n这可能并不安全。是否真的要执行？')){

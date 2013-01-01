@@ -29,10 +29,60 @@ $MOD('frame.home', function(){
                           load_widgets(data.data.www.widgets);
                       }
                   });
-        }
+        },
+        marktop: 'home'
     });
 
 });
+
+$MOD('frame::section', function(){
+
+    var submit = {};
+
+    submit['book_fav'] = function(kwargs, e){
+        var boardname = $(e.target).attr('data-args');
+        $api.add_self_fav(boardname, function(data){
+            if(data.success){
+                show_alert('收藏' + boardname + '版成功！', 'success');
+                refresh_fav();
+                $(e.target).removeClass('btn-info').addClass('disabled').text('已收藏');
+            }
+            else{
+                show_alert(ERROR[data.code]);
+            }
+        });
+    }
+
+    declare_frame({
+        mark: 'section',
+        submit: submit,
+        marktop: 'section',
+        enter: function(kwargs){
+            $api.get_all_boards(function(data){
+                if(data.success){
+                    render_template('section', {
+                        sections: data.data.all,
+                        good: array_to_dict(data.data.good)
+                    });
+                    $('a[data-toggle="pill"]').on('shown', function (e) {
+                        var num = $(e.target).attr('data-args');
+                        $G.lastsection = num;
+                        console.log(['lsc', num]);
+                        quite_set_hash('#!section?secnum='
+                                       + $(e.target).attr('data-args'));
+                    })
+                    var num = Number(kwargs.secnum) || $G.lastsection ;
+                    if(isNaN(num))
+                        num = 0;
+                    if(num >=0){
+                        $('#a-pill-' + num).tab('show');
+                    }
+                }
+            });
+        }
+    });
+
+})            
 
 $MOD('frame::user', function(){
 
@@ -362,17 +412,19 @@ $MOD('frame::board', function(){
     function enter_board(kwargs){
 
         var boardname = kwargs.boardname, pagenum;
-        cur_board.boardname = boardname;
         
         $api.get_board_info(boardname, function(data){
             var start_page, last;
             if(data.success){
                 cur_board.data = data.data;
+                cur_board.boardname = boardname = data.data.filename;
                 render_template('board-boardinfo',
                                 {
                                     board: data.data,
                                     PAGE_LIMIT: PAGE_LIMIT
                                 });
+                console.log(['fn', '#fn-'+boardname]);
+                $('#fn-'+boardname).addClass('active disabled').find('a').addClass('onactive');
                 local.postlist_container = $('#postlist-container');
                 set_default_loader(cur_board, kwargs);
                 if(data.data.www.widgets){
@@ -395,6 +447,7 @@ $MOD('frame::board', function(){
                     }
                 });
                 var sec_con = $('#near-board');
+                $G.lastsection = cur_board.data.secnum;
                 $api.get_boards_by_section(
                     cur_board.data.seccode,
                     function(data){
@@ -1048,6 +1101,7 @@ $MOD('frame::mail', function(){
 
     declare_frame({
         mark: 'mail',
+        marktop: 'mail',
         enter : function(kwargs){
             $api.get_mailbox_info(function(data){
                 var index;

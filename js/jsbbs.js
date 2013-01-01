@@ -1,5 +1,6 @@
 $MOD('jsbbs.main', function(){
     
+    $MOD['frame.hook'].register_hook('before_boot');
     $MOD['frame.hook'].register_hook('after_boot');
     register_hook('after_scroll');
 
@@ -35,11 +36,10 @@ $MOD('jsbbs.main', function(){
             }
 
             window.onhashchange = onhashchange;
+            bind_hook('after_boot', refresh_frame);
 
-            $G.hooks.after_boot();        
-            refresh_frame();
-            
-            bind_hook('after_boot', refresh_userbox);
+            $G.hooks.before_boot();
+            $G.hooks.after_boot();
 
             $(window).scroll(function(){
                 $G.hooks.after_scroll();

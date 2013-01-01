@@ -8,9 +8,13 @@
         {{each(i, v) board.BM}}
         <li><a href="${ url_for_user(v) }">${v}</a></li>
         {{/each}}
-        <li>
-          <button data-submit="book_fav" class="btn btn-book btn-info btn-mini">收藏该版</button>
-        </li>
+        {{if $G.authed }}
+        {{if !($G.userfav[board.filename]) }}
+        <li><button class="btn btn-info btn-mini" data-submit="book_fav">收藏该版</button></li>
+        {{else}}
+        <li><button class="btn btn-mini disabled">已收藏</button></li>
+        {{/if}}
+        {{/if}}
       </ul>
       {{else}}
       <div class="alert alert-danger small-font">

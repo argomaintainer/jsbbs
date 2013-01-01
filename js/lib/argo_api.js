@@ -18,6 +18,28 @@ $MOD('argo_api', function(){
 		});
 	}
 
+    function get_nc_sync( url, data, callback, type ) {
+        // ajax get no cache
+		if ( jQuery.isFunction( data ) ) {
+			type = type || callback;
+			callback = data;
+			data = undefined;
+		}
+        var coll;
+		jQuery.ajax({
+			type: 'get',
+			url: url,
+			data: data,
+			success: function(data){
+                coll = data;
+            },                
+            cache: false,
+            async: false,
+			dataType: type
+		});
+        return coll;
+	}
+
     function ajax_getor_nopara(url){
         return function(callback){
             get_nc(url, callback);
@@ -30,6 +52,7 @@ $MOD('argo_api', function(){
         'get_section': ajax_getor_nopara('/ajax/section'),
         'get_all_boardsname': ajax_getor_nopara('/ajax/board/all'),
         'get_all_boards': ajax_getor_nopara('/ajax/board/alls'),
+        'get_random_boardname': ajax_getor_nopara('/ajax/board/random'),
         'get_board_info': function(boardname, callback){
             get_nc('/ajax/board/get',
                   {
@@ -251,9 +274,17 @@ $MOD('argo_api', function(){
             get_nc('/ajax/user/info', callback);
         },
 
+        'get_self_info_aync': function(){
+            return get_nc_sync('/ajax/user/info');
+        },
+
         'get_self_fav': function(callback){
             get_nc('/ajax/user/fav', callback);
         },
+
+        'get_self_fav_aync' : function(){
+            return get_nc_sync('/ajax/user/fav');
+        },            
 
         'add_self_fav': function(boardname, callback){
             $.post('/ajax/user/addfav',

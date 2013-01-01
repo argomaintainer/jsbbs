@@ -12,7 +12,7 @@
 	width:16px;
 	height:100%;
 	top:0;
-	right:0;
+	right:15px;
     visibility: hidden;
 }
 .mCustomScrollBox:hover .mCSB_scrollTools{

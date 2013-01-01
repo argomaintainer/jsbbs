@@ -1,43 +1,28 @@
 {{if authed }}
-<div id="userbox" class="widget">
-  <div class="avatar">
-    <img class="img-rounded" src="${url_for_avatar(u.userid)}"/>
-    <div class="avatar-content">
-      <div class="big-font">${u.userid}</div>
-      <div>${u.username}</div>
-    </div>
-  </div>
-  <ul class="nav nav-pills">
-    <li><a href="#!"><i class="icon-home"></i></a></li>
-    <li id="userbox-mail"><a href="#!mail"><i class="icon-envelope"></i><span class="display-on-newmail">(新!)</span></a></li>
-    <li class="dropdown">
-      <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-        <i class="icon-wrench"></i>
-      </a>
-      <ul class="dropdown-menu">
-        <li><a href="#!profile">设置我的资料</a></li>
-        <li><a href="#" data-submit="logout">退出登录</a></li>
-      </ul>
-    </li>
+<div class="navbox">
+  <ul class="navlist markhash">
+    <li class="markhash-home first-li"><a href="#!home"><i class="icon-home"></i>发现中大</a></li>
+    <li><a data-submit="go-random-board" href="#"><i class="icon-random"></i>随便看看</a></li>
   </ul>
-  <div class="widget-header">
-    <h4>收藏夹</h4>
-    <small><a href="#" data-submit="refresh_fav">刷新</a></small>
-  </div>
   <div id="favbox-outer" class="scrollbar">
     <div id="favbox"></div>
   </div>
+  <div class="navbox-footer">
+    <small><a href="#" data-submit="refresh_fav">刷新</a></small>
+  </div>
 </div>
 {{else}}
-<div class="widget">
+<div class="widget loginbox">
   <div class="widget-header">
-    <h4>登录</h4>
+    <h4>登录逸仙时空</h4>
   </div>
   <form id="f-login" class="nomargin" data-submit="login">
+    <label>帐号</label>
     <input type="text" tabindex="1"  class="focus input-block-level" name="userid" placeholder="输入你的帐号 ：-） ">
+    <label>密码</label>
     <input type="password" tabindex="2" class="input-block-level" name="password" placeholder="以及密码...">
-    <button type="submit" tabindex="3" class="btn btn-small btn-success">登陆</button> · 
-    <a class="small-font" href="http://bbs.sysu.edu.cn/bbsreg">注册</a>
+    <button type="submit" tabindex="3" class="btn">登录</button>
+    <a class="btn btn-small btn-success" href="http://bbs.sysu.edu.cn/bbsreg">注册</a>
   </form>
 </div>
 {{/if}}

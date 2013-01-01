@@ -1,8 +1,8 @@
 {{if fav }}
 <div class="favbox">
-  <ul class="unstyled">
+  <ul class="markhash navlist">
     {{each(i, v) fav }}
-    <li{{if v.unread }} class="unread"{{/if}}><a href="${ url_for_board(v.boardname) }">${v.boardname}</a></li>
+    <li id="fn-${v.boardname}"><a href="${ url_for_board(v.boardname) }"><i class="{{if v.unread }}icon-nbrd{{else}}icon-null{{/if}}"></i>${v.boardname}</a></li>
     {{/each}}
   </ul>
 </div>

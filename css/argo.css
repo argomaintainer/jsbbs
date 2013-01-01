@@ -28,19 +28,6 @@ body{
     /* overflow: auto; */
 }
 
-#userfav{
-    font-size: 12px;
-    overflow: hidden;
-}
-
-#userfav li{
-    padding: 0 10px;
-}    
-
-#favbox ul{
-    margin: 0;
-}
-
 .text-center{
     text-align: center;
 }
@@ -157,7 +144,21 @@ i.unread{
 }
 
 li.unread{
-    font-weight: bold;
+    /* font-weight: bold; */
+}
+
+li.unread{
+    position: relative;
+}
+
+i.icon-nbrd:before{
+    content: "";
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    background: #084;
+    margin-top: 4px;
+    margin-left: 4px;
 }
 
 .over-hidden{
@@ -234,7 +235,7 @@ li.unread{
 }
 
 .cell ul:first-child li:first-child .list-link,
-.cell:first-child {
+.cell:first-child{
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
 }
@@ -250,6 +251,7 @@ li.unread{
     border-bottom: 1px solid #e8e8e8;
     margin: -12px -12px 10px;
     padding: 12px;
+    color: #237812;
 }    
 
 .cell-header h3{
@@ -323,6 +325,10 @@ li.unread{
     padding-left: 12px;
 }
 
+.topten-title a{
+    color: #333;
+}
+
 .topten-replynum{
     padding-right: 12px;
     text-align: right;
@@ -342,7 +348,7 @@ li.unread{
 }
 
 .metainfo .meta-board a{
-    color: #666;
+    color: #999;
     font-weight: bold;
     text-shadow: 0 0 1px #fff;
 }
@@ -466,6 +472,7 @@ li.unread{
     position: relative;
     margin-bottom: 10px;
     border-radius: 5px;
+    border-bottom: 1px solid #ccc;
     padding: 12px;
 }
 
@@ -1203,7 +1210,6 @@ a.nobtn{
 }
 
 a[data-submit]:hover{
-    text-decoration: underline;
 }
 
 .title-g a{
@@ -1663,7 +1669,6 @@ a[data-submit]:hover{
 
 #favbox-outer{
     position: relative;
-    padding-left: 12px;
 }
 
 .home-post-recom{
@@ -1733,4 +1738,146 @@ a[data-submit]:hover{
 
 .near-boards-header{
     padding: 4px 12px 0 12px;
+}
+
+.sec-boardlist{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.sec-boardlist > li{
+    float: left;
+    width: 300px;
+    margin-left: 15px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.sec-boardlist .boardname{
+    display: block;
+}
+
+.sec-boardlist .time{
+    font-size: 13px;
+    color: #999;
+}
+
+.sec-boardlist .bmlist{
+    color: #666;
+}
+
+.sec-boardlist .btn{
+    position: absolute;
+    bottom: 0;
+    right: 40px;
+}
+
+.sec-boardlist .recommend{
+    position: absolute;
+    color: red;
+    margin-left: 1px;
+}
+
+.top-a{
+    width: 60px;
+    text-align: center;
+}
+
+.top-u{
+    width: 200px;
+}
+
+.top-avatar > img{
+    width: 24px;
+    height: 24px;
+    top: 8px;
+    position: absolute;
+    border-bottom: 1px solid #333;
+    border-radius: 4px;
+}
+
+.top-avatar .avatar-content{
+    margin-left: 35px;
+}
+
+.top-u:hover .caret{
+    border-top-color: #fff !important;
+    border-bottom-color: #fff !important;
+}
+
+.loginbox{
+    background: #fff;
+    box-shadow: 0 1px 1px #ccc;
+}
+
+.loginbox .widget-header h4{
+    font-weight: bold;
+}
+
+.navbox{
+    background: #fff;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    border-bottom: 1px solid #ccc;
+}
+
+.navlist{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 212px;
+}
+
+.navlist > li{
+    line-height: 22px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.navbox-footer{
+    padding: 4px 12px;
+}
+
+.navlist li.active > a{
+    background: #333;
+    color: #fff;
+}
+
+.navlist > li > a{
+    display: block;
+    text-decoration: none;
+    color: #333;
+    padding: 8px 12px;
+}
+
+.navlist > li > a:hover{
+    color: #47a;
+    text-shadow: 0 0 1px #ccc;
+}
+
+.navlist > li.active > a:hover{
+    color: #fff;
+    text-shadow: none;
+}
+
+.navlist > li > a > i{
+    margin-right: 4px;
+}
+
+.first-li > a{
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+#favbox-outer{
+    margin-right: -30px;
+}
+
+.navlist .active > a > [class*=" icon-"],
+.navlist .active > a > [class^="icon-"]{
+    background-image: url("../img/glyphicons-halflings-white.png");    
+}
+
+.onactive{
+    cursor: default    ;
 }

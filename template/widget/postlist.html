@@ -7,7 +7,7 @@
     {{/if}}
   </div>
   {{/if}}
-  <ul class="small-list">
+  <ul class="unstyled">
     {{each(i, v) posts}}
     <li><a href="${ url_for_topic(v.filename, boardname) }">${v.title}</a></li>
     {{/each}}
