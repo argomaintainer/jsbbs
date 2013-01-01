@@ -13,6 +13,17 @@
     <div class="typo post-content">
       {{html content}}
       <div class="typo post-signature">{{html signature }}</div>
+      {{if ah }}
+      <p>这篇帖子含附件：
+        <div>
+          {{if !ah.desc.indexOf("image") }}
+          <img src="${ah.link}"/>
+          {{else}}
+          <a href="${ah.link}" target="_blank">${ah.origname}</a>
+          {{/if}}
+        </div>
+      </p>
+      {{/if}}
     </div>
     <div class="post-toolbar clearfix">
       <ul class="hidden-ul">

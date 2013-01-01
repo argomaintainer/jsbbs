@@ -1881,3 +1881,30 @@ a[data-submit]:hover{
 .onactive{
     cursor: default    ;
 }
+
+.file-uploader{
+    line-height: 30px;
+}
+
+input.file-selector{
+    height: auto;
+}
+
+#appender-container{
+    margin-top: 12px;
+}
+
+#appender-container a{
+    display: inline-block;
+    padding: 2px 4px;
+    border: 1px solid #ccc;
+    background: #f0f0f0;
+    text-decoration: none;
+    color: #47a;
+    margin-right: 4px;
+}
+    
+#appender-container a:hover{
+    color: #147;
+}
+    

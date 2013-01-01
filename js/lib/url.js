@@ -23,7 +23,10 @@ $MOD('frame.url_for', {
     },
     'readmail': function(index){ return '#!readmail?index=' + index; },
     'page': function(path){ return '#!page?path=' + path;},
-    'root': function(path){ return DATA_ROOT + path;},
+    'root': function(path){ return location.origin + path;},
+    'attach': function(boardname, filename){
+        return '/attach/' + boardname + '/' + filename;
+    },
     'url': function(path){ return DATA_ROOT + '/n/index.html' + path;},
     'admin_board': function(boardname){
         return '#!admin_board?boardname=' + boardname ;

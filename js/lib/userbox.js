@@ -109,10 +109,10 @@ $MOD('jsbbs.userbox', function(){
         $api.check_has_new_mail(function(data){
             if(data.success){
                 if(data.data=='1'){
-                    $('#userbox').addClass('hasnewmail');
+                    $('#userbox-nav').addClass('hasnewmail');
                 }
                 else{
-                    $('#userbox').removeClass('hasnewmail');
+                    $('#userbox-nav').removeClass('hasnewmail');
                 }
                 if(callback){
                     callback();

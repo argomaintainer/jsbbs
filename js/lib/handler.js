@@ -314,6 +314,11 @@ $MOD('frame::board', function(){
         }
         init_popwindow('popwindow/newpost',
                        { boardname: cur_board.boardname});
+        $('.editor textarea').keypress(function(event){
+            if(event.ctrlKey && (event.keyCode==10)){
+                $('#new-post-form').submit();
+            };
+        });
     }
 
     submit['publish_post'] = function(kwargs, e){
@@ -333,6 +338,77 @@ $MOD('frame::board', function(){
                                    }
                                });
         }
+    }
+
+    function getCaret(el) { 
+        if (el.selectionStart) { 
+            return el.selectionStart; 
+        } else if (document.selection) { 
+            el.focus(); 
+
+            var r = document.selection.createRange(); 
+            if (r == null) { 
+                return 0; 
+            } 
+
+            var re = el.createTextRange(), 
+            rc = re.duplicate(); 
+            re.moveToBookmark(r.getBookmark()); 
+            rc.setEndPoint('EndToStart', re); 
+
+            return rc.text.length; 
+        }  
+        return 0; 
+    }    
+
+    submit['append-text'] = function(kwargs, e){
+        var target = $('.editor textarea');
+        target.val(target.val() + '\n\n' + $(e.target).attr('data-args'));
+        target.focus();
+    }
+
+    function add_appender(name, text){
+        $('<a href="#" data-submit="append-text"></a>').attr('data-args', text).text(name).appendTo('#appender-container');
+    }
+
+    last = add_appender;
+
+    submit['submit-as-file'] = function(kwargs, e){
+        var filename = $('[type=file]').val().split('\\').pop(),
+        file = ($('[type=file]')[0].files[0]);
+        if(!filename){
+            show_alert('你还没选择要上传的文件！');
+            return;
+        }
+        console.log(file.size);
+        if(file.size >= 10485760){            
+            show_alert('上传文件过大，只接受1MB以下的文件 ～');
+            return;
+        }
+        if(!kwargs.title){
+            $('.editor [name=title]').val('[文件]'+filename);
+        }
+        $api.new_post_form('#new-post-form',
+                           function(data){
+                               if(data.success){
+                                   var link = url_for_root(url_for_attach(
+                                       cur_board.boardname,
+                                       data.data.replace('M', 'A')
+                                           + '.'+ filename.split('.').pop()));
+                                   show_alert('上传成功！', 'success');
+                                   $('.editor [name=title]').val('').focus();
+                                   $('.editor textarea').val('');
+                                   $('[type=file]').val('')
+                                   add_appender(filename, link);
+                               }
+                               else{
+                                   show_alert(ERROR[data.code], 'danger');
+                               }
+                           },
+                           function(e){
+                               show_alert('请确保文件小于1MB的后缀为png/pdf/jpg/gif/zip/txt/gz/bz2文件', 'danger')
+                           });
+        e.preventDefault();
     }
 
     var MAYBE_VIEW = { 'topic': true, 'digest': true, 'normal': true}
@@ -527,6 +603,7 @@ $MOD('frame::post', function(){
     function handler_post(post){
         post.content = $MOD.format.format(post.rawcontent);
         post.signature = $MOD.format.format(post.rawsignature);
+        console.log(['p', post]);
         return post;
     }
 
@@ -1009,7 +1086,7 @@ $MOD('frame::profile', function(){
         if(file.name.length < 1) {
             show_alert('不是有效的文件！', 'danger');
         }
-        else if(file.size > 100000) {
+        else if(file.size > 10485760) {
             show_alert('文件太大了！', 'danger');
         }
         else if(file.type != 'image/jpg' && file.type != 'image/jpeg'){

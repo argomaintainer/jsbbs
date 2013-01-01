@@ -19,14 +19,11 @@
     <div>
       <button data-group="newpost" class="btn btn-success">发表文章</button>
       <span class="help-inline">Ctrl+Enter快速发表</span>
-      <div class="pull-right">附件上传热血开发中……</div>
-      <!-- <ul class="pull-right inline-list"> -->
-      <!--   <li> -->
-      <!--     <button class="btn btn-small btn-v"> -->
-      <!--       <i class="item-attach"></i></button> -->
-      <!--   </li> -->
-      <!--   <li><a href="#">发帖须知</a></li> -->
-      <!-- </ul> -->
+      <div class="file-uploader pull-right">
+        <button data-submit="submit-as-file" data-group="newpost" class="btn btn-mini">作为文件上传</button>
+        <input class="file-selector" type="file" name="attach"/>
+      </div>
     </div>
+    <div id="appender-container"></div>
   </div>
 </div>
