@@ -182,11 +182,22 @@ $MOD('argo_api', function(){
         },
         'get_post': function(boardname, filename, callback){
             get_nc('/ajax/post/get',
-                  {
-                      boardname: boardname,
-                      filename: filename
-                  },
-                  callback);
+                   {
+                       boardname: boardname,
+                       filename: filename
+                   },
+                   function(data){
+                       if(data.success){
+                           var rd = data.data;
+                           if(!$.isEmptyObject(rd['ah'])){
+                               console.log(['ll', last = rd['ah'].link]);
+                               rd['ah'].link = rd['ah'].link.replace('/A.', '/').replace('.A', '');
+                               console.log(['d', rd]);
+                               data.data = rd;
+                           }
+                       }
+                       callback(data);
+                   });
         },
         'get_near_postname': function(boardname, filename, direction, callback){
             // direction = prev | next

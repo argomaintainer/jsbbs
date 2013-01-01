@@ -83,7 +83,6 @@ $MOD('format', function(){
         var segments = s.replace(/\x1b\[(?:\d{1,2};?)+m/gm, function(t) {
             //console.log(['zz', t.substring(2, t.length-1)]);
             var colors = t.substring(2, t.length-1).split(';');
-            console.log(colors);
             for (var i = 0; i< colors.length; i++) {
               colors[i] = 'c'+colors[i];
             }
@@ -128,7 +127,6 @@ $MOD('format', function(){
         text = format_br(text);
         text = format_esc(text);
         text = format_linkify(text);
-        console.log(['zzzzzzzzz', text]);
         return text;
     }
     $.fn.format = function(){

@@ -393,7 +393,7 @@ $MOD('frame::board', function(){
                                if(data.success){
                                    var link = url_for_root(url_for_attach(
                                        cur_board.boardname,
-                                       data.data.replace('M', 'A')
+                                       data.data.substring(2, 12)
                                            + '.'+ filename.split('.').pop()));
                                    show_alert('上传成功！', 'success');
                                    $('.editor [name=title]').val('').focus();
