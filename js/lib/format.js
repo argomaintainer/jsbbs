@@ -22,19 +22,19 @@ $MOD('format', function(){
 
         // 2. (http://)v.youku.com... to <embed> tag
         [/(^|\n)(http:&#x2F;&#x2F;)?v\.youku\.com&#x2F;v_show&#x2F;id_(\w+)\.(html|htm)/g,
-         '<embed wmode="opaque" src="http://player.youku.com/player.php/sid/$2/v.swf" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>'],
+         '<embed wmode="opaque" src="http://player.youku.com/player.php/sid/$3/v.swf" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>'],
 
         // youku.swf
         [/(^|\n)(http:&#x2F;&#x2F;player.youku.com&#x2F;player.php&#x2F;sid&#x2F;\w*&#x2F;v.swf)/g,
-         '<embed wmode="opaque" src="$1" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>'],         
+         '<embed wmode="opaque" src="$2" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>'],         
 
         // xiami
         [/(^|\n)(http:&#x2F;&#x2F;www.xiami.com&#x2F;widget&#x2F;\d*_\d*&#x2F;singlePlayer\.swf)/g,
-         '<embed wmode="opaque" src="$1" align="middle" width="257" height="33" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>'],
+         '<embed wmode="opaque" src="$2" align="middle" width="257" height="33" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>'],
 
         // tudou
         [/(^|\n)(http:&#x2F;&#x2F;www\.tudou\.com&#x2F;\w&#x2F;[\w\d\-]*(&#x2F;?)(&amp;[\w\d=_]*)*&#x2F;v\.swf)/g,
-         '<embed src="$1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="opaque" width="480" height="400"></embed>'],        
+         '<embed src="$2" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="opaque" width="480" height="400"></embed>'],        
 
         // url
 	    [/(^|\s|<br>|&nbsp;|\n|>)(www\..+?\..+?)(\s|$|<br>|&nbsp;|<)/g,		'$1<a target="_blank" href="http://$2">$2</a>$3'],
