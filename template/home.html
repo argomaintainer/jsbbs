@@ -1,24 +1,26 @@
+{{if www.posts }}
 <div class="cell cell-in">
   <div class="page-img">
-    <div class="carousel slide">
+    <div id="home-slide" data-interval="5000" class="carousel slide">
       <!-- Carousel items -->
       <div class="carousel-inner">
-        <div class="active item">
-          <img src="${url_for_img('brand.jpg')}"/>
+        {{each(i, m) www.posts}}
+        <div class="{{if (i==0) }}active {{/if}}item">
+          <img src="${(m[0])}">
           <div class="carousel-caption">
-            <h4>${www.post.title}</h4>
-            <p>${www.post.text}</p>
+            {{if m[1]}}<h4>${(m[1])}</h4>{{/if}}
+            {{if m[2]}}<p>${(m[2])}</p>{{/if}}
           </div>
         </div>
-        <div class="item">…</div>
-        <div class="item">…</div>
+        {{/each}}
       </div>
       <!-- Carousel nav -->
-      <!-- <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a> -->
-      <!-- <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a> -->
+      <a class="carousel-control left" href="#home-slide" data-slide="prev">&lsaquo;</a>
+      <a class="carousel-control right" href="#home-slide" data-slide="next">&rsaquo;</a>
     </div>
   </div>
 </div>
+{{/if}}
 <div class="cell cell-loose">
   <div class="cell-header">
     <h3>今日十大</h3>
