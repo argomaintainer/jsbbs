@@ -1807,12 +1807,16 @@ a[data-submit]:hover{
 }
 
 .loginbox{
-    background: #fff;
     box-shadow: 0 1px 1px #ccc;
 }
 
 .loginbox .widget-header h4{
     font-weight: bold;
+}
+
+.registerbox{
+    background: #fff;
+    box-shadow: 0 0 2px #ccc;
 }
 
 .navbox{
