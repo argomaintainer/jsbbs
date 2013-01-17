@@ -21,6 +21,7 @@
 $MOD('timeformat', function(){
 
     var now = new Date()
+    , TSnow = now / 1000
     , today = new Date(now.getFullYear(),
                        now.getMonth(),
                        now.getDate())
@@ -103,6 +104,11 @@ $MOD('timeformat', function(){
         return timestamp > TSYesterday;
     }
 
+    function tooOldTS(timestamp){
+        console.log(['tso', timestamp, TSnow, TSnow - timestamp]);
+        return TSnow - timestamp > 2700000 ;
+    }                                   
+
     $.fn.nicetime = function(options){
         return this.each(function(){
             var self = $(this);
@@ -114,7 +120,8 @@ $MOD('timeformat', function(){
     return {
         "nice_timestamp": niceTimestamp,
         "nice_time": niceTimeWord,
-        afterYesterdayTS: afterYesterdayTS
+        afterYesterdayTS: afterYesterdayTS,
+        tooOldTS: tooOldTS
     }
 
 })

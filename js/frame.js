@@ -357,6 +357,7 @@ $MOD('frame.template', function(){
         'json_encode': JSON.stringify,
         'tf_timestamp': $MOD.timeformat.nice_timestamp,
         'tf_after_yesterday': $MOD.timeformat.afterYesterdayTS,
+        'tf_too_old': $MOD.timeformat.tooOldTS,
         'raise404': raise404
     };
 

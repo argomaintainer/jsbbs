@@ -1,7 +1,14 @@
 <div class="cell main-cell cell-loose">
   <div class="board-header relative">
     <div class="board-header-inner">
-      <h3>${board.title}<small> ${board.filename}</small></h3>      
+      <h3>${board.title}<small> ${board.filename}</small></h3>
+      {{if tf_too_old(board.lastpost) }}
+      <div class="alert">
+        <strong>这个看版很久没更新了！</strong><br/>
+        这个版块很久都没有人发文，请移步其他看版。</br>
+        如果您有意建设此版，请 <a href="${url_for_board('New_boardmanager')}">竞选版主</a>！<br/>
+      </div>
+      {{else}}
       {{if board.BM.length}}
       <ul class="bmlist">
         版主：
@@ -17,10 +24,12 @@
         {{/if}}
       </ul>
       {{else}}
-      <div class="alert alert-danger small-font">
+      <div class="alert">
         <strong>诚征版主中！</strong><br/>
-        如果你希望参与本版的管理为本版做点事情，请申请成为版主！
+        这个版块需要版主<br/>
+        如果您有意建设此版，请 <a href="${url_for_board('New_boardmanager')}">竞选版主</a> ！<br/>
       </div>
+      {{/if}}
       {{/if}}
       <ul id="loader-wrapper" class="board-nav">
         <li id="normal-loader">

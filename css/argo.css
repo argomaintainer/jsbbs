@@ -1105,12 +1105,20 @@ i[class*=" icon-mark-"]:after {
     text-decoration: underline;
 }
 
+.board-stats a:hover small{
+    color: #0084B4;
+}
+
 .board-header .alert{
     padding-right: 20px;
 }
 
-.board-stats a:hover small{
-    color: #0084B4;
+.board-header .alert a:hover{
+    color: #e08843;
+}
+
+.board-header .alert a{
+    color: #C09853;
 }
 
 .hasnewmail #userbox-mail a{
@@ -1641,7 +1649,11 @@ a[data-submit]:hover{
 }
 
 .board-header .alert{
-    margin-right: 280px;
+    margin-right: 305px;
+}
+
+.board-header .alert a{
+    font-weight: bold;
 }
 
 .post-signature{
