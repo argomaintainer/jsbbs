@@ -1,0 +1,14 @@
+<div class="cell main-cell">
+  <form>
+    <fieldset>
+      <legend>电子邮件提醒</legend>
+      <label class="checkbox">
+        <input type="checkbox" id="input-imail" name="imail"{{if 0 == setting.no_hint_mail}} checked{{/if}}> 当收到站内信时使用电子邮箱通知我 
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" id="input-fav" name="fav"{{if 0 == setting.no_hint_fav}} checked{{/if}}> 每周检查我的收藏夹，如果有更新则通知我
+      </label>
+      <button type="submit" data-submit="update-mailhint" class="btn btn-danger">确认</button>
+    </fieldset>
+  </form>
+</div>

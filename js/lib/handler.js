@@ -1058,9 +1058,57 @@ $MOD('page_func', function(){
     }
 });
 
+$MOD('frame::setting', function(){
+
+    var submit = {};
+
+    submit['update-mailhint'] = function(){
+        var i1=$('#input-imail').is(':checked')?0:1,
+        i2=$('#input-fav').is(':checked')?0:1;
+        console.log(['s', i1, i2]);
+        if(i1 || i2){
+            modal_confirm('取消邮件提醒',
+                          '取消邮件提醒提醒可能会使您不能够即时处理您的站内信或者看到您喜欢的版块的更新，您确定要取消邮件提醒？',
+                          function(){
+                              $api.update_self_setting(
+                                  {
+                                      'no_hint_mail': i1,
+                                      'no_hint_fav': i2
+                                  },
+                                  function(data){
+                                      show_alert("操作成功");
+                                  });
+                          });
+        }
+        else{
+            $api.update_self_setting(
+                {
+                    'no_hint_mail': i1,
+                    'no_hint_fav': i2
+                },
+                function(data){
+                    show_alert("操作成功");
+                });
+        };
+    }
+
+    declare_frame({
+        mark: 'setting',
+        enter: function(){
+            $api.get_self_setting(function(data){
+                console.log(data);
+                console.log(data.data.no_hint_mail);
+                render_template('setting',{ 'setting': data.data});
+            })
+        },
+        submit: submit
+    });
+
+});                
+
 $MOD('frame::profile', function(){
 
-    submit = {}
+    var submit = {}
 
     submit['update-user'] = function(kwargs, e){
         if(kwargs.birthday){

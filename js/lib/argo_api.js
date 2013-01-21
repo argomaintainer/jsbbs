@@ -285,6 +285,18 @@ $MOD('argo_api', function(){
             get_nc('/ajax/user/info', callback);
         },
 
+        'get_self_setting': function(callback){
+            get_nc('/ajax/user/setting/get', callback);
+        },
+
+        'update_self_setting': function(values, callback){
+            $.post('/ajax/user/setting/update',
+                   {
+                       update: values,
+                   },
+                   callback);
+        },
+
         'get_self_info_aync': function(){
             return get_nc_sync('/ajax/user/info');
         },
