@@ -1543,6 +1543,10 @@ a[data-submit]:hover{
 /*     /\* color: #333; *\/ */
 /* } */
 
+.topic-post.post-wrapper{
+    border-bottom: 1px solid #c2daed;
+}
+
 .post-wrapper{
     padding: 12px 24px 12px 12px;
     position: relative;
@@ -1663,20 +1667,38 @@ a[data-submit]:hover{
     margin-top: 6px;
     padding-top: 6px;
     font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+    display: none;
+}
+
+.topic-post .post-signature{
+    display: block;
 }
 
 .postquote{
-    color:#999;
-    font-size: 12px;
-    line-height: 15px;
-    margin: 6px;
-}
-
-.postquote-header{
-    color: #4a7;
     font-size: 12px;
     line-height: 15px;
     font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+    margin: 10px;
+}
+
+.postquote-header{
+    color: #525;
+}
+
+.postquote.open .postquote-content{
+    display: block;
+}
+
+.postquote-content{
+    display: none;
+    color: #525;
+    margin: 5px;
+}
+
+.toggle-quote{
+    font-size: 10px;
+    color: #525;
+    cursor: pointer;
 }
 
 #favbox-outer{
@@ -1923,4 +1945,3 @@ input.file-selector{
 #appender-container a:hover{
     color: #147;
 }
-    

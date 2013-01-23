@@ -59,19 +59,12 @@ $MOD('format', function(){
     }
     format_cr = function(s){
         return s.replace(/\r\n/gm, '\n').replace(/\r/gm, '\n');
-    }
+    } 
     format_br = function(s){
         return s.replace(/\n/gm, '<br\>\n');
     }
     format_quote = function(s){
-        return s.replace(/^(【&nbsp;在.*的大作中提到:&nbsp;】)?(\n[:：].*)+/gm, function(s){
-            return '<div class="postquote">' +
-                s.replace(/^【&nbsp;在.*的大作中提到:&nbsp;】/, function(t){
-                    return '<div class="postquote-header">' + t + '</div>';
-                }).replace(/(\n[:：].*)+/gm, function(t){
-                    return '<div class="postquote-content">' + t + '</div>';
-                }) + '</div>';
-        });
+        return s.replace(/(\n*)^(【&nbsp;在.*的大作中提到:&nbsp;】\n)?\n*(([:：].*\n)+)(\n*)/gm, '<div class="postquote"><div class="postquote-header">$2</div><div data-submit="toggle-quote" class="toggle-quote"> : 显示引用文字 </div><div class="postquote-content">$3</div></div>')
     }
     format_color = function(s){
         return s.replace(/\[%\d+(;\d+)*#\]/gm, function(s){

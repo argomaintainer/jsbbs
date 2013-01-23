@@ -608,7 +608,7 @@ $MOD('frame::board', function(){
 
 })
 
-$MOD('frame::post', function(){
+$MOD('frame::flow', function(){
 
     require_jslib('format');
 
@@ -807,6 +807,19 @@ $MOD('frame::post', function(){
                 + cur_boardname + ' - 逸仙时空',
             $(e.target).attr('data-args'));            
     }
+
+    submit['toggle-quote'] = function(kwargs, e){
+        var self=$(e.target)
+        , parent = self.parent();
+        if(parent.hasClass('open')){
+            parent.removeClass('open');
+            self.text(' : 显示引用文字');
+        }
+        else{
+            parent.addClass('open');
+            self.text(' : 隐藏引用文字');
+        }
+    }
     
     declare_frame({
         mark : 'flow',
@@ -826,7 +839,8 @@ $MOD('frame::post', function(){
     return {
         handler_post: handler_post,
         reply_post: reply_post,
-        publish_reply: publish_reply
+        publish_reply: publish_reply,
+        toggle_quote: submit['toggle-quote']
     }
 
 })
@@ -838,9 +852,11 @@ $MOD('frame::topic', function(){
     var submit = {},
     local = {};
 
-    var handler_post = $MOD['frame::post'].handler_post;
+    var handler_post = $MOD['frame::flow'].handler_post;
 
     var lock = false;
+
+    submit['toggle-quote'] = $MOD['frame::flow'].toggle_quote;
 
     function new_loader(init, finish, get_filename, render, error){
         function load(counter){
