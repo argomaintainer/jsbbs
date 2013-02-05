@@ -38,10 +38,10 @@
                   </td>
                   <td class="ann-message">
                     {{if p.editor }}
-                    ${p.editor} 在 ${tf_timestamp(p.mtime)} 修改了此档案
+                    ${p.editor} - ${tf_timestamp(p.mtime)} 
                     {{else}}
                     {{if p.owner }}
-                    ${p.owner} 在 ${tf_timestam(p.mtime)} 创建了此档案
+                    ${p.owner} - ${tf_timestam(p.mtime)} 
                     {{/if}}
                     {{/if}}
                   </td>
