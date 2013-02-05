@@ -30,5 +30,6 @@ $MOD('frame.url_for', {
     'url': function(path){ return DATA_ROOT + '/n/index.html' + path;},
     'admin_board': function(boardname){
         return '#!admin_board?boardname=' + boardname ;
-    }
+    },
+    'ann': function(reqpath){ return '#!read?reqpath=' + reqpath; }
 })

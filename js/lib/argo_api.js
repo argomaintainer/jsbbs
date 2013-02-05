@@ -400,10 +400,10 @@ $MOD('argo_api', function(){
                    callback);
         },
 
-        'get_anc': function(path, callback){
-            get_nc('/ajax/anc',
+        'get_ann_content': function(reqpath, callback){
+            get_nc('/ajax/ann/content/',
                    {
-                       path: path,
+                       reqpath: reqpath,
                    },
                    callback);
         }

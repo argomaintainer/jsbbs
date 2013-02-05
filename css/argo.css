@@ -5,7 +5,7 @@ body{
 }
 
 #container{
-    width:920px;
+    width:950px;
     margin: 0 auto 20px;
     padding: 54px 20px 10px;
     min-height: 100%;
@@ -1944,4 +1944,69 @@ input.file-selector{
     
 #appender-container a:hover{
     color: #147;
+}
+
+.brand small{
+    font-size: 12px;
+}
+
+.ann-list{
+    text-indent: none;
+    list-style-type: none;
+    font-size: 12px;
+    font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+    padding: 0;
+    margin: 0;
+}
+
+.ann-list li{
+    position: relative;
+}
+
+.ann-list i{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+.ann-title{
+    display: inline-block;
+    max-width: 250px;
+    overflow: hidden;
+}
+
+.ann-table{
+    font-size: 14px;
+    line-height: 2em;
+    width: 100%;
+}
+
+.ann-table tr{
+    border-top: 1px solid #eee;
+}
+
+.ann-icon{
+    width: 5%;
+    text-align: center;
+}
+
+.ann-title{
+    width: 61.8%;
+}
+
+.ann-message{
+    color: #ccc;
+    font-size: .8em;
+    padding: 0 1em;
+}
+
+.ann-content{
+    padding: 1em;
+}
+
+.ann-hint{
+    color: #ccc;
+    padding: 1em 0;
+    margin: 1em 0;
+    border-top: 1px solid #eee;
 }
