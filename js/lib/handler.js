@@ -476,6 +476,9 @@ $MOD('frame::board', function(){
             if(last==-1){
                 last = cur_board.data.total;
             }
+            if(last > cur_board.data.total){
+                last = cur_board.data.total;
+            }
             else{
                 local.hover = Math.min(last, cur_board.data.total-1);
             }
