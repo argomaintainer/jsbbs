@@ -196,11 +196,26 @@ $MOD('frame::board', function(){
     }
     load_digest_post = new_api_loader('digest');
 
+    submit['open-folding'] = function(kwargs, e){
+        $('.folding').removeClass('folding');
+        $('.folding-btn').remove();
+    }
+
     function new_postlist_render(tpler){
         return function(boardname, data, pagenum){
             $('#postlist-content').remove();
+            console.log(['cc', data]);
+            var fold = 0, i;
+            for(i in data){
+                if(data[i].unread == 1){
+                    fold = i;
+                    break;
+                }
+            }
+            console.log(['ff', fold])
             render_template(tpler, {
                 posts: data,
+                fold: fold,
                 boardname: boardname,
                 has_next_page: (pagenum < local.max_page),
                 has_prev_page: (pagenum > 1)
@@ -457,12 +472,12 @@ $MOD('frame::board', function(){
             cur_board.loader = load_normal_post;
             cur_board.render = render_normal_post;
             $('#normal-loader').addClass('active');
-            last = cur_board.data.lastread;
+            last = cur_board.data.lastread + 1;
             if(last==-1){
                 last = cur_board.data.total;
             }
             else{
-                local.hover = Math.min(last+1, cur_board.data.total);
+                local.hover = Math.min(last, cur_board.data.total);
             }
             total = cur_board.data.total;
         }

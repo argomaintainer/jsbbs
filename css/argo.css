@@ -5,7 +5,7 @@ body{
 }
 
 #container{
-    width:950px;
+    width:920px;
     margin: 0 auto 20px;
     padding: 54px 20px 10px;
     min-height: 100%;
@@ -2009,4 +2009,12 @@ input.file-selector{
     padding: 1em 0;
     margin: 1em 0;
     border-top: 1px solid #eee;
+}
+
+.postlist-normal .folding{
+    display: none;
+}
+
+.block{
+    display: block;
 }

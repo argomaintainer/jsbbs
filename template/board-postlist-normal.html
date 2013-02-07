@@ -2,8 +2,15 @@
   <div id="postlist-content-inner">
     <table class="fluid-table">
       <tbody>
+        {{if fold > 2 }}
+        <tr class="folding-btn">
+          <td colspan="5">
+            <a class="block" data-submit="open-folding">本页的前 ${fold-1} 篇已读的文章已被折叠，点击此处展开</a>
+          </td>
+        </tr>
+        {{/if}}
         {{each(i, p) posts}}
-        <tr data-index="post-${p.index}"{{if index == $G.local.hover }} class="hover-li"{{/if}}>
+        <tr data-index="post-${p.index}" class="{{if index == $G.local.hover }} hover-li{{/if}}{{if i < (fold-1) }} folding{{/if}}">
           <td class="index">${p.index}</td>
           <td class="owner-img">
             <img src="${ url_for_avatar(p.owner) }" />
