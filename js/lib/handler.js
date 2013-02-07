@@ -477,7 +477,7 @@ $MOD('frame::board', function(){
                 last = cur_board.data.total;
             }
             else{
-                local.hover = Math.min(last, cur_board.data.total);
+                local.hover = Math.min(last, cur_board.data.total-1);
             }
             total = cur_board.data.total;
         }
