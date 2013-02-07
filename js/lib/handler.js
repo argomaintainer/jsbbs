@@ -479,7 +479,7 @@ $MOD('frame::board', function(){
             cur_board.render = render_normal_post;
             $('#normal-loader').addClass('active');
             last = cur_board.data.lastread + 1;
-            if(last==-1){
+            if(last==0){
                 last = cur_board.data.total;
             }
             if(last > cur_board.data.total){
@@ -551,17 +551,6 @@ $MOD('frame::board', function(){
                         'background-image',
                         'url("' + data.data.www.brand_url +'")');
                 }
-                $api.get_last_postindex(boardname, 'digest', 5, function(data){
-                    if(data.success){
-                        var l = data.data.reverse();
-                        render_template('widget/postlist', {
-                            title: '最新文摘',
-                            posts: l,
-                            boardname: boardname,
-                            more: 'set_digest_loader',
-                        }, '#dy-widgets');
-                    }
-                });
                 var sec_con = $('#near-board');
                 $G.lastsection = cur_board.data.secnum;
                 $api.get_boards_by_section(
@@ -572,6 +561,9 @@ $MOD('frame::board', function(){
                             for(b in all){
                                 if((all[b]).unread){
                                     near.push(all[b]);
+                                    if(near.length >= 3){
+                                        break;
+                                    }
                                 }
                             }
                             near.sort(function(a, b){
@@ -585,6 +577,17 @@ $MOD('frame::board', function(){
                                             '#dy-widgets');
                         }
                     });
+                $api.get_last_postindex(boardname, 'digest', 5, function(data){
+                    if(data.success){
+                        var l = data.data.reverse();
+                        render_template('widget/postlist', {
+                            title: '最新文摘',
+                            posts: l,
+                            boardname: boardname,
+                            more: 'set_digest_loader',
+                        }, '#dy-widgets');
+                    }
+                });
             }
             else{
                 raise404(ERROR[data.code]);
