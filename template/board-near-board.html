@@ -1,10 +1,12 @@
-{{if boards }}
-<div class="near-boards-header">
-  <strong>${secnum} 区</strong> 
+{{if boards.length }}
+<div class="navbox">
+  <div class="widget-header">
+    <h4>${ secnum } 区的未读看板</h4>
+  </div>
+  <ul class="navlist markhash">
+    {{each(i, v) boards}}
+    <li><a href="${ url_for_board(v.filename) }"><i class="{{if v.unread }}icon-nbrd{{else}}icon-null{{/if}}"></i>${v.filename}</a></li>
+    {{/each}}
+  </ul>
 </div>
-<ul class="near-boards">
-  {{each(i, b) boards}}
-  <li><a href="${url_for_board(b.filename)}">${b.title}</a></li>
-  {{/each}}
-</ul>
 {{/if}}

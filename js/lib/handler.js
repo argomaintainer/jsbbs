@@ -25,7 +25,13 @@ $MOD('frame.home', function(){
                                   return (b.lastpost - a.lastpost);
                               });
                           }
+                          require_jslib('slides');
                           render_template('home', data.data);
+                          $(function(){
+                              $("#slides").slides({
+                                  start: Math.floor(Math.random() * data.data.www.posts.length) + 1
+                              });
+                          });
                           load_widgets(data.data.www.widgets);
                       }
                   });
@@ -562,15 +568,21 @@ $MOD('frame::board', function(){
                     cur_board.data.seccode,
                     function(data){
                         if(data.success){
-                            data.data.sort(function(a, b){
+                            var all = (data.data), near=[], b;
+                            for(b in all){
+                                if((all[b]).unread){
+                                    near.push(all[b]);
+                                }
+                            }
+                            near.sort(function(a, b){
                                 return b.lastpost - a.lastpost;
                             });
                             render_template('board-near-board',
                                             {
-                                                boards: data.data,
+                                                boards: near,
                                                 secnum : cur_board.data.secnum
                                             },
-                                            sec_con);
+                                            '#dy-widgets');
                         }
                     });
             }

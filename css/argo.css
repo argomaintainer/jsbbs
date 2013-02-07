@@ -472,7 +472,8 @@ i.icon-nbrd:before{
     position: relative;
     margin-bottom: 10px;
     border-radius: 5px;
-    border-bottom: 1px solid #ccc;
+    border-bottom:2px solid #ccc;
+    box-shadow: 0 1px 2px #eee;
     padding: 12px;
 }
 
@@ -492,6 +493,10 @@ i.icon-nbrd:before{
     border-bottom-left-radius: 5px;
 }
 
+.navbox .widget-header{
+    padding: 12px 12px 0;
+}
+
 .widget-header{
     margin-bottom: 10px;
     line-height: 16px;
@@ -502,6 +507,7 @@ i.icon-nbrd:before{
     font-size: 14px;
     font-weight: normal;
     line-height: 16px;
+    color: #999;
 }
 
 .img-big{
@@ -2018,3 +2024,63 @@ input.file-selector{
 .block{
     display: block;
 }
+
+.slides_container {
+    width:682px;
+    position: relative;
+}
+
+.slides_container div {
+    width:682px;
+    display:block;
+}
+
+.slides_container img{
+    width:682px;
+    height:220px;
+}
+
+.slides_container p{
+    z-index: 3;
+    bottom: 0;
+    position: absolute;
+    background: #333;
+    background: rgba(0,0,0,.75);
+    width: 100%;
+    padding: 0 0 0 1em;
+    line-height: 30px;
+    margin: 0;
+}
+
+.slides_container a{
+    color: #fff;
+}
+
+.slides-pagination {
+    margin:6px;
+    list-style: none;
+    position: absolute;
+    bottom: 2px;
+    right: 4px;
+    z-index: 5;
+}
+
+.slides-pagination li {
+    float: left;
+    margin: 0 1px;
+}
+
+.slides-pagination li a {
+    display: block;
+    width: 13px;
+    height: 0;
+    padding-top: 13px;
+    background-image: url(../img/slides-pagination.png);
+    background-position: 0 0;
+    float: left;
+    overflow: hidden;
+}
+
+.slides-pagination li.current a, .slides-pagination li.current a:hover { background-position: 0 -13px }
+
+.slides-pagination li a:hover { background-position: 0 -26px }

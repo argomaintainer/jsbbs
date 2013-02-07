@@ -1,23 +1,17 @@
 {{if www.posts }}
-<div class="cell cell-in">
-  <div class="page-img">
-    <div id="home-slide" data-interval="5000" class="carousel slide">
-      <!-- Carousel items -->
-      <div class="carousel-inner">
-        {{each(i, m) www.posts}}
-        <div class="{{if (i==0) }}active {{/if}}item">
-          <img src="${(m[0])}">
-          <div class="carousel-caption">
-            {{if m[1]}}<h4>${(m[1])}</h4>{{/if}}
-            {{if m[2]}}<p>${(m[2])}</p>{{/if}}
-            {{if m[3]}}<a href="${m[3]}"> » 详细信息 </a>{{/if}}
-          </div>
-        </div>
-        {{/each}}
+<div class="cell cell-loose">
+  <div id="slides">
+    <div class="slides_container">
+      {{each(i, m) www.posts}}
+      <div>
+        <a href="${m[1]}">
+          <img src="${m[0]}"/>
+          {{if m[2]}}
+          <p>${m[2]}</p>
+          {{/if}}
+        </a>
       </div>
-      <!-- Carousel nav -->
-      <a class="carousel-control left" href="#home-slide" data-slide="prev">&lsaquo;</a>
-      <a class="carousel-control right" href="#home-slide" data-slide="next">&rsaquo;</a>
+      {{/each}}
     </div>
   </div>
 </div>
