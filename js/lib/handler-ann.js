@@ -45,7 +45,7 @@ $MOD('jsbbs-ann', function(){
                 quite_set_hash('#!read', kwargs);
             }
             if(startswith(kwargs.reqpath, /:Personal_corpus\/[A-Z]\//)){
-                kwargs.reqpath = '~' + kwargs.reqpath.substring(16) + '/';
+                kwargs.reqpath = '~' + kwargs.reqpath.substring(19) + '/';
                 console.log(['kw', kwargs]);
                 quite_set_hash('#!read', kwargs);
             }
