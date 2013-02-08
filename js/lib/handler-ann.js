@@ -26,7 +26,7 @@ $MOD('jsbbs-ann', function(){
     var local = {};
     function url_for_annpath(p){
         if(p.filename == '@BOARDS'){
-            return url_for_ann('~' + p.owner +'/');
+            return url_for_ann(':' + p.owner +'/');
         }
         return url_for_ann(local.url_prefix + p.filename);
     }
