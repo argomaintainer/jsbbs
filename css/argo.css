@@ -2092,14 +2092,14 @@ input.file-selector{
 
 .aside{
     border-right: 1px solid #f0f0f0;
-    padding: 1em;
+    padding: 1em 1em 4em 1em;
     min-height: 100%;
     background: #f8f8f8;
 }
 
 .container-solo .primary{
     padding-left: 2.564102564102564%;
-    padding-bottom: 2em;
+    padding-bottom: 4em;
 }
 
 .ann-meta{
@@ -2134,3 +2134,13 @@ input.file-selector{
     line-height: 2em;
 }
 
+.center-footer{
+    padding: 2em;
+    text-align: center;
+    color: #999;
+}
+
+.center-footer a{
+    display: inline-block;
+    margin-left: .5em;
+}
