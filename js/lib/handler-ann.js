@@ -23,12 +23,12 @@ $MOD('jsbbs-ann', function(){
         return str.search(pat) == 0;
     }
 
-    var url_prefix;
+    var local = {};
     function url_for_annpath(p){
-        if(p.filename = '@BOARDS'){
-            return '~' + p.owner +'/';
+        if(p.filename == '@BOARDS'){
+            return url_for_ann('~' + p.owner +'/');
         }
-        return url_prefix + p.filename;
+        return url_for_ann(local.url_prefix + p.filename);
     }
 
     declare_frame({
@@ -54,7 +54,7 @@ $MOD('jsbbs-ann', function(){
                     var reqpath = kwargs.reqpath;
                     if(reqpath[reqpath.length-1] == '/')
                         reqpath = reqpath.substr(0, reqpath.length-1);
-                    url_prefix = data.data.post?
+                    local.url_prefix = data.data.post?
                         basename(reqpath):(reqpath + '/');
                     var title = data.data.bt[data.data.bt.length-1];
                     data.data.bt[0] = data.data.metainfo.title = wrap_metatitle(data.data.metainfo);
@@ -62,7 +62,7 @@ $MOD('jsbbs-ann', function(){
                     render_template('ann', {
                         'data': data.data,
                         'title': title,
-                        'url_prefix': url_prefix
+                        'url_for_annpath': url_for_annpath
                     });
                 }
             });

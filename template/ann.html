@@ -58,7 +58,7 @@
           <ul class="ann-list">
             {{each(i, p) data.dir}}
             <li>
-              <a class="ann-title" href="${url_for_ann(url_prefix + p.filename)}">${p.title}</a>
+              <a class="ann-title" href="${url_for_annpath(p)}">${p.title}</a>
               {{if p.flag == 'd' }}<i class="icon-folder-close"></i>{{/if}}
             </li>
             {{/each}}
