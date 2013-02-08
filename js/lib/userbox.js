@@ -156,9 +156,7 @@ $MOD('jsbbs.userbox', function(){
             $G.userfav = {};
         }
         var simple = $G['simple-userbox'];
-        if(udata){
-            udata['simple'] = simple?true:false;
-        }
+        console.log(['ud', udata]);
         $('#userbox-nav').empty();
         render_template('userbox-nav', udata, '#userbox-nav');
         if(!simple){

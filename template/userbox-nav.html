@@ -1,7 +1,7 @@
 {{if $G.authed }}
 <div id="topbar-nav" class="pull-right">
   <ul class="markhash nav">
-    {{if !simple }}
+    {{if !$G['simple-userbox'] }}
     <li class="markhash-home">
       <a class="top-a" href="#!home">首页</a>
     </li>
@@ -31,7 +31,7 @@
   </ul>
 </div>
 {{else}}
-{{if !simple }}
+{{if !$G['simple-userbox'] }}
 <div id="topbar-nav">
   <ul class="nav markhash">
     <li class="markhash-home">
