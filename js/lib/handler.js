@@ -553,6 +553,12 @@ $MOD('frame::board', function(){
                 }
                 var sec_con = $('#near-board');
                 $G.lastsection = cur_board.data.secnum;
+                render_template('widget/link',
+                                {
+                                    href: url_for_ann(':' + boardname + '/'),
+                                    text: '进入 ' + boardname + ' 版精华区'
+                                },
+                                '#dy-widgets');
                 $api.get_boards_by_section(
                     cur_board.data.seccode,
                     function(data){

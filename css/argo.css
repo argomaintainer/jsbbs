@@ -2144,3 +2144,11 @@ input.file-selector{
     display: inline-block;
     margin-left: .5em;
 }
+
+.widget.link a{
+    display: block;
+}
+
+.widget-footer a{
+    display: inline-block;
+}

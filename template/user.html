@@ -17,6 +17,9 @@
         累计在线 <em>${u.stay}</em> <br/>
         上次离站 <em>${tf_timestamp(u.lastlogout)}</em>
       </div>
+      {{if u.has_works }}
+      <a href="${url_for_ann('~'+u.userid+'/')}"> 阅读{{if u.male }}他{{else}}她{{/if}}的个人文集</a>
+      {{/if}}
     </div>
     <div class="span2 text-right">
       <div class="btn-toolbar">
