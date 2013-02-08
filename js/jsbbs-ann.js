@@ -3,6 +3,9 @@ $MOD('jsbbs.main', function(){
     $MOD['frame.hook'].register_hook('before_boot');
     $MOD['frame.hook'].register_hook('after_boot');
 
+    require_jslib('userbox');
+    using('jsbbs.userbox');
+
     require_jslib('argo_api');
     import_module('argo_api', '$api');
 
@@ -18,6 +21,8 @@ $MOD('jsbbs.main', function(){
     }
     
     do_while_load(function(){
+
+        $G['simple-userbox'] = true;
 
         if(!$.support.boxModel){
             raise_too_old_browser();

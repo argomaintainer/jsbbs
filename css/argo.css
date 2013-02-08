@@ -1833,7 +1833,7 @@ a[data-submit]:hover{
     height: 24px;
     top: 8px;
     position: absolute;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #999;
     border-radius: 4px;
 }
 
@@ -1988,16 +1988,12 @@ input.file-selector{
 }
 
 .ann-table tr{
-    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
 }
 
 .ann-icon{
     width: 5%;
     text-align: center;
-}
-
-.ann-title{
-    width: 61.8%;
 }
 
 .ann-message{
@@ -2012,9 +2008,9 @@ input.file-selector{
 
 .ann-hint{
     color: #ccc;
-    padding: 1em 0;
+    padding: 1em;
     margin: 1em 0;
-    border-top: 1px solid #eee;
+    background: #fcfcfc;
 }
 
 .postlist-normal .folding{
@@ -2084,3 +2080,55 @@ input.file-selector{
 .slides-pagination li.current a, .slides-pagination li.current a:hover { background-position: 0 -13px }
 
 .slides-pagination li a:hover { background-position: 0 -26px }
+
+#container.container-solo{
+    width: 960px;
+    background-image: none;
+    margin-top: 60px;
+    padding-top: 20px;
+    border-radius: 4px;
+}
+
+.aside{
+    border-right: 1px solid #f0f0f0;
+    height: 100%;
+    padding: 1em;
+    background: #f8f8f8;
+}
+
+.container-solo .primary{
+    padding-left: 2.564102564102564%;
+}
+
+.ann-meta{
+    margin-top: 3em;
+}
+
+.ann-meta a{
+    display: block;
+}
+
+.ann-bc{
+    margin: 0;
+    background: #f0f0f0;
+    border-radius: 0;
+    border-bottom: 1px solid #eee;
+}
+
+.ann-bc .first{
+    font-size: 1.5em;
+    line-height: 1.5em;
+}
+
+#dirlist li{
+    border-bottom: 1px solid #eee;
+    line-height: 2em;
+    margin-bottom: 1em;
+}
+
+.page-title{
+    word-break: break-all;
+    border-bottom: 2px solid #f0f0f0;
+    line-height: 2em;
+}
+

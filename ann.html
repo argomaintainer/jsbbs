@@ -12,45 +12,43 @@
     <script src="js/frame.js"></script>
     <script src="js/jsbbs-ann.js"></script>
   </head>
-  <body>
-    <div id="topbar" class="navbar navbar-inverse navbar-fixed-top">
+  <body class="layout-solo">
+    <div id="topbar" class="simple navbar navbar-fixed-top">
       <div class="navbar-inner">
         <div id="topbar-container">
-          <a class="brand" href="#!home">逸仙时空 <small>精华</small> </a>
-          <ul class="nav">
-            <li><a href="index.html#!home">回到逸仙时空首页</a></li>
+          <a class="brand" href="#!home">逸仙时空 <small>文章存档</small> </a>
+          <div id="userbox-nav"></div>
         </div>
       </div>
     </div>    
-    <div id="container">
+    <div id="container" class="container-solo">
       <div class="row-fluid">
-        <div id="primary" class="span8">
-          <div class="row-fluid">
-            <div id="main-wrapper">
-			  <div id="main">
-				<p>内容正在载入中，若无法正常显示，请升级浏览器至IE9或以上，或使用其他浏览器（建议使用<a href="http://bbs.sysu.edu.cn:874/files/GoogleChromePortableBeta.zip">Chrome</a> 或者<a href="http://bbs.sysu.edu.cn:874/files/Mozilla_Firefox.rar">FireFox</a>）</p>
-				<p>我们的技术团队正在解决此类问题，带来的不便请各位站友见谅！</p>
-              </div>
-            </div>
-          </div>
-        </div>        
-        <div id="second" class="span4">
-          <div id="metainfo"></div>
-          <div id="dirlist"></div>
-          <div class="widgets-wrapper">
-            <div id="widgets-container" class="widgets">
-              <div id="userbox"></div>
-              <div id="dy-widgets"></div>
-              <div class="widget fade-font">
-                © 2012 逸仙时空
-                <a target="_blank" href="https://github.com/argolab/jsbbs">jsbbs</a> <a target="_blank" href="http://argolab.org/">argolab</a>
-              </div>
-            </div>
+        <div id="main-wrapper">
+		  <div id="main">
+			<p>内容正在载入中，若无法正常显示，请升级浏览器至IE9或以上，或使用其他浏览器（建议使用<a href="http://bbs.sysu.edu.cn:874/files/GoogleChromePortableBeta.zip">Chrome</a> 或者<a href="http://bbs.sysu.edu.cn:874/files/Mozilla_Firefox.rar">FireFox</a>）</p>
+			<p>我们的技术团队正在解决此类问题，带来的不便请各位站友见谅！</p>
           </div>
         </div>
       </div>
       <div id="fix-btns">
         <a id="totop" href="#" onclick="window.scrollTo(0, 0)">返回顶部</a>
+      </div>
+    </div>
+
+    <div id="modal" class="modal hide fade" tabindex="-1"
+         role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"
+                aria-hidden="true">×</button>
+        <h3 id="modal-header-content"></h3>
+      </div>
+      <div class="modal-body">
+        <div id="modal-content">One fine body…</div>
+      </div>
+      <div class="modal-footer">
+        <button data-submit="modal_yes" class="btn btn-primary">确认</button>
+        <button class="btn" data-dismiss="modal"
+                aria-hidden="true">取消操作</button>
       </div>
     </div>
 

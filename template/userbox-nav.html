@@ -1,6 +1,7 @@
 {{if $G.authed }}
 <div id="topbar-nav" class="pull-right">
   <ul class="markhash nav">
+    {{if !simple }}
     <li class="markhash-home">
       <a class="top-a" href="#!home">首页</a>
     </li>
@@ -10,6 +11,7 @@
     <li class="markhash-mail" id="userbox-mail">
       <a class="top-a" href="#!mail">联系</a>
     </li>
+    {{/if}}
     <li class="dropdown">
       <a href="#" class="top-u dropdown-toggle" data-toggle="dropdown">
         <div class="top-avatar">
@@ -21,14 +23,15 @@
         </div>
       </a>
       <ul class="dropdown-menu">
-        <li><a href="#!profile">设置我的资料</a></li>
-        <li><a href="#!setting">设置电子邮件提醒</a></li>
+        <li><a href="index.html#!profile">设置我的资料</a></li>
+        <li><a href="index.html#!setting">设置电子邮件提醒</a></li>
         <li><a href="#" data-submit="logout">退出登录</a></li>
       </ul>
     </li>
   </ul>
 </div>
 {{else}}
+{{if !simple }}
 <div id="topbar-nav">
   <ul class="nav markhash">
     <li class="markhash-home">
@@ -39,4 +42,5 @@
     </li>
   </ul>
 </div>
+{{/if}}
 {{/if}}

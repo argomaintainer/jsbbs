@@ -141,6 +141,7 @@ $MOD('jsbbs.userbox', function(){
     
     $G('authed', false);
     $G('userfav', {});
+    $G('simple-userbox', false);
 
     function refresh_userbox(){
         var data = $api.get_self_info_aync();
@@ -154,11 +155,15 @@ $MOD('jsbbs.userbox', function(){
             $G.authed = false;
             $G.userfav = {};
         }
-        $('#userbox').empty();
+        var simple = $G['simple-userbox'];
+        udata['simple'] = simple?true:false;
         $('#userbox-nav').empty();
-        render_template('userbox', udata, '#userbox');
         render_template('userbox-nav', udata, '#userbox-nav');
-        $G.hooks.after_refresh_userbox(data);
+        if(!simple){
+            $('#userbox').empty();
+            render_template('userbox', udata, '#userbox');
+            $G.hooks.after_refresh_userbox(data);
+        }
     }
     
     bind_hook('before_boot', refresh_userbox);
