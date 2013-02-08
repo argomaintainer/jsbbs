@@ -29,7 +29,7 @@ $MOD('jsbbs-ann', function(){
             return url_for_ann(':' + p.owner +'/');
         }
         if(p.filename == '@NULL'){
-            return '';
+            return '#';
         }
         if(p.filename[0] == '@'){
             return url_for_ann(p.filename);
