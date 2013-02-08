@@ -40,7 +40,7 @@ $MOD('frame.load_lib', function(){
             async: false,
             success: function(data){
                 $G.loaded_lib[libname] = true;
-                console.log('Done.\n');
+                console.log('Load [' + libname + '] Done.\n');
             },
             error: function(jqXHR, textStatus, errorThrown){
                 throw errorThrown;
