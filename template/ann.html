@@ -34,7 +34,7 @@
               {{if p.flag == 'd' }}<i class="icon-folder-close"></i>{{else}}<i class="icon-file"></i>{{/if}}
             </td>
             <td class="ann-title">
-              <a href="${ url_for_ann(url_prefix + p.filename) }">${p.title}</a>
+              <a href="${ url_for_annpath(p) }">${p.title}</a>
             </td>
             <td class="ann-message">
               {{if p.editor }}

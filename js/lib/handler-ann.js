@@ -20,7 +20,15 @@ $MOD('jsbbs-ann', function(){
     }
 
     function startswith(str, pat){
-        return str.indexOf(pat) == 0;
+        return str.search(pat) == 0;
+    }
+
+    var url_prefix;
+    function url_for_annpath(p){
+        if(p.filename = '@BOARDS'){
+            return '~' + p.owner +'/';
+        }
+        return url_prefix + p.filename;
     }
 
     declare_frame({
@@ -33,11 +41,12 @@ $MOD('jsbbs-ann', function(){
         mark: 'read',
         enter: function(kwargs){
             if(startswith(kwargs.reqpath, 'site/boards/')){
-                kwargs.reqpath = ':' + kwargs.reqpath(12);
+                kwargs.reqpath = ':' + kwargs.reqpath.substring(12) + '/';
                 quite_set_hash('#!read', kwargs);
             }
-            if(startswith(kwargs.reqpath, 'site/boards/Personal_corpus/')){
-                kwargs.reqpath = '~' + kwargs.reqpath(29);
+            if(startswith(kwargs.reqpath, /site\/personal\/[A-Z]\//)){
+                kwargs.reqpath = '~' + kwargs.reqpath.substring(16) + '/';
+                console.log(['kw', kwargs]);
                 quite_set_hash('#!read', kwargs);
             }
             $api.get_ann_content(kwargs.reqpath, function(data){
@@ -45,7 +54,7 @@ $MOD('jsbbs-ann', function(){
                     var reqpath = kwargs.reqpath;
                     if(reqpath[reqpath.length-1] == '/')
                         reqpath = reqpath.substr(0, reqpath.length-1);
-                    var url_prefix = data.data.post?
+                    url_prefix = data.data.post?
                         basename(reqpath):(reqpath + '/');
                     var title = data.data.bt[data.data.bt.length-1];
                     data.data.bt[0] = data.data.metainfo.title = wrap_metatitle(data.data.metainfo);

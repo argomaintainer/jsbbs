@@ -2091,13 +2091,14 @@ input.file-selector{
 
 .aside{
     border-right: 1px solid #f0f0f0;
-    height: 100%;
     padding: 1em;
+    min-height: 100%;
     background: #f8f8f8;
 }
 
 .container-solo .primary{
     padding-left: 2.564102564102564%;
+    padding-bottom: 2em;
 }
 
 .ann-meta{
