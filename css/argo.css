@@ -1232,12 +1232,7 @@ a[data-submit]:hover{
 
 .frame-anc #main,
 .frame-readmail .post-wrapper{
-    margin: 0 10px;
     line-height: 22px;
-}
-
-.frame-readmail .main-cell{
-    margin: 12px 50px;
 }
 
 .boardlist{
