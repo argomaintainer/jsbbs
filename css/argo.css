@@ -1985,6 +1985,7 @@ input.file-selector{
     font-size: 14px;
     line-height: 2em;
     width: 100%;
+    font-family: Monaco, Menlo, Consolas, "Courier New", monospace;    
 }
 
 .ann-table tr{
