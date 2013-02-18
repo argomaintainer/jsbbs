@@ -18,7 +18,7 @@
   {{/if}}
   {{each(i, b) boards}}
   <div class="boards-pill">
-    <div class="bp-unreadnum-wrapper {{if b.unreadn==-1}}bp-allread {{/if}}"><span class="bp-unreadnum">{{if b.unreadn==-1}}={{else}}${b.unread}+{{/if}}</span></div>
+    <div class="bp-unreadnum-wrapper {{if b.unreadn==-1}}bp-allread {{/if}}"><span class="bp-unreadnum">{{if b.unreadn==-1}}={{else}}${b.unreadn}+{{/if}}</span></div>
     <div class="bp-boards-pill-mid">
       <div class="bp-title">
         <span class="bp-boardname"><a href="${url_for_board(b.boardname)}">${b.title}(${b.boardname})</a></span>
@@ -38,6 +38,13 @@
     </div>
   </div>
   {{/each}}
+  {{if status.findmore }}
+  <div class="well text-center">
+    <h3>您可以在逸仙时空发现更多有趣的东西</h3>
+    <p> <strong>收藏</strong> 您感兴趣的看版，参与有趣的版友生活</p>
+    <a class="btn btn-success" data-submit="go-section">开始探索看板</a>
+  </div>
+  {{else}}
   {{if status.noupdate || status.tooold }}
   <div class="well text-center">
     <h3>和版友交流</h3>
@@ -48,11 +55,5 @@
     <a class="btn btn-success" href="${url_for_board(boards[0].boardname)}">前往你喜欢的 ${boards[0].boardname} 版</a>
   </div>
   {{/if}}
-  {{if status.findmore || status.tooold }}
-  <div class="well text-center">
-    <h3>您可以在逸仙时空发现更多有趣的东西</h3>
-    <p> <strong>收藏</strong> 您感兴趣的看版，参与有趣的版友生活</p>
-    <a class="btn btn-success" data-submit="go-section">开始探索看板</a>
-  </div>
   {{/if}}
 </div>

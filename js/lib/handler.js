@@ -23,7 +23,7 @@ $MOD('frame.home', function(){
             }
             if(type=='fav'){
                 if(data[0]){
-                    if(!(data[0].unread==1)){
+                    if(!data[0].unread){
                         status['noupdate'] = true;
                     }
                     if(too_old(data[0].lastpost)){
