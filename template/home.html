@@ -16,6 +16,16 @@
     </div>
   </div>
   {{/if}}
+  
+  {{if status.noupdate || status.tooold }}
+  <div class="boards-pill">
+    <div class="bp-unreadnum-wrapper bp-unread-focus">&nbsp;</div>
+    <div class="bp-boards-pill-mid">
+      您喜欢的看版没有新发言了，<strong>发表一个新话题</strong> 或者 <strong>回复一个帖子</strong> 开始和版友们交流吧！
+    </div>
+  </div>  
+  {{/if}}
+
   {{each(i, b) boards}}
   <div class="boards-pill">
     <div class="bp-unreadnum-wrapper {{if b.unreadn==-1}}bp-allread {{/if}}"><span class="bp-unreadnum">{{if b.unreadn==-1}}={{else}}${b.unreadn}+{{/if}}</span></div>
@@ -44,16 +54,5 @@
     <p> <strong>收藏</strong> 您感兴趣的看版，参与有趣的版友生活</p>
     <a class="btn btn-success" data-submit="go-section">开始探索看板</a>
   </div>
-  {{else}}
-  {{if status.noupdate || status.tooold }}
-  <div class="well text-center">
-    <h3>和版友交流</h3>
-    <p>
-      您喜欢的看版没有新发言了<br/>
-      您可以开始 <strong>发表一个新话题</strong> 或者 <strong>回复一个帖子</strong>
-    </p>
-    <a class="btn btn-success" href="${url_for_board(boards[0].boardname)}">前往你喜欢的 ${boards[0].boardname} 版</a>
-  </div>
-  {{/if}}
   {{/if}}
 </div>
