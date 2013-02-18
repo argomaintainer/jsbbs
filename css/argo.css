@@ -861,6 +861,7 @@ i[class*=" icon-mark-"]:after {
     margin-left: -330px;
     background: #f8f8f8;
     overflow: auto;
+    z-index: 1050;
 }
 
 #pop-content{
@@ -1018,17 +1019,33 @@ i[class*=" icon-mark-"]:after {
 }
 
 .board-header{
-    padding: 1em 1em 0;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
     position: relative;
 }
 
+.board-header-img{
+    padding: 1em 1em 0;
+}
+
 .hasimg.board-header-img{
-    height: 132px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    height: 120px;
 }    
 
 .hasimg .board-header-content{
-    padding-top: 46px;
+    padding-top: 32px;
     padding-left: 20px;
+}
+
+.hasimg a{
+    color: #333;
+    text-decoration: underline;
+}
+
+.hasimg a:hover{
+    color: #000;
 }
 
 .board-header .alert{
