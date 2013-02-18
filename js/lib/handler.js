@@ -9,7 +9,7 @@ $MOD('frame.home', function(){
     , too_old = $MOD.timeformat.tooOldTS;
 
     function cmp_boards(a, b){
-        return (b.lastpost - a.lastpost);
+        return (b.unread - a.unread) || (b.lastpost - a.lastpost);
     }
 
     function setup_type(type){
