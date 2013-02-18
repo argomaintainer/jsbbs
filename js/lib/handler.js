@@ -1,5 +1,60 @@
 $MOD('frame.home', function(){
 
+    var map_name = [
+        ['fav', '收藏夹', 1],
+        ['good', '推荐版面'],
+        ['new', '新发文看版'],
+        ['hot', '热门看版'],
+    ]
+    , too_old = $MOD.timeformat.tooOldTS;
+
+    function cmp_boards(a, b){
+        return (b.lastpost - a.lastpost);
+    }
+
+    function setup_type(type){
+        $api.get_goodboards(type, function(data){
+            var status = {};
+            if(data.success){
+                data = data.data.sort(cmp_boards);
+            }
+            else{
+                data = [];
+            }
+            if(data[0]){
+                if(!(data[0].unread==1)){
+                    status['noupdate'] = true;
+                }
+                if(too_old(data[0].lastpost)){
+                    status['tooold'] = true;
+                }
+            }
+            if(type=='fav' && (data.length < 8))
+                status['findmore'] = true;
+            render_template('home', {
+                boards: data,
+                type: type,
+                status: status,
+                map_name: map_name
+            });
+        });
+    }
+
+    declare_frame({
+        mark: 'home',
+        enter: function(kwargs){
+            if(!kwargs.type){
+                kwargs.type = $G.authed?'fav':'good';
+            }
+            setup_type(kwargs.type);
+        },
+        marktop: 'home',
+    });
+
+});
+
+$MOD('frame.focus', function(){
+
     function format_number(x){
         x = Number(x);
         if(x < 10) return 'default';
@@ -13,7 +68,7 @@ $MOD('frame.home', function(){
     TPL_TOPTEN = 'home-topten';
 
     declare_frame({
-        mark: 'home',
+        mark: 'focus',
         enter: function(){
             $.get('/ajax/comp/www_home',
                   function(data){
@@ -26,7 +81,7 @@ $MOD('frame.home', function(){
                               });
                           }
                           require_jslib('slides');
-                          render_template('home', data.data);
+                          render_template('focus', data.data);
                           $(function(){
                               $("#slides").slides({
                                   start: Math.floor(Math.random() * data.data.www.posts.length) + 1
@@ -36,7 +91,7 @@ $MOD('frame.home', function(){
                       }
                   });
         },
-        marktop: 'home'
+        marktop: 'focus'
     });
 
 });

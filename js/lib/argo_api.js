@@ -68,6 +68,12 @@ $MOD('argo_api', function(){
                   },
                   callback);
         },
+        'get_goodboards': function(type, callback){
+            get_nc('/ajax/board/good',
+                   {
+                       type: type,
+                   }, callback);
+        },            
         'set_board_www_etc': function(boardname, data, callback){
             $.post('/ajax/board/setwww',
                    {

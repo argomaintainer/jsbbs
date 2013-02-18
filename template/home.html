@@ -1,80 +1,58 @@
-{{if www.posts }}
-<div class="cell cell-loose">
-  <div id="slides">
-    <div class="slides_container">
-      {{each(i, m) www.posts}}
-      <div>
-        <a href="${m[1]}">
-          <img src="${m[0]}"/>
-          {{if m[2]}}
-          <p>${m[2]}</p>
-          {{/if}}
-        </a>
-      </div>
+<div class="cell main-cell">
+  <div class="page-btn-group">
+    <div class="btn-group">
+      {{each(i, b) map_name}}
+      {{if !b[2] || $G.authed}}
+      <a class="btn {{if b[0]==type }}active{{/if}}" href="${url_for_index(b[0])}">${b[1]}</a>
+      {{/if}}
       {{/each}}
     </div>
   </div>
-</div>
-{{/if}}
-<div class="cell cell-loose">
-  <div class="cell-header">
-    <h3>今日十大</h3>
-  </div>
-  <div class="topten-wrapper">
-    <table class="table-topten odd-even">
-      <tbody>
-        {{each(i, p) topten}}
-        <tr{{if i % 2 == 1}} class="odd"{{/if}}>
-          <td class="topten-title">
-            <div>
-              <a href="${ url_for_topic(p.filename, p.board) }" data-ismain>
-                ${p.title}
-              </a>
-              <span class="metainfo">
-                <span class="meta-board">
-                  &nbsp » 
-                  <a href="#!board?boardname=${p.board}">
-                    ${p.board} 
-                  </a>
-                </span>&nbsp • &nbsp
-                <span class="meta-time">
-                  <time>${tf_timestamp(p.time)}</time>
-                </span>
-              </span>
-            </div>
-          </td>
-          <td class="topten-replynum">
-            <span class="label label-${ $G.local.format_number(p.num) }">
-              ${p.num} 
-            </span>
-          </td>
-        </tr>
-        {{/each}}
-      </tbody>
-    </table>
-  </div>
-</div>
-<div class="cell cell-loose">
-  <div class="cell-header">
-    <h3>文章推荐</h3>
-  </div>
-  {{if (www.rempost) && (www.rempost.length) }}
-  {{each(i, p) www.rempost}}
-  <div class="home-post-recom">
-    <div class="post-content">
-      <h3><a href="${url_for_topic(p.filename, 'Recommend')}">${p.title}</a></h3>
-      ${p.content}
+  {{if status.noupdate }}
+  <div class="boards-pill">
+    <div class="bp-unreadnum-wrapper bp-unread-focus">&nbsp;</div>
+    <div class="bp-boards-pill-mid">
+      没有新帖？ <a class="big-title" href="index.html#!focus">关注逸仙时空上的热点信息</a>
     </div>
-    <div class="post-info">
-      <div>
-        <a class="owner" href="${url_for_user(p.owner)}">
-          <strong class="userid">${p.owner}</strong>
-        </a>
-        <span class="time">${tf_timestamp(p.update)}</span>
-        <img class="user-avatar" src="${url_for_avatar(p.owner)}"/>
+  </div>
+  {{/if}}
+  {{each(i, b) boards}}
+  <div class="boards-pill">
+    <div class="bp-unreadnum-wrapper {{if b.unreadn==-1}}bp-allread {{/if}}"><span class="bp-unreadnum">{{if b.unreadn==-1}}={{else}}${b.unread}+{{/if}}</span></div>
+    <div class="bp-boards-pill-mid">
+      <div class="bp-title">
+        <span class="bp-boardname"><a href="${url_for_board(b.boardname)}">${b.title}(${b.boardname})</a></span>
+        &nbsp;- 版主: 
+        <ul class="bp-bm">
+          {{each(i, p) b.BM}}
+          <li><a href="${url_for_user(p)}">${p}</a></li>
+          {{/each}}
+        </ul>
       </div>
+      <div class="bp-postinfo">
+        &nbsp; - <span class="bp-lastpostfile"><a href="${url_for_topic(b.boardname, b.lastfilename)}">${b.lastpostfile}</a></span>
+      </div>
+    </div>
+    <div class="bp-lastupdatetime">
+      ${tf_timestamp(b.lastpost)}
     </div>
   </div>
   {{/each}}
+  {{if status.noupdate || status.tooold }}
+  <div class="well text-center">
+    <h3>和版友交流</h3>
+    <p>
+      您喜欢的看版没有新发言了<br/>
+      您可以开始 <strong>发表一个新话题</strong> 或者 <strong>回复一个帖子</strong>
+    </p>
+    <a class="btn btn-success" href="${url_for_board(boards[0].boardname)}">前往你喜欢的 ${boards[0].boardname} 版</a>
+  </div>
   {{/if}}
-</div>    
+  {{if status.findmore || status.tooold }}
+  <div class="well text-center">
+    <h3>您可以在逸仙时空发现更多有趣的东西</h3>
+    <p> <strong>收藏</strong> 您感兴趣的看版，参与有趣的版友生活</p>
+    <a class="btn btn-success" data-submit="go-section">开始探索看板</a>
+  </div>
+  {{/if}}
+</div>

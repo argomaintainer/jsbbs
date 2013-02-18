@@ -2068,3 +2068,78 @@ input.file-selector{
 .board-img{
     margin-bottom: 1em;
 }
+
+.boards-pill{
+    position: relative;
+    padding: 1em 0;
+    border-top: 1px solid #ccc;
+}
+
+.bp-unreadnum{
+    display: block;
+}
+
+.bp-unreadnum-wrapper{
+    width: 48px;
+    background: #51A351;
+    color: #fff;
+    text-align: center;
+    position: absolute;
+}
+
+.bp-unreadnum{
+    line-height: 48px;
+    font-size: 16px;
+}    
+
+.bp-boards-pill-mid{
+    margin-left: 54px;
+}
+
+.bp-title{
+    height: 30px;
+    font-size: 11px;
+    color: #999;
+}
+
+.bp-boardname a{
+    line-height: 30px;
+    font-size: 16px;
+    color: #333;
+}    
+
+.bp-bm{
+    display: inline-block;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.bp-bm a{
+    color: #999;
+    text-decoration: underline;
+}
+
+.bp-postinfo{
+    line-height: 18px;
+    color: #999;
+}
+
+.bp-lastupdatetime{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    color: #999;
+}
+
+.bp-allread{
+    background: #999;
+}
+
+.page-btn-group{
+    padding-bottom: 1em;
+}
+
+.bp-unread-focus{
+    background: #EE5F5B;
+}
