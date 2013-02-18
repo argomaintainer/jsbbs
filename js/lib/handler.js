@@ -41,6 +41,9 @@ $MOD('frame.home', function(){
                 www: data.www,
                 map_name: map_name
             });
+            if(data.www && data.www.widget){
+                load_widgets(data.www.widgets);
+            }
         });
     }
 
