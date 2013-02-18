@@ -14,8 +14,8 @@ $MOD('frame.home', function(){
 
     function setup_type(type){
         $api.get_goodboards(type, function(data){
+            var status = {};
             if(type=='fav'){
-                var status = {};
                 if(data.success){
                     data = data.data.sort(cmp_boards);
                 }
