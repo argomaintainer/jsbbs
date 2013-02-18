@@ -2115,6 +2115,10 @@ input.file-selector{
     padding: 0;
 }
 
+.bp-bm li{
+    display: inline;
+}
+
 .bp-bm a{
     color: #999;
     text-decoration: underline;
