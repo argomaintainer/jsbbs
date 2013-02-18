@@ -14,23 +14,25 @@ $MOD('frame.home', function(){
 
     function setup_type(type){
         $api.get_goodboards(type, function(data){
-            var status = {};
-            if(data.success){
-                data = data.data.sort(cmp_boards);
-            }
-            else{
-                data = [];
-            }
-            if(data[0]){
-                if(!(data[0].unread==1)){
-                    status['noupdate'] = true;
+            if(type=='fav'){
+                var status = {};
+                if(data.success){
+                    data = data.data.sort(cmp_boards);
                 }
-                if(too_old(data[0].lastpost)){
-                    status['tooold'] = true;
+                else{
+                    data = [];
                 }
+                if(data[0]){
+                    if(!(data[0].unread==1)){
+                        status['noupdate'] = true;
+                    }
+                    if(too_old(data[0].lastpost)){
+                        status['tooold'] = true;
+                    }
+                }
+                if(type=='fav' && (data.length < 8))
+                    status['findmore'] = true;
             }
-            if(type=='fav' && (data.length < 8))
-                status['findmore'] = true;
             render_template('home', {
                 boards: data,
                 type: type,
