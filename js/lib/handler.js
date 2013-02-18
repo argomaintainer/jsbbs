@@ -260,7 +260,7 @@ $MOD('frame::board', function(){
                 data = data.slice(-curnum);
                 cur_board.loader = loader;
                 // ugly a lot.
-                var base = $('.pagination').data('jqPagination');
+                var base = $('.bpagination').data('jqPagination');
                 base.options.current_page = pagetotal;
                 base.options.max_page = pagetotal;
                 base.updateInput(true);
@@ -272,15 +272,15 @@ $MOD('frame::board', function(){
 
     submit['next_page'] = function(){
         window.scrollTo(0,0);
-        $('.pagination').jqPagination(
+        $('.bpagination').jqPagination(
             'option', 'current_page',
-            $('.pagination').jqPagination('option', 'current_page') + 1);
+            $('.bpagination').jqPagination('option', 'current_page') + 1);
     }
     submit['prev_page'] = function(){
         window.scrollTo(0,0);
-        $('.pagination').jqPagination(
+        $('.bpagination').jqPagination(
             'option', 'current_page',
-            $('.pagination').jqPagination('option', 'current_page') - 1);
+            $('.bpagination').jqPagination('option', 'current_page') - 1);
     }
     submit['set_normal_loader'] = set_normal_loader
         = new_wrapper_loader(load_normal_post, function(){
@@ -498,7 +498,7 @@ $MOD('frame::board', function(){
             start_page = Math.ceil(last / PAGE_LIMIT);
         }
         local.max_page = Math.ceil(total / PAGE_LIMIT);
-        $('.pagination').jqPagination({
+        $('.bpagination').jqPagination({
 		    page_string	: '第 {current_page} 页 / 共 {max_page} 页',
 		    paged		: set_page_anim,
             current_page: start_page,
@@ -547,9 +547,10 @@ $MOD('frame::board', function(){
                     load_widgets(data.data.www.widgets);
                 }
                 if(data.data.www.brand_url){
-                    $('.board-header-inner').css(
-                        'background-image',
-                        'url("' + data.data.www.brand_url +'")');
+                    $('.board-header-img').addClass('hasimg').css(
+                        'background-image', 'url("' +
+                            data.data.www.brand_url + '")');
+                    
                 }
                 var sec_con = $('#near-board');
                 $G.lastsection = cur_board.data.secnum;
@@ -1311,7 +1312,7 @@ $MOD('frame::mail', function(){
                     render_template('mail-framework', { mailbox: data.data });
                     local.index = index;
                     var pagenum = Math.ceil(index / PAGE_LIMIT);
-                    $('.pagination').jqPagination({
+                    $('.bpagination').jqPagination({
 		                page_string	: '第 {current_page} 页 / 共 {max_page} 页',
 		                paged		: set_page_anim,
                         current_page: pagenum

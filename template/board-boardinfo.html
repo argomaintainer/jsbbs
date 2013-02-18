@@ -1,61 +1,65 @@
 <div class="cell main-cell cell-loose">
-  <div class="board-header relative">
-    <div class="board-header-inner">
-      <h3>${board.title}<small> ${board.filename}</small></h3>
-      {{if tf_too_old(board.lastpost) }}
-      <div class="alert">
-        <strong>这个看版很久没更新了！</strong><br/>
-        这个版块很久都没有人发文，请移步其他看版。</br>
-        如果您有意建设此版，请 <a href="${url_for_board('New_boardmanager')}">竞选版主</a>！<br/>
-      </div>
-      {{else}}
-      {{if board.BM.length}}
-      <ul class="bmlist">
-        版主：
-        {{each(i, v) board.BM}}
-        <li><a href="${ url_for_user(v) }">${v}</a></li>
-        {{/each}}
-        {{if $G.authed }}
-        {{if !($G.userfav[board.filename]) }}
-        <li><button class="btn btn-info btn-mini" data-submit="book_fav">收藏该版</button></li>
-        {{else}}
-        <li><button class="btn btn-mini disabled">已收藏</button></li>
-        {{/if}}
-        {{/if}}
-      </ul>
-      {{else}}
-      <div class="alert">
-        <strong>诚征版主中！</strong><br/>
-        这个版块需要版主<br/>
-        如果您有意建设此版，请 <a href="${url_for_board('New_boardmanager')}">竞选版主</a> ！<br/>
-      </div>
-      {{/if}}
-      {{/if}}
-      <ul id="loader-wrapper" class="board-nav">
-        <li id="normal-loader">
-          <a data-submit="set_normal_loader" href="#">发言<small>(${board.total})</small></a></li>
-        <li id="topic-loader"><a data-submit="set_topic_loader" href="#">主题<small>(${board.total_topic})</small></a></li>
-        <li id="digest-loader"><a data-submit="set_digest_loader" href="#">文摘<small>(${board.total_digest})</small></a></li>
-      </ul>
-    </div>    
-  </div>  
-  <div class="board-toolbar clearfix">
-    <div class="btn-toolbar pull-left">
-      <button class="btn btn-small btn-success" data-submit="newpost">发表话题</button>
-      <button class="btn btn-small" data-submit="clear_unread">清除未读标记</button>
-      {{if board.isadmin }}
-      <a class="btn btn-small" href="${url_for_admin_board(board.filename)}">管理</a>
-      {{/if}}
-    </div>    
-    <div class="pull-right">
-      <div class="bpagination pagination">
-        <ul>
-          <li><a href="#" class="first" data-action="first">&laquo;</a></li>
-          <li><a href="#" class="previous" data-action="previous">&lsaquo;</a></li>
-          <li><input type="text" /></li>
-          <li><a href="#" class="next" data-action="next">&rsaquo;</a></li>
-          <li><a href="#" class="last" data-action="last">&raquo;</a></li>
+  <div class="board-header">
+    <div class="board-header-img">
+      <div class="board-header-content">
+        <h2>${board.title}<small>&nbsp;${board.filename}</small></h2>
+        <ul class="bmlist">
+          {{if $G.authed }}
+          {{if !($G.userfav[board.filename]) }}
+          <li><button class="btn btn-info btn-mini" data-submit="book_fav">收藏该版</button></li>
+          {{else}}
+          <li> - 已收藏该版</li>
+          {{/if}}
+          {{/if}}
+          {{if board.BM.length}}
+          <li> - 版主：</li>
+          {{each(i, v) board.BM}}
+          <li><a href="${ url_for_user(v) }">${v}</a></li>
+          {{/each}}
+          {{/if}}
         </ul>
+      </div>
+    </div>
+    {{if tf_too_old(board.lastpost) }}
+    <div class="alert">
+      <strong>这个看版很久没更新了！</strong><br/>
+      这个版块很久都没有人发文，请移步其他看版。</br>
+      如果您有意建设此版，请 <a href="${url_for_board('New_boardmanager')}">竞选版主</a>！<br/>
+    </div>
+    {{else}}
+    {{if !board.BM.length }}
+    <div class="alert">
+      <strong>诚征版主中！</strong><br/>
+      这个版块需要版主<br/>
+      如果您有意建设此版，请 <a href="${url_for_board('New_boardmanager')}">竞选版主</a> ！<br/>
+    </div>
+    {{/if}}
+    {{/if}}
+  </div>
+  <div class="board-toolbar">
+    <div class="btn-toolbar">
+      <div class="btn-group">
+        <button class="btn btn-small btn-success" data-submit="newpost">发表话题</button>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-small" data-submit="clear_unread">清除未读标记</button>
+      </div>
+      {{if board.isadmin }}
+      <div class="btn-group">
+        <a class="btn btn-small" href="${url_for_admin_board(board.filename)}">管理</a>
+      </div>
+      {{/if}}      
+      <div id="loader-wrapper" class="btn-group">
+        <button id="normal-loader" class="btn btn-small" data-submit="set_normal_loader" href="#">发言</button>
+        <button id="topic-loader" class="btn btn-small" data-submit="set_topic_loader" href="#">主题</button>
+        <button id="digest-loader" class="btn btn-small" data-submit="set_digest_loader" href="#">文摘</button>
+      </div>
+      <div class="bpagination btn-group pull-right">
+        <a href="#" class="btn btn-small first" data-action="first">&laquo;</a>
+        <a href="#" class="btn btn-small previous" data-action="previous">&lsaquo;</a>
+        <input class="btn-input" type="text" />
+        <a href="#" class="btn btn-small next" data-action="next">&rsaquo;</a>
+        <a href="#" class="btn btn-small last" data-action="last">&raquo;</a>
       </div>
     </div>
   </div>
