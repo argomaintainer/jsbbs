@@ -15,13 +15,13 @@ $MOD('frame.home', function(){
     function setup_type(type){
         $api.get_goodboards(type, function(data){
             var status = {};
+            if(data.success){
+                data = data.data.sort(cmp_boards);
+            }
+            else{
+                data = [];
+            }
             if(type=='fav'){
-                if(data.success){
-                    data = data.data.sort(cmp_boards);
-                }
-                else{
-                    data = [];
-                }
                 if(data[0]){
                     if(!(data[0].unread==1)){
                         status['noupdate'] = true;
