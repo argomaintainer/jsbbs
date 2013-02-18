@@ -16,27 +16,29 @@ $MOD('frame.home', function(){
         $api.get_goodboards(type, function(data){
             var status = {};
             if(data.success){
-                data = data.data.sort(cmp_boards);
+                data = data.data;
+                boards = data.boards.sort(cmp_boards);
             }
             else{
-                data = [];
+                boards = [];
             }
             if(type=='fav'){
-                if(data[0]){
-                    if(!data[0].unread){
+                if(boards[0]){
+                    if(!boards[0].unread){
                         status['noupdate'] = true;
                     }
-                    if(too_old(data[0].lastpost)){
+                    if(too_old(boards[0].lastpost)){
                         status['tooold'] = true;
                     }
                 }
-                if(type=='fav' && (data.length < 8))
+                if(type=='fav' && (boards.length < 8))
                     status['findmore'] = true;
             }
             render_template('home', {
-                boards: data,
+                boards: boards,
                 type: type,
                 status: status,
+                www: data.www,
                 map_name: map_name
             });
         });
