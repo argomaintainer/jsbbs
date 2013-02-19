@@ -28,7 +28,11 @@
 
   {{each(i, b) boards}}
   <div class="boards-pill">
+    {{if $G.authed }}
     <div class="bp-unreadnum-wrapper {{if b.unreadn==-1}}bp-allread {{/if}}"><span class="bp-unreadnum">{{if b.unreadn==-1}}={{else}}${b.unreadn}+{{/if}}</span></div>
+    {{else}}
+    <div class="bp-unreadnum-wrapper"><span class="bp-unreadnum">?</span></div>
+    {{/if}}
     <div class="bp-boards-pill-mid">
       <div class="bp-title">
         <span class="bp-boardname"><a href="${url_for_board(b.boardname)}">${b.title}(${b.boardname})</a></span>
