@@ -2,6 +2,7 @@ $MOD('frame.home', function(){
 
     var map_name = [
         ['fav', '收藏夹', 1],
+        ['month', '本月精品'],
         ['good', '推荐版面'],
         ['hot', '热门看版'],
         ['new', '新发文看版']
