@@ -3,8 +3,8 @@ $MOD('frame.home', function(){
     var map_name = [
         ['fav', '收藏夹', 1],
         ['good', '推荐版面'],
-        ['new', '新发文看版'],
         ['hot', '热门看版'],
+        ['new', '新发文看版']
     ]
     , too_old = $MOD.timeformat.tooOldTS;
 
@@ -1309,6 +1309,11 @@ $MOD('frame::mail', function(){
 
     var submit = {},
     local = {};
+
+    submit['open-folding'] = function(kwargs, e){
+        $('.folding').removeClass('folding');
+        $('.folding-btn').remove();
+    }
 
     function pop_new_mail(){
         if(!$G.authed){
