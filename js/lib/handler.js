@@ -1310,11 +1310,6 @@ $MOD('frame::mail', function(){
     var submit = {},
     local = {};
 
-    submit['open-folding'] = function(kwargs, e){
-        $('.folding').removeClass('folding');
-        $('.folding-btn').remove();
-    }
-
     function pop_new_mail(){
         if(!$G.authed){
             show_alert('请先登录再执行此操作：-）');
@@ -1402,6 +1397,11 @@ $MOD('frame::readmail', function(){
 
     var local = {},
     submit = {};
+
+    submit['open-folding'] = function(kwargs, e){
+        $('.folding').removeClass('folding');
+        $('.folding-btn').remove();
+    }
 
     function pop_reply_mail(kwargs){
         if(!$G.authed){
