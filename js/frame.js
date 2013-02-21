@@ -784,3 +784,21 @@ $MOD('range', function(){
     }
     
 })
+
+$MOD('temp', function(){
+    $G.submit['load-gist'] = function(p, e){
+        var gistframe = $('<iframe marginwidth="0" marginheight="0" frameborder="0" width="100%">')[0];
+        var zone = e.target
+        , gistframehtml = '<html><body><script type="text/javascript" src="https://gist.github.com/' + zone.getAttribute('data-gistid') + '.js"></script></body></html>';
+        $(zone).replaceWith(gistframe);
+        var gistframedoc = gistframe.document;
+        if (gistframe.contentDocument) {
+			gistframedoc = gistframe.contentDocument;
+		} else if (gistframe.contentWindow) {
+			gistframedoc = gistframe.contentWindow.document;
+		}
+        gistframedoc.open();
+		gistframedoc.writeln(gistframehtml);
+		gistframedoc.close();		
+    }
+});

@@ -34,7 +34,11 @@ $MOD('format', function(){
 
         // tudou
         [/(^|\n)(http:&#x2F;&#x2F;www\.tudou\.com&#x2F;\w&#x2F;[\w\d\-]*(&#x2F;?)(&amp;[\w\d=_]*)*&#x2F;v\.swf)/g,
-         '<embed src="$2" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="opaque" width="480" height="400"></embed>'],        
+         '<embed src="$2" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" wmode="opaque" width="480" height="400"></embed>'],
+
+        // gist
+        [/(^|\n)(https?:&#x2F;&#x2F;gist\.github\.com&#x2F;([0-9]+)\.js)/g,
+         '<div class="gist" data-submit="load-gist" data-gistid="$3">: 点击打开gist代码</div>'],
 
         // url
 	    [/(^|\s|<br>|&nbsp;|\n|>)(www\..+?\..+?)(\s|$|<br>|&nbsp;|<)/g,		'$1<a target="_blank" href="http://$2">$2</a>$3'],

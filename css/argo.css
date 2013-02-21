@@ -2145,3 +2145,7 @@ input.file-selector{
 .bp-unread-focus{
     background: #EE5F5B;
 }
+
+.gist{
+    color: #993;
+}
