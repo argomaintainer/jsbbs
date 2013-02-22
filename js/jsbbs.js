@@ -27,25 +27,16 @@ $MOD('jsbbs.main', function(){
     
     do_while_load(function(){
 
-        if(!$.support.boxModel){
-            raise_too_old_browser();
-        }
-        else{
-            if(!$.support.objectAll){
-                raise_may_no_good_browser();
-            }
+        window.onhashchange = onhashchange;
+        bind_hook('after_boot', refresh_frame);
 
-            window.onhashchange = onhashchange;
-            bind_hook('after_boot', refresh_frame);
+        $G.hooks.before_boot();
+        $G.hooks.after_boot();
 
-            $G.hooks.before_boot();
-            $G.hooks.after_boot();
+        $(window).scroll(function(){
+            $G.hooks.after_scroll();
+        });
 
-            $(window).scroll(function(){
-                $G.hooks.after_scroll();
-            });
-            
-        }
     });
 
 })
