@@ -71,7 +71,7 @@ $MOD('argo_api', function(){
         'get_goodboards': function(type, callback){
             get_nc('/ajax/board/good',
                    {
-                       type: type,
+                       type: type
                    }, callback);
         },            
         'set_board_www_etc': function(boardname, data, callback){
@@ -114,7 +114,7 @@ $MOD('argo_api', function(){
                       boardname: boardname,
                       type: type,
                       start: start,
-                      limit: limit,
+                      limit: limit
                   },
                   callback);
         },
@@ -124,7 +124,7 @@ $MOD('argo_api', function(){
                    {
                        boardname: boardname,
                        type: type,
-                       limit: limit,
+                       limit: limit
                    },
                    callback);
         },                
@@ -298,7 +298,7 @@ $MOD('argo_api', function(){
         'update_self_setting': function(values, callback){
             $.post('/ajax/user/setting/update',
                    {
-                       update: values,
+                       update: values
                    },
                    callback);
         },
@@ -409,7 +409,7 @@ $MOD('argo_api', function(){
         'get_ann_content': function(reqpath, callback){
             get_nc('/ajax/ann/content/',
                    {
-                       reqpath: reqpath,
+                       reqpath: reqpath
                    },
                    callback);
         }

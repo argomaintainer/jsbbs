@@ -1,3 +1,5 @@
+console.log('handler.js');
+
 $MOD('frame.home', function(){
 
     var map_name = [
@@ -56,7 +58,7 @@ $MOD('frame.home', function(){
             }
             setup_type(kwargs.type);
         },
-        marktop: 'home',
+        marktop: 'home'
     });
 
 });
@@ -654,7 +656,7 @@ $MOD('frame::board', function(){
                             title: '最新文摘',
                             posts: l,
                             boardname: boardname,
-                            more: 'set_digest_loader',
+                            more: 'set_digest_loader'
                         }, '#dy-widgets');
                     }
                 });

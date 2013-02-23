@@ -1,7 +1,15 @@
 $MOD('jsbbs.main', function(){
 
+    console.log('zzzzzzzzzzz');
+
+    if(!$MOD['frame.hook']){
+        return;
+    }
+
     $MOD['frame.hook'].register_hook('before_boot');
     $MOD['frame.hook'].register_hook('after_boot');
+
+    console.log('dddddddddddd');
 
     require_jslib('userbox');
     using('jsbbs.userbox');

@@ -347,6 +347,16 @@ $MOD('frame.template', function(){
         $('#main').empty();
         render_template('404', { msg: msg});
     }
+
+    if(JSON){
+        var json_encode=JSON.stringify;
+    }
+    else{
+        var json_encode=function(d){
+            console.log(['Try to encode', d]);
+            return 'ERR';
+        };
+    }
     
     return {
         "require_template": require_template,
@@ -354,7 +364,7 @@ $MOD('frame.template', function(){
         "render_template_prepend": render_template_prepend,
         'render_string': render_string,
         'load_widgets': load_widgets,
-        'json_encode': JSON.stringify,
+        'json_encode': json_encode,
         'tf_timestamp': $MOD.timeformat.nice_timestamp,
         'tf_after_yesterday': $MOD.timeformat.afterYesterdayTS,
         'tf_too_old': $MOD.timeformat.tooOldTS,
