@@ -27,7 +27,7 @@ $MOD('frame.url_for', {
     'attach': function(boardname, filename){
         return '/attach/' + boardname + '/' + filename;
     },
-    'url': function(path){ return DATA_ROOT + '/n/index.html' + path;},
+    'url': function(path){ return DATA_ROOT + '/n/' + path;},
     'admin_board': function(boardname){
         return 'index.html#!admin_board?boardname=' + boardname ;
     },
