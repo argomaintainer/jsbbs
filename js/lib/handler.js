@@ -761,7 +761,7 @@ $MOD('frame::flow', function(){
 
     function update_hash(data){
         local.kwargs.last = data.data;
-        quite_set_hash('#!flow', local.kwargs);
+        // quite_set_hash('#!flow', local.kwargs);
     }
 
     function new_post_loader(direct, ref, handler, render,
