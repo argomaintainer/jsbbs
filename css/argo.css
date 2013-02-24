@@ -2156,12 +2156,12 @@ input.file-selector{
 
 .fcell{
     float: left;
-    border: 1px solid #999;
+    border: 1px solid #fff;
     width: 160px;
 }
 
 .ftext{
-    border-top: 1px solid #999;
+    border-top: 1px solid #fff;
     background: #f0f0f0;
     padding: 1em;
     color: #333;
