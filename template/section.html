@@ -38,18 +38,25 @@
           </li>
           {{/each}}
         </ul>
-        <ul class="pager">
-          {{if i==0 }}
-          <li class="previous disabled"><a href="#">上一个分区</a></li>
-          {{else}}
-          <li class="previous"><a data-toggle="pill" href="#pill-${i-1}">上一个分区</a></li>
-          {{/if}}
-          {{if i == (sections.length-1) }}
-          <li class="next disabled"><a href="#">下一个分区</a></li>
-          {{else}}
-          <li class="next"><a data-toggle="pill" href="#pill-${i+1}">下一个分区</a></li>
-          {{/if}}
-        </ul>
+        <div class="clearfix btn-toolbar">
+          <div class="pull-right">
+            <div class="btn-group">
+              {{if i==0 }}
+              <a class="btn disabled" href="#">上一个分区</a>
+              {{else}}
+              <a class="btn" data-toggle="pill" href="#pill-${i-1}">上一个分区</a>
+              {{/if}}
+              {{if i == (sections.length-1) }}
+              <a class="btn disabled" href="#">下一个分区</a>
+              {{else}}
+              <a class="btn" data-toggle="pill" href="#pill-${i+1}">下一个分区</a>
+              {{/if}}
+            </div>
+            <div class="btn-group">
+              <a class="btn" href="#!home">回到首页</a>
+            </div>
+          </div>
+        </div>
       </div>
       {{/each}}
     </div>

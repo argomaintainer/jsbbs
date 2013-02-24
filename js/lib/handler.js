@@ -11,6 +11,11 @@ $MOD('frame.home', function(){
     ]
     , too_old = $MOD.timeformat.tooOldTS;
 
+    function set_sh(){
+        $.cookie('sh', 1);
+        $('#flowchart').remove();
+    }
+
     function cmp_boards(a, b){
         return (b.unread - a.unread) || (b.lastpost - a.lastpost);
     }
@@ -37,6 +42,12 @@ $MOD('frame.home', function(){
                 if(type=='fav' && (boards.length < 8))
                     status['findmore'] = true;
             }
+            if($.cookie('sh')){ // has show usage flowchart
+                status['sh'] = 1;
+            }
+            else{
+                status['sh'] = false;
+            }
             render_template('home', {
                 boards: boards,
                 type: type,
@@ -57,6 +68,9 @@ $MOD('frame.home', function(){
                 kwargs.type = $G.authed?'fav':'good';
             }
             setup_type(kwargs.type);
+        },
+        submit: {
+            set_sh: set_sh
         },
         marktop: 'home'
     });
