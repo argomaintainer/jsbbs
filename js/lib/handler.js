@@ -130,7 +130,7 @@ $MOD('frame::section', function(){
             if(data.success){
                 show_alert('收藏' + boardname + '版成功！', 'success');
                 refresh_fav();
-                $(e.target).removeClass('btn-info').addClass('disabled').text('已收藏');
+                $(e.target).removeClass('btn-info').addClass('disabled').text('取消收藏');
             }
             else{
                 show_alert(ERROR[data.code]);
@@ -684,13 +684,14 @@ $MOD('frame::board', function(){
 
     }
 
-    function book_fav(){
+    function book_fav(kwargs, e){
         var boardname;
         if(cur_board && (boardname = cur_board.boardname)){
             $api.add_self_fav(boardname, function(data){
                 if(data.success){
                     show_alert('收藏' + boardname + '版成功！', 'success');
                     refresh_fav();
+                    $(e.target).parent().text(' - 已收藏该版');
                 }
                 else{
                     show_alert(ERROR[data.code]);
