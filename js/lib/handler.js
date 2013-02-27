@@ -74,8 +74,8 @@ $MOD('frame.home', function(){
                     "links": [
                         ['设置默认使用旧版首页',
                          ' javascript: confirm("默认使用旧版？") && (document.cookie="love=0; path=/") && (alert("设置成功") , (location="/"))'],
-                        ['解除默认使用旧版',
-                         ' javascript: confirm("默认使用旧版？") (document.cookie="love=1; path=/") && alert("设置成功")']
+                        ['恢复默认使用新版',
+                         ' javascript: confirm("默认使用新版？") (document.cookie="love=1; path=/") && alert("设置成功")']
                     ]
                 }
             ]);
