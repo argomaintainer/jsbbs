@@ -2,7 +2,7 @@ $MOD('frame.url_for', {
     'avatar': function(userid){ return '/avatar/' + userid },
     'board': function(boardname){ return 'index.html#!board?boardname=' + boardname},
     'board_i': function(index, boardname){
-        return 'index.html#!board?view=normal&&boardname=' + boardname + '&&index=' + index;
+        return 'index.html#!board?boardname=' + boardname + '&&index=' + index;
     },
     'user': function(userid){ return 'index.html#!user?userid=' + userid},
     'img' : function(path){ return 'img/' + path },

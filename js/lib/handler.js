@@ -827,7 +827,7 @@ $MOD('frame::flow', function(){
         update_hash,
         render_template,
         function(){
-            $('#post-down [data-submit]').remove();
+            // $('#post-down [data-submit]').remove();
             $('#post-down .hidden').removeClass('hidden');
         }
     );
@@ -988,6 +988,10 @@ $MOD('frame::topic', function(){
 
     submit['toggle-quote'] = $MOD['frame::flow'].toggle_quote;
 
+    submit['back-to-board'] = function(){
+        location = url_for_board_i(local.first.index, cur_boardname);
+    }
+
     function new_loader(init, finish, get_filename, render, error){
         function load(counter){
             var filename;
@@ -995,6 +999,9 @@ $MOD('frame::topic', function(){
                 if(filename = get_filename(counter)){
                     $api.get_post(cur_boardname, filename, function(data){
                         if(data.success){
+                            if(!local.first){
+                                local.first = data.data;
+                            }
                             render('topic',
                                    handler_post(data.data),
                                    local.target);
@@ -1032,7 +1039,7 @@ $MOD('frame::topic', function(){
     
     var load_next = submit['load_next'] = new_loader(
         PAGE_LIMIT, function(){
-        $('#post-down [data-submit]').remove();
+        $('#post-down .load-next').remove();
         $('#post-down .hidden').removeClass('hidden');
     }, function(){
         return (local.last_index < local.topiclist.length)?
@@ -1444,6 +1451,8 @@ $MOD('frame::readmail', function(){
         $('.folding').removeClass('folding');
         $('.folding-btn').remove();
     }
+
+    submit['toggle-quote'] = $MOD['frame::flow'].toggle_quote;
 
     function pop_reply_mail(kwargs){
         if(!$G.authed){

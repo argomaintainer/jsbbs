@@ -1,7 +1,6 @@
-<div class="cell cell-loose main-cell">
+<div class="cell cell-loose main-cell">  
   <div class="cell-header">
-    <h3>${ $G.local.boardname } 版</h3> &nbsp;
-    <a href="${url_for_board($G.local.boardname)}"> 回到版块</a>
+    <a class="back-to-board"  href="#" data-submit="back-to-board">‹ ${ $G.local.boardname } 版</a>
   </div>
   {{if $G.local.oldest_index }}
   <div id="post-up" class="page-btn">
@@ -10,12 +9,12 @@
   {{/if}}
   <div id="post-container"></div>
   <div id="post-down" class="page-btn">
-    <a data-submit="load_next">下一篇</a>
+    <a class="load-next" data-submit="load_next">下一篇</a>
     <div class="hidden">
       已经是最后一篇了 o(∩_∩)o <br/>
     </div>
     <div class="text-center">
-      <a href="${url_for_board($G.local.boardname)}">回到版块</a>
+      <a data-submit="back-to-board" href="#">回到版块</a>
     </div>
   </div>
 </div>
