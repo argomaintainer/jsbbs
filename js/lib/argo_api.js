@@ -140,21 +140,12 @@ $MOD('argo_api', function(){
                    callback);
         },
         'new_post_form': function(selector, callback){
-            // need boardname, title, content, type==new, and else
-            var formData = new FormData($(selector)[0]);
-            $.ajax({
+            $(selector).ajaxSubmit({
                 url: '/ajax/post/add',
                 type: 'POST',
-                xhr: function(){
-                    var myXhr = $.ajaxSettings.xhr();
-                    return myXhr;
-                },
                 success: callback,
-                data: formData,
-                cache: false,
-                contentType: false,
-                processData: false
-            }, 'json');
+                dataType: 'json'
+            });
         },                   
         'reply_post': function(boardname, title, content, refname, callback){
             $.post('/ajax/post/add',
@@ -266,25 +257,17 @@ $MOD('argo_api', function(){
         },
 
         'update_user_avatar': function(selector, callback){
-            var formData = new FormData($(selector)[0]);
-            $.ajax({
+            $(selector).ajaxSubmit({
                 url: '/ajax/user/update',
-                type: 'POST',
-                xhr: function(){
-                    var myXhr = $.ajaxSettings.xhr();
-                    // if(myXhr.upload){
-                    //     myXhr.upload.addEventListener(
-                    //         'progress', progressHandlingFunction, false
-                    //     );
-                    // };
-                    return myXhr;
-                },
+                type: 'post',
                 success : callback,
-                data: formData,
-                cache: false,
-                contentType: false,
-                processData: false
-            }, 'json');
+                error: function(data){
+                    alert('eeeee');
+                    alert(data);
+                },
+                timeout:   3000,
+                dataType: 'json'
+            });
         },
 
         'get_self_info': function(callback){

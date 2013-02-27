@@ -765,10 +765,11 @@ input.btn-input{
     display: inline-block;
     *display: inline;
     *zoom: 1;
-    padding: 2px 12px;
+    padding: 0;
+    height: 26px;
     margin-bottom: 0;
     font-size: 13px;
-    line-height: 20px;
+    line-height: 24px;
     *line-height: 20px;
     text-align: center;
     vertical-align: middle;

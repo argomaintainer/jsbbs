@@ -637,10 +637,12 @@ $MOD('frame.frame', function(){
             e.preventDefault();
             if(action[0] == '#'){
                 set_location(action);
-                return;
+                return false;
             }             
             group = target.attr('data-group');
-            submit_action(action, collect_para(group), e);
+            if(submit_action(action, collect_para(group), e) == false){
+                return false;
+            }
         }
     });
 
@@ -648,6 +650,8 @@ $MOD('frame.frame', function(){
         var target=$(e.target),
         action=target.attr('data-submit'), args, group, para;
         if(action){
+            e.preventDefault();
+            e.stopImmediatePropagation();
             group = target.attr('data-group');
             if(group){
                 para = collect_para(group);
@@ -655,7 +659,12 @@ $MOD('frame.frame', function(){
             else{
                 para = collect_form_para(target);
             }
-            submit_action(action, para, e);
+            try{
+                submit_action(action, para, e);
+            }
+            catch(e){
+                console.log(e);
+            }
             return false;
         }
     });

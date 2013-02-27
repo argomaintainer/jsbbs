@@ -423,8 +423,11 @@ $MOD('frame::board', function(){
 
     function check_pushlish(kwargs, e){
         var filename = $('[type=file]').val().split('\\').pop(),
-        file = ($('[type=file]')[0].files[0]),
-        title = $('[name=title]').val();
+        title = $('[name=title]').val() ,
+        file = $('[type=file]');
+        if(filename && file[0].files){
+            file = file[0].files[0];
+        }
         if(filename){
             if(file.size >= 1048576){            
                 show_alert('上传文件过大，只接受1MB以下的文件 ～');
@@ -443,10 +446,9 @@ $MOD('frame::board', function(){
     }
 
     submit['publish_post'] = function(kwargs, e){
-        e.preventDefault();
         if(e.target.tagName == 'FORM'){
             if(!check_pushlish(kwargs, e))
-                return false;
+                return;
             $api.new_post_form('#new-post-form',
                                // $api.new_post(cur_board.boardname,
                                //               kwargs.title,
@@ -866,7 +868,6 @@ $MOD('frame::flow', function(){
                       });                       
     }
 
-    // submit['
     submit['publish_reply'] = publish_reply = function(kwargs, e){
         $api.reply_post(local.boardname, kwargs.title, kwargs.content,
                       kwargs.toreply, function(data){
@@ -1277,31 +1278,45 @@ $MOD('frame::profile', function(){
     }
 
     submit['update-avatar'] = function(kwargs, e){
+        var file = $('[name=avatar]')[0];
 
-        var file = $('[name=avatar]')[0].files[0],
-        name = file.name,
-        size = file.size,
-        type = file.type;
-
-        if(file.name.length < 1) {
-            show_alert('不是有效的文件！', 'danger');
+        if(file.files){
+            file = file.files[0];
+            if(!file){
+                show_alert('还未选择文件！', 'danger');
+                return;
+            }
+            var name = file.name;
+            var size = file.size;
+            var type = file.type;
+            if(file.name.length < 1) {
+                show_alert('不是有效的文件！', 'danger');
+                return;
+            }
+            else if(file.size > 1048576) {
+                show_alert('文件太大了！', 'danger');
+                return;
+            }
+            else if(file.type != 'image/jpg' && file.type != 'image/jpeg'){
+                show_alert('目前只支持jpg文件 ：-（', 'danger');
+                return;
+            }
         }
-        else if(file.size > 1048576) {
-            show_alert('文件太大了！', 'danger');
-        }
-        else if(file.type != 'image/jpg' && file.type != 'image/jpeg'){
-            show_alert('目前只支持jpg文件 ：-（', 'danger');
-        }
-        else {
+        try{
             $api.update_user_avatar(
-                '[data-submit=update-avatar]', function(data){
+                '#update-avatar', function(data){
                     if(data.success){
                         show_alert('更新成功！');
+                        location.reload();
                     }
                     else{
                         show_alert(ERROR[data.code], 'danger');
                     }
                 });
+            return false;
+        }catch(e){
+            console.log(e);
+            return false;
         };
     }
 

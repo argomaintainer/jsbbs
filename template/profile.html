@@ -9,16 +9,17 @@
 
   <div class="profile-form">
 
-    <form data-submit="update-avatar" class="form-horizontal">
+    <form id="update-avatar" class="form-horizontal">
       <div class="control-group">
+        <input type="hidden" name="_" />
         <label class="control-label" for="input-avatar">头像</label>
         <div class="controls">
-          <input type="file" name="avatar" id="input-avatar">
-          <button type="submit" class="btn btn-small">保存</button>
-          <span class="help-block">
+          <input type="file" name="avatar" id="input-avatar"/>
+          <a data-submit="update-avatar" class="btn btn-small">保存</a>
+          <div class="help-block">
             目前头像只支持 <em>jpg</em> 格式，建议最少为 72x72 像素<br/>
             头像可以通过 <a href="${url_for_root(url_for_avatar(self.userid))}">
-              ${url_for_root(url_for_avatar(self.userid))}</a> 访问</span>
+              ${url_for_root(url_for_avatar(self.userid))}</a> 访问</div>
         </div>
       </div>
     </form>
@@ -28,12 +29,12 @@
         <label class="control-label" for="input-username">昵称</label>
         <div class="controls">
           <input type="text" name="username" id="input-username"
-                 value="${self.username}">
+                 value="${self.username}"/>
           <button type="submit" class="btn btn-small">保存</button>
-          <span class="help-block">
+          <div class="help-block">
             对你的文章的引用会留下你的id和昵称<br/>
             昵称最多9个汉字
-          </span>
+          </div>
         </div>
       </div>
     </form>
@@ -44,9 +45,9 @@
         <div class="controls">
           <textarea rows="6" class="profile-textarea"
                     name="plan">${self.plan}</textarea>
-          <span class="help-inline">
+          <div class="help-inline">
             个人说明档支持markdown和<a href="http://argo.sysu.edu.cn/n/index.html#!topic?filename=M.1353825555.A&&boardname=BBS_Help&&index=2712&&last=M.1353826143.A">bbsup!</a>
-          </span>
+          </div>
           <button type="submit" class="btn btn-small">保存</button>        
         </div>
       </div>
@@ -59,9 +60,9 @@
           <textarea rows="6" class="profile-textarea"
                     name="signature">${self.signature}</textarea>
           <button type="submit" class="btn btn-small">保存</button>
-          <span class="help-inline">
+          <div class="help-inline">
             六行一组，发文时随机加入
-          </span>
+          </div>
         </div>
       </div>
     </form>
