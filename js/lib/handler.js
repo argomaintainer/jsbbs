@@ -68,6 +68,17 @@ $MOD('frame.home', function(){
                 kwargs.type = $G.authed?'fav':'good';
             }
             setup_type(kwargs.type);
+            load_widgets([
+                {
+                    "type": "links",
+                    "links": [
+                        ['设置默认使用旧版首页',
+                         ' javascript: confirm("默认使用旧版？") && (document.cookie="love=0; path=/") && (alert("设置成功") , (location="/"))'],
+                        ['解除默认使用旧版',
+                         ' javascript: confirm("默认使用旧版？") (document.cookie="love=1; path=/") && alert("设置成功")']
+                    ]
+                }
+            ]);
         },
         submit: {
             set_sh: set_sh
@@ -446,15 +457,12 @@ $MOD('frame::board', function(){
     }
 
     function handler_submit(data){
-        console.log([data, data.success]);
-        lasttttttttttt = data;
         if(data.success){
             show_alert('发表成功！', 'success');
             close_popwindow();
             refresh_current_page();
         }
         else{
-            console.log(['show', ERROR[data.code], 'danger']);
             show_alert(ERROR[data.code], 'danger');
         }
     }
