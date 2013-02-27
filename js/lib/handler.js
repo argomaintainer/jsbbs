@@ -445,24 +445,25 @@ $MOD('frame::board', function(){
         return true;
     }
 
+    function handler_submit(data){
+        console.log([data, data.success]);
+        lasttttttttttt = data;
+        if(data.success){
+            show_alert('发表成功！', 'success');
+            close_popwindow();
+            refresh_current_page();
+        }
+        else{
+            console.log(['show', ERROR[data.code], 'danger']);
+            show_alert(ERROR[data.code], 'danger');
+        }
+    }
+    
     submit['publish_post'] = function(kwargs, e){
         if(e.target.tagName == 'FORM'){
             if(!check_pushlish(kwargs, e))
                 return;
-            $api.new_post_form('#new-post-form',
-                               // $api.new_post(cur_board.boardname,
-                               //               kwargs.title,
-                               //               kwargs.content,
-                               function(data){
-                                   if(data.success){
-                                       show_alert('发表成功！', 'success');
-                                       close_popwindow();
-                                       refresh_current_page();
-                                   }
-                                   else{
-                                       show_alert(ERROR[data.code], 'danger');
-                                   }
-                               });
+            $api.new_post_form('#new-post-form', handler_submit);
         }
     }
 

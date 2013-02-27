@@ -139,11 +139,12 @@ $MOD('argo_api', function(){
                    },
                    callback);
         },
-        'new_post_form': function(selector, callback){
+        'new_post_form': function(selector, argocc){
             $(selector).ajaxSubmit({
                 url: '/ajax/post/add',
                 type: 'POST',
-                success: callback,
+                success: argocc,
+                target: $('body'),
                 dataType: 'json'
             });
         },                   
@@ -261,10 +262,6 @@ $MOD('argo_api', function(){
                 url: '/ajax/user/update',
                 type: 'post',
                 success : callback,
-                error: function(data){
-                    alert('eeeee');
-                    alert(data);
-                },
                 timeout:   3000,
                 dataType: 'json'
             });
