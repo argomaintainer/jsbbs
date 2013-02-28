@@ -39,7 +39,7 @@ $MOD('frame.home', function(){
                         status['tooold'] = true;
                     }
                 }
-                if(type=='fav' && (boards.length < 8))
+                if(type=='fav' && (boards.length < 3))
                     status['findmore'] = true;
             }
             if($.cookie('sh')){ // has show usage flowchart
