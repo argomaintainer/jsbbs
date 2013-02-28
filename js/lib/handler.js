@@ -12,7 +12,7 @@ $MOD('frame.home', function(){
     , too_old = $MOD.timeformat.tooOldTS;
 
     function set_sh(){
-        $.cookie('sh', 1);
+        $.cookie('sh', 1, {expires: 365});
         $('#flowchart').remove();
     }
 
