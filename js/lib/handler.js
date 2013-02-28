@@ -1685,35 +1685,55 @@ $MOD('frame::admin_board', function(){
 
 $MOD('frame::admin', function(){
 
-    var www
-    , submit = {};
+    var submit = {};
 
-    submit['update-www'] = function(kwargs){        
-        var d = jQuery.parseJSON(kwargs.data);
-        $api.set_www_etc(d, function(data){
-            if(data.success){
-                show_alert('更新成功！', 'success');
-            }
-            else{
-                show_alert(ERROR[data.code], 'danger');
-            }
-        });
+    submit['get-target'] = function(kwargs, e){
+        var target = $(e.target),
+        t = target.attr('data-targetname');
+        $.get('/ajax/etc/get', 
+              {
+                  target: t
+              },
+              function(data){
+                  if(data.success){
+                      $('#etc-container').val(data.data.data).attr('targetname', t);
+                  }
+                  else{
+                      console.log(['ERROR', data]);
+                  }
+              });
     }
+
+    submit['update-target'] = function(){
+        var t = $('#etc-container').attr('targetname'),
+        content = $('#etc-container').val();
+        $.post('/ajax/etc/update', 
+               {
+                   target: t,
+                   content: content
+               },
+               function(data){
+                   if(data.success){
+                       show_alert('更新成功！');
+                   }
+                   else{
+                       show_alert('更新失败', 'danger');
+                   }
+               });
+    }        
 
     declare_frame({
         mark: 'admin',
+        submit: submit,
         enter: function(kwargs){
-            $api.get_www_etc(function(data){
+            $.get('/ajax/etc/alltarget', function(data){
                 if(data.success){
-                    www = data.data;
-                    render_template('admin',  { d: json_encode(www) });
-                }
-                else{
-                    show_alert(ERROR[data.code], 'danger');
+                    render_template('admin', {
+                        'desc': data.data.desc
+                    });
                 }
             });
-        },
-        submit: submit
+        }
     });
 
 });
