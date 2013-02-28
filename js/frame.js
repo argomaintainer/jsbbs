@@ -457,11 +457,11 @@ $MOD('frame.frame', function(){
         }
 
         if(frame.isnew){
-            $('#main').empty();
+            $('#main').replace('<div id="main">');
         }
 
         if(!frame.keep_widgets){
-            $('#dy-widgets').empty();
+            $('#dy-widgets').replace('<div id="dy-widgets">');
         }
 
         $('.local-container').empty()

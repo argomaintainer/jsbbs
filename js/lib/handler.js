@@ -1162,6 +1162,7 @@ $MOD('frame::topic', function(){
         mark: 'topic',
         submit : submit,
         enter : function(kwargs){
+            local.first = null;
             local.kwargs = kwargs;
             $api.get_post_topiclist(
                 kwargs.boardname, kwargs.filename, function(data){
