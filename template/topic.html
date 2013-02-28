@@ -29,7 +29,7 @@
       <ul class="hidden-ul">
         <li class="display"><a data-group="post-${index}" data-submit="reply_post"> 回复 </a>
         </li>
-        {{if perm_del }}
+        {{if perm_del==1 }}
         <li> • <a data-group="post-${index}" data-submit="delete_post">删除</a></li>
         <li> • <a data-group="post-${index}" data-submit="editpost">修改</a></li>
         {{/if}}

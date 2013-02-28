@@ -989,7 +989,7 @@ $MOD('frame::topic', function(){
     submit['toggle-quote'] = $MOD['frame::flow'].toggle_quote;
 
     submit['back-to-board'] = function(){
-        location = url_for_board_i(local.first.index, cur_boardname);
+        location = url_for_board_it(local.first.index, cur_boardname, local.first.id);
     }
 
     function new_loader(init, finish, get_filename, render, error){

@@ -1,8 +1,9 @@
 $MOD('frame.url_for', {
     'avatar': function(userid){ return '/avatar/' + userid },
     'board': function(boardname){ return 'index.html#!board?boardname=' + boardname},
-    'board_i': function(index, boardname){
-        return 'index.html#!board?boardname=' + boardname + '&&index=' + index;
+    'board_it': function(index, boardname, topicid){
+        return 'index.html#!board?boardname=' + boardname + '&&index=' + index
+         + '&&topic=' + topicid;
     },
     'user': function(userid){ return 'index.html#!user?userid=' + userid},
     'img' : function(path){ return 'img/' + path },
