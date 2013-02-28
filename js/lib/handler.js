@@ -644,12 +644,17 @@ $MOD('frame::board', function(){
                 }
                 var sec_con = $('#near-board');
                 $G.lastsection = cur_board.data.secnum;
-                render_template('widget/link',
-                                {
-                                    href: url_for_ann(':' + boardname + '/'),
-                                    text: '进入 ' + boardname + ' 版精华区'
-                                },
-                                '#dy-widgets');
+                render_template(
+                    'widget/links',
+                    {
+                        links: [
+                            ['进入 ' + boardname + ' 版精华区',
+                             url_for_ann(':' + boardname + '/')],
+                            ['本版RSS文件',
+                             'http://bbs.sysu.edu.cn/rss/' +
+                             boardname + '.xml']
+                        ]
+                    }, '#dy-widgets');
                 $api.get_boards_by_section(
                     cur_board.data.seccode,
                     function(data){
