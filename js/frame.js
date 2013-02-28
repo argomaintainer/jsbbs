@@ -456,12 +456,12 @@ $MOD('frame.frame', function(){
             $('.markhash-' + frame.marktop).addClass('active disabled').find('a').addClass('onactive');
         }
 
-        if(frame.isnew){
-            $('#main').replace('<div id="main">');
+        if(frame.isnew){ // replace a new rather empty it for overtime render
+            $('#main').replaceWith('<div id="main">');
         }
 
         if(!frame.keep_widgets){
-            $('#dy-widgets').replace('<div id="dy-widgets">');
+            $('#dy-widgets').replaceWith('<div id="dy-widgets">');
         }
 
         $('.local-container').empty()
