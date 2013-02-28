@@ -70,26 +70,6 @@ $MOD('jsbbs.userbox', function(){
                 $('#favbox-outer').height(height);
                 $('[data-submit=refresh_fav]').removeClass('refreshing');
                 $G.hooks.after_refresh_fav();
-                var cookiename = 'hint-more@' + $G.authed.u.userid;
-                if(!$.cookie(cookiename)){
-                    $.cookie(cookiename, 1);                        
-                    if(data.data.length<5){
-                        $api.get_all_boards(function(data){
-                            var d;                            
-                            if(data.success){
-                                d = data.data;
-                                for(s in d){
-                                    d[s].boards.sort(function(a, b){
-                                        return (b.lastpost - a.lastpost);
-                                    });
-                                    d[s].boards = d[s].boards.slice(0, 5);
-                                }                                
-                                var html = render_string('morefav', {b: d});
-                                show_modal(html);
-                            };
-                        });
-                    };
-                }
             }, 500);
         }
     };
