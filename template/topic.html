@@ -1,16 +1,16 @@
 <div class="post-wrapper{{if !(title.substr(0, 3) == 'Re:')}} topic-post{{/if}}" data-index="${ index }" id="post-${filename}">
   <div class="post-wrapper-inner">
-    <div class="post-header">
-      <div class="post-info">
-        <div>
-          <a class="owner" href="${ url_for_user(userid) }"><strong class="userid">${userid}</strong><span class="username"> ${username} </span></a>
-          <img class="user-avatar" src="${ url_for_avatar(userid) }"/>
-          <span class="time">${post_time}</span>
-        </div>
-        <h3 id="title-${index}">${title}</h3>
-      </div>
-    </div>
     <div class="typo post-content">
+      <div class="post-header">
+        <div class="post-info">
+          <div>
+            <a class="owner" href="${ url_for_user(userid) }"><strong class="userid">${userid}</strong><span class="username"> ${username} </span></a>
+            <img class="user-avatar" src="${ url_for_avatar(userid) }"/>
+            <span class="time">${post_time}</span>
+          </div>
+          <h3 id="title-${index}">${title}</h3>
+        </div>
+      </div>
       {{html content}}
       <div class="typo post-signature">{{html signature }}</div>
       {{if !$.isEmptyObject(ah) }}
