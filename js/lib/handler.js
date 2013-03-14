@@ -68,12 +68,15 @@ $MOD('frame.home', function(){
                 kwargs.type = $G.authed?'fav':'good';
             }
             setup_type(kwargs.type);
+            var CookieDate = new Date;
+            CookieDate.setFullYear(CookieDate.getFullYear( ) +10);
             load_widgets([
                 {
                     "type": "links",
                     "links": [
                         ['设置默认使用旧版首页',
-                         ' javascript: confirm("默认使用旧版？") && (document.cookie="love=0; path=/") && (alert("设置成功") , (location="/"))'],
+                         ' javascript: confirm("默认使用旧版？") && (document.cookie="love=0; path=/; expires='
+                         + CookieDate.toGMTString() +  '") && (alert("设置成功") , (location="/"))'],
                         ['恢复默认使用新版',
                          ' javascript: confirm("默认使用新版？") (document.cookie="love=1; path=/") && alert("设置成功")']
                     ]
