@@ -1691,6 +1691,79 @@ $MOD('frame::admin_board', function(){
     
 })
 
+$MOD('frame::bm_selection', function(){
+
+    var submit = {};
+
+
+    function render_post(data){
+        return {
+            title: data.userid + ' 申请 ' + data.boardname + '版务',
+            content:
+            '\n申请看版： ' + data.boardname + ' \n'
+                + '申请人id： ' + data.userid + ' \n'
+                + '院系年级： ' + data.cls + '\n\n\n'
+                + '联系邮箱： ' + data.email + ' \n'
+                + data.intro,
+            boardname: 'New_boardmanager'
+        }
+    }
+
+    function render_mail(data){
+        return {
+            title: data.userid + ' 申请 ' + data.boardname + '版务',
+            content:
+            '真实姓名： ' + data.realname + '\n'
+                + '申请看版： ' + data.boardname + ' \n'
+                + '申请人id： ' + data.userid + ' \n'
+                + '联系邮箱： ' + data.email + ' \n'
+                + '院系年级： ' + data.cls + '\n\n\n'
+                + data.intro,
+            receiver: DATA_ADMIN
+        }
+    }
+
+    submit['post-selpost'] = function(kwargs, e){
+        if(!confirm('确认发表竞选帖？')){
+            return;
+        }
+        var data = {}, content;
+        data.boardname = $('[name=boardname]').val();
+        data.intro = $('[name=intro]').val();
+        data.realname = $('[name=name]').val();
+        data.email = $('[name=email]').val();
+        data.cls = $('[name=class]').val();
+        data.userid = $G.authed.u.userid;
+        post = render_post(data);
+        $api.new_post(
+            post.boardname, post.title, post.content,
+            function(data){
+                if(data.success){
+                    show_alert('竞选帖已发至 New_boardmanager 版');
+                    setTimeout(function(){
+                        location = url_for_board('New_boardmanager');
+                    }, 1000);
+                    var mail = render_mail(data);
+                    $api.send_mail(data.title,
+                                   data.content,
+                                   data.receiver);
+                }
+                else{
+                    show_alert(ERROR[data.code]);
+                }
+            });
+    }
+
+    declare_frame({
+        mark: 'bm_selection',
+        submit: submit,
+        enter: function(kwargs){
+            render_template('bm_selection');
+        }
+    });
+    
+});
+
 $MOD('frame::admin', function(){
 
     var submit = {};

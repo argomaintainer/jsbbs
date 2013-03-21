@@ -44,3 +44,4 @@ ERROR = {
 }
 
 DATA_ROOT = 'http://argo.sysu.edu.cn';
+DATA_ADMIN = 'jmf';

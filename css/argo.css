@@ -1637,15 +1637,20 @@ a[data-submit]:hover{
 }
 
 .home-post-recom .post-content{
-    padding-right: 100px;
-    padding-bottom: 40px;
+    padding-bottom: 1em;
+    margin-top: 1em;
 }
 
-.home-post-recom .post-info{
-    position: absolute;
-    bottom: 12px;
-    right: 12px;
+.part{
+    display: inline-block;
+    margin-right: 1em;
 }
+
+/* .home-post-recom .post-info{ */
+/*     position: absolute; */
+/*     bottom: 12px; */
+/*     right: 12px; */
+/* } */
 
 .home-post-recom .user-avatar{
     width: 28px;

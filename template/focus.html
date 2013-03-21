@@ -61,18 +61,20 @@
   {{if (www.rempost) && (www.rempost.length) }}
   {{each(i, p) www.rempost}}
   <div class="home-post-recom">
-    <div class="post-content">
-      <h3><a href="${url_for_topic(p.filename, 'Recommend')}">${p.title}</a></h3>
-      ${p.content}
-    </div>
     <div class="post-info">
-      <div>
+      <div class="span8">
+        <h3><a href="${url_for_topic(p.filename, 'Recommend')}">${p.title}</a></h3>
+      </div>
+      <div class="span4 text-right">
         <a class="owner" href="${url_for_user(p.owner)}">
           <strong class="userid">${p.owner}</strong>
         </a>
         <span class="time">${tf_timestamp(p.update)}</span>
         <img class="user-avatar" src="${url_for_avatar(p.owner)}"/>
       </div>
+    </div>
+    <div class="post-content">
+      ${p.content}
     </div>
   </div>
   {{/each}}
