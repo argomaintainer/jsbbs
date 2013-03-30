@@ -658,6 +658,13 @@ $MOD('frame::board', function(){
                              boardname + '.xml']
                         ]
                     }, '#dy-widgets');
+                render_template(
+                    'widget/text',
+                    {
+                        text: '收藏本版人数： ' + cur_board.data.favnum
+                            + '\n' + '累计发文篇数： ' + cur_board.data.total
+                    }, '#dy-widgets');
+
                 $api.get_boards_by_section(
                     cur_board.data.seccode,
                     function(data){
