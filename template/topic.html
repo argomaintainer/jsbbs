@@ -6,7 +6,7 @@
           <div>
             <a class="owner" href="${ url_for_user(userid) }"><strong class="userid">${userid}</strong><span class="username"> ${username} </span></a>
             <img class="user-avatar" src="${ url_for_avatar(userid) }"/>
-            <span class="time">${post_time}</span>
+            <span class="time">${tf_timestamp(post_time)}</span>
           </div>
           <h3 id="title-${index}">${title}</h3>
         </div>
