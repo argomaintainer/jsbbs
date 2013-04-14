@@ -1,4 +1,4 @@
-SIGNV = 2004;
+SIGNV = 2005;
 NOCACHE = true;
 
 seajs.config({
@@ -18,6 +18,7 @@ seajs.config({
         },
         'userbox': 'lib/userbox.js',
         'handler': 'lib/handler.js',
+        'handler-ann': 'lib/handler-ann.js',
         'argo_api': {
             src: 'lib/argo_api.js'
         },
