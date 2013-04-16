@@ -120,13 +120,14 @@ define(function(require){
                                       return (b.lastpost - a.lastpost);
                                   });
                               }
-                              require('slides');
+                              // require('slides');
                               render_template('focus', data.data);
-                              $(function(){
-                                  $("#slides").slides({
-                                      start: Math.floor(Math.random() * data.data.www.posts.length) + 1
-                                  });
-                              });
+                              // $(function(){
+                              //     $("#slides_container").slides({
+                              //         start: Math.floor(Math.random()
+                              //                           * data.data.www.posts.length) + 1
+                              //     });
+                              // });
                               load_widgets(data.data.www.widgets);
                           }
                       });
@@ -305,7 +306,6 @@ define(function(require){
         function new_postlist_render(tpler){
             return function(boardname, data, pagenum){
                 $('#postlist-content').remove();
-                console.log(['cc', data]);
                 var fold = 0, i;
                 for(i in data){
                     if(data[i].unread == 1){
@@ -313,13 +313,12 @@ define(function(require){
                         break;
                     }
                 }
-                console.log(['ff', fold])
                 render_template(tpler, {
                     posts: data,
                     fold: fold,
-                    boardname: boardname,
                     has_next_page: (pagenum < local.max_page),
-                    has_prev_page: (pagenum > 1)
+                    has_prev_page: (pagenum > 1),
+                    boardname: boardname
                 }, local.postlist_container);
             }
         }
@@ -335,11 +334,41 @@ define(function(require){
             return Math.ceil(number / PAGE_LIMIT);
         }
 
+        function build_page_array(index, total){
+            var max=0, x, i, ret=[], arr;
+            index = Number(index);
+            total = Number(total);
+            arr = [1, null,
+                   index-2, index-1, index, index+1, index+2, null,
+                   total-2, total-1, total];
+            for(i in arr){
+                x = arr[i];
+                if(!x){
+                    if(!ret.length || ret[ret.length-1]) ret.push(x);
+                    continue;
+                }
+                if(x <= max) continue;
+                max = x;
+                if(max>total) break;
+                ret.push(max);
+            }
+            if(!ret.length && !ret[ret.length]) ret.pop();
+            return ret;
+        }                
+
         function set_page(pagenum){
             var start = pagenum * PAGE_LIMIT - PAGE_LIMIT + 1;
+            var pages = build_page_array(pagenum, local.max_page);
             local.pagenum = pagenum;
             cur_board.loader(cur_board.boardname, start, function(data){
+                console.log(pages);
                 cur_board.render(cur_board.boardname, data, pagenum);
+                $('.my-pag').empty();
+                window.scrollTo(0, 0);
+                render_template('board-pager', {
+                    pages: pages,
+                    curpage: pagenum
+                }, '.my-pag');
                 // range_update(cur_board.range, data[0].index,
                 //              data[data.length-1].index);
             });
@@ -385,7 +414,7 @@ define(function(require){
                 delete local.kwargs['index'];
                 cur_board.render = render_normal_post;
                 delete cur_board.hover;
-                $('#loader-wrapper .active').removeClass('active');
+                $('.loader-wrapper .active').removeClass('active');
                 $('#normal-loader').addClass('active');
             });
         submit['set_digest_loader'] = set_digest_loader
@@ -396,7 +425,7 @@ define(function(require){
                 quite_set_hash('#!board', local.kwargs);
                 cur_board.render = render_digest_post;
                 delete cur_board.hover;
-                $('#loader-wrapper .active').removeClass('active');
+                $('.loader-wrapper .active').removeClass('active');
                 $('#digest-loader').addClass('active');
             });
         submit['set_topic_loader'] =  set_topic_loader
@@ -407,7 +436,7 @@ define(function(require){
                 quite_set_hash('#!board', local.kwargs);
                 cur_board.render = render_topic_post;
                 delete cur_board.hover;
-                $('#loader-wrapper .active').removeClass('active');
+                $('.loader-wrapper .active').removeClass('active');
                 $('#topic-loader').addClass('active');
             });
         
@@ -416,6 +445,12 @@ define(function(require){
                 set_page(pagenum);
             });
         }
+
+        function set_page_inter(args, event){
+            var t=$(event.target);
+            set_page_anim(t.attr('data-para'));
+        }
+        submit['set_page_inter'] = set_page_inter;
 
         function refresh_current_page(){
             // location.hash = url_for_board(cur_board.boardname);
@@ -594,7 +629,7 @@ define(function(require){
             }
             local.max_page = Math.ceil(total / PAGE_LIMIT);
             $('.bpagination').jqPagination({
-		        page_string	: '第 {current_page} 页 / 共 {max_page} 页',
+		        page_string	: '跳转',
 		        paged		: set_page_anim,
                 current_page: start_page,
                 max_page: local.max_page
@@ -650,45 +685,33 @@ define(function(require){
                     var sec_con = $('#near-board');
                     $G.lastsection = cur_board.data.secnum;
                     render_template(
-                        'widget/links',
-                        {
-                            links: [
-                                ['进入 ' + boardname + ' 版精华区',
-                                 url_for_ann(':' + boardname + '/')],
-                                ['本版RSS文件',
-                                 'http://bbs.sysu.edu.cn/rss/' +
-                                 boardname + '.xml']
-                            ]
-                        }, '#dy-widgets');
-                    render_template(
                         'widget/text',
                         {
                             text: '收藏本版人数： ' + cur_board.data.favnum
                                 + '\n' + '累计发文篇数： ' + cur_board.data.total
                         }, '#dy-widgets');
-
                     $api.get_boards_by_section(
                         cur_board.data.seccode,
                         function(data){
                             if(data.success){
-                                var all = (data.data), near=[], b;
-                                for(b in all){
-                                    if((all[b]).unread){
-                                        near.push(all[b]);
-                                        if(near.length >= 3){
-                                            break;
-                                        }
-                                    }
-                                }
-                                near.sort(function(a, b){
-                                    return b.lastpost - a.lastpost;
+                                var all = data.data, near=[], i=0;
+                                all.sort(function(a, b){
+                                    return (b.unread-a.unread) ||
+                                        ((a.unread==b.unread)&&
+                                         (b.lastpost - a.lastpost));
                                 });
+                                while(i<10){
+                                    if(!all[i]) break;
+                                    if(all[i]!=boardname)
+                                        near.push(all[i]);
+                                    ++i;
+                                }
                                 render_template('board-near-board',
                                                 {
                                                     boards: near,
                                                     secnum : cur_board.data.secnum
                                                 },
-                                                '#dy-widgets');
+                                                '#board-near');
                             }
                         });
                     $api.get_last_postindex(boardname, 'digest', 5, function(data){

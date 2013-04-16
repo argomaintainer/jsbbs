@@ -1,0 +1,8 @@
+分页：
+{{each(i, p) pages }}
+{{if p }}
+<a{{if p==curpage }} class="active"{{/if}} data-para="${p}" data-submit="set_page_inter" href="#">${p}</a>
+{{else}}
+<span>...</span>
+{{/if}}
+{{/each}}

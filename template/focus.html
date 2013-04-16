@@ -1,16 +1,9 @@
 {{if www.posts }}
 <div class="cell cell-loose">
-  <div id="slides">
+  <div id="slides_container">
     <div class="slides_container">
       {{each(i, m) www.posts}}
-      <div>
-        <a href="${m[1]}">
-          <img src="${m[0]}"/>
-          {{if m[2]}}
-          <p>${m[2]}</p>
-          {{/if}}
-        </a>
-      </div>
+      <img src="${m[0]}"/>
       {{/each}}
     </div>
   </div>

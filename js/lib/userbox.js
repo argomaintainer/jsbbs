@@ -14,7 +14,7 @@ define(function(require){
         $G.submit.login = function(kwargs){
             $api.user_login(kwargs.userid, kwargs.password, function(data){
                 if(data.success){
-                    $('#userbox').empty();
+                    $('#userbox-wrapper').empty();
                     refresh_userbox();
                     show_alert('登录成功！', 'success');
                 }
@@ -90,10 +90,10 @@ define(function(require){
             $api.check_has_new_mail(function(data){
                 if(data.success){
                     if(data.data=='1'){
-                        $('#userbox-nav').addClass('hasnewmail');
+                        $('#userbox-wrapper').addClass('hasnewmail');
                     }
                     else{
-                        $('#userbox-nav').removeClass('hasnewmail');
+                        $('#userbox-wrapper').removeClass('hasnewmail');
                     }
                     if(callback){
                         callback();
@@ -138,11 +138,11 @@ define(function(require){
             }
             var simple = $G['simple-userbox'];
             console.log(['ud', udata]);
-            $('#userbox-nav').empty();
-            render_template('userbox-nav', udata, '#userbox-nav');
+            // $('#userbox-nav').empty();
+            // render_template('userbox-nav', udata, '#userbox-nav');
             if(!simple){
                 $('#userbox').empty();
-                render_template('userbox', udata, '#userbox');
+                render_template('userbox', udata, '#userbox-wrapper');
                 $G.hooks.after_refresh_userbox(data);
             }
         }

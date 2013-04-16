@@ -1,9 +1,9 @@
-SIGNV = 2005;
+SIGNV = 2006;
 NOCACHE = true;
 
 seajs.config({
 
-    plugins: ['shim', 'text'],
+    plugins: ['shim', 'text', 'nocache'],
 
     debug: true,
 

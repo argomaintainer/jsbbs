@@ -36,13 +36,13 @@ define(function(require){
         function raise_may_no_good_browser(){
         }
 
-        if(SIGNV != localStorage['site:$version']){
+        if(NOCACHE || SIGNV != localStorage['site:$version']){
             if(!localStorage['tpl:$all'])
                 localStorage['tpl:$all'] = '';
             var arr = localStorage['tpl:$all'].split(';');
             for(x in arr){
                 if(x)
-                    delete localStorage['tpl:'+arr[x]];
+                    localStorage.removeItem('tpl:'+arr[x]);
             }
             localStorage['site:$version'] = SIGNV;
         }                

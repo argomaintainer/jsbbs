@@ -1,4 +1,5 @@
 define(function(require){
+
     $MOD('console', function(){
 
         if(typeof window.console == "undefined"){
@@ -8,56 +9,6 @@ define(function(require){
         };
         
     })
-
-    // $MOD('frame.load_lib', function(){
-
-    //     /*
-    //       frame.load_lib
-    //       ~~~~~~~~~~~~~~~
-
-    //       Some method for manager js lib(jsfile).
-    
-    //       require_jslib(libname):
-    //       Load '/js/lib/$libname.js' file if this lib has not been loaded.
-
-    //       drop_jslib(libname):
-    //       Drop a loaded lib. (so you can reload it.)
-
-    //       --
-
-    //       $G.load_lib : the lib that have been loaded.
-    
-    //     */
-
-    //     $G('loaded_lib', {});
-    //     function require_jslib(libname){
-    //         if(libname in $G.loaded_lib){
-    //             return false;
-    //         }
-    //         console.log('Load lib [' + libname + '] ... ');
-    //         $.ajax({
-    //             url : 'js/lib/'+ libname + '.js',
-    //             dataType: "script",
-    //             async: false,
-    //             success: function(data){
-    //                 $G.loaded_lib[libname] = true;
-    //                 console.log('Load [' + libname + '] Done.\n');
-    //             },
-    //             error: function(jqXHR, textStatus, errorThrown){
-    //                 throw errorThrown;
-    //             }
-    //         });
-    //         return true;
-    //     }
-    //     function drop_jslib(libname){
-    //         delete $G.loaded_lib[libname];
-    //     }
-    //     return {
-    //         "require_jslib": require_jslib,
-    //         "drop_jslib": drop_jslib
-    //     }
-    // })
-    // using('frame.load_lib');
 
     $MOD('frame.hook', function(){
 
@@ -299,6 +250,7 @@ define(function(require){
                 $.ajax('template/' + tplname + '.html',
                        {
                            dataType: 'text',
+                           cache: false,
                            async: false,
                            success: function(data){
                                localStorage[tpl_key] = data;
