@@ -859,7 +859,7 @@ $MOD('frame::flow', function(){
         },
         function(){
             if($('body').height() - $(window).height() -
-               $(window).scrollTop() < 1000){
+               $(window).scrollTop() < 2000){
                 load_next();
             }
         }
