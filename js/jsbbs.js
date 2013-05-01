@@ -1,4 +1,19 @@
+SIGNV = '2013-05-02-00:34';
+
 $MOD('jsbbs.main', function(){
+
+    if(!localStorage) localStorage = {};
+
+    if(window.NOCACHE || SIGNV != localStorage['site:$version']){
+        if(!localStorage['tpl:$all'])
+            localStorage['tpl:$all'] = '';
+        var arr = localStorage['tpl:$all'].split(';');
+        for(x in arr){
+            if(x)
+                localStorage.removeItem('tpl:'+arr[x]);
+        }
+        localStorage['site:$version'] = SIGNV;
+    }        
     
     $MOD['frame.hook'].register_hook('before_boot');
     $MOD['frame.hook'].register_hook('after_boot');

@@ -291,18 +291,25 @@ $MOD('frame.template', function(){
             console.log('Template[' + tplname + '] loaded.');
             return;
         }
-        console.log('Loading template[' + tplname + ']...');
-        $.ajax('template/' + tplname + '.html',
-               {
-                   dataType: 'text',
-                   async: false,
-                   success: function(data){
-                       $.template(tplname, data);
-                       $G.template[tplname] = $.template[tplname];
-                       console.log('Loading template success');
-                   }
-               });
-        console.log('Done...');
+        var tpl_key = 'tpl:' + tplname;
+        if(!localStorage[tpl_key]){
+            console.log('Loading template[' + tplname + ']...');
+            $.ajax('template/' + tplname + '.html',
+                   {
+                       dataType: 'text',
+                       cache: false,
+                       async: false,
+                       success: function(data){
+                           localStorage[tpl_key] = data;
+                           console.log('Loading template success');
+                       }
+                   });
+            console.log('Done...');
+        }
+        $.template(tplname, localStorage[tpl_key]);
+        $G.template[tplname] = $.template[tplname];
+        localStorage['tpl:$all'] = localStorage['tpl:$all'] + ';' +
+            tplname;
     }
 
     function require_template(tplname){
