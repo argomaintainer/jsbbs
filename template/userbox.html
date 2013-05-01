@@ -1,114 +1,46 @@
-<div id="userbox-wrapper">
-  <div id="userbox-fixer">
-    <div action-click="toggle-userbox" id="userbox-holder">
-      <i class="icon-plus"></i>
-    </div>
-    <div id="userbox-box">
-      <div id="userbox-box-inner">
-        {{if authed }}
-        <div class="userbox-userinfo">
-          <img class="avatar" src="${url_for_avatar(u.userid)}">
-          <div class="userid">
-            <a class="title" href="${url_for_user(u.userid)}">${u.userid}</a>
-            <div class="setting">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                设置 <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu">
-                <li><a href="index.html#!profile">设置我的资料</a></li>
-                <li><a href="index.html#!setting">设置电子邮件提醒</a></li>
-                <li><a href="http://bbs.sysu.edu.cn/n/ann.html#!read?reqpath=:BBS_Help/">帮助</a></li>
-                <li><a href="#" data-submit="logout">退出登录</a></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <hr/>
-        {{else}}
-        <div>
-          <h4>登录逸仙时空</h4>
-          <form action-submit="login">
-            <label>帐号</label>
-            <input type="text" tabindex="1"  class="focus input-block-level" name="userid" placeholder="输入你的帐号 ：-） ">
-            <label>密码</label>
-            <input type="password" tabindex="2" class="input-block-level" name="password" placeholder="以及密码...">
-            <button type="submit" tabindex="3" class="btn">登录</button>
-          </form>
-        </div>
-        {{/if}}
-
-        <div class="userbox-nav">
-          <ul class="userbox-nav-inner">
-            <li>
-              <a href="#!home"><i class="icon-plus-sign"></i> 探索看版</a>
-            </li>
-            <li>
-              <a href="#!focus"><i class="icon-flag"></i> 热点关注</a>
-            </li>
-            <li>
-              <a href="#!mail"><i class="icon-envelope-alt"></i> 处理信笺</a>
-            </li>
-          </ul>
-        </div>
-
-        <div id="favbox"></div>
-
-        <div class="userbox-nav">
-          <ul class="userbox-nav-inner">
-            <li>
-              <a href="#">我的足迹</a>
-            </li>
-            <li>
-              <a href="#">主题设置</a>
-            </li>
-            <li>
-              <a href="#">寻找帮助</a>
-            </li>
-            <li>
-              <a href="#">关于本站</a>
-            </li>
-          </ul>
-        </div>
-        
-      </div>
+{{if authed }}
+<div class="navbox">
+  <ul class="navlist markhash">
+    <li class="markhash-home first-li">
+      <a href="#!home"><i class="icon-home"></i>探索看版</a>
+    </li>
+    <li class="markhash-focus">
+      <a href="#!focus"><i class="icon-flag"></i>热点关注</a>
+    </li>
+    <li>
+      <a data-submit="go-next-board" href="#">
+        <i class="icon-random"></i>随便看看</a>
+    </li>    
+  </ul>
+  <div id="favbox-outer" class="scrollbar">
+    <div id="favbox"></div>
+  </div>
+  <div class="navbox-footer">
+    <small><a href="#" data-submit="refresh_fav">刷新</a></small>
+  </div>
+</div>
+{{else}}
+<div class="widget loginbox">
+  <div class="widget-header">
+    <h4>登录逸仙时空</h4>
+  </div>
+  <form id="f-login" class="nomargin" data-submit="login">
+    <label>帐号</label>
+    <input type="text" tabindex="1"  class="focus input-block-level" name="userid" placeholder="输入你的帐号 ：-） ">
+    <label>密码</label>
+    <input type="password" tabindex="2" class="input-block-level" name="password" placeholder="以及密码...">
+    <button type="submit" tabindex="3" class="btn">登录</button>
+  </form>
+</div>
+<div class="widget registerbox">
+  <div class="widget-header">
+    <h3>没有帐号？</h3>
+    <div>
+      <p>
+        结识同好，发现智慧
+      </p>
+      <a target="_blank" href="http://bbs.sysu.edu.cn/bbsreg" class="btn btn-success btn-block">一分钟注册</a>
     </div>
   </div>
-</div>    
-<!-- {{if authed }} -->
-<!-- <div class="navbox"> -->
-<!--   <ul class="navlist markhash"> -->
-<!--     <li class="markhash-home first-li"><a href="#!home"><i class="icon-home"></i>发现中大</a></li> -->
-<!--     <li><a data-submit="go-random-board" href="#"><i class="icon-random"></i>随便看看</a></li> -->
-<!--   </ul> -->
-<!--   <div id="favbox-outer" class="scrollbar"> -->
-<!--     <div id="favbox"></div> -->
-<!--   </div> -->
-<!--   <div class="navbox-footer"> -->
-<!--     <small><a href="#" data-submit="refresh_fav">刷新</a></small> -->
-<!--   </div> -->
-<!-- </div> -->
-<!-- {{else}} -->
-<!-- <div class="widget loginbox"> -->
-<!--   <div class="widget-header"> -->
-<!--     <h4>登录逸仙时空</h4> -->
-<!--   </div> -->
-<!--   <form id="f-login" class="nomargin" data-submit="login"> -->
-<!--     <label>帐号</label> -->
-<!--     <input type="text" tabindex="1"  class="focus input-block-level" name="userid" placeholder="输入你的帐号 ：-） "> -->
-<!--     <label>密码</label> -->
-<!--     <input type="password" tabindex="2" class="input-block-level" name="password" placeholder="以及密码..."> -->
-<!--     <button type="submit" tabindex="3" class="btn">登录</button> -->
-<!--   </form> -->
-<!-- </div> -->
-<!-- <div class="widget registerbox"> -->
-<!--   <div class="widget-header"> -->
-<!--     <h3>没有帐号？</h3> -->
-<!--     <div> -->
-<!--       <p> -->
-<!--         结识同好，发现智慧 -->
-<!--       </p> -->
-<!--       <a target="_blank" href="http://bbs.sysu.edu.cn/bbsreg" class="btn btn-success btn-block">一分钟注册</a> -->
-<!--     </div> -->
-<!--   </div> -->
-<!-- </div>       -->
-<!-- {{/if}} -->
+</div>      
+{{/if}}

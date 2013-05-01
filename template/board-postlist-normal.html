@@ -2,13 +2,6 @@
   <div id="postlist-content-inner">
     <table class="fluid-table">
       <tbody>
-        {{if has_prev_page}}
-        <tr class="meta-tr">
-          <td colspan="5">
-            <a href="#" data-submit="prev_page">上一页</a>
-          </td>
-        </tr>
-        {{/if}}
         {{if fold > 2 }}
         <tr class="folding-btn">
           <td colspan="5">
@@ -40,17 +33,16 @@
           </td>
         </tr>
         {{/each}}
-        <tr class="meta-tr">          
+        <tr class="meta-tr">
+          {{if has_next_page }}
           <td colspan="5">
-            {{if has_next_page}}
-            <a href="#" data-submit="next_page">下一页</a>
-            {{else}}
-            <a href="#" data-submit="mark-all-go" class="red mark-all-read">
-              <i class="icon-ok"></i><br/>
-              我读完了，进入下个看版
-            </a>
-            {{/if}}
-          </td>
+            <ul class="pager">
+              <li{{if !has_prev_page}} class="disabled"{{/if}}><a href="#" data-submit="prev_page">上一页</a></li>
+              <li{{if !has_next_page}} class="disabled"{{/if}}><a href="#" data-submit="next_page">下一页</a></li>
+            </ul>
+          {{else}}
+          <td colspan="5"><a href="#" href="#" onclick="window.scrollTo(0, 0)">返回顶部</a></td>
+          {{/if}}
         </tr>
       </tbody>
     </table>

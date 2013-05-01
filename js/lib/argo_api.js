@@ -53,6 +53,13 @@ $MOD('argo_api', function(){
         'get_all_boardsname': ajax_getor_nopara('/ajax/board/all'),
         'get_all_boards': ajax_getor_nopara('/ajax/board/alls'),
         'get_random_boardname': ajax_getor_nopara('/ajax/board/random'),
+        'get_next_boardname': function(boardname, callback){
+            get_nc('/ajax/board/next',
+                   {
+                       boardname: boardname || '',
+                   },
+                   callback);
+        },
         'get_board_info': function(boardname, callback){
             get_nc('/ajax/board/get',
                   {

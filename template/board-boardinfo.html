@@ -1,8 +1,8 @@
-<div class="cell">
-  <div class="board-header-nav">
-    <div class="row-fluid clearfix">
-      <div class="span6 board-title">
-        <h2>${board.title} (${board.filename}) 版</h2>
+<div class="cell main-cell cell-loose">
+  <div class="board-header">
+    <div class="board-header-img">
+      <div class="board-header-content">
+        <h2>${board.title}<small>&nbsp;${board.filename}</small></h2>
         <ul class="bmlist">
           {{if $G.authed }}
           {{if !($G.userfav[board.filename]) }}
@@ -17,59 +17,56 @@
           <li><a href="${ url_for_user(v) }">${v}</a></li>
           {{/each}}
           {{/if}}
-        </ul>        
-      </div>
-      <div class="span6 board-icon-bar">
-        <div class="pull-right">
-          <ul class="board-icon-group loader-wrapper">
-            <li><a id="normal-loader" data-submit="set_normal_loader"><i class="icon-comments"></i></a></li>
-            <li><a id="topic-loader" data-submit="set_topic_loader" href="#"><i class="icon-list"></i></a></li>
-            <li><a id="digest-loader" data-submit="set_digest_loader" href="#"><i class="icon-leaf"></i></a></li>
-          </ul>
-          <ul class="board-icon-group">
-            <li><a data-submit="newpost" href="#"><i class="green big icon-pencil"></i></a></li>
-            <li><a data-submit="clear_unread" href="#"><i class="red icon-ok"></i></a></li>
-            {{if board.isadmin }}
-            <li><a href="${url_for_admin_board(board.filename)}"><i class="icon-cog"></i></a></li>
-            {{/if}}
-          </ul>
-          <ul class="board-icon-group">
-            <li><a href="${url_for_ann(':' + board.filename + '/')}"><i class="yellow icon-folder-close"></i></a></li>
-            <li><a href="${url_for_frgg(board.filename)}"><i class="yellow icon-search"></i></a></li>
-            <li><a href="${url_for_rss(board.filename)}"><i class="icon-rss"></i></a></li>
-          </ul>                  
-        </div>
+        </ul>
       </div>
     </div>
     {{if tf_too_old(board.lastpost) }}
     <div class="alert">
       <strong>这个看版很久没更新了！</strong><br/>
-      这个看版很久都没有人发文，请移步其他看版。</br>
+      这个版块很久都没有人发文，请移步其他看版。</br>
       如果您有意建设此版，请 <a href="${url_for_board('New_boardmanager')}">竞选版主</a>！<br/>
     </div>
     {{else}}
-    {{if board.BM.length<3 }}
+    {{if !board.BM.length }}
     <div class="alert">
       <strong>诚征版主中！</strong><br/>
-      这个看版还需要 <em>${3-board.BM.length}</em> 名版主<br/>
+      这个版块需要版主<br/>
       如果您有意建设此版，请 <a href="${url_for_board('New_boardmanager')}">竞选版主</a> ！<br/>
     </div>
     {{/if}}
     {{/if}}
-  </div>  
-  <div id="postlistbox" class="relative">
-    <div id="postlist-container" class="relative">
-      <div id="postlist-content">
-        <i class="icon-refreshing"></i> 努力地抓取数据中……
+  </div>
+  <div class="board-toolbar">
+    <div class="btn-toolbar">
+      <div class="btn-group">
+        <button class="btn btn-small btn-success" data-submit="newpost">发表话题</button>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-small" data-submit="clear_unread">清除未读标记</button>
+      </div>
+      {{if board.isadmin }}
+      <div class="btn-group">
+        <a class="btn btn-small" href="${url_for_admin_board(board.filename)}">管理</a>
+      </div>
+      {{/if}}      
+      <div id="loader-wrapper" class="btn-group">
+        <button id="normal-loader" class="btn btn-small" data-submit="set_normal_loader" href="#">发言</button>
+        <button id="topic-loader" class="btn btn-small" data-submit="set_topic_loader" href="#">主题</button>
+        <button id="digest-loader" class="btn btn-small" data-submit="set_digest_loader" href="#">文摘</button>
+      </div>
+      <div class="bpagination btn-group pull-right">
+        <a href="#" class="btn btn-small first" data-action="first">&laquo;</a>
+        <a href="#" class="btn btn-small previous" data-action="previous">&lsaquo;</a>
+        <input class="btn-input" type="text" />
+        <a href="#" class="btn btn-small next" data-action="next">&rsaquo;</a>
+        <a href="#" class="btn btn-small last" data-action="last">&raquo;</a>
       </div>
     </div>
   </div>
-  <div class="pag-wrapper clearfix">
-    <div class="pull-left bpagination">
-      <input class="btn-input" type="text" />
+  <div id="postlistbox" class="relative">
+    <div id="postlist-container" class="relative">
+      <div id="postlist-content"> <i class="icon-refreshing"></i> 努力地抓取数据中…… </div>
     </div>
-    <div class="pull-left my-pag"></div>
   </div>
-  <div id="board-near"></div>
 </div>
 

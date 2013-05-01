@@ -1,13 +1,11 @@
 {{if boards.length }}
-<div class="nearboards">
-  相关看版：
-  <ul>
+<div class="navbox">
+  <div class="widget-header">
+    <h4>${ secnum } 区的未读看板</h4>
+  </div>
+  <ul class="navlist markhash">
     {{each(i, v) boards}}
-    <li>
-      <a{{if !(v.unread) }} class="hasread"{{/if}} href="${ url_for_board(v.filename) }">
-        ${v.filename}
-      </a>
-    </li>
+    <li><a href="${ url_for_board(v.filename) }"><i class="{{if v.unread }}icon-nbrd{{else}}icon-null{{/if}}"></i>${v.filename}</a></li>
     {{/each}}
   </ul>
 </div>

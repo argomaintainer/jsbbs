@@ -1,6 +1,4 @@
 $MOD('frame.url_for', {
-    'rss': function(boardname){ return ('http://bbs.sysu.edu.cn/rss/'+boardname+'.xml')},
-    'frgg': function(boardname){ return ('/frgg/search?q=' + (($G.authed.u)?($G.authed.u.userid):'?') + '&b='+ boardname +'&t=b'); },
     'avatar': function(userid){ return '/avatar/' + userid },
     'board': function(boardname){ return 'index.html#!board?boardname=' + boardname},
     'board_it': function(index, boardname, topicid){

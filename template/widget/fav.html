@@ -1,18 +1,12 @@
 {{if fav }}
-<div class="userbox-nav">
-  <ul class="userbox-nav-inner">
-    <li>
-      <a action-click="update-fav" href="#"><i class="icon-bookmark"></i> 我收藏的看版</a>
-    </li>
-    {{each(i, b) fav}}
-    <li>
-      {{if b.unread }}
-      <a href="${url_for_board(b.boardname)}"><i class="icon-circle"></i> ${b.boardname} <span class="badge badge-success">${b.unreadn}</span></a>
-      {{else}}
-      <a href="${url_for_board(b.boardname)}"><i class="icon-circle-blank"></i> ${b.boardname}</a>
-      {{/if}}
-    </li>
+<div class="favbox">
+  <ul class="markhash navlist">
+    {{each(i, v) fav }}
+    <li id="fn-${v.boardname}"><a href="${ url_for_board(v.boardname) }"><i class="{{if v.unread }}icon-nbrd{{else}}icon-null{{/if}}"></i>${v.boardname}</a></li>
     {{/each}}
   </ul>
 </div>
+{{else}}
+<span class="big-font">目前您没有收藏任何版块哟！</span><br>
+收藏一个版块，请进入该版并点击“预订该版”！
 {{/if}}
