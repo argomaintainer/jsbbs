@@ -848,13 +848,20 @@ $MOD('frame::flow', function(){
             show_alert('o(∩_∩)o <br\> 已经是第一篇了', 'success');
         }
     );
-    var load_next = submit['load_next'] = new_post_loader(
+    var load_next;
+    load_next = submit['load_next'] = new_post_loader(
         'next', 'last_filename',
         update_hash,
         render_template,
         function(){
             // $('#post-down [data-submit]').remove();
             $('#post-down .hidden').removeClass('hidden');
+        },
+        function(){
+            if($('body').height() - $(window).height() -
+               $(window).scrollTop() < 1000){
+                load_next();
+            }
         }
     );
 
@@ -862,7 +869,8 @@ $MOD('frame::flow', function(){
         if($G.current.mark != 'flow' || load_next.lock){
             return;
         }
-        if($('body').height() - $(window).height() - $(window).scrollTop() < 100){
+        if($('body').height() - $(window).height() -
+           $(window).scrollTop() < 100){
             load_next();
         }
     });
