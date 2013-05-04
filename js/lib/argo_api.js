@@ -318,6 +318,14 @@ $MOD('argo_api', function(){
                    callback);
         },
 
+        'set_self_fav': function(boards, callback){
+            $.post('/ajax/user/setfav',
+                   {
+                       boards: boards
+                   },
+                   callback);
+        },
+
         'get_mailbox_info': function(callback){
             get_nc('/ajax/mail/mailbox', callback);
         },
