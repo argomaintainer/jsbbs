@@ -2150,3 +2150,37 @@ a:hover .ftext{
 .ftext p{
     margin: 0;
 }
+
+.boardset-tags a{
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    text-decoration: none;
+}
+
+.boardset-tags a.active{
+    background: #470;
+    color: #fff;
+    border-color: #fff;
+}    
+
+#board-container a{
+    display: inline-block;
+    padding: 2px 8px;
+}
+
+.step-progress{
+    position: absolute;
+    width: 100%;
+}
+
+.step-progress span{
+    width: 24%;
+    float: left;
+    text-align: center;
+}
+
+.step-progress .active{
+    color: #fff;
+}

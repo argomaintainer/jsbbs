@@ -399,6 +399,15 @@ $MOD('argo_api', function(){
                        reqpath: reqpath
                    },
                    callback);
+        },
+
+        'weibo_check_auth': ajax_getor_nopara('/ajax/weibo/check_auth'),
+        'weibo_use_weibo_avatar': function(callback){
+            $.post('/ajax/weibo/use_avatar',
+                   callback);
+        },
+        'weibo_update1': function(callback){
+            $.post('/ajax/weibo/update1', callback);
         }
         
     }

@@ -858,6 +858,7 @@ $MOD('frame::flow', function(){
             $('#post-down .hidden').removeClass('hidden');
         },
         function(){
+            console.log('loading moremoremore');
             if($('body').height() - $(window).height() -
                $(window).scrollTop() < 2000){
                 load_next();
@@ -1785,6 +1786,197 @@ $MOD('frame::bm_selection', function(){
         submit: submit,
         enter: function(kwargs){
             render_template('bm_selection');
+        }
+    });
+    
+});
+
+$MOD('frame::tut', function(){
+
+    var submit = {};
+    var selected = {};
+    var count = 0;
+
+    function add_board(boardname){
+        if(selected[boardname] || (count >= 50)) return;
+        $('#board-container').append('<a href="#" id="b-'+boardname+'" data-submit="remove-board">'+boardname+'</a>');
+        selected[boardname] = true;
+        ++count;
+    }
+
+    function remove_board(boardname){
+        if(selected[boardname]){
+            $('#b-'+boardname).remove();
+            delete selected[boardname];
+            --count;
+        }
+    }
+
+    function reset_board(collect){
+        var i;
+        selected = {};
+        count = 0;
+        $('#board-container').empty();        
+        for(i=0; i<collect.length; ++i)
+            add_board(collect[i]);
+        update_count();
+    }
+
+    function update_count(){
+        if(count<15){
+            $('#num-counter').text('您只关注了 '+count+' 个看版，好少哟～');
+        }
+        else if(count>30){
+            $('#num-counter').text('您已经关注了 '+count+' 个看版，太多啦！');
+        }
+        else{
+            $('#num-counter').text('您关注了 '+count+' 个看版。');
+        }
+    }            
+
+    function coll_board(){
+        var coll = [], x;
+        for(x in selected)
+            if(selected[x] === true)
+                coll.push(x);
+        return coll;
+    }
+
+    function remove_board_iter(kwargs, e){
+        var text=$(e.target).text();
+        remove_board(text);
+        update_count();
+    }
+    submit['remove-board'] = remove_board_iter;
+
+    function select(kwargs, e){
+        var self = $(e.target), i, $e=$(e.target);
+        var para = self.attr('data-para').split(';');
+        if($e.hasClass('active')){
+            for(i=0; i<para.length; ++i) remove_board(para[i]);
+            $e.removeClass('active');
+        }
+        else{
+            for(i=0; i<para.length; ++i) add_board(para[i]);
+            $e.addClass('active');
+        }
+        update_count();
+    }
+    submit['select-tag'] = select;
+
+    function check_weibo_auth(){
+        $api.weibo_check_auth(function(data){
+            if(data.success && data.data){
+                $('#is_weibo_auth').removeClass('hidden');
+            }
+        });
+    }
+
+    function auth_weibo(){
+        var nw = window.open("/weibo/auth", 'auth',
+                             config='width=600,height=380,left=100,top=100');
+        $(nw).unload(check_weibo_auth);
+    }
+    submit['auth-weibo'] = auth_weibo;
+
+    function goto_tut2(kwargs, e){
+        if(!$('#is_weibo_auth').hasClass('hidden') &&
+           $('#use-weibo-avatar')[0].checked){
+            $api.weibo_use_weibo_avatar(function(){
+                $G.refresh = false;
+                location = '#!tut-2';
+                location.reload(true);
+            });
+        }
+        else if($('#use-weibo-avatar')[0].checked){
+            var nw = window.open(
+                "/weibo/auth", 'auth',
+                config='width=600,height=380,left=100,top=100');
+            $(nw).unload(function(){
+                $api.weibo_check_auth(function(data){
+                    if(data.success && data.data){
+                        $api.weibo_use_weibo_avatar(function(){
+                            $G.refresh = false;
+                            location = '#!tut-2';
+                            location.reload(true);
+                        });
+                    }
+                    else
+                        location = '#!tut-2';
+                });
+            });
+        }
+        else
+            location = '#!tut-2';
+    }
+    submit['goto-tut2'] = goto_tut2;
+
+    function goto_tut3(){
+        var d = coll_board();
+        $api.set_self_fav(d, function(){
+            $G.submit.refresh_fav();
+            location = '#!tut-3';
+        });
+    }
+    submit['goto-tut3'] = goto_tut3;
+
+    function finish_tut_success(){
+        if(!$('#is-send-weibo').hasClass('hidden') &&
+           $('#is-send-weibo input')[0].checked){
+            $api.weibo_update1();
+        }
+        location = url_for_board('Test');
+    }
+    submit['finish-tut-success'] = finish_tut_success;
+
+    declare_frame({
+        mark: 'tut-1',
+        submit: submit,
+        enter: function(kwargs){
+            render_template('tut-1');
+            check_weibo_auth();
+        }
+    });
+
+    declare_frame({
+        mark: 'tut-2',
+        submit: submit,
+        enter: function(kwargs){
+            render_template('tut-2');
+            var d = coll_board();
+            if(d.length) reset_board(d);
+            $('.tag.default').each(function(){ $(this).click(); });
+            $api.get_self_fav(function(data){
+                if(data.success){
+                    var i;
+                    data = data.data;
+                    for(i=0; i<data.length; ++i)
+                        add_board(data[i].boardname);
+                }
+                update_count();
+            });
+            update_count();            
+        }
+    });
+
+    declare_frame({
+        mark: 'tut-3',
+        submit: submit,
+        enter: function(kwargs){
+            render_template('tut-3');
+        }
+    });
+
+    declare_frame({
+        mark: 'tut-4',
+        submit: submit,
+        enter: function(kwargs){
+            render_template('tut-4');
+            $api.weibo_check_auth(function(data){
+                if(data.success && data.data){
+                    $('#is-send-weibo').removeClass('hidden');
+                }
+            });
         }
     });
     
