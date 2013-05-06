@@ -20,6 +20,18 @@
       {{if u.has_works }}
       <a href="${url_for_ann('~'+u.userid+'/')}"> 阅读{{if u.male }}他{{else}}她{{/if}}的个人文集</a>
       {{/if}}
+      {{if u.title }}
+      <ul class="unstyled">
+        {{each(i, t) u.title}}
+        {{if t[0] }}
+        <li class="inline">
+          <span title="${t[1]}" class="label{{if t[2]}}
+                                       label-${t[2]}{{/if}}">${t[0]}</span>
+        </li>
+        {{/if}}
+        {{/each}}
+      </ul>
+      {{/if}}
     </div>
     <div class="span2 text-right">
       <div class="btn-toolbar">

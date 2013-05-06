@@ -2019,7 +2019,20 @@ $MOD('frame::admin', function(){
                        show_alert('更新失败', 'danger');
                    }
                });
-    }        
+    }
+
+    submit['update-user-title'] = function(){
+        var userid = $('#etc-inputer').val();
+        var content = $('#etc-container').val();
+        $api['!update_user_title'](userid, content, function(data){
+            if(data.success){
+                show_alert('更新成功！');
+            }
+            else{
+                show_alert('更新失败！', 'danger');
+            }
+        });
+    }
 
     declare_frame({
         mark: 'admin',

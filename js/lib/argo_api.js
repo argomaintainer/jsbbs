@@ -409,6 +409,15 @@ $MOD('argo_api', function(){
                    callback);
         },
 
+        '!update_user_title': function(userid, content, callback){
+            $.post('/ajax/admin/update_title',
+                   {
+                       userid: userid,
+                       content: content
+                   },
+                   callback);
+        },
+
         'weibo_check_auth': ajax_getor_nopara('/ajax/weibo/check_auth'),
         'weibo_use_weibo_avatar': function(callback){
             $.post('/ajax/weibo/use_avatar',
