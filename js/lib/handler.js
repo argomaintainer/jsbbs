@@ -2023,13 +2023,31 @@ $MOD('frame::admin', function(){
 
     submit['update-user-title'] = function(){
         var userid = $('#etc-inputer').val();
-        var content = $('#etc-container').val();
+        var content = $('#etc-title-content').val();
+        console.log(['up', userid, content]);
         $api['!update_user_title'](userid, content, function(data){
             if(data.success){
                 show_alert('更新成功！');
             }
             else{
                 show_alert('更新失败！', 'danger');
+            }
+        });
+    }
+
+    submit['check-user-title'] = function(){
+        var userid = $('#etc-inputer').val(), title;
+        $api.query_user(userid, function(data){
+            if(data.success){
+                console.log('d', data.data.title);
+                title = data.data.title;
+                if(title){
+                    var i, content='';
+                    for(i=0; i<title.length; ++i){
+                        content = content + title[i].join(' ') + '\n';
+                    }
+                    $('#etc-title-content').val(content);
+                }
             }
         });
     }

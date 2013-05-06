@@ -10,9 +10,24 @@
   </ul>
   <br/>
   <textarea rows="10" id="etc-container"></textarea>
-  <input id="etc-inputer"/>
   <div class="form-actions">
     <button class="btn btn-danger" data-submit="update-target">保存该档案</button>
     <a class="btn" href="${url_for_root('')}">回到首页</a>
   </div>
+  
+  <hr/>  
+
+  <h3>设置称号</h3>
+  <p>每行一个。
+    每行分三列，第一个是称号的名称，然后是对该称号的描述，最后是'success',
+    'warning', 'important', 'info', 'inverse' 表示绿黄红蓝黑，可以省略第三列。
+  </p>
+  <input type="text" id="etc-inputer"/>
+  <a href="#" data-submit="check-user-title">
+    获取称号资料 </a>
+  <br/>
+  <textarea rows="10" id="etc-title-content"></textarea> <hr/>
+  <a class="btn btn-danger" href="#" data-submit="update-user-title">
+    更新该用户的称号</a>
+  
 </div>
