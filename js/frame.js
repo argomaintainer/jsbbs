@@ -79,7 +79,41 @@ $MOD('frame.hook', function(){
       Push the `fun` to the hook.
 
     */
-    
+
+    function seqcall(array){
+        var i=0, l=array.length, trigger;
+        trigger = function(){
+            if(i<l){
+                array[i](trigger);
+                ++ i;
+            }
+        }
+        trigger();
+    }
+
+    function new_seqcaller(array){
+        return function(f){            
+            seqcall(array.concat(f));
+        }
+    }
+
+    function parcall(array, finish){
+        var i=0, l=array.length, trigger, j;
+        trigger = function(){
+            ++i;
+            if(i==l) finish();
+        }
+        for(j=0; j<l; ++j){
+            array[j](trigger);
+        }
+    }
+
+    function new_parcaller(array){
+        return function(f){
+            parcall(array, f);
+        }
+    }
+
     $G('hooks', {});
     function trigger_hooks(hookname, args){
         if(!(hookname in $G.hooks)){
@@ -94,6 +128,10 @@ $MOD('frame.hook', function(){
         }
     }
     return {
+        seqcall: seqcall,
+        new_seqcaller: new_seqcaller,
+        parcall: parcall,
+        new_parcaller: new_parcaller,
         trigger_hooks: trigger_hooks,
         register_hook: function(hookname){
             var funs = [];
