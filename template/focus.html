@@ -1,3 +1,19 @@
+{{if activeboard }}
+<div class="cell cell-fake">
+  <div id="slides">
+    <div class="slides_container">
+      {{each(i, m) activeboard}}
+      <div>
+        <a href="${m.href}">
+          <img src="${m.img}"/>
+          <p>${m.title}</p>
+        </a>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>
+{{else}}
 {{if www.posts }}
 <div class="cell cell-fake">
   <div id="slides">
@@ -15,6 +31,7 @@
     </div>
   </div>
 </div>
+{{/if}}
 {{/if}}
 <div class="cell cell-loose">
   <div class="cell-header">
