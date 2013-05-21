@@ -5,7 +5,7 @@ body{
 }
 
 #container{
-    width:920px;
+    width:960px;
     margin: 0 auto;
     padding: 54px 20px 0;
     min-height: 100%;
@@ -439,7 +439,7 @@ i.icon-nbrd:before{
     position:fixed;
     bottom:20px;
     left: 50%;
-    margin-left: 485px;
+    margin-left: 505px;
 }
 
 #fix-btns a{
@@ -1762,7 +1762,7 @@ a[data-submit]:hover{
     list-style-type: none;
     margin: 0;
     padding: 0;
-    width: 212px;
+    width: 224px;
 }
 
 .navlist > li{
@@ -2199,4 +2199,8 @@ a:hover .ftext{
 
 .step-progress .active{
     color: #fff;
+}
+
+.bpagination .btn-input{
+    height: 29px;
 }
