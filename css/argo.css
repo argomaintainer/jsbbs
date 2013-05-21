@@ -2164,7 +2164,26 @@ a:hover .ftext{
 
 #board-container a{
     display: inline-block;
-    padding: 2px 8px;
+    padding: 2px 8px 2px 20px;
+    background: #47a;
+    color: #eee;
+    margin: 5px;
+    position: relative;
+    text-decoration: none;
+}
+
+#board-container a:before{
+    content: "×";
+    position: absolute;
+    left: 5px;
+}
+
+#board-container a:hover{
+    color: #fff;
+}
+
+.tut-progress{
+    margin-top: 20px;
 }
 
 .step-progress{
@@ -2173,7 +2192,7 @@ a:hover .ftext{
 }
 
 .step-progress span{
-    width: 24%;
+    width: 33%;
     float: left;
     text-align: center;
 }

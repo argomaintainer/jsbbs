@@ -529,6 +529,8 @@ $MOD('frame.frame', function(){
         
         frame.enter(curhash.args);
 
+        window.scrollTo(0, 0);
+
         $('body').attr('class', 'frame-' + curhash.hash);
 
         if(frame.widgets_loader){

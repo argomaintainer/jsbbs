@@ -1,49 +1,5 @@
-{{if !status['sh'] }}
-<div id="flowchart" class="cell">
-  <h4>逸仙时空新生手册</h4>
-  <div class="flow clearfix">
-    <a href="http://bbs.sysu.edu.cn/n/ann.html#!read?reqpath=:BBS_Help/M.1361722640.A" target="_blank">
-      <div class="fcell">
-        <img src="images/f/f1.jpg"/>
-        <div class="ftext">
-          <strong>1. 入住</strong><br/>
-          <p>注册你的id，<br/>设置你的个性资料</p>
-        </div>
-      </div>
-    </a>
-    <a href="http://bbs.sysu.edu.cn/n/ann.html#!read?reqpath=:BBS_Help/M.1361722658.A" target="_blank">
-      <div class="fcell">
-        <img src="images/f/f2.jpg"/>
-        <div class="ftext">
-          <strong>2. 发现看版</strong><br/>
-          <p>收藏你喜欢的版块，<br/>结识版友站友</p>
-        </div>
-      </div>
-    </a>
-    <a href="http://bbs.sysu.edu.cn/n/ann.html#!read?reqpath=:BBS_Help/M.1361722690.A" target="_blank">
-      <div class="fcell">
-        <img src="images/f/f3.jpg"/>
-        <div class="ftext">
-          <strong>3. 关注版面</strong><br/>
-          <p>浏览帖子，<br/>看看大家在讨论什么</p>
-        </div>
-      </div>
-    </a>
-    <a href="http://bbs.sysu.edu.cn/n/ann.html#!read?reqpath=:BBS_Help/M.1361722705.A" target="_blank">
-      <div class="fcell">
-        <img src="images/f/f4.jpg"/>
-        <div class="ftext">
-          <strong>4. 参与社区生活</strong><br/>
-          <p>发帖和回复，<br/>参与社区生活</p>
-        </div>
-      </div>
-    </a>
-  </div>
-  <div class="clearfix">
-    <a class="btn pull-right" href="#" data-submit="set_sh">我知道了</a>
-  </div>
-</div>
-{{/if}}
+{{if status.noupdate }}{{/if}}
+{{if status.noupdate || status.tooold }}{{/if}}
 <div class="cell main-cell">
   <div class="page-btn-group">
     <div class="btn-group">
@@ -54,24 +10,6 @@
       {{/each}}
     </div>
   </div>
-  {{if status.noupdate }}
-  <div class="boards-pill">
-    <div class="bp-unreadnum-wrapper bp-unread-focus">&nbsp;</div>
-    <div class="bp-boards-pill-mid">
-      没有新帖？ <a class="big-title" href="index.html#!focus">关注热点信息</a> ， <a data-submit="go-random-board" href="#">随便看看</a> 或者 <a data-submit="go-section">探索更多看板</a>
-    </div>
-  </div>
-  {{/if}}
-  
-  {{if status.noupdate || status.tooold }}
-  <div class="boards-pill">
-    <div class="bp-unreadnum-wrapper bp-unread-focus">&nbsp;</div>
-    <div class="bp-boards-pill-mid">
-      您喜欢的看版没有新发言了，<strong>发表一个新话题</strong> 或者 <strong>回复一个帖子</strong> 开始和版友们交流吧！
-    </div>
-  </div>  
-  {{/if}}
-
   {{each(i, b) boards}}
   <div class="boards-pill">
     {{if $G.authed }}
@@ -102,7 +40,7 @@
   <div class="well text-center">
     <h3>您可以在逸仙时空发现更多有趣的东西</h3>
     <p> <strong>收藏</strong> 您感兴趣的看版，参与有趣的版友生活</p>
-    <a class="btn btn-success" data-submit="go-section">开始探索看板</a>
+    <a class="btn btn-success" href="#!admin-fav">开始探索看板</a>
   </div>
   {{/if}}
 </div>

@@ -56,7 +56,8 @@ $MOD('jsbbs.userbox', function(){
             for(x in myfav){
                 t[myfav[x].boardname] = true;
             }
-            $G.userfav = t;                
+            $G.userfav = t;
+            $G.userfav_a = data.data;
             data.data.sort(sort_favitem);
             render_template('widget/fav', { fav: data.data },
                             '#favbox');

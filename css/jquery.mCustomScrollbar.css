@@ -34,7 +34,7 @@
 	-webkit-border-radius:10px;
 	-moz-border-radius:10px;
 	border-radius:10px;
-    visibility: hidden;
+    /* visibility: hidden; */
 }
 .mCSB_scrollTools:hover .mCSB_draggerRail{
     visibility: visible;

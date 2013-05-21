@@ -21,6 +21,10 @@ $MOD('frame.home', function(){
     }
 
     function setup_type(type){
+        // if($G.authed && ((!$G.userfav_a)||($G.userfav_a.length < 5))
+        //    &&(!localStorage['bool::watched-tut'])){
+        //     location = '#!tut-2';
+        // }
         $api.get_goodboards(type, function(data){
             var status = {};
             if(data.success){
@@ -1832,6 +1836,12 @@ $MOD('frame::tut', function(){
         else{
             $('#num-counter').text('您关注了 '+count+' 个看版。');
         }
+        if(count<1){
+            $('#goto-tut3').removeClass('btn-success').addClass('disabled').text('要关注至少一个看版哟！');
+        }
+        else{
+            $('#goto-tut3').removeClass('disabled').addClass('btn-success').text('收藏这些看版，下一步');
+        }
     }            
 
     function coll_board(){
@@ -1911,30 +1921,89 @@ $MOD('frame::tut', function(){
     }
     submit['goto-tut2'] = goto_tut2;
 
-    function goto_tut3(){
+    function _goto_tut3(){
         var d = coll_board();
         $api.set_self_fav(d, function(){
             $G.submit.refresh_fav();
             location = '#!tut-3';
         });
+    }        
+
+    function goto_tut3(){
+        if(count < 6){
+            modal_confirm('你只关注了很少的看版',
+                          '你只关注了很少的看版，真的不想再多关注几个了？',
+                          _goto_tut3);
+        }
+        else{
+            _goto_tut3();
+        }
     }
     submit['goto-tut3'] = goto_tut3;
 
+    submit['submit-fav'] = function(){
+        var d = coll_board();
+        $api.set_self_fav(d, function(){
+            show_alert('更新收藏夹成功！', 'success');
+            $G.submit.refresh_fav();
+            refresh_frame();
+        });
+    }
+
     function finish_tut_success(){
-        if(!$('#is-send-weibo').hasClass('hidden') &&
-           $('#is-send-weibo input')[0].checked){
-            $api.weibo_update1();
+        if($('#is-send-weibo input')[0].checked){
+            var nw = window.open(
+                "/weibo/auth", '_blank',
+                config='width=600,height=380,left=100,top=100');
+            $(nw).unload(function(e){
+                var cid = setInterval(function(){
+                    if(nw.closed){
+                        $api.weibo_check_auth(function(data){
+                            if(data.success && data.data){
+                                $api.weibo_update1();
+                            }
+                            clearInterval(cid);
+                            localStorage['bool::watched-tut'] = 1;
+                            window.location = url_for_board('Test');
+                        });
+                    }
+                }, 1000);
+            });
         }
-        location = url_for_board('Test');
+        else{
+            localStorage['bool::watched-tut'] = 1;            
+            location = url_for_board('Test');
+        }
     }
     submit['finish-tut-success'] = finish_tut_success;
 
+    // declare_frame({
+    //     mark: 'tut-1',
+    //     submit: submit,
+    //     enter: function(kwargs){
+    //         render_template('tut-1');
+    //         check_weibo_auth();
+    //     }
+    // });
+
     declare_frame({
-        mark: 'tut-1',
+        mark: 'admin-fav',
         submit: submit,
         enter: function(kwargs){
-            render_template('tut-1');
-            check_weibo_auth();
+            render_template('admin-fav');
+            var d = coll_board();
+            if(d.length) reset_board(d);
+            $('.tag.default').each(function(){ $(this).click(); });
+            $api.get_self_fav(function(data){
+                if(data.success){
+                    var i;
+                    data = data.data;
+                    for(i=0; i<data.length; ++i)
+                        add_board(data[i].boardname);
+                }
+                update_count();
+            });
+            update_count();            
         }
     });
 
@@ -1972,11 +2041,6 @@ $MOD('frame::tut', function(){
         submit: submit,
         enter: function(kwargs){
             render_template('tut-4');
-            $api.weibo_check_auth(function(data){
-                if(data.success && data.data){
-                    $('#is-send-weibo').removeClass('hidden');
-                }
-            });
         }
     });
     
