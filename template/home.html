@@ -13,9 +13,15 @@
   {{each(i, b) boards}}
   <div class="boards-pill">
     {{if $G.authed }}
-    <div class="bp-unreadnum-wrapper {{if b.unreadn==-1}}bp-allread {{/if}}"><span class="bp-unreadnum">{{if b.unreadn==-1}}={{else}}${b.unreadn}+{{/if}}</span></div>
+    <div class="bp-unreadnum-wrapper {{if b.unreadn==-1}}bp-allread{{else}}bp-c-${b.secnum}{{/if}}">
+      {{if b.unreadn==-1}}
+      <span class="bp-unreadnum-0">=</span>
+      {{else}}
+      <span class="bp-unreadnum">${b.unreadn}+<br/><small>新发言</small></span>      
+      {{/if}}
+    </div>
     {{else}}
-    <div class="bp-unreadnum-wrapper"><span class="bp-unreadnum">?</span></div>
+    <div class="bp-unreadnum-wrapper"><span class="bp-unreadnum-0">?</span></div>
     {{/if}}
     <div class="bp-boards-pill-mid">
       <div class="bp-title">
