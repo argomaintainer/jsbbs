@@ -61,6 +61,7 @@ body{
     padding: 54px 20px 0;
     min-height: 100%;
     background-image: url("../images/cover.png");
+    box-shadow: 0 2px 10px #aaa;
 }
 
 .simple body{
