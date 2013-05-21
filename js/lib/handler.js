@@ -662,6 +662,7 @@ $MOD('frame::board', function(){
                 }
                 var sec_con = $('#near-board');
                 $G.lastsection = cur_board.data.secnum;
+                $G.last_seccode = cur_board.data.seccode;
                 render_template(
                     'widget/links',
                     {

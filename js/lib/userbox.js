@@ -3,6 +3,7 @@ $MOD('jsbbs.userbox', function(){
     require_jslib('cookie');
 
     $G('lastsection', 0);
+    $G('last_seccode', 0);
     
     $G.submit.logout = function(){
         modal_confirm('登出帐号', '你确认要取消登录？',
