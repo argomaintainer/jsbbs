@@ -1081,8 +1081,6 @@ i[class*=" icon-mark-"]:after {
 }
 
 .hasnewmail #userbox-mail a{
-    box-shadow: 0 0 4px aaa;
-    background: #eee;
     color: red;
 }
 
@@ -1099,7 +1097,6 @@ th.th-center{
 }
 
 .hasnewmail #userbox-mail a:hover{
-    background: #fff;
 }
 
 .display-on-newmail{

@@ -1,5 +1,5 @@
 SIGNV = 2006;
-NOCACHE = true;
+NOCACHE = false;
 
 seajs.config({
 

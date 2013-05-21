@@ -1,5 +1,5 @@
-SIGNV = '2013-05-02-00:34';
-NOCACHE = true;
+SIGNV = '2013-05-20-00:40';
+NOCACHE = false;
 
 $MOD('jsbbs.main', function(){
 
