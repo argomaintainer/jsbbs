@@ -19,6 +19,7 @@ body{
 
 #topbar .navbar-inner{
     background-image: none;
+    background: rgb(5,67,14);
     background: rgba(5,67,14, 0.75);
     border-bottom: 1px solid #eee;
 }
@@ -2140,28 +2141,28 @@ input.file-selector{
     background-color: rgb(164,200,222);
 }
 .bp-c-2{
-    background-color: rgb(101,185,170);
+    background-color: rgb(118, 174, 143);
 }
 .bp-c-3{
-    background-color: rgb(250,174,125);
+    background-color: rgb(244, 170, 133);
 }
 .bp-c-4{
-    background-color: rgb(255,223,94);
+    background-color: rgb(242, 223, 116);
 }
 .bp-c-5{
-    background-color: rgb(209,226,134 );
+    background-color: rgb(167, 201, 134);
 }
 .bp-c-6{
-    background-color: rgb(203 ,77,214 );
+    background-color: rgb(203, 177, 214);
 }
 .bp-c-7{
-    background-color: rgb(152,204,182 );
+    background-color: rgb(112, 163, 192);
 }
 .bp-c-8{
-    background-color: rgb(248,223,201 );
+    background-color: rgb(249, 181, 215);
 }
 .bp-c-8{
-    background-color: rgb(225,172,96);
+    background-color: rgb(146, 143, 210);
 }
 
 .bp-boards-pill-mid{
