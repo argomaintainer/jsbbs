@@ -64,7 +64,7 @@ body{
     background-image: url("../images/cover.png");
     border-left: 1px solid #ccc;
     border-right: 1px solid #ccc;
-    box-shadow: 0 2px 10px #aaa;
+    box-shadow: 0 2px 20px #999;
 }
 
 .simple body{
@@ -2161,7 +2161,7 @@ input.file-selector{
 .bp-c-8{
     background-color: rgb(249, 181, 215);
 }
-.bp-c-8{
+.bp-c-9{
     background-color: rgb(251,205,137);
 }
 
