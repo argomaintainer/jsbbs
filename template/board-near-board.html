@@ -5,7 +5,7 @@
   </div>
   <ul class="navlist markhash">
     {{each(i, v) boards}}
-    <li><a href="${ url_for_board(v.filename) }"><i class="{{if v.unread }}icon-nbrd{{else}}icon-null{{/if}}"></i>${v.filename}</a></li>
+    <li><a href="${ url_for_board(v.filename) }"><i class="{{if v.unread }}icon-nbrd{{else}}icon-null{{/if}}"></i>${v.title}</a></li>
     {{/each}}
   </ul>
 </div>
