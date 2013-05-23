@@ -1818,7 +1818,6 @@ a[data-submit]:hover{
 }
 
 #userbox .navbox{
-    background: rgb(240, 240, 240);
 }
 
 #userbox > .navbox > .navlist{
@@ -1882,7 +1881,7 @@ a[data-submit]:hover{
 }
 
 #favbox{
-    background: rgb(243, 243, 243);
+    background: rgb(240,240,240);
 }
 
 .onactive{
