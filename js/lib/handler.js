@@ -432,13 +432,18 @@ $MOD('frame::board', function(){
             show_alert('请先登录再执行此操作：-）');
             return;
         }
-        init_popwindow('popwindow/newpost',
-                       { boardname: cur_board.boardname});
-        $('.editor textarea').keypress(function(event){
-            if(event.ctrlKey && (event.keyCode==10)){
-                $('#new-post-form').submit();
-            };
-        });
+        if($G.authed.u.ban_post){
+            init_popwindow('popwindow/ban_post');
+        }
+        else{
+            init_popwindow('popwindow/newpost',
+                           { boardname: cur_board.boardname});
+            $('.editor textarea').keypress(function(event){
+                if(event.ctrlKey && (event.keyCode==10)){
+                    $('#new-post-form').submit();
+                };
+            });
+        }
     }
 
     function check_pushlish(kwargs, e){
