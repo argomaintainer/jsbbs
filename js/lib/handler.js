@@ -21,10 +21,10 @@ $MOD('frame.home', function(){
     }
 
     function setup_type(type){
-        // if($G.authed && ((!$G.userfav_a)||($G.userfav_a.length < 5))
-        //    &&(!localStorage['bool::watched-tut'])){
-        //     location = '#!tut-2';
-        // }
+        if($G.authed && ((!$G.userfav_a)||($G.userfav_a.length < 5))
+           &&(!localStorage['bool::watched-tut'])){
+            location = '#!tut-2';
+        }
         $api.get_goodboards(type, function(data){
             var status = {};
             if(data.success){
