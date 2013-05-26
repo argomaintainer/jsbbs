@@ -109,7 +109,7 @@ body{
     left:30.9%;
     width:38.2%;
     margin:0 auto;
-    padding:1em 2em;
+    padding:10px 20px;
     text-align:center;
     margin-left:-50px;
     border-radius: 1px;
@@ -145,8 +145,8 @@ body{
 }
 
 .big-font{
-    font-size: 1.2em;
-    font-weight: bold;
+    font-size: 1.20px;
+    /*font-weight: bold;*/
 }
 
 .light-font{
@@ -158,7 +158,7 @@ body{
 
 .cell-help-block{
     line-height: 25px;
-    text-indent: 1em;
+    text-indent: 10px;
     font-size: 10px;
     color: #888;
 }
@@ -226,7 +226,7 @@ i.icon-nbrd:before{
 }
 
 .content-wrapper{
-    padding: 0 1em;
+    padding: 0 10px;
     position:relative;
 }
 
@@ -262,7 +262,7 @@ i.icon-nbrd:before{
 }
 
 .page-btn a{
-    padding: 3px 1em;
+    padding: 3px 10px;
     display:block;
     color: #4a7;
     cursor: pointer;
@@ -355,15 +355,15 @@ i.icon-nbrd:before{
 .board-group-head{
     width: 90px;
     text-align:center;
-    /* padding-right: 1em; */
+    /* padding-right: 10px; */
     vertical-align: middle;
 }
 
 .board-group-head h4{
-    font-size: 1em;
+    font-size: 10px;
     line-height: 1.5em;
     font-weight: normal;
-    margin: .5em 1em;
+    margin: .5em 10px;
 }
 
 .board-group-content{
@@ -380,7 +380,7 @@ i.icon-nbrd:before{
 }
 
 .board-group-content ul{
-    margin: .5em 1em .5em 0;
+    margin: .5em 10px .5em 0;
 }
 
 .text-right-align{
@@ -394,7 +394,7 @@ i.icon-nbrd:before{
 }
 
 .topten-title a{
-    color: #333;
+    color: rgb(67,67,67);
 }
 
 .topten-replynum{
@@ -439,7 +439,7 @@ i.icon-nbrd:before{
     border-bottom: 2px solid #bbb;
     box-shadow: 0 0 1px #777;
     border-radius: 3px;
-    margin-left: 1em;
+    margin-left: 10px;
 }
 
 .t10-0,.t10-1,.t10-2{
@@ -459,7 +459,7 @@ i.icon-nbrd:before{
 
 .align-bottom>div{
     position: absolute;
-    bottom: -1em;
+    bottom: -10px;
 }
 
 .tb-align-bottom{
@@ -471,11 +471,11 @@ i.icon-nbrd:before{
 }
 
 .padding-side{
-    padding: 0 2em;
+    padding: 0 20px;
 }
 
 .padding-bottom{
-    padding-bottom: 2em;
+    padding-bottom: 20px;
 }
 
 .frame-header-inner{
@@ -489,7 +489,7 @@ i.icon-nbrd:before{
 }
 
 .frame-header-inner{
-    padding-bottom: 1em;
+    padding-bottom: 10px;
 }
 
 #fix-btns{
@@ -697,12 +697,12 @@ button[data-submit]{
     left: 0;
 }
 
-.padding1em{
-    padding: 1em;
+.padding10px{
+    padding: 10px;
 }
 
-.top2em{
-    margin-top: 2em;
+.top20px{
+    margin-top: 20px;
 }
 
 .inverse{
@@ -722,7 +722,7 @@ button[data-submit]{
 }
 
 #colophon-inner{
-    padding: 1em 2em;
+    padding: 10px 20px;
     color: #e0e0e0;
     text-align: center;
 }
@@ -793,9 +793,9 @@ button[data-submit]{
 }
 
 .hint-empty{
-    font-size: 1.2em;
+    font-size: 1.20px;
     color: #aaa;
-    padding: 1em;
+    padding: 10px;
 }
 
 #postlistbox{
@@ -803,7 +803,7 @@ button[data-submit]{
 }
 
 .main-cell{
-    background: #fff;
+    background: rgb(250, 250, 250);
 }    
 
 input.btn-input{
@@ -911,8 +911,8 @@ i[class*=" icon-mark-"]:after {
 }
 
 #pop-content{
-    /* margin-top: 1em; */
-    padding: 0 2em;
+    /* margin-top: 10px; */
+    padding: 0 20px;
 }
 
 #pop-title{
@@ -923,7 +923,7 @@ i[class*=" icon-mark-"]:after {
 #pop-title h3{
     font-size: 14px;
     line-height: 20px;
-    margin: 1em;
+    margin: 10px;
     text-shadow: 0 1px 2px #fff;
 }
 
@@ -971,12 +971,12 @@ i[class*=" icon-mark-"]:after {
 }
 
 .close.pull-right{
-    margin-right: 1em;
+    margin-right: 10px;
     margin-top: 10px;
 }
 
 .page-container{
-    margin: 0 2em;
+    margin: 0 20px;
 }
 
 .quick-btn{
@@ -986,7 +986,7 @@ i[class*=" icon-mark-"]:after {
 }
 
 .page-content{
-    padding: 1em 2em;
+    padding: 10px 20px;
     font-size: 13px;
     background: #fff;
 }
@@ -1001,8 +1001,8 @@ i[class*=" icon-mark-"]:after {
 
 /* telnet format */
 .c0{
-    color: #333;
-    font-size: 1em;
+    color: rgb(67,67,67);
+    font-size: 10px;
 }
 .c1{
     text-shadow: 0 1px 2px #f0f0f0;
@@ -1071,7 +1071,7 @@ i[class*=" icon-mark-"]:after {
 }
 
 .board-header-img{
-    padding: 1em 1em 0;
+    padding: 10px 10px 0;
 }
 
 .hasimg.board-header-img{
@@ -1086,7 +1086,7 @@ i[class*=" icon-mark-"]:after {
 }
 
 .hasimg a{
-    color: #333;
+    color: rgb(67,67,67);
     text-decoration: underline;
 }
 
@@ -1095,7 +1095,7 @@ i[class*=" icon-mark-"]:after {
 }
 
 .board-header .alert{
-    margin-top: 1em;
+    margin-top: 10px;
 }
 
 .board-nav{
@@ -1144,7 +1144,7 @@ i[class*=" icon-mark-"]:after {
 
 .fluid-table th{
     text-align: left;
-    padding-left: 1em;
+    padding-left: 10px;
     line-height: 20px;
     background: #eee;
 }
@@ -1226,7 +1226,7 @@ a.nobtn{
 
 #board-bottom-widget-outer{
     position: relative;
-    padding: 1em;
+    padding: 10px;
     border-top: 2px solid #eee;
     background: #e0e0e0;
 }
@@ -1345,7 +1345,7 @@ a[data-submit]:hover{
 .postlist-normal .owner a{
     display: block;
     /* font-weight: bold; */
-    color: #333;
+    color: rgb(67,67,67);
 }
 
 .postlist-normal .time{
@@ -1371,10 +1371,11 @@ a[data-submit]:hover{
 .post-li-topic .title strong{
     font-size: 16px;
     line-height: 1.8;
+    font-weight: normal;
 }
 
 .post-li-topic .owner{
-    color: #333;
+    color: rgb(67,67,67);
 }
 
 .post-li-topic .time{
@@ -1443,7 +1444,7 @@ a[data-submit]:hover{
     
 /* .postquote-content{ */
 /*     color:#999; */
-/*     padding-left: 1em; */
+/*     padding-left: 10px; */
 /* } */
 
 /* .postquote-header{ */
@@ -1451,7 +1452,7 @@ a[data-submit]:hover{
 /* } */
 
 /* .post-header{ */
-/*     padding: 12px 2em; */
+/*     padding: 12px 20px; */
 /* } */
 
 /* .post-header h3{ */
@@ -1476,7 +1477,7 @@ a[data-submit]:hover{
 /* } */
 
 /* .post-content{ */
-/*     padding: 5px 2em; */
+/*     padding: 5px 20px; */
 /* } */
 
 /* .post-signature{ */
@@ -1521,9 +1522,11 @@ a[data-submit]:hover{
 }
     
 .post-info h3{
-    font-size: 14px;
-    line-height: 24px;
-    margin: 2px 0;
+    font-size: 13px;
+    font-weight: normal;
+    color: rgb(181, 181, 181);
+    line-height: 30px;
+    margin: 2px 0 8px 0;
 }
 
 .post-wrapper .owner{
@@ -1531,7 +1534,7 @@ a[data-submit]:hover{
     line-height: 24px;
     display: block;
     text-decoration: none;
-    margin: 2px 0 12px 0;
+    margin: 2px 0;
     border-bottom: 1px solid #f0f0f0;
 }
     
@@ -1665,16 +1668,17 @@ a[data-submit]:hover{
 .home-post-recom h3{
     font-size: 16px;
     line-height: 1.61;
+    font-weight: normal;
 }
 
 .home-post-recom .post-content{
-    padding-bottom: 1em;
-    margin-top: 1em;
+    padding-bottom: 10px;
+    margin-top: 10px;
 }
 
 .part{
     display: inline-block;
-    margin-right: 1em;
+    margin-right: 10px;
 }
 
 /* .home-post-recom .post-info{ */
@@ -1690,7 +1694,7 @@ a[data-submit]:hover{
 }
 
 .home-post-recom .userid{
-    color: #333;
+    color: rgb(67,67,67);
 }
 
 .home-post-recom .time{
@@ -1746,6 +1750,10 @@ a[data-submit]:hover{
 
 .sec-boardlist .boardname{
     display: block;
+}
+
+.boardname strong{
+    font-weight: normal;
 }
 
 .sec-boardlist .time{
@@ -1809,6 +1817,13 @@ a[data-submit]:hover{
     box-shadow: 0 0 2px #eee;
 }
 
+#userbox .navbox{
+}
+
+#userbox > .navbox > .navlist{
+    background: #fbfbfb;
+}
+
 .navbox{
     background: #fbfbfb;
     margin-bottom: 20px;
@@ -1842,13 +1857,13 @@ a[data-submit]:hover{
 .navlist > li > a{
     display: block;
     text-decoration: none;
-    color: #333;
+    color: rgb(67,67,67);
     padding: 8px 12px;
 }
 
 .navlist > li > a:hover{
     color: #111;
-    background: #fff;
+    background: rgb(250, 250, 250);
     text-shadow: 0 0 1px #eee;
 }
 
@@ -1863,6 +1878,10 @@ a[data-submit]:hover{
 
 #favbox-outer{
     margin-right: -30px;
+}
+
+#favbox{
+    background: rgb(240,240,240);
 }
 
 .onactive{
@@ -1926,7 +1945,7 @@ input.file-selector{
 
 .ann-table{
     font-size: 14px;
-    line-height: 2em;
+    line-height: 20px;
     width: 100%;
     font-family: Monaco, Menlo, Consolas, "Courier New", monospace;    
 }
@@ -1943,17 +1962,17 @@ input.file-selector{
 .ann-message{
     color: #eee;
     font-size: .8em;
-    padding: 0 1em;
+    padding: 0 10px;
 }
 
 .ann-content{
-    padding: 1em;
+    padding: 10px;
 }
 
 .ann-hint{
     color: #eee;
-    padding: 1em;
-    margin: 1em 0;
+    padding: 10px;
+    margin: 10px 0;
     background: #fcfcfc;
 }
 
@@ -1984,10 +2003,10 @@ input.file-selector{
     z-index: 3;
     bottom: 0;
     position: absolute;
-    background: #333;
+    background: rgb(67,67,67);
     background: rgba(0,0,0,.75);
     width: 100%;
-    padding: 0 0 0 1em;
+    padding: 0 0 0 10px;
     line-height: 30px;
     margin: 0;
 }
@@ -2035,7 +2054,7 @@ input.file-selector{
 
 .aside{
     border-right: 1px solid #f0f0f0;
-    padding: 1em 1em 4em 1em;
+    padding: 10px 10px 4em 10px;
     min-height: 100%;
     background: #f8f8f8;
 }
@@ -2067,18 +2086,18 @@ input.file-selector{
 
 #dirlist li{
     border-bottom: 1px solid #eee;
-    line-height: 2em;
-    margin-bottom: 1em;
+    line-height: 20px;
+    margin-bottom: 10px;
 }
 
 .page-title{
     word-break: break-all;
     border-bottom: 2px solid #f0f0f0;
-    line-height: 2em;
+    line-height: 20px;
 }
 
 .center-footer{
-    padding: 2em;
+    padding: 20px;
     text-align: center;
     color: #999;
 }
@@ -2097,12 +2116,12 @@ input.file-selector{
 }
 
 .board-img{
-    margin-bottom: 1em;
+    margin-bottom: 10px;
 }
 
 .boards-pill{
     position: relative;
-    padding: 1em 0;
+    padding: 10px 0;
     border-top: 1px solid #eee;
 }
 
@@ -2170,13 +2189,12 @@ input.file-selector{
 }
 
 .bp-title{
-    height: 30px;
     color: #999;
 }
 
 .bp-boardname a{
-    line-height: 30px;
-    color: #333;
+    line-height: 20px;
+    color: rgb(67,67,67);
 }    
 
 .bp-bm{
@@ -2196,7 +2214,6 @@ input.file-selector{
 }
 
 .bp-postinfo{
-    line-height: 18px;
     color: #999;
 }
 
@@ -2208,7 +2225,7 @@ input.file-selector{
 }
 
 .page-btn-group{
-    padding-bottom: 1em;
+    padding-bottom: 10px;
 }
 
 .bp-unread-focus{
@@ -2221,7 +2238,7 @@ input.file-selector{
 
 .flow{
     padding: 5px;
-    margin-bottom: 1em;
+    margin-bottom: 10px;
 }
 
 .fcell{
@@ -2233,8 +2250,8 @@ input.file-selector{
 .ftext{
     border-top: 1px solid #fff;
     background: #f0f0f0;
-    padding: 1em;
-    color: #333;
+    padding: 10px;
+    color: rgb(67,67,67);
 }
 
 a:hover .ftext{

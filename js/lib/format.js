@@ -16,7 +16,7 @@ $MOD('format', function(){
 
 
         // 1. jpg|png|gif pic to <img> tag, class from link
-        [/(^|\n)(http:&#x2F;&#x2F;.+?\.)(jpg|png|gif|jpeg)/ig, '$1<img src="$2$3" class="" alt="" />'],
+        [/(^|\n(&nbsp;)*)(http:&#x2F;&#x2F;.+?\.)(jpg|png|gif|jpeg)/ig, '$1<img src="$3$4" class="" alt="" />'],
         [/(^|\s|<br>|&nbsp;|\n|>)(http:&#x2F;&#x2F;.+\.)(mp3)/g, 
          '<audio src="$2$3" controls="controls" />'],
 
