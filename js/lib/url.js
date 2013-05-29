@@ -1,5 +1,5 @@
 $MOD('frame.url_for', {
-    'avatar': function(userid){ return '/avatar/' + userid },
+    'avatar': function(userid){ return 'http://argo.sysu.edu.cn/avatar/' + userid },
     'board': function(boardname){ return 'index.html#!board?boardname=' + boardname},
     'board_it': function(index, boardname, topicid){
         return 'index.html#!board?boardname=' + boardname + '&&index=' + index
@@ -26,7 +26,7 @@ $MOD('frame.url_for', {
     'page': function(path){ return 'index.html#!page?path=' + path;},
     'root': function(path){ return location.protocol + '//' + location.host + path;},
     'attach': function(boardname, filename){
-        return '/attach/' + boardname + '/' + filename;
+        return 'http:/argo.sysu.edu.cn/attach/' + boardname + '/' + filename;
     },
     'url': function(path){ return DATA_ROOT + '/n/' + path;},
     'admin_board': function(boardname){

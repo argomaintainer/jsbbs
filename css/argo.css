@@ -1861,6 +1861,10 @@ a[data-submit]:hover{
     padding: 8px 12px;
 }
 
+.favbox li > a{
+    background: rgb(240,240,240);
+}    
+
 .navlist > li > a:hover{
     color: #111;
     background: rgb(250, 250, 250);
@@ -1878,10 +1882,6 @@ a[data-submit]:hover{
 
 #favbox-outer{
     margin-right: -30px;
-}
-
-#favbox{
-    background: rgb(240,240,240);
 }
 
 .onactive{
