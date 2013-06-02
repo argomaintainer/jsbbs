@@ -33,7 +33,6 @@ $MOD('jsbbs.main', function(){
 
     require_jslib('jquery.jqpagination');
 
-
     function raise_too_old_browser(){
         location = "choose_modern_browsers.html";
     }

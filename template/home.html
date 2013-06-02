@@ -1,3 +1,13 @@
+{{if activeboard }}
+<div id="activeboard-wrapper" class="alert alert-success">
+  <span id="activeboard">${activeboard.title}</span>
+  <a href="${activeboard.href}">查看详情</a>
+  <div class="pull-right">
+    <a href="${url_for_board('posterwall')}">全部广播</a>&nbsp; &nbsp; &nbsp; 
+    <a data-submit="close-activeboard" href="#">关闭</a>
+  </div>
+</div>
+{{/if}}
 {{if status.noupdate }}{{/if}}
 {{if status.noupdate || status.tooold }}{{/if}}
 <div class="cell main-cell">

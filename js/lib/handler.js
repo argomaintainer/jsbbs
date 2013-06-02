@@ -10,21 +10,26 @@ $MOD('frame.home', function(){
         ['new', '新发文看版']
     ]
     , too_old = $MOD.timeformat.tooOldTS;
+    var submit = {};
 
     function set_sh(){
         $.cookie('sh', 1, {expires: 365});
         $('#flowchart').remove();
     }
+    submit['set_sh'] = set_sh;
 
     function cmp_boards(a, b){
-        return (b.unread - a.unread) || (b.lastpost - a.lastpost);
+        return (b.unread - a.unread) || (a.secnum - b.secnum) ||
+            (b.lastpost - a.lastpost);
     }
 
+    function close_activeboard(kwargs, e){
+        localStorage['f:home:activeboard'] = $('#activeboard').text();
+         $("#activeboard-wrapper").remove();
+    }
+    submit['close-activeboard'] = close_activeboard;
+    
     function setup_type(type){
-        if($G.authed && ((!$G.userfav_a)||($G.userfav_a.length < 5))
-           &&(!localStorage['bool::watched-tut'])){
-            location = '#!tut-2';
-        }
         $api.get_goodboards(type, function(data){
             var status = {};
             if(data.success){
@@ -52,12 +57,20 @@ $MOD('frame.home', function(){
             else{
                 status['sh'] = false;
             }
+            var acb = data.activeboard;
+            if(acb && acb.length){
+                acb = acb[acb.length-1];
+                if(localStorage['f:home:activeboard'] == acb.title ){
+                    acb = null;
+                }
+            }
             render_template('home', {
                 boards: boards,
                 type: type,
                 status: status,
                 www: data.www,
-                map_name: map_name
+                map_name: map_name,
+                activeboard : acb
             });
             if(data.www && data.www.widget){
                 load_widgets(data.www.widgets);
@@ -68,28 +81,18 @@ $MOD('frame.home', function(){
     declare_frame({
         mark: 'home',
         enter: function(kwargs){
+            if($G.authed && ((!$G.userfav_a)||($G.userfav_a.length < 5))
+               &&(!localStorage['bool::watched-tut'])){
+                location = '#!tut-2';
+            }
             if(!kwargs.type){
                 kwargs.type = $G.authed?'fav':'good';
             }
             setup_type(kwargs.type);
             var CookieDate = new Date;
             CookieDate.setFullYear(CookieDate.getFullYear( ) +10);
-            load_widgets([
-                {
-                    "type": "links",
-                    "links": [
-                        ['设置默认使用旧版首页',
-                         ' javascript: confirm("默认使用旧版？") && (document.cookie="love=0; path=/; expires='
-                         + CookieDate.toGMTString() +  '") && (alert("设置成功") , (location="/"))'],
-                        ['恢复默认使用新版',
-                         ' javascript: confirm("默认使用新版？") (document.cookie="love=1; path=/") && alert("设置成功")']
-                    ]
-                }
-            ]);
         },
-        submit: {
-            set_sh: set_sh
-        },
+        submit: submit,
         marktop: 'home'
     });
 
