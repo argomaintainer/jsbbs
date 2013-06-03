@@ -27,7 +27,7 @@
       {{if b.unreadn==-1}}
       <span class="bp-unreadnum-0">=</span>
       {{else}}
-      <span class="bp-unreadnum">${Math.max(20, Number(b.unreadn)+1)}+<br/><small>新发言</small></span>      
+      <span class="bp-unreadnum">${Math.min(20, Number(b.unreadn)+1)}+<br/><small>新发言</small></span>      
       {{/if}}
     </div>
     {{else}}
