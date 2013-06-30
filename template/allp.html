@@ -13,7 +13,7 @@
     <h3>新鲜发言</h3>
   </div>
   {{each(i, b) boards}}
-  {{if !$G.userfav || (b.boardname in $G.userfav) }}
+  {{if !(b.boardname in $G.userfav) }}
   <div class="boards-pill">
     {{if $G.authed }}
     <div class="bp-unreadnum-wrapper {{if b.unreadn==-1}}bp-allread{{else}}bp-c-${b.secnum}{{/if}}">

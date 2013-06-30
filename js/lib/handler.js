@@ -32,7 +32,6 @@ $MOD('frame.allp', function(){
             else{
                 boards = [];
             }
-            
             if(acb && acb.length){
                 acb = acb[acb.length-1];
                 if(localStorage['f:home:activeboard'] == acb.title ){
