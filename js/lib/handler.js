@@ -2139,4 +2139,31 @@ $MOD('frame::admin', function(){
         }
     });
 
+    declare_frame({
+        mark: 'freshmen',
+        submit: submit,
+        enter: function(kwargs){
+            var type = (kwargs.type=='topic')?('topic'):('digest');
+            $api.get_board_info('Freshmen', function(data){
+                var info = data.data;
+                var intro = $MOD.format.format(info.www.widgets[0].text);
+                $api.get_postindex(
+                    'Freshmen', type, 0, function(data){
+                        var digest = data.data.reverse();
+                        $api.get_postindex(
+                            'Freshmen', 'topic', 0, function(data){
+                                var topic = data.data.reverse();
+                                render_template('freshmen', {
+                                    info: info,
+                                    intro: intro,
+                                    type: type,
+                                    digest: digest,
+                                    topic: topic
+                                })
+                        });
+                    });                                         
+            });            
+        }
+    });
+    
 });

@@ -2319,3 +2319,52 @@ a:hover .ftext{
 .bpagination .btn-input{
     height: 29px;
 }
+
+.frame-freshmen #second{
+    display: none;
+}
+
+.frame-freshmen #primary{
+    width: 100%;
+    margin-left: 0;
+}
+    
+.frame-freshmen a.active{
+    color: #555;
+    cursor: default;
+    text-decoration: none;
+}
+
+.freshlist{
+    border-top: 1px solid #eee;
+    margin-bottom: 10px;
+}
+
+.freshli{
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #eee;
+}
+
+.freshnum{
+    background: #4cb;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    color: #fff;
+    display: inline-block;
+    margin-right: 10px;
+    position: absolute;
+}
+
+.freshli-inner{
+    margin-left: 54px;
+}
+
+.freshtitle{
+    text-align: center;
+}
+
+.frame-freshmen embed{
+    margin-left: 104px;
+}

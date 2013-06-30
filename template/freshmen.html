@@ -1,0 +1,76 @@
+<div class="span3">
+  <div class="widget">
+    <div class="widget-header">
+      <h4>新生必读</h4>
+    </div>
+    <div class="freshlist">
+      {{each(i, p) digest}}
+      <div class="freshli">
+        <a target="_blank"
+           href="${url_for_topic(p.filename, 'Freshmen')}">${p.title}</a><br/>
+        <small>${tf_timestamp(p.update)}</small>
+        <br/>
+      </div>
+      {{/each}}            
+    </div>
+  </div>
+  <div class="widget">
+    {{if authed }}
+    <a class="btn btn-success btn-block" data-submit="" href="#">说点什么</a>
+    {{else}}
+    <h3>没有帐号？</h3>
+    <p>
+      <a target="_blank" class="btn btn-success btn-block">新生快速通道</a>
+    </p>
+    <small>登录后即可发帖</small>
+    {{/if}}
+  </div>
+  {{if !window.authed }}
+  <div class="widget loginbox">
+    <div class="widget-header">
+      <h4>登录逸仙时空</h4>
+    </div>
+    <form id="f-login" class="nomargin" data-submit="login">
+      <label>帐号</label>
+      <input type="text" tabindex="1"  class="focus input-block-level" name="userid" placeholder="输入你的帐号 ：-） ">
+      <label>密码</label>
+      <input type="password" tabindex="2" class="input-block-level" name="password" placeholder="以及密码...">
+      <button type="submit" tabindex="3" class="btn">登录</button>
+    </form>
+  </div>
+  {{/if}}
+</div>
+<div class="span9">
+  <div class="cell main-cell">
+    <h3 class="freshtitle">迎新专页</h3>
+    <div>
+      {{html intro }}
+    </div>
+    <br/>
+    <h4>最新话题</h4>
+    <div class="freshlist">
+      {{each(i, p) topic}}
+      <div class="freshli">
+        <div class="bp-unreadnum-wrapper bp-c-1">
+          <span class="bp-unreadnum">
+            ${p.total_reply}<br/>
+            <small>回复</small>
+          </span>      
+        </div>
+        <div class="freshli-inner">
+          <a target="_blank"
+             href="${url_for_topic(p.filename, 'Freshmen')}">${p.title}</a>
+          <br/>
+          <span>${tf_timestamp(p.update)}</span>
+        </div>
+      </div>
+      {{/each}}
+    </div>
+    <div>      
+      <a href="#!board?filename=Freshmen&&view=digest">
+        查看新生交流版更多信息 </a> &nbsp; | &nbsp;
+      <a href="#!">返回逸仙时空首页</a> &nbsp; | &nbsp;
+      <span>最后更新： ${tf_timestamp(digest[0].update)}</span>
+    </div>
+  </div>
+</div>

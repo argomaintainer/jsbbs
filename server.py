@@ -92,5 +92,11 @@ def proxy_request(file):
 def proxy_ajax(file) :
     return proxy_request('ajax/'+file)
 
+@app.route('/bbssignal/<path:file>', methods=["POST"])
+def handler_bbssignal(file):
+    print file
+    print request.form
+    return ''
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", debug=True)
