@@ -3,7 +3,6 @@
     <h3>收藏夹</h3>
   </div>
   {{each(i, b) boards}}
-  {{if !(b.boardname in $G.userfav) }}
   <div class="boards-pill">
     {{if $G.authed }}    
     <div class="bp-unreadnum-wrapper {{if b.unreadn==-1}}bp-allread{{else}}bp-c-${b.secnum}{{/if}}">
@@ -34,7 +33,6 @@
       ${tf_timestamp(b.lastpost)}
     </div>
   </div>
-  {{/if}}
   {{/each}}
 </div>
   
