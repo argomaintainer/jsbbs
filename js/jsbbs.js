@@ -1,9 +1,9 @@
-SIGNV = '2013-07-01-00:48';
+SIGNV = '2013-07-01-00:53';
 NOCACHE = true;
 
 $MOD('jsbbs.main', function(){
 
-    if(!localStorage) localStorage = {};
+    if(!window.localStorage) localStorage = {};
 
     if(window.NOCACHE || SIGNV != localStorage['site:$version']){
         if(!localStorage['tpl:$all'])
