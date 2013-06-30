@@ -35,7 +35,7 @@ $MOD('frame.load_lib', function(){
         }
         console.log('Load lib [' + libname + '] ... ');
         $.ajax({
-            url : 'js/lib/'+ libname + '.js',
+            url : 'js/lib/'+ libname + '.js?_='+SIGNV,
             dataType: "script",
             async: false,
             success: function(data){
