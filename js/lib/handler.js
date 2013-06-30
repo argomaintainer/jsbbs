@@ -1,4 +1,102 @@
-console.log('handler.js');
+$MOD('frame.allp', function(){
+
+    var submit = {};
+
+    function cmp_boards(a, b){
+        return (b.unread - a.unread) || (a.secnum - b.secnum) ||
+            (b.lastpost - a.lastpost);
+    }
+
+    function close_activeboard(kwargs, e){
+        localStorage['f:home:activeboard'] = $('#activeboard').text();
+         $("#activeboard-wrapper").remove();
+    }
+    submit['close-activeboard'] = close_activeboard;
+
+    function format_number(x){
+        x = Number(x);
+        if(x < 10) return 'default';
+        else if(x < 20) return 'success';
+        else if(x < 50) return 'info';
+        else if(x < 80) return 'warning';
+        else return 'important';
+    }
+
+    function load_new(callback){
+        $api.get_goodboards('new', function(data){
+            var acb = data.activeboard;
+            if(data.success){
+                data = data.data;
+                boards = data.boards.sort(cmp_boards);
+            }
+            else{
+                boards = [];
+            }
+            
+            if(acb && acb.length){
+                acb = acb[acb.length-1];
+                if(localStorage['f:home:activeboard'] == acb.title ){
+                    acb = null;
+                }
+            }
+            render_template('allp', {
+                boards: boards,
+                www: data.www,
+                activeboard : acb
+            });
+            if(data.www && data.www.widget){
+                load_widgets(data.www.widgets);
+            }
+            callback();
+        });
+    }
+
+    function load_fav(){
+        if($G.authed){
+            $api.get_goodboards('fav', function(data){
+                var n = $(render_string('allp-fav', data.data ));
+                $('#part-1').replaceWith(n);
+            });
+        }
+    }                            
+
+    function load_focus(){
+        $.get('/ajax/comp/www_home',
+              function(data){
+                  if(data.success){
+                      require_jslib('slides');
+                      var n = $(render_string('focus', data.data));
+                      $('#part-2').replaceWith(n);
+                      $(function(){
+                          $("#slides").slides({
+                              start: Math.floor(
+                                  Math.random() *
+                                      data.data.www.posts.length) + 1
+                          });
+                      });
+                      load_widgets(data.data.www.widgets);
+                  }
+              });
+    }
+
+    declare_frame({
+        mark: 'allp',
+        enter: function(kwargs){
+            if($G.authed && ((!$G.userfav_a)||($G.userfav_a.length < 5))
+               &&(!localStorage['bool::watched-tut'])){
+                location = '#!tut-2';
+            }
+            load_new(function(){
+                load_fav();
+                load_focus();
+            });
+        },
+        submit: submit,
+        marktop: 'home'
+    });
+
+});
+
 
 $MOD('frame.home', function(){
 

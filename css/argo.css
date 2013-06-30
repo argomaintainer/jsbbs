@@ -2122,7 +2122,7 @@ input.file-selector{
 .boards-pill{
     position: relative;
     padding: 10px 0;
-    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
 }
 
 .bp-unreadnum-wrapper{

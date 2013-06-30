@@ -1,0 +1,54 @@
+{{if activeboard }}
+<div id="activeboard-wrapper" class="alert alert-success">
+  <span id="activeboard">${activeboard.title}</span>
+  <a href="${activeboard.href}">查看详情</a>
+  <div class="pull-right">
+    <a href="${url_for_board('posterwall')}">全部广播</a>&nbsp; &nbsp; &nbsp; 
+    <a data-submit="close-activeboard" href="#">关闭</a>
+  </div>
+</div>
+{{/if}}
+<div class="cell main-cell">
+  <div class="cell-header">
+    <h3>新鲜发言</h3>
+  </div>
+  {{each(i, b) boards}}
+  <div class="boards-pill">
+    {{if $G.authed }}
+    <div class="bp-unreadnum-wrapper {{if b.unreadn==-1}}bp-allread{{else}}bp-c-${b.secnum}{{/if}}">
+      {{if b.unreadn==-1}}
+      <span class="bp-unreadnum-0">=</span>
+      {{else}}
+      <span class="bp-unreadnum">${Math.min(20, Number(b.unreadn)+1)}+<br/><small>新发言</small></span>      
+      {{/if}}
+    </div>
+    {{else}}
+    <div class="bp-unreadnum-wrapper bp-c-${b.secnum}"><span class="bp-unreadnum-0">?</span></div>
+    {{/if}}
+    <div class="bp-boards-pill-mid">
+      <div class="bp-title">
+        <span class="bp-boardname"><a href="${url_for_board(b.boardname)}">${b.title}(${b.boardname})</a></span>
+        &nbsp;- 版主: 
+        <ul class="bp-bm">
+          {{each(i, p) b.BM}}
+          <li><a href="${url_for_user(p)}">${p}</a></li>
+          {{/each}}
+        </ul>
+      </div>
+      <div class="bp-postinfo">
+        &nbsp; - <span class="bp-lastpostfile"><a href="${url_for_topic(b.lastfilename, b.boardname)}">${b.lastpostfile}</a></span>
+      </div>
+    </div>
+    <div class="bp-lastupdatetime">
+      ${tf_timestamp(b.lastpost)}
+    </div>
+  </div>
+  {{/each}}
+</div>
+<div class="cell" id="part-1">
+  <p>注册帐号，收藏你喜欢的看版。</p>
+  <p>不错过你和你的同好的任何信息。 </p>
+  <a target="_blank" href="http://bbs.sysu.edu.cn/bbsreg" class="btn btn-success">一分钟注册</a>
+</div>
+<div class="cell" id="part-2">载入热门信息中……</div>
+  
