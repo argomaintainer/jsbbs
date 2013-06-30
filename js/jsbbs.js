@@ -1,4 +1,4 @@
-SIGNV = '2013-07-01-00:40';
+SIGNV = '2013-07-01-00:48';
 NOCACHE = true;
 
 $MOD('jsbbs.main', function(){

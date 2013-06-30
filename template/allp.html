@@ -1,3 +1,10 @@
+{{if $G.authed && $G.authed.u.notauth }}
+<div id="activeboard-wrapper" class="alert">
+  <span id="activeboard">激活你的帐号以获得全部看版发文权限</span>
+  <a href="http://argo.sysu.edu.cn/n/index.html#!topic?boardname=BBS_Help&&filename=M.1372610827.A">查看详情</a>
+  </div>
+</div>
+{{/if}}  
 {{if activeboard }}
 <div id="activeboard-wrapper" class="alert alert-success">
   <span id="activeboard">${activeboard.title}</span>
