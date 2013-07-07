@@ -385,6 +385,31 @@ $MOD('frame::board', function(){
     }
     submit['refresh_current_page'] = refresh_current_page;
 
+
+    submit['setb'] = function(kwargs, e){
+        var self = $(e.target);
+        var data = self.data('boardname');
+        if(data){
+            $('#qboardname').val(data);
+        }
+    }
+
+    submit['see-more'] = function(){
+        $('#see-more').text('加载中...');
+        $api.get_all_boards(function(data){
+            $('#allboards').html(render_string('qp-seemore', data.data));
+            $('#see-more').remove();
+        }, '#allboards');
+    }
+
+    declare_frame({
+        mark: 'quickpost',
+        submit: submit,
+        enter : function(kwargs){
+            render_template('quickpost');
+        }
+    });
+
     submit['newpost'] = function(){
         if(!$G.authed){
             show_alert('请先登录再执行此操作：-）');
@@ -438,7 +463,7 @@ $MOD('frame::board', function(){
             show_alert(ERROR[data.code], 'danger');
         }
     }
-    
+
     submit['publish_post'] = function(kwargs, e){
         if(e.target.tagName == 'FORM'){
             if(!check_pushlish(kwargs, e))
@@ -447,6 +472,24 @@ $MOD('frame::board', function(){
         }
     }
 
+    submit['publish_post2'] = function(kwargs, e){
+        if(e.target.tagName == 'FORM'){
+            if(!check_pushlish(kwargs, e))
+                return;
+            $api.new_post_form(
+                '#new-post-form',
+                function(data){
+                    if(data.success){
+                        show_alert('发表成功！', 'success');
+                        location = url_for_board(kwargs.boardname);
+                    }
+                    else{
+                        show_alert(ERROR[data.code], 'danger');
+                    }                        
+                });
+        }
+    }
+    
     function getCaret(el) { 
         if (el.selectionStart) { 
             return el.selectionStart; 

@@ -1837,7 +1837,7 @@ a[data-submit]:hover{
     list-style-type: none;
     margin: 0;
     padding: 0;
-    width: 224px;
+    width: 222px;
 }
 
 .navlist > li{
@@ -2367,4 +2367,26 @@ a:hover .ftext{
 
 .frame-freshmen embed{
     margin-left: 104px;
+}
+
+.quickpost{
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.postto{
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.postto-container{
+    padding: 0 10px;
+}
+
+.postto-container .more{
+    color: #666;
+}
+
+.editor label{
+    padding: 0 10px;
 }

@@ -1,0 +1,10 @@
+{{each(i, sec) all}}
+<div class="qp-sec">
+  <h5>${sec.secname}</h5>
+  {{each(i, b) sec.boards}}
+  <a data-submit="setb" href="#" class="postto"
+     data-boardname="${b.boardname}">${b.title}</a>
+  {{/each}}
+</div>
+{{/each}}
+    

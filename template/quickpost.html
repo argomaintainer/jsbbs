@@ -1,0 +1,68 @@
+<div class="cell main-cell">
+  <div class="cell-header">
+    <h3>发个贴子</h3>
+  </div>
+  <form data-submit="publish_post2" id="new-post-form">
+    <input type="hidden" name="type" value="new"/>
+    <div class="editor">
+      <div class="editor-group">
+        <label>标题</label>
+        <input name="title" class="input-block-level"
+               type="text" placeholder="写个有吸引力的标题 ..." />        
+      </div>
+      <div class="editor-group">
+        <textarea name="content" rows="18" placeholder="发帖好心情 ：-）" class="input-block-level"></textarea>
+      </div>
+      <div class="editor-group">
+        <label>发往看版：</label>
+        <input type="text" class="span3" id="qboardname"
+               placeholder="发到一个适合的看版..." name="boardname"/>
+        <div class="postto-container">
+          热门看版：<br/>
+          <a data-submit="setb" href="#" class="postto"
+             data-boardname="Lecture">讲座专栏</a>
+          <a data-submit="setb" href="#" class="postto" d
+             ata-boardname="SYSU_Info">中大特快</a>
+          <a data-submit="setb" href="#" class="postto"
+             data-boardname="EastCampus">东校区</a>
+          <a data-submit="setb" href="#" class="postto"
+             data-boardname="ZhuhaiCampus">明珠海聚</a>
+          <a data-submit="setb" href="#" class="postto"
+             data-boardname="SUMS">杏林风采</a> | &nbsp;
+          <a data-submit="setb" href="#" class="postto"
+             data-boardname="Sale">跳蚤市场</a>
+          <a data-submit="setb" href="#" class="postto"
+             data-boardname="Job">人才市场</a>
+          <a data-submit="setb" href="#" class="postto"
+             data-boardname="PartTime">兼职信息</a>
+          <a data-submit="setb" href="#" class="postto"
+             data-boardname="Search">寻人寻物寻租</a>
+          <br/>
+          <a data-submit="setb" href="#" class="postto"
+             data-boardname="Say">不吐不快</a>
+          <a data-submit="setb" href="#" class="postto"
+             data-boardname="Memory">时光流转</a>
+          <a data-submit="setb" href="#" class="postto"
+             data-boardname="Heart">你心我心</a>
+          <a data-submit="setb" href="#" class="postto"
+             data-boardname="Love">爱是我们的责任</a>
+          <a data-submit="setb" href="#" class="postto"
+             data-boardname="Suggest">系统管理大家谈</a>
+          <br/>
+          <a id="see-more" href="#" data-submit="see-more"
+             class="more">&gt;&gt;查看全部看版</a>
+        </div>
+        <div id="allboards"></div>
+      </div>
+      <hr>
+      <div>
+        <button class="btn btn-success">发表文章</button>
+        <span class="help-inline">Ctrl+Enter快速发表</span>
+        <div class="file-uploader pull-right">
+        <input class="file-selector" type="file" name="attach"/>
+        </div>
+      </div>
+      <div id="appender-container"></div>
+    </div>
+  </form>
+</div>
