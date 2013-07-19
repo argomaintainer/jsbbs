@@ -2150,6 +2150,9 @@ $MOD('frame::admin', function(){
                            location.reload(true);
                        }, 1000);
                    }
+                   else{
+                       show_alert(ERROR[data.code] || data.error);
+                   }
                });
     }
 
