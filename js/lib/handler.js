@@ -2137,6 +2137,30 @@ $MOD('frame::admin', function(){
         }
     });
 
+    submit['authinvcode'] = function(){
+        $.post('/ajax/auth/invcode',
+               {
+                   invcode: $('#invcode').val()
+               },
+               function(data){
+                   if(data.success){
+                       show_alert('邀请码激活成功！现在开始畅游逸仙！');
+                       setTimeout(function(){
+                           location.hash = '';
+                           location.reload(true);
+                       }, 1000);
+                   }
+               });
+    }
+
+    declare_frame({
+        mark : 'invcode',
+        submit : submit,
+        enter : function(){
+            render_template('invcode');
+        }
+    });
+
     declare_frame({
         mark: 'freshmen',
         submit: submit,
@@ -2163,5 +2187,5 @@ $MOD('frame::admin', function(){
             });            
         }
     });
-    
+
 });
