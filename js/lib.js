@@ -1,8 +1,16 @@
-define(function(require){
+define(function(require, exports, module){
 
+    var $ = require('jquery');
     var ko = require('knockout');
-    var f = require('lib');
-    
+    var api = require('bbsapi');
+    var vms = {};
+    var session = {};
+
+    window.conf = {
+        version : window.SIGNV,
+        SITENAME : '逸仙时空'
+    };
+
     var localStorage;
     if(window.localStorage){
         localStorage = window.localStorage;
@@ -19,21 +27,11 @@ define(function(require){
                        cache: false,
                        async: false,
                        success: function(data){
-                           localStorage[tpl_key] = data;
+                           localStorage[key] = data;
                        }
                    });
         };
-        return localStorage[tpl_key];
-    }
-
-    function new_modal(vmname, data, callback){
-        require.async('vm/'+modname, function(vmc){
-            var dom = $(get_tpl('template/vm/'+vmname));
-            var vm = new vmc(data);
-            ko.applyBindings(dom, vm);
-            dom.data('vm', vm);
-            callback(dom);
-        });
+        return localStorage[key];
     }
 
     function before_remote(){
@@ -43,13 +41,28 @@ define(function(require){
     }
 
     var urloffset = (location.protocol + "//" + location.host
-                     + "/n/index.html#!").length;    
+                     + "/n/index.html#!").length;
+
+    function async_vm(mm, callback){
+        if(!(mm.$name in vms)){
+            console.error('No sush ViewModel. /%s/', mm.$name);
+            return;
+        }
+        var vmc = vms[mm.$name];
+        vmc.async_init(mm, function(data){
+            var dom = $(get_tpl('vm/'+mm.$name));
+            var vm = new vmc(data);
+            ko.applyBindings(vm, dom[0]);
+            if(vm.myinfo){
+                console.log(vm.myinfo, dom.html());
+            };
+            dom.data('vm', vm);
+            callback(dom);
+        });
+    }
 
     function route_go(url){
         var i, m, mm;
-        if(!url){
-            url = location.href.substring(urloffset);
-        }
         for(i=0; i<routes.length; ++i){
             if(m = url.match(routes[i][0])){
                 mm = routes[i][1](m);
@@ -58,20 +71,33 @@ define(function(require){
         }
         if(mm){
             var br = before_remote();
-            var vmc = window[mm.$name];
-            vmc.async_init(mm, function(data){
-                var dom = $(get_tpl('template/'+mm.$name));
+            async_vm(mm, function(dom){
                 after_remote(br);
-                ko.applyBindings(dom, data);
-                $('#main').replaceWith(dom);
+                $('#container').replaceWith(dom);
             });
         }
         else{
-            console.error('Wrong Route');
+            console.error('Wrong Route. /%s/', url);
         }
     }
 
+    function startup(){
+        $(function(){
+            async_vm({ $name : 'TopbarVM' },
+                     function(dom){
+                         $('#topbar').replaceWith(dom);
+                         url = location.href.substring(urloffset);
+                         route_go(url);
+                     });
+        });
+    }        
 
+    var single_url = {
+        'allboards' : 'AllBoardsVM',
+        'admin' : 'AdminVM',
+        '' : 'IndexVM'
+    };
+    
     var routes = [
         [/^~(\w{2,20})\/(\w{2,20})\/?$/, function(match){
             return {
@@ -97,7 +123,7 @@ define(function(require){
         }],
         [/^(allboards|admin|)\/?$/, function(match){
             return {
-                $name : single_url[match[1]];
+                $name : single_url[match[1]]
             };
         }],
         [/^profile\/(\w{2,20})\/?$/, function(match){
@@ -122,10 +148,12 @@ define(function(require){
         }],
     ];
 
-    return {
+    return module.exports = {
         get_tpl : get_tpl,
-        new_modal :  new_modal,
-        route_go : route_go
+        route_go : route_go,
+        vms : vms,
+        session : session,
+        startup : startup
     };
         
 });                

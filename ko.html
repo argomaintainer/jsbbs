@@ -20,12 +20,36 @@
     <!--       type="text/css" /> -->
   </head>
   <body>
-    <div id="topbar"></div>
-    <div id="container"></div>
+    <div id="app">
+      <div i="app" data-bind="text: x"></div>
+      <div data-bind="template: { name : 'Layout' + layout() }"></div>
+    </div>
+    <script type="text/html" id="LayoutNormal">
+      <div i="layout" data-bind="text: x"></div>
+      <div data-bind="template: { name : 'content', data: content }"></div>
+      <div data-bind="template: { name : 'topbar', data: topbar }"></div>
+    </script>
+    <script type="text/html" id="Layout2">
+      <div data-bind="text: t"></div>
+    </script>
+    <script type="text/html" id="topbar">
+      <div i="topbar" data-bind="text: x"></div>
+    </script>
+    <script type="text/html" id="content">
+      <div i="content" data-bind="text: x"></div>
+      <div data-bind="text: pagecontent"></div>
+      <div>
+        <div data-bind="template: { name : 'left', data: left}"></div>
+      </div>
+    </script>
+    <script type="text/html" id="left">
+      <div i="left" data-bind="text: x"></div>
+      <p data-bind="text: sidebarname"></p>
+    </script>
     <script type="text/javascript" src="js/seajs/sea.js"></script>
     <script type="text/javascript">
       (function(){
-          window.SIGNV = 32;
+          window.SIGNV = 30;
           window.NOCACHE = 1;
           seajs.config({
               base : './js',
@@ -37,7 +61,7 @@
                   [ /(.*(?:css|js))$/i, '$1?' + SIGNV]
               ]              
           });
-          seajs.use(['lib', 'vm'], function(l){ l.startup(); });
+          seajs.use('main');
       })();
     </script>
 
