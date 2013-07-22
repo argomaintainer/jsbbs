@@ -549,14 +549,14 @@ table {
     overflow: visible;
     position: fixed;
     width: 100%;
-    font-family : "华文仿宋", "微软雅黑", "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti, sans-serif; /* 1 */
+    font-family : "华文仿宋", "宋体", "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti, sans-serif; /* 1 */
     -ms-text-size-adjust: 100%; /* 2 */
     -webkit-text-size-adjust: 100%; /* 2 */
     z-index: 5;
 }
 
 .navbar-inner{
-    min-height: 48px;
+    min-height: 40px;
     padding-right: 20px;
     padding-left: 20px;
     background: rgb(29, 63, 27);
@@ -579,15 +579,15 @@ table {
     float: left;
     color: #fff;
     text-decoration: none;
-    font-size: 27px;
-    line-height: 43px;
+    font-size: 22px;
+    line-height: 35px;
     margin-bottom: 5px;
     padding-left: 30px;
     padding-right: 30px;
 }
 
 .navbar .nav{
-    margin-top: 10px;
+    margin-top: 6px;
 }
 
 .navbar{
@@ -632,8 +632,6 @@ table {
 /* Wall */
 
 #wall{
-    max-height: 400px;
-    overflow: hidden;
     position: relative;
 }
 
@@ -654,6 +652,7 @@ table {
     font-size: 30px;
     line-height: 2;
     padding-right: 20px;
+    font-family : "华文仿宋", "宋体", "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti, sans-serif; /* 1 */
 }
 
 .notifi{
@@ -666,7 +665,7 @@ table {
 .notifi a{
     color: #fff;
     font-size: 18px;
-    line-height: 45px;
+    line-height: 40px;
     text-decoration: none;
     display: block;
 }
@@ -677,7 +676,7 @@ table {
 
 .notifi-btn{
     font-size: 14px;
-    line-height: 45px;
+    line-height: 40px;
     position: absolute;
     right: 20px;
     bottom: 0;
@@ -736,11 +735,11 @@ table {
 
 .w2 .whead > h4{
     text-align: center;
-    border-bottom: 1px solid rgb(87, 114, 86);
+    border-bottom: 1px solid rgb(194, 204, 194);
 }
 
 .w2{
-    border-bottom: 1px solid rgb(87, 114, 86);
+    border-bottom: 1px solid rgb(194, 204, 194);
 }
 
 .whead > h4{
@@ -749,7 +748,7 @@ table {
     font-weight: normal;
     border-bottom: 2px solid rgb(194, 204, 194);
     line-height: 2;
-    margin: 5px 0;
+    margin: 0;
 }
 
 .whead-ass{
@@ -777,14 +776,15 @@ table {
     margin-bottom: 20px;
 }
 
+.w2{
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
 .indexright{
     background-color: rgb(170, 184, 169);
     background-color: rgba(170, 184, 169, .1);
     margin: 20px 15px;
-}
-
-.w3 h4{
-    margin: 0;
 }
 
 .avatar-content{
@@ -877,6 +877,8 @@ table {
 
 .line{
     width: 100%;
+    max-height: 2em;
+    overflow: hidden;
 }
 
 .line:before, .line:after{
