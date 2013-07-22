@@ -1,20 +1,20 @@
 <div id="topbar">
-  <div class="topbar">
-    <div class="topbar-inner">
+  <div class="navbar">
+    <div class="navbar-inner">
       <div class="container">
         <a class="brand" data-bind="text: conf.SITENAME"></a>
-        <ul class="pull-right">
+        <ul class="nav pull-right">
           <li data-bind="css : { on : tab() == 'home' }">
             <a href="#/">首页</a></li>
           <li data-bind="css : { on : tab() == 'allboards' }">
             <a href="#/allboards">全部看版</a></li>
           <!-- ko if : udata -->
           <li data-bind="css : { on : tab() == 'mypost' }">
-            <a href="#/mypost">我的发帖</a>
-            <span data-bind="text: unread()"></span></li>
+            <a href="#/mypost">我的发帖 <span class="alert" data-bind="text: '('+unread()+')', visible: unread() > 0"></span> </a>
+          </li>
           <li data-bind="css : { on : tab() == 'mail' }">
             <a href="#/mail/l/0">我的信箱</a></li>
-          <li><span data-bind="text: udata().userid"></span></li>
+          <li><a data-bind="text: udata().userid"></a></li>
           <!-- /ko -->
         </ul>
       </div>

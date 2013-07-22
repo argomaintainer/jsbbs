@@ -1,10 +1,15 @@
 define(function(require, exports, module){
 
+    window.localStorage.clear();
+
     var $ = require('jquery');
     var ko = require('knockout');
     var api = require('bbsapi');
+    var format = require('format');
     var vms = {};
     var session = {};
+
+    require('../css/style.css');
 
     window.conf = {
         version : window.SIGNV,
@@ -16,6 +21,19 @@ define(function(require, exports, module){
         localStorage = window.localStorage;
     }else{
         localStorage = {};
+    }
+
+    var url = {
+        avatar : function(userid){ return 'http://argo.sysu.edu.cn/avatar/'+userid; },
+        user : function(userid){ return '#!/@'+userid; },
+        post : function(boardname, postid){ return '#!~'+boardname+'/'+postid;},
+        board : function(boardname){ return '#!~'+boardname; },
+        profile : function(){ return '#!/profile/'}
+    }, k;
+    for(k in url){
+        if(url.hasOwnProperty(k)){
+            window['url_for_'+k] = url[k]
+        }
     }
     
     function get_tpl(tplname){
@@ -53,9 +71,6 @@ define(function(require, exports, module){
             var dom = $(get_tpl('vm/'+mm.$name));
             var vm = new vmc(data);
             ko.applyBindings(vm, dom[0]);
-            if(vm.myinfo){
-                console.log(vm.myinfo, dom.html());
-            };
             dom.data('vm', vm);
             callback(dom);
         });
@@ -73,7 +88,7 @@ define(function(require, exports, module){
             var br = before_remote();
             async_vm(mm, function(dom){
                 after_remote(br);
-                $('#container').replaceWith(dom);
+                $('#frame').replaceWith(dom);
             });
         }
         else{
@@ -82,12 +97,27 @@ define(function(require, exports, module){
     }
 
     function startup(){
+        var over = 1;
+        var dom1 = null;
+        var dom2 = null;
+        function check(){
+            if(--over<0){
+                $('#topbar').replaceWith(dom1);
+                $('#wall').replaceWith(dom2);
+                url = location.href.substring(urloffset);
+                route_go(url);
+            }
+        }                
         $(function(){
             async_vm({ $name : 'TopbarVM' },
                      function(dom){
-                         $('#topbar').replaceWith(dom);
-                         url = location.href.substring(urloffset);
-                         route_go(url);
+                         dom1 = dom;
+                         check();                         
+                     });
+            async_vm({ $name : 'WallVM' },
+                     function(dom){
+                         dom2 = dom;
+                         check();
                      });
         });
     }        
@@ -148,12 +178,25 @@ define(function(require, exports, module){
         }],
     ];
 
+    window.DEBUG = true;
+    if(window.DEBUG){
+        window.$api = api;
+        window.$ = $;
+        window._ = function(){
+            console.log.apply(console, arguments);
+        }
+    }
+    
     return module.exports = {
         get_tpl : get_tpl,
         route_go : route_go,
         vms : vms,
         session : session,
-        startup : startup
+        startup : startup,
+        localStorage : localStorage ,
+        json_decode : $.parseJSON,
+        format : format.format,
+        otime : format.niceTimeWord
     };
         
 });                

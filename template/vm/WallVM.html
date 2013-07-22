@@ -1,0 +1,14 @@
+<div id="wall">
+  <img class="wall-img" data-bind="attr: { src: poster }"/>
+  <div class="wall-text">
+    <div class="wall-weather">
+      明日 24~26 ℃ 晴 微风
+    </div>
+    <!-- ko if : message -->
+    <div class="notifi">
+      <a data-bind="text: message, attr: {href : url}"></a>
+      <span class="notifi-btn">关闭该通知</span>
+    </div>
+    <!-- /ko -->
+  </div>
+</div>

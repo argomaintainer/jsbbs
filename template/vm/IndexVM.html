@@ -1,3 +1,143 @@
-<div id="container">
-  <span data-bind="text: hotman().length"></span>
+<div id="frame">
+  <div class="row">
+    <div class="span3">
+      <!-- ko if : udata() -->
+      <div class="w0">
+        <button class="btn quickpost">快速发帖</button>
+      </div>
+      <div class="w1">
+        <div class="myinfo">
+          <div class="avatar-content">
+            <img data-bind="attr : { src: url_for_avatar(userid()) }" />
+            <a data-bind="attr : { href: url_for_profile() }, text : userid"></a>
+          </div>
+          <ul class="mynum">
+            <li class="first">
+              <span data-bind="text : postnum"></span>发过贴子</li>
+            <li><span data-bind="text : votenum"></span>得票数</li>
+            <li>
+              <span data-bind="text : favnum"></span>收藏看版</li>
+          </ul>
+          <ul class="mynotifi">
+            <li><a data-bind="text : unread, attr: {href : '#'}"></a> 条未读信息</li>
+          </ul>
+        </div>
+      </div>
+      <div class="w1">
+        <div class="whead">
+          <h4>名人堂</h4>
+          <a class="head-btn" href="#">查看全部</a>
+        </div>
+        <p class="whead-ass">得票数前100随机抽取的5人</p>
+        <ul class="hotman" data-bind="foreach: { data : hotman, as : 'p' }">
+          <li>
+            <a class="hotman-userid"
+               data-bind="attr : { href : url_for_user(p[0]) }, text: p[0]"></a>
+            <div class="line">
+              <span class="left fade" data-bind="text: p[1] + '次发帖'"></span>
+              <span class="right fade" data-bind="text: p[2] + '票'"></span>
+            </div>
+          </li>
+        </ul>      
+      </div>
+      <!-- /ko -->
+    </div>
+    <div class="span5">
+      <div class="w2">
+        <div class="whead">
+          <h4>收藏夹</h4>
+        </div>
+        <ul class="list2 favlist" data-bind="foreach: fav">
+          <li data-bind="css: {first: $index()==0}">
+            <div>
+              <span class="favlist-boardname"
+                    data-bind="text: '< '+ title+'('+boardname+')' + ' >'"></span>
+              - 版主: <span data-bind="foreach: { data: BM, as: 'p' }"
+                            class="favlist-bm">
+                <a data-bind="href: url_for_user(p), text: p"></a>
+            </div>
+            <div class="line">
+              <span class="left">
+                最新: <a data-bind="attr : { href : url_for_post(boardname,newest[1])}, text : newest[0]"></a>
+              </span>
+              <span data-bind="text: otime(newest[2])" class="right"></span>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="w2">
+        <div class="whead">
+          <h4>新鲜发言</h4>
+        </div>
+        <ul class="list2 list-c newpostlist" data-bind="foreach: newpost">
+          <li data-bind="css: {first: $index()==0}">
+            <div class="list-li-c">
+              <div class="line">
+                <a class="left posttitle" data-bind="attr: {href: url_for_post(board, postid)}, text: title"></a>
+                <span class="right" data-bind="text: votenum + '票'"></span>
+              </div>
+              <div class="line">
+                <span class="left">
+                  -form <a data-bind="attr: {href: url_for_board(board)},
+                                      text: boardtitle"></a> - by
+                  <a data-bind="attr: { href: url_for_user(author)},
+                                text: author"></a>
+                </span>
+                <span data-bind="text: otime(posttime)" class="right"></span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="span4">
+      <div class="w3">
+        <div class="whead">
+          <h4>今日十大</h4>
+        </div>
+        <ul class="topten list2" data-bind="foreach: topten">
+          <li data-bind="css: {first: $index()==0}">
+            <div class="list-li-c">
+              <div class="line">
+                <a class="left posttitle" data-bind="attr: {href: url_for_post(board, postid)}, text: title"></a>
+                <span class="right" data-bind="text: votenum + '票'"></span>
+              </div>
+              <div class="line">
+                <span class="left">
+                  -form <a data-bind="attr: {href: url_for_board(board)},
+                                      text: boardtitle"></a>
+                </span>
+                <span data-bind="text: otime(posttime)" class="right"></span>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <div class="w3">
+        <div class="whead">
+          <h4>推荐文章</h4>
+        </div>
+        <ul class="topten list2" data-bind="foreach: goodpost">
+          <li data-bind="css: {first: $index()==0}">
+            <div class="list-li-c">
+              <div class="line">
+                <a class="left posttitle" data-bind="attr: {href: url_for_post(board, postid)}, text: title"></a>
+                <span class="right" data-bind="text: votenum + '票'"></span>
+              </div>
+              <div class="line">
+                <span class="left">
+                  -form <a data-bind="attr: {href: url_for_board(board)},
+                                      text: boardtitle"></a> - by
+                  <a data-bind="attr: { href: url_for_user(author)},
+                                text: author"></a>
+                </span>
+                <span data-bind="text: otime(posttime)" class="right"></span>
+              </div>
+              <p class="summary gray" data-bind="text: summary"></p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
 </div>
