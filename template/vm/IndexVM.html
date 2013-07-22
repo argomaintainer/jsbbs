@@ -3,7 +3,7 @@
     <div class="span3">
       <!-- ko if : udata() -->
       <div class="w0">
-        <button class="btn quickpost">快速发帖</button>
+        <button class="btn quickpost">发个贴子</button>
       </div>
       <div class="w1">
         <div class="myinfo">
@@ -96,7 +96,7 @@
           <div class="whead">
             <h4>今日十大</h4>
           </div>
-          <ul class="topten list2" data-bind="foreach: topten">
+          <ul class="topten list3" data-bind="foreach: topten">
             <li data-bind="css: {first: $index()==0}">
               <div class="list-li-c">
                 <div class="line">
@@ -118,7 +118,7 @@
           <div class="whead">
             <h4>推荐文章</h4>
           </div>
-          <ul class="topten list2" data-bind="foreach: goodpost">
+          <ul class="topten list3" data-bind="foreach: goodpost">
             <li data-bind="css: {first: $index()==0}">
               <div class="list-li-c">
                 <div class="line">

@@ -723,7 +723,7 @@ table {
     background: rgb(122, 153, 123);
     color: #fff;
     margin: 20px 10%;
-    font-size: 17px;
+    font-size: 18px;
     width: 80%;
 }
 
@@ -908,7 +908,11 @@ table {
     border-top: 1px solid rgb(225, 231, 224);
 }
 
-.list2{
+.list3 li{
+    padding: 5px 10px;
+}
+
+.list2, .list3{
     color: rgb(170, 184, 169);
     line-height: 2;
     font-size: 13px;
