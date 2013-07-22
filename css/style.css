@@ -549,7 +549,7 @@ table {
     overflow: visible;
     position: fixed;
     width: 100%;
-    font-family : "华文仿宋", "宋体", "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti, sans-serif; /* 1 */
+    font-family : "华文仿宋", "宋体", sans-serif; /* 1 */
     -ms-text-size-adjust: 100%; /* 2 */
     -webkit-text-size-adjust: 100%; /* 2 */
     z-index: 5;
@@ -652,7 +652,7 @@ table {
     font-size: 30px;
     line-height: 2;
     padding-right: 20px;
-    font-family : "华文仿宋", "宋体", "Helvetica Neue", "Luxi Sans", "DejaVu Sans", Tahoma, "Hiragino Sans GB", STHeiti, sans-serif; /* 1 */
+    font-family : "华文仿宋", "宋体", sans-serif; /* 1 */
 }
 
 .notifi{
