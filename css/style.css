@@ -771,7 +771,20 @@ table {
 }
 
 .w1{
-    padding: 10px;
+    padding: 3px 10px 20px 10;
+    background-color: rgb(170, 184, 169);
+    background-color: rgba(170, 184, 169, .1);
+    margin-bottom: 20px;
+}
+
+.indexright{
+    background-color: rgb(170, 184, 169);
+    background-color: rgba(170, 184, 169, .1);
+    margin: 20px 15px;
+}
+
+.w3 h4{
+    margin: 0;
 }
 
 .avatar-content{
@@ -779,6 +792,7 @@ table {
     padding-left: 90px;
     min-height: 50px;
     margin-bottom: 20px;
+    padding-top: 20px;
 }
 
 .avatar-content img{

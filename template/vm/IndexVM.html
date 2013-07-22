@@ -91,52 +91,54 @@
       </div>
     </div>
     <div class="span4">
-      <div class="w3">
-        <div class="whead">
-          <h4>今日十大</h4>
+      <div class="indexright">
+        <div class="w3">
+          <div class="whead">
+            <h4>今日十大</h4>
+          </div>
+          <ul class="topten list2" data-bind="foreach: topten">
+            <li data-bind="css: {first: $index()==0}">
+              <div class="list-li-c">
+                <div class="line">
+                  <a class="left posttitle" data-bind="attr: {href: url_for_post(board, postid)}, text: title"></a>
+                  <span class="right" data-bind="text: votenum + '票'"></span>
+                </div>
+                <div class="line">
+                  <span class="left">
+                    -form <a data-bind="attr: {href: url_for_board(board)},
+                                        text: boardtitle"></a>
+                  </span>
+                  <span data-bind="text: otime(posttime)" class="right"></span>
+                </div>
+              </div>
+            </li>
+          </ul>
         </div>
-        <ul class="topten list2" data-bind="foreach: topten">
-          <li data-bind="css: {first: $index()==0}">
-            <div class="list-li-c">
-              <div class="line">
-                <a class="left posttitle" data-bind="attr: {href: url_for_post(board, postid)}, text: title"></a>
-                <span class="right" data-bind="text: votenum + '票'"></span>
+        <div class="w3">
+          <div class="whead">
+            <h4>推荐文章</h4>
+          </div>
+          <ul class="topten list2" data-bind="foreach: goodpost">
+            <li data-bind="css: {first: $index()==0}">
+              <div class="list-li-c">
+                <div class="line">
+                  <a class="left posttitle" data-bind="attr: {href: url_for_post(board, postid)}, text: title"></a>
+                  <span class="right" data-bind="text: votenum + '票'"></span>
+                </div>
+                <div class="line">
+                  <span class="left">
+                    -form <a data-bind="attr: {href: url_for_board(board)},
+                                        text: boardtitle"></a> - by
+                    <a data-bind="attr: { href: url_for_user(author)},
+                                  text: author"></a>
+                  </span>
+                  <span data-bind="text: otime(posttime)" class="right"></span>
+                </div>
+                <p class="summary gray" data-bind="text: summary"></p>
               </div>
-              <div class="line">
-                <span class="left">
-                  -form <a data-bind="attr: {href: url_for_board(board)},
-                                      text: boardtitle"></a>
-                </span>
-                <span data-bind="text: otime(posttime)" class="right"></span>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div class="w3">
-        <div class="whead">
-          <h4>推荐文章</h4>
+            </li>
+          </ul>
         </div>
-        <ul class="topten list2" data-bind="foreach: goodpost">
-          <li data-bind="css: {first: $index()==0}">
-            <div class="list-li-c">
-              <div class="line">
-                <a class="left posttitle" data-bind="attr: {href: url_for_post(board, postid)}, text: title"></a>
-                <span class="right" data-bind="text: votenum + '票'"></span>
-              </div>
-              <div class="line">
-                <span class="left">
-                  -form <a data-bind="attr: {href: url_for_board(board)},
-                                      text: boardtitle"></a> - by
-                  <a data-bind="attr: { href: url_for_user(author)},
-                                text: author"></a>
-                </span>
-                <span data-bind="text: otime(posttime)" class="right"></span>
-              </div>
-              <p class="summary gray" data-bind="text: summary"></p>
-            </div>
-          </li>
-        </ul>
       </div>
     </div>
   </div>
