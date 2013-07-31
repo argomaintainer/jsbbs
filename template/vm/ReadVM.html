@@ -1,0 +1,160 @@
+<div id="frame">
+  <div class="row">
+    <div class="span3">
+      <div class="w0">
+        <button class="btn quickpost">发个贴子</button>
+      </div>
+      <div class="bookmark">
+        <div class="myinfo">
+          <div class="avatar-content">
+            <img data-bind="attr : { src: url_for_avatar(userid()) }" />
+            <a data-bind="attr : { href: url_for_profile() }, text : userid"></a>
+          </div>
+        </div>
+
+        <ul class="bookmarklist">
+          <li><a href="#!"><i class="icon-home"></i> 首页</a></li>
+          <!-- ko foreach : bookmarks -->
+          <!-- ko if : $data.seccode == $root.bk_cursor() -->
+          <li>
+            <a>
+              <i class="icon-chevron-down"></i>
+              <span data-bind="text: $data.secname"></span>
+            </a>
+            <ul class="bk_open" data-bind="foreach : $root.bk_open">
+              <li data-bind="css:{open: $root.board().filename==$data.filename}">
+                <a data-bind="text: $data.title,
+                              click: function(){$root.open_board($data.filename)},
+                              attr: {href: url_for_board($data.boardname)}">
+                </a>
+              </li>
+            </ul>
+          </li>
+          <!-- /ko -->
+          <!-- ko ifnot : $data.seccode == $root.bk_cursor() -->
+          <li>
+            <a data-bind="click:function(){$root.open_section($data.seccode)}">
+              <i class="icon-chevron-right"></i>
+              <span data-bind="text: $data.secname"></span>
+            </a>
+          </li>
+          <!-- /ko -->
+          <!-- /ko -->
+        </ul>
+      </div>
+    </div>
+    <div class="span9">
+      <!-- ko if : tab() == 'r' -->
+      <!-- /ko -->
+      <!-- ko if : tab() == 'l' -->
+      <div class="board-l-container">
+        <div class="board-l-header">
+          <h2 data-bind="text: board().filename"></h2>
+          <span class="bm">
+            -版主 :
+            <ul data-bind="foreach: board().BM">
+              <li><a data-bind="text: $data,
+                                attr: {href: url_for_user($data)}"></a></li>
+            </ul>
+          </span>
+        </div>
+        <div class="board-l-toolbar">
+          <button data-bind="click: bookboard"
+                  class="abtn"><i class="icon-star"></i> 收藏该版</button>
+          &nbsp; &nbsp; &nbsp; 
+          <button data-bind="click: newpost"
+                  class="abtn">&lt; 发表话题 &gt;</button>
+          <button data-bind="click: clearunread"
+                  class="abtn">&lt; 清除所有未读标记 &gt;</button>
+        </div>
+        <div class="board-l-viewtabs btabs">
+          <ul>
+            <li data-bind="css: {active: board_view()=='t'}"><a href="" data-bind="click: settopicview">话题</a></li>
+            <li data-bind="css: {active: board_view()=='p'}"><a href="" data-bind="click: setnormalview">发言</a></li>
+            <li data-bind="css: {active: board_view()=='d'}"><a href="" data-bind="click: setdigestview">文摘</a></li>
+          </ul>
+        </div>
+        <!-- ko if: board_view() == 't' -->
+        <div class="board-l-topiclist">
+          <ul data-bind="foreach : board_tlist()">
+            <li>
+              <div class="avatar">
+                <img data-bind="attr: {src: url_for_avatar($data.owner)}"/>
+              </div>
+              <div class="list-content">
+                <div class="list-li-c">
+                  <div class="line">
+                    <a data-bind="text: $data.title, attr: {href:
+                                  url_for_post($root.boardname(),
+                                  $data.filename)}" class="posttitle"></a>
+                    <span class="right"
+                          data-bind="text: $data.votenum + ' 票'"></span>
+                  </div>
+                  <div class="line">
+                    <span>
+                      -by <a data-bind="text: $data.owner, attr: {href:
+                                        url_for_user($data.owner)}"></a>
+                      • <span data-bind="text: $data.replynum + '条回复'"></span>
+                    </span>
+                    <span data-bind="text: otime($data.update)"
+                          class="right"></span>                    
+                  </div>                    
+                </div>                    
+              </div>
+            </li>
+          </ul>
+        </div>
+        <!-- /ko -->
+        <!-- ko if: board_view() == 'p' -->
+        <div class="board-l-postlist">
+          <ul data-bind="foreach : board_plist_ord()">
+            <li>
+              <div class="postgroup">
+                <span data-bind="text: $data[0].title"
+                      class="postgroup-header"></span>
+                <ul class="postgroup-content" data-bind="foreach: $data">
+                  <li class="row" data-bind="css: { first : $index() == 0}" >
+                    <div class="left">
+                      <img data-bind="attr: {src: url_for_avatar(owner)}" />
+                      <div class="title-outer unread">
+                        <a data-bind="attr: {href: url_for_post($root.boardname(),
+                                      filename)}, text: $data.title"></a>
+                      </div>
+                    </div>
+                    <div class="info right">
+                      -by <a data-bind="attr: {href: url_for_user(owner)}, text:
+                                        owner"></a>
+                      • <span data-bind="text: otime(update)"></span>
+                    </div>
+                  </li>
+                </ul>                  
+              </div>
+            </li>
+          </ul>
+        </div>
+        <!-- /ko -->
+        <!-- ko if: board_view() == 'd' -->
+        <div class="board-l-digestlist">
+          <ul data-bind="foreach : board_dlist()">
+            <li class="row">
+              <div class="left">
+                <img data-bind="attr: {src: url_for_avatar(owner)}" />
+                <div class="title-outer unread">
+                  <a data-bind="attr: {href: url_for_post($root.boardname(),
+                                filename)}, text: title"></a>
+                </div>
+              </div>
+              <div class="info right">
+                -by <a data-bind="attr: {href: url_for_user(owner)}, text:
+                                  owner"></a>
+                • <span data-bind="text: otime(update)"></span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <!-- /ko -->
+      </div>
+      <!-- /ko -->
+    </div>
+  </div>
+</div>

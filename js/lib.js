@@ -10,6 +10,7 @@ define(function(require, exports, module){
     var session = {};
 
     require('../css/style.css');
+    require('../font-awesome/css/font-awesome.min.css');
 
     window.conf = {
         version : window.SIGNV,
@@ -69,6 +70,7 @@ define(function(require, exports, module){
         var vmc = vms[mm.$name];
         vmc.async_init(mm, function(data){
             var dom = $(get_tpl('vm/'+mm.$name));
+            console.log(mm.$name, dom[0]);
             var vm = new vmc(data);
             ko.applyBindings(vm, dom[0]);
             dom.data('vm', vm);
@@ -134,7 +136,7 @@ define(function(require, exports, module){
                 $name : 'ReadVM',
                 boardname : match[1],
                 postid : match[2],
-                tab : ''
+                tab : 'r'
             };
         }],
         [/^~(\w{2,20})\/([tpd])\/(\d{2,20})\/?$/, function(match){
@@ -142,7 +144,8 @@ define(function(require, exports, module){
                 $name : 'ReadVM',
                 boardname : match[1],
                 startindex : match[3],
-                tab : match[2]
+                tab : 'l',
+                view : match[2]
             };
         }],
         [/^@(\w{2,20})\/?$/, function(match){

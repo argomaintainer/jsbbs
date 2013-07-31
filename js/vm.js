@@ -6,6 +6,7 @@ define(function(require, exports, module){
     var api = require('bbsapi');
     var ko = require('knockout');
     var localStorage = lib.localStorage;
+    require('../data');
 
     session.udata = null;
     function resolve_user(){
@@ -50,9 +51,11 @@ define(function(require, exports, module){
         this.message = ko.observable('[10.10号逸仙时空招新，欢迎你来]');
         this.url = ko.observable('1.png');
     }
+
     WallVM.async_init = function(mm, callback){
         callback({});
     }
+
     vms.WallVM = WallVM;
 
     function IndexVM(data){
@@ -71,145 +74,149 @@ define(function(require, exports, module){
         this.votenum = ko.observable(10);
         this.unread = ko.observable(0);
     };
+
     IndexVM.async_init = function(mm, callback){
-        var ret = {};
-        ret.myinfo = {
-            'udata' : session.udata,
-            'postnum' : 10,
-            'votenum' : 7,
-            'favnum' : 18,
-            'unread' : 0
-        };
-        ret.hotman = [
-            ['liuzhipeng', 100, 20],
-            ['LTaoist', 80, 190],
-            ['yaoyao', 75, 99],
-            ['Jasison', 64, 99],
-            ['LoL', 51, 34],
-        ];
-        ret.fav = [
-            {
-                boardname : 'ClassMusic',
-                title : '古典音乐',
-                BM : ['chenbt'],
-                newest : ['写给ClassMusic', 'm2', 201122334],
-            },
-            {
-                boardname : 'Programming',
-                title : '编程技巧',
-                BM : ['gcc', 'TigerSoldier'],
-                newest : ['第一天准备开始干活！', '1', 201122334],
-            },
-            {
-                boardname : 'Game',
-                title : '电脑游戏乐园',
-                BM : ['lyj'],
-                newest : ['一将成名', 'm4', 201122334],
-            },
-        ];
-        ret.newpost = [
-            {
-                postid : '1',
-                title : '有木有人看了小时代的，觉得怎样呢？',
-                votenum : 3,
-                board : 'BBS_Help',
-                boardtitle : 'BBS求助',
-                author : 'liuzhipeng',
-                posttime : '222220001'
-            },
-            {
-                postid : '2',
-                title : '工学院交通工程学科',
-                votenum : 13,
-                board : 'gongxueyuan',
-                boardtitle : '工学院',
-                author : 'zhaoer',
-                posttime : '23322220001'
-            },
-            {
-                postid : '3',
-                title : '南沙区机关招聘雇员数名',
-                votenum : 3,
-                board : 'job',
-                boardtitle : '人才市场',
-                author : 'Jedediah',
-                posttime : '422220001'
-            },                
-        ];
-        ret.newpost.push.apply(ret.newpost, ret.newpost);
-        ret.newpost.push.apply(ret.newpost, ret.newpost);
-        ret.topten = [
-            {
-                postid : '14',
-                title : '在深圳的家庭支出',
-                votenum : 14,
-                board : 'Employee',
-                boardtitle : '上班一族',
-                author : 'Jedediah',
-                posttime : '422220001'
-            },                
-            {
-                postid : '14',
-                title : '其实最烦的是午休敲键盘点鼠标的声音',
-                votenum : 14,
-                board : 'Say',
-                boardtitle : '不吐不快',
-                author : 'Jedediah',
-                posttime : '222220001'
-            },                
-            {
-                postid : '19',
-                title : '矛盾',
-                votenum : 30,
-                board : 'Joke',
-                boardtitle : '每天笑一笑',
-                author : 'z',
-                posttime : '422220001'
-            },                
-            {
-                postid : '17',
-                title : '搬凳子',
-                votenum : 19,
-                board : 'ACMICPC',
-                boardtitle : '国际大学生程序设计竞赛',
-                author : 'Jedediah',
-                posttime : '422220001'
-            },                                
-        ];
-        ret.goodpost = [
-            {
-                postid : '17',
-                title : 'Travel版一年一度活动之夜游--鬼故事专场',
-                votenum : 17,
-                board : 'Employee',
-                boardtitle : '上班一族',
-                author : 'cloudykumo',
-                posttime : '422220001',
-                summary : '前言 本来是每年6月才会举办的Travel年度节目夜游，由于各种各样的关系不得已才推到了7月份虽然6月份发过贴子可惜人数不够而流产……'
-            },
-            {
-                postid : '17',
-                title : 'IT民工男的CS课程记忆',
-                votenum : 23,
-                board : 'Employee',
-                boardtitle : '上班一族',
-                author : 'kyhpudding',
-                posttime : '422220001',
-                summary : '先介绍下自己，03CS 本科在某更懂中文的地方混了两年多，做社区产品，后来做基础平台，带项目带新人前端到后端应用到底层跟各部分死磕无处不折腾……'
-            },
-            {
-                postid : '17',
-                title : 'IT民工男的CS课程记忆',
-                votenum : 23,
-                board : 'Employee',
-                boardtitle : '上班一族',
-                author : 'kyhpudding',
-                posttime : '422220001',
-                summary : '先介绍下自己，03CS 本科在某更懂中文的地方混了两年多，做社区产品，后来做基础平台，带项目带新人前端到后端应用到底层跟各部分死磕无处不折腾……'
-            },
-        ];
-        callback(ret);
+        INDEXVM_EG.myinfo.udata = session.udata;
+        callback(INDEXVM_EG);
     }
+
     vms.IndexVM = IndexVM;
+
+    function ReadVM(data){
+        var self = this;
+        /* sidebar */
+        this.udata = session.udata;
+        this.userid = ko.observable(session.udata.userid);
+        this.bookmarks = ko.observableArray(data.bookmarks);
+        this.bk_open = ko.observableArray(data.bk_open);
+        this.bk_cursor = ko.observable(data.bk_cursor || '');
+        this.readed = ko.observable({});
+        /* content tab */
+        this.tab = ko.observable(data.tab);
+        /* for board */
+        this.board = ko.observable(data.board);
+        this.boardname = ko.computed(function(){
+            return self.board().filename;
+        });
+        this.board_view = ko.observable(data.board_view);
+        /* Topic View */
+        this.board_tlist = ko.observableArray(data.board_tlist);
+        this.board_tstart = ko.observable(data.board_tstart);
+        /* Post View */
+        this.board_plist = ko.observableArray(data.board_plist);
+        this.board_plist_ord = ko.computed(function(){
+            var d = {}, v=[], i, rp = self.board_plist(), it;
+            for(i=0; i<rp.length; ++i){
+                it = rp[i];
+                if(!(it.id in d)){
+                    d[it.id] = v.length;
+                    v.push([]);
+                }
+                v[d[it.id]].push(it);
+            }
+            return v;
+        });
+            
+        this.board_pstart = ko.observable(data.board_pstart);
+        /* Digest View */
+        this.board_dlist = ko.observableArray(data.board_dlist);
+        this.board_dstart = ko.observable(data.board_dstart);
+        /* for read */
+        this.posts = ko.observableArray(data.posts);
+    }
+
+    ReadVM.prototype.open_board = function(boardname){
+        var self = this;
+        api.get_board_info(boardname, function(data){
+            var d = data.data;
+            if(d.seccode != self.bk_cursor()){
+                api.get_boards_by_section(d.seccode, function(data){
+                    self.bk_cursor(d.seccode);
+                    self.bk_open(data.data);
+                });
+            }
+            self.board(d);
+        });
+    }
+
+    ReadVM.prototype.open_section = function(sid){
+        var self = this;
+        if(sid != self.bk_cursor()){
+            api.get_boards_by_section(sid, function(data){
+                self.bk_cursor(sid);
+                self.bk_open(data.data);
+            });
+        }
+    }
+
+    ReadVM.prototype.bookboard = function(){};
+
+    ReadVM.prototype.newpost = function(){};
+
+    ReadVM.prototype.clearunread = function(){};
+
+    ReadVM.prototype.settopicview = function(){
+        var self = this;
+        api.get_postindex(self.boardname(), 'topic', self.board_dstart,
+                          function(data){
+                              self.board_tlist(data.data);
+                              self.board_tstart(self.board_tstart() + 20);
+                              self.board_view('t');
+                          });
+    };
+
+    ReadVM.prototype.setnormalview = function(){
+        var self = this;
+        api.get_postindex(self.boardname(), 'normal', self.board_dstart,
+                          function(data){
+                              self.board_plist(data.data);
+                              console.log(data.data);
+                              self.board_pstart(self.board_pstart() + 20);
+                              self.board_view('p');
+                          });
+    };
+
+    ReadVM.prototype.setdigestview = function(){
+        var self = this;
+        api.get_postindex(self.boardname(), 'digest', self.board_dstart,
+                          function(data){
+                              self.board_dlist(data.data);
+                              self.board_dstart(self.board_dstart() + 20);
+                              self.board_view('d');
+                          });
+    };
+
+    ReadVM.async_init = function(mm, callback){
+        var over = 2;
+        var ret = {};
+        function check(){
+            if(--over <= 0) callback(ret);
+        }
+        ret.tab = mm.tab;
+        api.get_board_info(mm.boardname, function(data){
+            ret.board = data.data;
+            ret.bk_cursor = ret.board.seccode;
+            api.get_boards_by_section(ret.bk_cursor, function(data){
+                ret.bk_open = data.data;
+                check();
+            });
+        });
+        ret.board_view = mm.view;
+        if(mm.view == 't'){
+            ++over;
+            ret.board_tstart = mm.startindex;
+            api.get_postindex(mm.boardname, 'topic', mm.startindex,
+                              function(data){
+                                  ret.board_tlist = data.data;
+                                  check();
+                              });
+        }
+        api.get_section(function(data){
+            ret.bookmarks = data.data;
+            check();
+        });
+    }
+
+    vms.ReadVM = ReadVM;
     
 });

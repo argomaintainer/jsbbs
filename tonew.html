@@ -1,0 +1,61 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>浏览器检查 - 逸仙时空</title>
+    <style>
+      *{ margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline;}
+      body{ font-size: 14px; line-height: 2; background: #eee; color: rgb(34,
+      34, 34);}
+      a{ color: rgb(105, 163, 200); }
+      #container{ margin: 5% auto auto auto; width: 800px;
+      background:rgb(245, 245, 245); border: 1px solid #ccc; box-shadow: 0 0
+      5px rgb(200, 200, 200); padding: 2em;}
+      h2{ font-size: 2em; line-height: 2; margin-bottom: 1em;}
+      .sign{ color: rgb(112, 112, 112); }
+    </style>
+    <script>
+      function main(){
+          var myNav = navigator.userAgent.toLowerCase();
+          var ie = (myNav.indexOf('msie') != -1) ?
+      parseInt(myNav.split('msie')[1]) : false;
+          if(ie && ie < 8){
+              document.getElementById('bad').style.display = 'block';
+          }
+          else{
+                      document.getElementById('good').style.display = 'block';
+          }
+      }
+    </script>
+  </head>
+  <body onload="main(); ">
+    <div id="container">
+      <div style="display: none" id="bad">
+        <h2>你的浏览器太弱了，更新一下才能上站哟</h2>
+        <p>
+          你的浏览器太弱了，很可能你的浏览器使用的是低版本的IE内核。<br/>
+          使用新一点的浏览器有利于你获得更好的体验。<br/>
+          <br/>
+          请至少使用IE8以上，或者其他非IE核心的浏览器浏览本站。
+        </p>
+        <p>
+          如果你使用的是双核浏览器，请尝试切换到另一模式（如「高速」、
+          「极速」模式）。
+        </p>
+        <br/>
+      </div>
+      <div style="display: none" id="good">
+        <h2>开心！你的浏览器给力哟！</h2>
+        <p>
+          本站支持你的浏览器。
+        </p>
+        <br/>
+      </div>
+      <div>
+        <a href="javascript: history.go(-1)" onclick="history.go(-1);">点此返回刚才的页面</a><br/>
+        <a href="/index.htm">点此返回旧版web</a><br/><br/>
+        <p class="sign">© 2013 逸仙时空</p>
+      </div>
+    </div>
+  </body>
+</html>
