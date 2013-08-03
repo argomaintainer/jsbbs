@@ -264,6 +264,35 @@ $MOD('argo_api', function(){
             $.post('/ajax/user/update', newval, callback);
         },
 
+        'get_my_part_topic':function(callback){
+            get_nc('/ajax/v2/post/mine', function(data){
+                if(data.items){
+                    data.items = data.items.sort(function(a, b){
+                        return b.lastupdate-a.lastupdate;
+                    });
+                }
+                callback(data);
+            });                
+        },
+
+        'vote_topic':function(topicid, callback){
+            $.post('/ajax/v2/post/vote/topic',
+                   {
+                       topicid : topicid
+                   },
+                   callback);
+        },
+
+        'get_topicinfo':function(boardname, filename, topicid, callback){
+            $.get('/ajax/v2/post/topicinfo',
+                  {
+                      filename: filename || '',
+                      boardname: boardname || '',
+                      topicid : topicid || ''
+                  },
+                  callback);
+        },        
+
         'update_user_avatar': function(selector, callback){
             $(selector).ajaxSubmit({
                 url: '/ajax/user/update',

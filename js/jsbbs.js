@@ -3,7 +3,15 @@ NOCACHE = true;
 
 $MOD('jsbbs.main', function(){
 
-    if(!window.localStorage) localStorage = {};
+    var localStorage = window.localStorage;
+    if(!localStorage)
+        localStorage = {};
+    window.isnewtopic = function(tf, boardname){
+        var key = 'lt:' + boardname;
+        if(!(key in localStorage))
+            return true;
+        return tf > localStorage[key];
+    }
 
     if(window.NOCACHE || SIGNV != localStorage['site:$version']){
         if(!localStorage['tpl:$all'])

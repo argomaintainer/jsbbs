@@ -1,4 +1,7 @@
 $MOD('frame.url_for', {
+    'topic2' : function(topicid){
+        return 'index.html#!topic?topicid=' + topicid;
+    },
     'avatar': function(userid){ return 'http://argo.sysu.edu.cn/avatar/' + userid },
     'board': function(boardname){ return 'index.html#!board?boardname=' + boardname},
     'board_it': function(index, boardname, topicid){

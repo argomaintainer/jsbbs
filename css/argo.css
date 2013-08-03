@@ -2394,3 +2394,21 @@ a:hover .ftext{
 #allboards{
     padding: 0 10px;
 }
+
+.vote-p{
+    position: fixed;
+    left: 50%;
+    padding: 12px 10px 8px;
+    margin-left: 260px;
+    margin-top: 1px;
+    width: 200px;
+    background: #fff;
+    text-align: center;
+    z-index: 1;
+    border: 1px solid #eee;
+    border-left: 1px solid #f0f0f0;
+}
+
+.vote-p a{
+    padding-left: 10px;
+}

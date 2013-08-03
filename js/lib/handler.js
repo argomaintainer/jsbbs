@@ -1204,30 +1204,64 @@ $MOD('frame::topic', function(){
             $(e.target).attr('data-args'));            
     }
 
+    function get_filename(kwargs, callback){
+        $api.get_topicinfo(kwargs.boardname,
+                           kwargs.filename,
+                           kwargs.topicid,
+                           function(data){
+                               var topicinfo = data.data;
+                               if(topicinfo){
+                                   local.topicinfo = topicinfo;
+                                   if(!kwargs.boardname){
+                                       kwargs.boardname = topicinfo.boardname;
+                                   }
+                                   if(!kwargs.filename){
+                                       kwargs.filename = topicinfo.filename;
+                                   }
+                               }
+                               console.log(kwargs);
+                               callback(kwargs);
+                           });
+    }
+
+    submit['vote'] = function(kwargs, event){
+        var self = $(event.target);
+        var topicid = self.data('topicid');
+        $api.vote_topic(topicid, function(data){
+            if(data.status){
+                var t = self.parent().find('span');
+                t.text(Number(t.text()) + 1);
+                self.remove();
+            }
+        });
+    }
+    
     declare_frame({
         mark: 'topic',
         submit : submit,
         enter : function(kwargs){
-            local.first = null;
-            local.kwargs = kwargs;
-            $api.get_post_topiclist(
-                kwargs.boardname, kwargs.filename, function(data){
-                    if(data.success){
-                        local.boardname = cur_boardname = kwargs.boardname;
-                        local.from_filename = kwargs.filename;
-                        local.topiclist = data.data;
-                        local.last_index = local.from_index =
-                            local.oldest_index = 
-                            $.inArray(kwargs.filename, local.topiclist);
-                        render_template('topic-framework');
-                        local.target = $($('#post-container')[0]);
-                        submit.load_next();
-                    }
-                    else{
-                        raise404(ERROR[data.code]);
-                        console.error(data);
-                    }
-                })
+            get_filename(kwargs, function(kwargs){
+                local.first = null;
+                local.kwargs = kwargs;
+                $api.get_post_topiclist(
+                    kwargs.boardname, kwargs.filename, function(data){
+                        if(data.success){
+                            local.boardname = cur_boardname = kwargs.boardname;
+                            local.from_filename = kwargs.filename;
+                            local.topiclist = data.data;
+                            local.last_index = local.from_index =
+                                local.oldest_index = 
+                                $.inArray(kwargs.filename, local.topiclist);
+                            render_template('topic-framework');
+                            local.target = $($('#post-container')[0]);
+                            submit.load_next();
+                        }
+                        else{
+                            raise404(ERROR[data.code]);
+                            console.error(data);
+                        }
+                    });
+            });
         },
         local: local
     });
@@ -2163,6 +2197,17 @@ $MOD('frame::admin', function(){
             render_template('invcode');
         }
     });
+
+    declare_frame({
+        mark : 'mine',
+        enter : function(){
+            $api.get_my_part_topic(function(data){
+                console.log(data);
+                render_template('mine', data);
+            });
+        },
+        marktop: 'mine'
+    });                                   
 
     declare_frame({
         mark: 'freshmen',

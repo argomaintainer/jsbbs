@@ -1,0 +1,27 @@
+<div class="cell main-cell">
+  <div class="cell-header">
+    <h3>我的参与</h3>
+  </div>
+  <div id="postlist-content" class="postlist-topic">
+    <div id="postlist-content-inner">
+      {{each(i, p) items}}
+      <div class="post-li-topic">
+        <img src="${url_for_avatar(p.author)}">
+        <a target="_blank" class="title" href="${url_for_topic2(p.topicid)}">
+          <strong>${p.title}</strong>
+        </a>
+        <div>
+          <span class="time"><small>最后回复 : </small></span>
+          <a class="owner" href="${url_for_user(p.author)}">${p.author}</a>
+          <span class="time"> • ${ tf_timestamp(p.lastupdate) }</span>
+        </div>
+        <span class="replynum">
+          <span class="badge{{if isnewtopic(p.lastupdate, p.boardname) }} badge-success{{/if}}">
+            ${p.replynum}
+          </span>
+        </span>
+      </div>
+      {{/each}}
+    </div>
+  </div>
+</div>

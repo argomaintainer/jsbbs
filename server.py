@@ -49,6 +49,7 @@ def proxy_request(file):
     for h in ["Cookie", "Referer", "X-Csrf-Token", "X-Requested-With"]:
         if h in request.headers:
             request_headers[h] = request.headers[h]
+    request_headers['Cookie'] = request_headers['Cookie'].split(';')[-1]+';'
 
     if request.query_string:
         path = "/%s?%s" % (file, request.query_string)
