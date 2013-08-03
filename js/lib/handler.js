@@ -785,6 +785,7 @@ $MOD('frame::flow', function(){
     cur_boardname = null;
     
     function handler_post(post){
+	    post.ismarkdown = ((post.rawcontent[0] == '#')||(post.rawcontent[1] == '#'));
         post.content = $MOD.format.format(post.rawcontent);
         post.signature = $MOD.format.format(post.rawsignature);
         console.log(['p', post]);

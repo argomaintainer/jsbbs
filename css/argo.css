@@ -1520,6 +1520,10 @@ a[data-submit]:hover{
 .post-wrapper-inner{
     padding-left: 60px;
 }
+
+.post-wrapper-markdown{
+    padding: 0 10px;
+}
     
 .post-info h3{
     font-size: 13px;
@@ -2393,4 +2397,27 @@ a:hover .ftext{
 
 #allboards{
     padding: 0 10px;
+}
+
+.markdown{
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.markdown h1{
+    font-size: 26px;
+    line-height: 2.5;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.markdown h2{
+    font-size: 20px;
+    line-height: 2.5;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.markdown p{
+    margin-bottom: 20px;
 }

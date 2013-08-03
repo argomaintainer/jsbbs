@@ -1,11 +1,13 @@
-SIGNV = '2013-07-01-00:53';
-NOCACHE = true;
+SIGNV = '2013-07-28-23:54';
+NOCACHE = false;
 
 $MOD('jsbbs.main', function(){
 
     if(!window.localStorage) localStorage = {};
 
     if(window.NOCACHE || SIGNV != localStorage['site:$version']){
+	    if(window.localStorage)
+		    localStorage.clear();
         if(!localStorage['tpl:$all'])
             localStorage['tpl:$all'] = '';
         var arr = localStorage['tpl:$all'].split(';');

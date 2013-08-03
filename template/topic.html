@@ -1,6 +1,16 @@
 <div class="post-wrapper{{if !(title.substr(0, 3) == 'Re:')}} topic-post{{/if}}" data-index="${ index }" id="post-${filename}">
-  <div class="post-wrapper-inner">
+  <div class="{{if !ismarkdown}}post-wrapper-inner{{else}}post-wrapper-markdown{{/if}}">
     <div class="typo post-content">
+      {{if ismarkdown }}
+      {{html content}}
+      <div class="avatar-small avatar">
+	<img class="avatar-img" src="${ url_for_avatar(userid) }"/>
+	<div class="avatar-content">
+	  作者：<a href="${ url_for_user(userid) }">${userid}</a>
+	  <div class="typo post-signature">{{html signature }}</div>
+	</div>
+      </div>
+      {{else}}
       <div class="post-header">
         <div class="post-info">
           <div>
@@ -13,6 +23,7 @@
       </div>
       {{html content}}
       <div class="typo post-signature">{{html signature }}</div>
+      {{/if}}
       {{if !$.isEmptyObject(ah) }}
       <p>这篇帖子含附件：
         <div>
