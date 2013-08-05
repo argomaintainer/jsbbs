@@ -454,6 +454,9 @@ $MOD('argo_api', function(){
         },
         'weibo_update1': function(callback){
             $.post('/ajax/weibo/update1', callback);
+        },
+        'get_fresh' : function(callback){
+            $.get('/ajax/v2/top/topic', callback);
         }
         
     }

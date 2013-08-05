@@ -1,10 +1,10 @@
 <div class="cell main-cell">
   <div class="cell-header">
-    <h3>我的参与</h3>
+    <h3>新鲜发言</h3>
   </div>
   <div id="postlist-content" class="postlist-topic">
     <div id="postlist-content-inner">
-      {{each(i, p) items}}
+      {{each(i, p) data}}
       <div class="post-li-topic">
         <img src="${url_for_avatar(p.author)}">
         <a target="_blank" class="title" href="${url_for_topic2(p.topicid)}">
@@ -27,3 +27,4 @@
     </div>
   </div>
 </div>
+<div id="part-2"></div>
