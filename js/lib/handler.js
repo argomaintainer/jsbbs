@@ -1,3 +1,57 @@
+$MOD('func', function(){
+
+    var localStorage = window.localStorage || {};
+    var maxkey = 100;
+
+    function check_isnew(boardname, topic, time){
+        console.log('cin', boardname, topic, time);
+        var d = localStorage['unread::'+boardname];
+        if(d){
+            d = $.parseJSON(d);
+            return !d[topic] || d[topic] < time;
+        }
+        return true;
+    }
+
+    function set_read(boardname, topic, time){
+        var key = 'unread::'+boardname;
+        var d = localStorage[key];
+        if(d){
+            d = $.parseJSON(d);
+            if(topic in d){
+                if(time > d[topic])
+                    d[topic] = time;
+                console.log(d);
+                localStorage[key] = $.toJSON(d);
+            }
+            else{
+                if(topic <= d.$min)
+                    return;
+                if(d.$size > maxkey){
+                    d = { $min: time, $size : 1};
+                    d[topic] = time;
+                }
+                else{
+                    d.$size ++;
+                    d[topic] = title;
+                }
+                localStorage[key] = $.toJSON(d);
+                return;
+            }
+        }                    
+        if(!d){
+            d = { $min : time, $size: 1};
+            d[topic] = time;
+            localStorage[key] = $.toJSON(d);
+        }
+        return;
+    }
+
+    window.check_isnew = check_isnew;
+    window.set_read = set_read;
+
+});
+
 $MOD('frame.allp', function(){
 
     var submit = {};
@@ -23,45 +77,42 @@ $MOD('frame.allp', function(){
     }
 
     function load_new(callback){
-        $api.get_goodboards('new', function(data){
-            var acb = data.activeboard;
-            if(data.success){
-                data = data.data;
-                boards = data.boards.sort(cmp_boards);
-            }
-            else{
-                boards = [];
-            }
-            if(acb && acb.length){
-                acb = acb[acb.length-1];
-                if(localStorage['f:home:activeboard'] == acb.title ){
-                    acb = null;
-                }
-            }
-            render_template('allp', {
-                boards: boards,
-                www: data.www,
-                activeboard : acb
-            });
-            if(data.www && data.www.widget){
-                load_widgets(data.www.widgets);
-            }
+        $api.get_fresh(function(data){
+            render_template('fresh', { data: data.items });
             callback();
         });
+        
+        // $api.get_goodboards('new', function(data){
+        //     var acb = data.activeboard;
+        //     if(data.success){
+        //         data = data.data;
+        //         boards = data.boards.sort(cmp_boards);
+        //     }
+        //     else{
+        //         boards = [];
+        //     }
+        //     if(acb && acb.length){
+        //         acb = acb[acb.length-1];
+        //         if(localStorage['f:home:activeboard'] == acb.title ){
+        //             acb = null;
+        //         }
+        //     }
+        //     render_template('allp', {
+        //         boards: boards,
+        //         www: data.www,
+        //         activeboard : acb
+        //     });
+        //     if(data.www && data.www.widget){
+        //         load_widgets(data.www.widgets);
+        //     }
+        //     callback();
+        // });
     }
-
-    function load_fav(){
-        if($G.authed){
-            $api.get_goodboards('fav', function(data){
-                var n = $(render_string('allp-fav', data.data ));
-                $('#part-1').replaceWith(n);
-            });
-        }
-    }                            
 
     function load_focus(){
         $.get('/ajax/comp/www_home',
               function(data){
+                  console.log(data);
                   if(data.success){
                       require_jslib('slides');
                       var n = $(render_string('focus', data.data));
@@ -85,10 +136,7 @@ $MOD('frame.allp', function(){
                &&(!localStorage['bool::watched-tut'])){
                 location = '#!tut-2';
             }
-            load_new(function(){
-                load_fav();
-                load_focus();
-            });
+            load_new(load_focus);
         },
         submit: submit,
         marktop: 'home'
@@ -1212,6 +1260,10 @@ $MOD('frame::topic', function(){
                                var topicinfo = data.data;
                                if(topicinfo){
                                    local.topicinfo = topicinfo;
+                                   console.log('setr', topicinfo);
+                                   set_read(topicinfo.boardname,
+                                            topicinfo.topicid,
+                                            Math.floor((new Date()) / 1000));
                                    if(!kwargs.boardname){
                                        kwargs.boardname = topicinfo.boardname;
                                    }
