@@ -1,4 +1,5 @@
 <div class="cell cell-loose main-cell">  
+  {{if $G.local.topicinfo }}
   <div class="vote-p">
     收到 <span>${$G.local.topicinfo.vote}</span> 票
     {{if !$G.local.topicinfo.hasvoted }}
@@ -11,7 +12,6 @@
     <a class="back-to-board"  href="#" data-submit="back-to-board">‹
       ${$G.local.boardname } 版</a>
   </div>
-  {{if $G.local.topicinfo }}
   {{if $G.local.oldest_index }}
   <div id="post-up" class="page-btn">
     <a href="${ url_for_topic($G.local.topiclist[0], $G.local.boardname) }">从本主题第一篇开始</a>

@@ -63,8 +63,8 @@ $MOD('jsbbs.userbox', function(){
             render_template('widget/fav', { fav: data.data },
                             '#favbox');
             var height = 40 * data.data.length;
-            if(height > 200){
-                height = 200;
+            if(height > 240){
+                height = 240;
             }
             $('#favbox-outer').height(height);
             $G.hooks.after_refresh_fav();

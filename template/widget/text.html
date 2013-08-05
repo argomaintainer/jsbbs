@@ -4,5 +4,11 @@
     <h4>${title}</h4>
   </div>
   {{/if}}
+  {{if text.substr(-4) == '.swf' }}
+  <div>
+    <embed wmode="opaque" src="${text}" allowfullscreen="true" quality="high" width="200px" align="middle" allowscriptaccess="always" type="application/x-shockwave-flash"/>
+  </div>
+  {{else}}	      
   <pre class="widget-pre">${text}</pre>
+  {{/if}}
 </div>
