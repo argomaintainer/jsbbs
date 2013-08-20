@@ -8,7 +8,11 @@
       <div class="post-li-topic">
         <img src="${url_for_avatar(p.author)}">
         <a target="_blank" class="title" href="${url_for_topic2(p.topicid)}">
-          <strong>${p.title|'(...)'}</strong>
+	  {{if p.title }}
+          <strong>${p.title }</strong>
+	  {{else}}
+	  <strong>(...)</strong>
+	  {{/if}}
         </a>
         <div>
           <span class="time">发起 : </span>
