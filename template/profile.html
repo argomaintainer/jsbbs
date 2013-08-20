@@ -9,13 +9,13 @@
 
   <div class="profile-form">
 
-    <form id="update-avatar" class="form-horizontal">
+    <form action="http://baidu.com" enctype="multipart/form-data" id="update-avatar" method="POST" class="form-horizontal">
       <div class="control-group">
         <input type="hidden" name="_" />
         <label class="control-label" for="input-avatar">头像</label>
         <div class="controls">
           <input type="file" name="avatar" id="input-avatar"/>
-          <a data-submit="update-avatar" class="btn btn-small">保存</a>
+          <input type="submit" value="保存" class="btn btn-small"/>
           <div class="help-block">
             目前头像只支持 <em>jpg</em> 格式，建议最少为 72x72 像素<br/>
             头像可以通过 <a href="${url_for_avatar(self.userid)}">

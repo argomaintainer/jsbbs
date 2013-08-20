@@ -5,10 +5,11 @@
   <div id="postlist-content" class="postlist-topic">
     <div id="postlist-content-inner">
       {{each(i, p) data}}
+      {{if p.title }}
       <div class="post-li-topic">
         <img src="${url_for_avatar(p.author)}">
         <a target="_blank" class="title" href="${url_for_topic2(p.topicid)}">
-          <strong>${p.title|'(...)'}</strong>
+          <strong>${p.title}</strong>
         </a>
         <div>
           <span class="time">发起 : </span>
@@ -23,6 +24,7 @@
           </span>
         </span>
       </div>
+      {{/if}}
       {{/each}}
     </div>
   </div>
