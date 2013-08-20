@@ -1427,9 +1427,44 @@ $MOD('frame::profile', function(){
         };            
     }
 
+    function before_avatar_submit(){
+        var file = $('[name=avatar]')[0];
+        if(file.files){
+            file = file.files[0];
+            if(!file){
+                show_alert('还未选择文件！', 'danger');
+                return false;
+            }
+            var name = file.name;
+            var size = file.size;
+            var type = file.type;
+            if(file.name.length < 1) {
+                show_alert('不是有效的文件！', 'danger');
+                return false;
+            }
+            else if(file.size > 1048576) {
+                show_alert('文件太大了！', 'danger');
+                return false;
+            }
+            else if(file.type != 'image/jpg' && file.type != 'image/jpeg'){
+                show_alert('目前只支持jpg文件 ：-（', 'danger');
+                return false;
+            }
+        }
+    }
+
+    function update_avatar_success(data){
+        if(data.success){
+            show_alert('更新成功！');
+            location.reload();
+        }
+        else{
+            show_alert(ERROR[data.code], 'danger');
+        }
+    }
+
     submit['update-avatar'] = function(kwargs, e){
         var file = $('[name=avatar]')[0];
-
         if(file.files){
             file = file.files[0];
             if(!file){
@@ -1463,11 +1498,10 @@ $MOD('frame::profile', function(){
                         show_alert(ERROR[data.code], 'danger');
                     }
                 });
-            return false;
         }catch(e){
-            console.log(e);
-            return false;
+            alert(e);
         };
+        return false;
     }
 
     declare_frame({
@@ -1476,6 +1510,12 @@ $MOD('frame::profile', function(){
             $api.get_self_info(function(data){
                 if(data.success){
                     render_template('profile', { self: data.data });
+                    $('#update-avatar').ajaxForm({
+                        url : '/ajax/user/update',
+                        beforeSubmit : before_avatar_submit,
+                        complete : update_avatar_success,
+                        dataType : 'json'                        
+                    });
                 }
                 else{
                     raise404(ERROR[data.code], 'danger');

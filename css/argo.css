@@ -19,8 +19,9 @@ body{
 
 #topbar .navbar-inner{
     background-image: none;
-    background: rgb(5,67,14);
-    background: rgba(5,67,14, 0.75);
+    background-color: rgb(5,67,14);
+    background-color: rgba(5,67,14, 0.75);
+    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#BF05430E,endColorstr=#BF05430E);
     border-bottom: 1px solid #eee;
 }
 
@@ -37,6 +38,7 @@ body{
 
 #topbar .nav > li > a.onactive{
     background: rgba(140, 185, 157, .30);
+    
 }
 
 #topbar .nav li.dropdown.open>.dropdown-toggle,
