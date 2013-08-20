@@ -1455,7 +1455,11 @@ $MOD('frame::profile', function(){
     function update_avatar_success(data){
         if(data.success){
             show_alert('更新成功！');
-            location.reload();
+            var d = $('<img style="position: fixed; visibility: hidden;" src="'+url_for_avatar($G.authed.u.userid)+'?_+'+ Number(new Date())+'"/>');
+            d.appendTo($('body'));
+            setTimeout(function(){
+                location.reload(true);
+            }, 2000);
         }
         else{
             show_alert(ERROR[data.code], 'danger');
@@ -1512,7 +1516,7 @@ $MOD('frame::profile', function(){
                     $('#update-avatar').ajaxForm({
                         url : '/ajax/user/update',
                         beforeSubmit : before_avatar_submit,
-                        complete : update_avatar_success,
+                        success : update_avatar_success,
                         dataType : 'json'                        
                     });
                 }
