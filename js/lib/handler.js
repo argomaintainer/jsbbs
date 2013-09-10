@@ -816,6 +816,8 @@ $MOD('frame::board', function(){
                 if(data.data.lastnotes &&
                    !((localStorage['notes::'+boardname] >
                       data.data.lastnotes))){
+                    localStorage['notes::'+boardname] =
+                        Math.floor((new Date())/1000);
                     show_notes(boardname);
                 }
             }
