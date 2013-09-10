@@ -49,7 +49,8 @@ def proxy_request(file):
     for h in ["Cookie", "Referer", "X-Csrf-Token", "X-Requested-With"]:
         if h in request.headers:
             request_headers[h] = request.headers[h]
-    request_headers['Cookie'] = request_headers['Cookie'].split(';')[-1]+';'
+    request_headers['Cookie'] = 'PHPSESSID=22e697cf314742e2b5ef043f7a7a8643;';
+    # request_headers['Cookie'] = request_headers['Cookie'].split(';')[-1]+';'
 
     if request.query_string:
         path = "/%s?%s" % (file, request.query_string)
@@ -75,7 +76,8 @@ def proxy_request(file):
             continue
 
         if key == "set-cookie":
-            cookies = value.split(",")
+            cookies = value.split(" ,")
+            print 'cookies: %s' % cookies
             [response_headers.add(key, c) for c in cookies]
         else:
             response_headers.add(key, value)

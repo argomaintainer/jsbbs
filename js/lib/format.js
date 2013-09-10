@@ -6,7 +6,8 @@ $MOD('format', function(){
         ">": "&gt;",
         '"': '&quot;',
         "'": '&#39;',
-        "/": '&#x2F;'
+        "/": '&#x2F;',
+        " ": '&nbsp;'
     };
 
     var urls = [
@@ -53,14 +54,11 @@ $MOD('format', function(){
     ];
 
     function format_escape(string) {
-        return String(string).replace(/[&<>"'\/]/g, function (s) {
+        return String(string).replace(/[&<>"'\/\ ]/g, function (s) {
             return entityMap[s];
         });
     }
 
-    format_blank = function(s){
-        return s.replace(/ /g, '&nbsp;');
-    }
     format_cr = function(s){
         return s.replace(/\r\n/gm, '\n').replace(/\r/gm, '\n');
     } 
@@ -118,7 +116,6 @@ $MOD('format', function(){
             }
         }            
         text = format_escape(text);
-        text = format_blank(text);
         text = format_cr(text);
         text = format_quote(text);
         text = format_br(text);
@@ -163,11 +160,113 @@ $MOD('format', function(){
             index: mail.index
         }
     }
+
+    var widths = [
+        [126,    1], [159,    0], [687,     1], [710,   0], [711,   1], 
+        [727,    0], [733,    1], [879,     0], [1154,  1], [1161,  0], 
+        [4347,   1], [4447,   2], [7467,    1], [7521,  0], [8369,  1], 
+        [8426,   0], [9000,   1], [9002,    2], [11021, 2], [12350, 2], 
+        [12351,  1], [12438,  2], [12442,   0], [19893, 2], [19967, 1],
+        [55203,  2], [63743,  1], [64106,   2], [65039, 1], [65059, 0],
+        [65131,  2], [65279,  1], [65376,   2], [65500, 1], [65510, 2],
+        [120831, 1], [262141, 2], [1114109, 1],
+    ]
+
+    function get_width( o ){
+        o = o.charCodeAt();
+        if( o == 0xe || o == 0xf){
+            return 0;
+        }
+        for(var i=0; i<widths.length; ++i){
+            if( o <= widths[i][0] )
+                return widths[i][1];
+        }
+        return 1;
+    }
+
+    function apply_effect(a, b){
+        for(var i=0; i<b.length; ++i){
+            if(b[i] == 0){
+                delete a.fc;
+                delete a.bc;
+                delete a.ss;
+            }else if((b[i] >= 30) && b[i] <= 39){
+                a.fc = b[i];
+            }else if((b[i] >= 40) && b[i] <= 49){
+                a.bc = b[i];
+            }else if((b[i] < 10)){
+                if(!a.ss) a.ss = {};
+                a.ss[b[i]] = true;
+            }
+        }
+        var c = [];
+        if(a.fc) c.push('c'+a.fc);
+        if(a.bc) c.push('c'+a.bc);
+        if(a.ss){
+            for(i in a.ss){
+                if(a.ss.hasOwnProperty(i)){
+                    c.push('c'+i);
+                }
+            }
+        }
+        return c.join(' ');
+    }            
+    
+    function ascii(s){
+        var x = 0, i=0, j=0, ca = {}, c='', r=[], maxx=s.length,
+        x2, x1, w, mi=0, mj=0;
+        var gw = 8;
+        var gh = 20;
+        while(x < maxx){
+            if(s[x] == '\r'){
+                x ++;
+                j = 0;
+            }else if(s[x] == '\n'){
+                x ++;
+                j = 0;
+                i += 1;
+            }else if(s[x] == '\x1b'){
+                if(s[x+1] != '['){
+                    x += 1;
+                    continue;
+                }
+                x += 2;
+                x1 = x;
+                for(x2=x; x2<maxx; ++x2){
+                    if(s[x2] == 'm'){
+                        x = x2+1;
+                        break;
+                    }else if(!((s[x2] == ';') ||
+                               ((s[x2] <= '9') && (s[x2] >= '0')))){
+                        x = x2;
+                        break;
+                    }
+                }
+                console.log(x1, x2, x);
+                console.log(s.slice(x1, x2).split(';'));
+                c = apply_effect(ca, s.slice(x1, x2).split(';'));
+            }
+            else{
+                w = get_width(s[x]);
+                r.push('<span class="w'+w+' p'+i+'-'+j+' '+c
+                       +'" style="top:'+(i*gh)+'px; '
+                       +'left:'+(j*gw)+'px;"'+'>'+format_escape(s[x])
+                       +'</span>');
+                j += w;
+                if(j > mj) mj = j;
+                x ++;
+            }
+        }
+        return '<div style="height:'+((i+1) * gh)+' ; width:'
+            +(mj * gw)+' ;" class="ascii-box">' + r.join(' ') + '</div>';
+    }
     
     return {
-        'format': format,
+        format: format,
         gen_quote: gen_quote,
-        gen_quote_mail: gen_quote_mail
+        gen_quote_mail: gen_quote_mail,
+        ascii: ascii,
+        format_escape : format_escape
     };
 
 })

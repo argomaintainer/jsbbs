@@ -1002,74 +1002,147 @@ i[class*=" icon-mark-"]:after {
 }
 
 /* telnet format */
-.c0{
-    color: rgb(67,67,67);
-    font-size: 10px;
+.ascii-box{
+    position: relative;
+    text-align: center;
+    background-color: #000;
+    color: #f0f0f0;
+    font-size: 13px;
+    line-height: 22px;
+    font-family: monospace;
+    overflow: hidden;
 }
+.w0, .w1, .w2{
+    position: absolute;
+    display: block;  
+}
+.w0{
+    width: 0px; 
+}
+.w1{
+    width: 8px;
+    font-size: 12px;
+}
+.w2{
+    width: 16px; 
+}
+.w3{
+    width: 24px; 
+}
+
 .c1{
-    text-shadow: 0 1px 2px #f0f0f0;
+    font-weight: bold;
+}
+.c4{
+    text-decoration: underline;
+}   
+
+.c30{
+    color:#000;
+}
+.c31{
+    color:#d22;
+}
+.c32{
+    color:#22984d;
+}
+.c33{
+    color:#ffca27;
+}
+.c34{
+    color:#22d;
+}
+.c35{
+    color:#c2c;
+}
+.c36{
+    color:#208ccf;
 }
 .c37{
-    color:#222;
+    color:#eee;
 }
+
+.c40{
+    background-color:#000;
+}
+.c41{
+    background-color:#d22;
+}
+.c42{
+    background-color:#22984d;
+}
+.c43{
+    background-color:#ffca27;
+}
+.c44{
+    background-color:#22d;
+}
+.c45{
+    background-color:#c2c;
+}
+.c46{
+    background-color:#208ccf;
+}
+.c47{
+    background-color:#eee;
+}
+
 .c37 a{
     color:#222;
     text-decoration: underline;
-}
-.c30{
-    color:#707070;
 }
 .c30 a{
     color:#707070;
     text-decoration: underline;
 }
-.c31{
-    color:#d22;
-}
 .c31 a{
     color:#d22;
     text-decoration: underline;
-}
-.c32{
-    color:#22984d;
 }
 .c32 a{
     color:#22984d;
     text-decoration: underline;
 }
-.c33{
-    color:#ffca27;
-}
 .c33 a{
     color:#ffca27;
     text-decoration: underline;
-}
-.c34{
-    color:#22d;
 }
 .c34 a{
     color:#22d;
     text-decoration: underline;
 }
-.c35{
-    color:#c2c;
-}
 .c35 a{
     color:#c2c;
     text-decoration: underline;
-}
-.c36{
-    color:#208ccf;
 }
 .c36 a{
     color:#208ccf;
     text-decoration: underline;
 }
 
+.board-notes{
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    background: #000;
+    z-index: 5;
+    box-shadow: 0 0 5px #555;
+    display: none;
+}
+
+.board-notes .ascii-box{
+    max-width: 640px;
+    margin: 12px 36px;
+    overflow: hidden;
+}    
+
 .board-header{
     border-top-left-radius: 3px;
     border-top-right-radius: 3px;
     position: relative;
+    overflow: hidden;
 }
 
 .board-header-img{
@@ -2413,4 +2486,17 @@ a:hover .ftext{
 
 .vote-p a{
     padding-left: 10px;
+}
+
+.say-hello{
+    text-align: center;
+    background: #ccc;
+    padding: 10px;
+    margin: 75px 150px;
+    font-size: 16px;
+    line-height: 2;
+}
+
+.say-hello a{
+    margin: 5px;
 }

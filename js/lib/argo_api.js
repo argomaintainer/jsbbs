@@ -68,6 +68,13 @@ $MOD('argo_api', function(){
                   },
                   callback);
         },
+        'get_board_notes': function(boardname, callback){
+            get_nc('/ajax/board/notes',
+                  {
+                      boardname: boardname,
+                  },
+                  callback);
+        },
         "get_boards_by_section": function(sec_code, callback){
             get_nc('/ajax/board/getbysec',
                   {
