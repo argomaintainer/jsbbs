@@ -2528,3 +2528,25 @@ a:hover .ftext{
 .say-hello a{
     margin: 5px;
 }
+
+.namelist{
+    list-style-type: none;
+    margin: 20px 0;
+}
+
+.namelist li{
+    float: left;
+    text-align: center;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.namelist img{
+    display: block;
+    width: 40px;
+    height: 40px;
+}
+
+.hint{
+    color: #999
+}

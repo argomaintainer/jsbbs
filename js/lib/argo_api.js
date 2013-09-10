@@ -318,6 +318,10 @@ $MOD('argo_api', function(){
             get_nc('/ajax/user/setting/get', callback);
         },
 
+        'get_self_inv': function(callback){
+            get_nc('/ajax/user/myinv', callback);
+        },
+
         'update_self_setting': function(values, callback){
             $.post('/ajax/user/setting/update',
                    {

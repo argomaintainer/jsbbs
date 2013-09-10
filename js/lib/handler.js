@@ -365,7 +365,7 @@ $MOD('frame::board', function(){
                 base.updateInput(true);
                 init();
                 cur_board.view = name;
-                localStorage['lastview::'+cur_board.boardname] = name;
+                localStorage['lastview'] = name;
                 cur_board.render(cur_board.boardname, data, pagetotal);
             });
         }
@@ -602,10 +602,10 @@ $MOD('frame::board', function(){
     function set_default_loader(cur_board, kwargs){
         var start_page, last, max_page;
         if(typeof kwargs.view == "undefined"){
-            if(!localStorage['lastview::'+cur_board.boardname]){
-                localStorage['lastview::'+cur_board.boardname] = 'topic';
+            if(!localStorage['lastview']){
+                localStorage['lastview'] = 'topic';
             }
-            kwargs.view = localStorage['lastview::'+cur_board.boardname];
+            kwargs.view = localStorage['lastview'];
         }
         if(!MAYBE_VIEW[kwargs.view]){
             kwargs.view = 'topic';
@@ -690,6 +690,7 @@ $MOD('frame::board', function(){
         $('.board-notes').remove();
         localStorage['notes::'+local.cur_board.boardname] =
             Math.floor(Number(new Date()) / 1000);
+        window.scrollTo(0, 0);
     }
 
     function count_down_enter(f, s){
@@ -2345,7 +2346,18 @@ $MOD('frame::admin', function(){
             });
         },
         marktop: 'mine'
-    });                                   
+    });
+
+    declare_frame({
+        mark : 'myinv',
+        enter : function(){
+            $api.get_self_inv(function(data){
+                if(data.success){
+                    render_template('myinv', data.data);
+                }
+            });
+        }
+    });
 
     declare_frame({
         mark: 'freshmen',
