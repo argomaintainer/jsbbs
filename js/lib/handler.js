@@ -4,7 +4,6 @@ $MOD('func', function(){
     var maxkey = 100;
 
     function check_isnew(boardname, topic, time){
-        console.log('cin', boardname, topic, time);
         var d = localStorage['unread::'+boardname];
         if(d){
             d = $.parseJSON(d);
@@ -21,7 +20,6 @@ $MOD('func', function(){
             if(topic in d){
                 if(time > d[topic])
                     d[topic] = time;
-                console.log(d);
                 localStorage[key] = $.toJSON(d);
             }
             else{
@@ -112,7 +110,6 @@ $MOD('frame.allp', function(){
     function load_focus(){
         $.get('/ajax/comp/www_home',
               function(data){
-                  console.log(data);
                   if(data.success){
                       require_jslib('slides');
                       var n = $(render_string('focus', data.data));
@@ -176,7 +173,6 @@ $MOD('frame::section', function(){
                     $('a[data-toggle="pill"]').on('shown', function (e) {
                         var num = $(e.target).attr('data-args');
                         $G.lastsection = num;
-                        console.log(['lsc', num]);
                         quite_set_hash('#!section?secnum='
                                        + $(e.target).attr('data-args'));
                     })
@@ -314,7 +310,6 @@ $MOD('frame::board', function(){
     function new_postlist_render(tpler){
         return function(boardname, data, pagenum){
             $('#postlist-content').remove();
-            console.log(['cc', data]);
             var fold = 0, i;
             for(i in data){
                 if(data[i].unread == 1){
@@ -322,7 +317,6 @@ $MOD('frame::board', function(){
                     break;
                 }
             }
-            console.log(['ff', fold])
             render_template(tpler, {
                 posts: data,
                 fold: fold,
@@ -355,7 +349,7 @@ $MOD('frame::board', function(){
         });
     }
 
-    function new_wrapper_loader(loader, init){
+    function new_wrapper_loader(loader, init, name){
         return function(){
             loader(cur_board.boardname, 0, function(data){
                 var total = data[data.length-1].index,
@@ -370,6 +364,8 @@ $MOD('frame::board', function(){
                 base.options.max_page = pagetotal;
                 base.updateInput(true);
                 init();
+                cur_board.view = name;
+                localStorage['lastview::'+cur_board.boardname] = name;
                 cur_board.render(cur_board.boardname, data, pagetotal);
             });
         }
@@ -397,7 +393,7 @@ $MOD('frame::board', function(){
             delete cur_board.hover;
             $('#loader-wrapper .active').removeClass('active');
             $('#normal-loader').addClass('active');
-        });
+        }, 'normal');
     submit['set_digest_loader'] = set_digest_loader
         = new_wrapper_loader(load_digest_post, function(){
             local.kwargs.view = 'digest';
@@ -408,7 +404,7 @@ $MOD('frame::board', function(){
             delete cur_board.hover;
             $('#loader-wrapper .active').removeClass('active');
             $('#digest-loader').addClass('active');
-        });
+        }, 'digest');
     submit['set_topic_loader'] =  set_topic_loader
         = new_wrapper_loader(load_topic_post, function(){
             local.kwargs.view = 'topic';
@@ -419,7 +415,7 @@ $MOD('frame::board', function(){
             delete cur_board.hover;
             $('#loader-wrapper .active').removeClass('active');
             $('#topic-loader').addClass('active');
-        });
+        }, 'topic');
     
     function set_page_anim(pagenum){
         $('#postlist-content').fadeTo(200, 0.61, function(){
@@ -606,15 +602,18 @@ $MOD('frame::board', function(){
     function set_default_loader(cur_board, kwargs){
         var start_page, last, max_page;
         if(typeof kwargs.view == "undefined"){
-            kwargs.view = $.cookie('boardview');
-            if(!MAYBE_VIEW[kwargs.view]){
-                $.cookie('boardview', 'normal');
-                kwargs.view = 'normal';
+            if(!localStorage['lastview::'+cur_board.boardname]){
+                localStorage['lastview::'+cur_board.boardname] = 'topic';
             }
+            kwargs.view = localStorage['lastview::'+cur_board.boardname];
         }
         if(!MAYBE_VIEW[kwargs.view]){
-            kwargs.view = 'normal';
-        }            
+            kwargs.view = 'topic';
+        }
+
+        if(kwargs.view != 'normal'){
+            delete kwargs.index;
+        }
 
         if(kwargs.view == 'topic'){
             cur_board.loader = load_topic_post;
@@ -687,7 +686,52 @@ $MOD('frame::board', function(){
     //     return $Type.Range([0, NaN]);
     // }
 
+    submit['remove_notes'] = function(){
+        $('.board-notes').remove();
+        localStorage['notes::'+local.cur_board.boardname] =
+            Math.floor(Number(new Date()) / 1000);
+    }
+
+    function count_down_enter(f, s){
+        var cid = setInterval(function(){
+            var r = f.data('remain');
+            if(r <= 0){
+                clearInterval(cid);
+                $('.board-notes', s).remove();
+            }
+            else{
+                r--;
+                f.data('remain', r);
+                f.text(''+r+'秒钟后自动进入看版');
+            }
+        }, 1000);
+    }
+
+    function show_notes(boardname){
+        $('.board-notes').show();
+        $api.get_board_notes(boardname, function(data){
+            if(data.success){
+                data = data.data;
+                var t = $MOD.format.ascii(data.content), f=false;
+                if((!$G.userfav
+                    || !($G.local.cur_board.boardname in $G.userfav))
+                   || (localStorage['switch::say-hello'] &&
+                       (localStorage['switch::say-hello'] <
+                        (Number(new Date()) / 1000 + 2592000)))){
+                    t += '<div class="say-hello">欢迎来到 <strong>'+$G.local.cur_board.data.title+'</strong><br><a class="btn btn-large btn-success" href="#" data-submit="remove_notes">进入看版</a></div>';
+                }
+                else{
+                    t += '<div class="say-hello">欢迎回到 <strong>'+$G.local.cur_board.data.title+'</strong> , 跟版友们打个招呼？<br><a href="#" data-submit="remove_notes" class="btn btn-success">我待会就发个贴子打个招呼</a><a data-submit="remove_notes" class="btn">我不打招呼</a><div>';
+                    localStorage['switch::say-hello'] = true;
+                }
+                $('.board-notes').html(t);
+            }
+        });
+    }
+
     function enter_board(kwargs){
+
+        require_jslib('format');
 
         var boardname = kwargs.boardname, pagenum;
         
@@ -701,7 +745,6 @@ $MOD('frame::board', function(){
                                     board: data.data,
                                     PAGE_LIMIT: PAGE_LIMIT
                                 });
-                console.log(['fn', '#fn-'+boardname]);
                 $('#fn-'+boardname).addClass('active disabled').find('a').addClass('onactive');
                 local.postlist_container = $('#postlist-container');
                 set_default_loader(cur_board, kwargs);
@@ -770,6 +813,11 @@ $MOD('frame::board', function(){
                         }, '#dy-widgets');
                     }
                 });
+                if(data.data.lastnotes &&
+                   !((localStorage['notes::'+boardname] >
+                      data.data.lastnotes))){
+                    show_notes(boardname);
+                }
             }
             else{
                 raise404(ERROR[data.code]);
@@ -836,7 +884,6 @@ $MOD('frame::flow', function(){
 	    post.ismarkdown = ((post.rawcontent[0] == '#')||(post.rawcontent[1] == '#'));
         post.content = $MOD.format.format(post.rawcontent);
         post.signature = $MOD.format.format(post.rawsignature);
-        console.log(['p', post]);
         return post;
     }
 
@@ -1261,7 +1308,6 @@ $MOD('frame::topic', function(){
                                var topicinfo = data.data;
                                if(topicinfo){
                                    local.topicinfo = topicinfo;
-                                   console.log('setr', topicinfo);
                                    set_read(topicinfo.boardname,
                                             topicinfo.topicid,
                                             Math.floor((new Date()) / 1000));
@@ -1272,7 +1318,6 @@ $MOD('frame::topic', function(){
                                        kwargs.filename = topicinfo.filename;
                                    }
                                }
-                               console.log(kwargs);
                                callback(kwargs);
                            });
     }
@@ -1352,7 +1397,6 @@ $MOD('frame::setting', function(){
     submit['update-mailhint'] = function(){
         var i1=$('#input-imail').is(':checked')?0:1,
         i2=$('#input-fav').is(':checked')?0:1;
-        console.log(['s', i1, i2]);
         if(i1 || i2){
             modal_confirm('取消邮件提醒',
                           '取消邮件提醒提醒可能会使您不能够即时处理您的站内信或者看到您喜欢的版块的更新，您确定要取消邮件提醒？',
@@ -1383,8 +1427,6 @@ $MOD('frame::setting', function(){
         mark: 'setting',
         enter: function(){
             $api.get_self_setting(function(data){
-                console.log(data);
-                console.log(data.data.no_hint_mail);
                 render_template('setting',{ 'setting': data.data});
             })
         },
@@ -2226,7 +2268,6 @@ $MOD('frame::admin', function(){
     submit['update-user-title'] = function(){
         var userid = $('#etc-inputer').val();
         var content = $('#etc-title-content').val();
-        console.log(['up', userid, content]);
         $api['!update_user_title'](userid, content, function(data){
             if(data.success){
                 show_alert('更新成功！');
@@ -2241,7 +2282,6 @@ $MOD('frame::admin', function(){
         var userid = $('#etc-inputer').val(), title;
         $api.query_user(userid, function(data){
             if(data.success){
-                console.log('d', data.data.title);
                 title = data.data.title;
                 if(title){
                     var i, content='';
@@ -2299,7 +2339,6 @@ $MOD('frame::admin', function(){
         mark : 'mine',
         enter : function(){
             $api.get_my_part_topic(function(data){
-                console.log(data);
                 render_template('mine', data);
             });
         },

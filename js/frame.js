@@ -276,6 +276,10 @@ $MOD('frame.func', {
         return t;
     },
 
+    ascii : function(str){
+        
+    },
+
     range : function(start, end, step) {
         var range = [];
         var typeofStart = typeof start;
