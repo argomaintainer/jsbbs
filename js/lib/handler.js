@@ -722,8 +722,7 @@ $MOD('frame::board', function(){
                     t += '<div class="say-hello">欢迎来到 <strong>'+$G.local.cur_board.data.title+'</strong><br><a class="btn btn-large btn-success" href="#" data-submit="remove_notes">进入看版</a></div>';
                 }
                 else{
-                    t += '<div class="say-hello">欢迎回到 <strong>'+$G.local.cur_board.data.title+'</strong> , 跟版友们打个招呼？<br><a href="#" data-submit="remove_notes" class="btn btn-success">我待会就发个贴子打个招呼</a><a data-submit="remove_notes" class="btn">我不打招呼</a><div>';
-                    localStorage['switch::say-hello'] = true;
+                    t += '<div class="say-hello">欢迎回到 <strong>'+$G.local.cur_board.data.title+'</strong> , 呆会记得跟版友打个招呼哟。<br><a class="btn btn-large btn-success" href="#" data-submit="remove_notes">进入看版</a><div>';
                 }
                 $('.board-notes').html(t);
             }
