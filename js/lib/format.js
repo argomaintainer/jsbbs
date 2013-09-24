@@ -107,6 +107,8 @@ $MOD('format', function(){
     }
     require_jslib('markdown');
     function format(text){
+        if(text.match('\x1b') && !text.match("※ 来源:．逸仙时空 Yat-Sen Channel"))
+            return ascii(text);
         if(text[0] == '\n')
             text = text.slice(1);
         if(text[0] == '#' ){
