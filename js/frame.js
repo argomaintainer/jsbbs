@@ -276,6 +276,35 @@ $MOD('frame.func', {
         return t;
     },
 
+    array_values : function(c){
+        var d = [];
+        for(i in c)
+            if(c.hasOwnProperty(i))
+                d.push(c[i]);
+        return d;
+    },
+    
+    filter_by_lambda : function(d, kf){
+        var ret = [], i;
+        for(i in d)
+            if(kf(d[i]))
+                ret.push(d[i]);
+        return ret;
+    },
+    
+    group_by_lambda : function(d, kf){
+        var ki = {}, k, ret = [], i;
+        for(i=0; i<d.length; ++i){
+            k = kf(d[i]);
+            if(typeof ki[k] == 'undefined'){
+                ki[k] = ret.length;
+                ret.push([]);
+            }
+            ret[ki[k]].push(d[i]);
+        }
+        return ret;
+    },
+
     ascii : function(str){
         
     },

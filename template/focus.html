@@ -1,38 +1,3 @@
-{{if activeboard }}
-<div class="cell cell-fake">
-  <div id="slides">
-    <div class="slides_container">
-      {{each(i, m) activeboard}}
-      <div>
-        <a href="${m.href}">
-          <img src="${m.img}"/>
-          <p>${m.title}</p>
-        </a>
-      </div>
-      {{/each}}
-    </div>
-  </div>
-</div>
-{{else}}
-{{if www.posts }}
-<div class="cell cell-fake">
-  <div id="slides">
-    <div class="slides_container">
-      {{each(i, m) www.posts}}
-      <div>
-        <a href="${m[1]}">
-          <img src="${m[0]}"/>
-          {{if m[2]}}
-          <p>${m[2]}</p>
-          {{/if}}
-        </a>
-      </div>
-      {{/each}}
-    </div>
-  </div>
-</div>
-{{/if}}
-{{/if}}
 <div class="cell cell-loose">
   <div class="cell-header">
     <h3>今日十大</h3>

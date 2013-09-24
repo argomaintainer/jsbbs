@@ -74,9 +74,44 @@ $MOD('frame.allp', function(){
         else return 'important';
     }
 
+    function key_boardname(i){
+        return i.boardname;
+    }
+
+    function key_title(i){
+        return i.title;
+    }
+
+    function get_fresh_group(cursor, callback){
+        $api.get_fresh(cursor, function(data){
+            data.groups = group_by_lambda(
+                filter_by_lambda(array_values(data.items), key_title),
+                key_boardname);
+            callback(data);
+        });
+    }
+    window.get_fresh_group = get_fresh_group;
+
+    function load_cursor(kwargs, e){
+        var self = $(e.target);
+        var t = $('<div class="load-more-post loading">载入中...</div>');
+        self.replaceWith(t);
+        get_fresh_group(self.data('cursor'), function(data){
+            t.replaceWith(render_string('fresh-li', { data: data }));
+        });
+    }
+    submit['load-cursor'] = load_cursor;
+
+    function load_board_more(kwargs, e){
+        var self = $(e.target);
+        self.parent().addClass('open');
+        self.remove();
+    }
+    submit['load-board-more'] = load_board_more;
+
     function load_new(callback){
-        $api.get_fresh(function(data){
-            render_template('fresh', { data: data.items });
+        get_fresh_group(null, function(data){
+            render_template('fresh-g', { data: data });
             callback();
         });
         
@@ -111,16 +146,16 @@ $MOD('frame.allp', function(){
         $.get('/ajax/comp/www_home',
               function(data){
                   if(data.success){
-                      require_jslib('slides');
+                      // require_jslib('slides');
                       var n = $(render_string('focus', data.data));
                       $('#part-2').replaceWith(n);
-                      $(function(){
-                          $("#slides").slides({
-                              start: Math.floor(
-                                  Math.random() *
-                                      data.data.www.posts.length) + 1
-                          });
-                      });
+                      // $(function(){
+                      //     $("#slides").slides({
+                      //         start: Math.floor(
+                      //             Math.random() *
+                      //                 data.data.www.posts.length) + 1
+                      //     });
+                      // });
                       load_widgets(data.data.www.widgets);
                   }
               });
@@ -814,8 +849,8 @@ $MOD('frame::board', function(){
                     }
                 });
                 if(data.data.lastnotes &&
-                   !((localStorage['notes::'+boardname] >
-                      data.data.lastnotes))){
+                   (localStorage['notes::'+boardname]
+                    < data.data.lastnotes)){
                     localStorage['notes::'+boardname] =
                         Math.floor((new Date())/1000);
                     show_notes(boardname);

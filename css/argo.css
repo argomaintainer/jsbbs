@@ -1429,6 +1429,14 @@ a[data-submit]:hover{
     font-size: 11px;
 }
 
+.post-li-loadmore{
+    padding: 3px 3px 3px 70px;
+    color: #999;
+    position: relative;
+    border-bottom: 1px solid #e8e8e8;
+    cursor: pointer;
+}    
+
 .post-li-topic{
     padding: 12px 12px 12px 70px;
     position: relative;
@@ -2549,4 +2557,23 @@ a:hover .ftext{
 
 .hint{
     color: #999
+}
+
+.post-li-second{
+    display: none;
+}
+
+.open .post-li-second{
+    display: block;
+}
+
+.load-more-post{
+    cursor: pointer;
+    padding: 8px;
+    color: #c21;
+    text-align: center;
+}
+
+.load-more-post.loading{
+    color: orange;
 }
