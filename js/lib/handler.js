@@ -109,9 +109,17 @@ $MOD('frame.allp', function(){
     }
     submit['load-board-more'] = load_board_more;
 
-    function load_new(callback){
+    submit['close-home-post'] = function(){
+        localStorage['show-home-post'] = 111;
+        $('#show-home-post').hide();
+    }
+
+    function load_new(callback){            
         get_fresh_group(null, function(data){
             render_template('fresh-g', { data: data });
+            if(localStorage['show-home-post'] != 111){
+                $('#show-home-post').show();
+            }
             callback();
         });
         
