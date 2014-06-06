@@ -110,14 +110,14 @@ $MOD('frame.allp', function(){
     submit['load-board-more'] = load_board_more;
 
     submit['close-home-post'] = function(){
-        localStorage['show-home-post'] = 111;
+        localStorage['show-home-post'] = $('#show-home-post').data('label');
         $('#show-home-post').hide();
     }
 
     function load_new(callback){            
         get_fresh_group(null, function(data){
             render_template('fresh-g', { data: data });
-            if(localStorage['show-home-post'] != 111){
+            if(localStorage['show-home-post'] != $('#show-home-post').data('label')){
                 $('#show-home-post').show();
             }
             callback();
