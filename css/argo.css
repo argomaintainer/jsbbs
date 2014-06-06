@@ -2577,3 +2577,91 @@ a:hover .ftext{
 .load-more-post.loading{
     color: orange;
 }
+
+.dowhat a{
+    display: inline-block;
+    font-size: 14px;
+    padding: 2px 10px;
+    margin: 3px 3px 5px 0;
+}
+
+.second-opener{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 10px;
+    background: #ccc;
+    cursor: pointer;
+    display: none;
+}
+
+.second-closer{
+    display: none;
+    position: absolute;
+    top: 5px;
+    right: 8px;
+    cursor: pointer;
+}
+
+@media (max-width: 1024px){
+    #topbar-container{
+        width: 100%;
+        min-width: 765px;
+    }
+    .second-opener,
+    .second-closer{
+        display: block;
+    }
+    #second{
+        display: none;
+        position: fixed;
+        top: 45px;
+        z-index: 10000;
+        width: 285px;
+        padding: 30px 0 20px 20px;
+        left: 0;
+        top: 0;
+        height: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+        background: #fbfbfb;
+        border-right-radius: 5px;
+        box-shadow: 0 0 5px #333;
+    }
+    #second.show{
+        display: block;
+    }
+    #widgets-container{
+        width: 224px;
+    }
+    .navlist > li{
+        border-bottom: 0;
+    }
+    .favbox li > a {
+        background: none;
+    }
+    .navlist li.active > a{
+        background: #f0f0f0;
+    }
+    .navlist > li > a:hover,
+    .favbox li > a:hover{
+        background: #eee;
+    }
+    .navbox{
+        box-shadow: none;
+        border:none;
+    }
+    .widget{
+        box-shadow: none;
+        border: none;
+    }
+    #container{
+        width: auto;
+        min-width: 715px;
+    }
+    #primary{
+        width: 100%;
+        margin-left: 0;
+    }
+}
