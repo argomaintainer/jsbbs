@@ -1649,16 +1649,19 @@ a[data-submit]:hover{
     line-height: 22px;
 }
 
-.hidden-ul > li{
-    visibility: hidden;
-}
+@media (hover) {
 
-.post-wrapper:hover .hidden-ul > li{
-    visibility: visible;
-}
+    .hidden-ul > li{
+        visibility: hidden;
+    }
 
-.hidden-ul .display{
-    visibility: visible;
+    .post-wrapper:hover .hidden-ul > li{
+        visibility: visible;
+    }
+
+    .hidden-ul .display{
+        visibility: visible;
+    }
 }
 
 .post-toolbar{
