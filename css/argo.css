@@ -2142,6 +2142,7 @@ input.file-selector{
     padding-top: 20px;
     border-radius: 4px;
     box-shadow: none;
+    border: 0;
 }
 
 .aside{
