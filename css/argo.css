@@ -2141,6 +2141,7 @@ input.file-selector{
     margin-top: 60px;
     padding-top: 20px;
     border-radius: 4px;
+    box-shadow: none;
 }
 
 .aside{
@@ -2586,6 +2587,7 @@ a:hover .ftext{
     font-size: 14px;
     padding: 2px 10px;
     margin: 3px 3px 5px 0;
+    width: 15%;
 }
 
 .second-opener{
