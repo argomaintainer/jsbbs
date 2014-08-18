@@ -35,19 +35,8 @@ define(function(require){
 
         function raise_may_no_good_browser(){
         }
-
-        if(NOCACHE || SIGNV != localStorage['site:$version']){
-            if(!localStorage['tpl:$all'])
-                localStorage['tpl:$all'] = '';
-            var arr = localStorage['tpl:$all'].split(';');
-            for(x in arr){
-                if(x)
-                    localStorage.removeItem('tpl:'+arr[x]);
-            }
-            localStorage['site:$version'] = SIGNV;
-        }                
         
-        do_while_load(function(){
+        $(function(){
 
             window.onhashchange = onhashchange;
             bind_hook('after_boot', refresh_frame);

@@ -1,4 +1,4 @@
-$MOD('argo_api', function(){
+$api = (function(){
 
     function get_nc( url, data, callback, type ) {
         // ajax get no cache
@@ -474,4 +474,5 @@ $MOD('argo_api', function(){
                   callback);
         }
     }
-})
+
+})();

@@ -1,0 +1,38 @@
+.topbar{
+    background: #3bbe8b;
+    box-shadow: 0 0 3px #555;
+}
+
+.brand{
+    color: #bbe8d7;
+    display: block;
+    line-height: 50px;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.topbar .search{
+    margin-top : 10px;
+    margin-left: 20px;
+}
+
+.topbar .search input{
+    border: 1px solid #ccc;
+    outline: none;
+    font-size: 13px;
+    padding: 5px 10px;
+    border-radius: 50px;
+    background: #f4f4f4;
+}
+
+.topbar .list > li > a{
+    color: #bbe8d7;
+    line-height: 1;
+    padding: 18px 15px 16px;
+    text-decoration: none;
+}
+
+.topbar .list > li > a:hover{
+    color: #fff;
+}
+    

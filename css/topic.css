@@ -1,0 +1,158 @@
+.page-topic .primary{
+    width: 714px;
+    margin-right: 42px;
+}
+
+.page-topic .aside{
+    width: 210px;
+}
+
+.mod-topic-editor-reply .editarea{
+    min-height: 110px;
+}
+
+.mod-topic-editor-reply .row{
+    margin-top: 20px;
+    text-align: right;
+}
+
+.mod-topic-editor-reply .btn{
+}
+
+.mod-topic-editor-reply .reset{
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.page-topic .primary hr{
+    background: transparent url('../img/hr714.png') no-repeat bottom;
+}
+
+.page-topic .aside hr{
+    background: transparent url("../img/hr210.png") no-repeat bottom;
+    margin: 30px 0;
+}    
+
+/* css */
+
+.mod-topic-lz{
+    margin-top: 40px;
+}
+
+.mod-topic-lz .avatar{
+    width: 70px;
+    height: 70px;
+    margin-left: -10px;
+    margin-top: 45px;
+}
+
+.mod-topic-lz .col-main{
+    margin-left: 84px;
+}
+
+.mod-topic-lz .header{
+    margin-bottom: 45px;
+}
+
+.mod-topic-lz .header h3{
+    font-size: 25px;
+    margin-bottom: 10px;
+}
+
+.mod-topic-lz .username{
+    font-size: 16px;
+}
+
+.mod-topic-lz .typo{
+    margin-bottom: 55px;
+}
+
+.mod-topic-lz .btn{
+    margin-right: 20px;
+}
+
+.mod-topic-lz .row{
+    margin-bottom: 20px;
+}
+
+.mod-topic-lz .text-iter2{
+    line-height: 30px;
+    display: inline-block;
+    margin-left: 25px;
+}
+
+.mod-topic-reply .col-main{
+    margin-left: 84px;
+}
+
+.mod-topic-reply .avatar{
+    margin-left: 34px;
+    margin-top: 15px;
+}
+
+.mod-topic-reply .header{
+    font-size: 16px;
+    line-height: 40px;
+    margin-top: 15px;
+    margin-bottom: 10px;
+}
+
+.mod-topic-reply .reply-action{
+    float: right;
+    margin-bottom: 10px;
+    margin-right: 20px;
+}
+
+.mod-topic-reply .reply-action li{
+    margin-left: 20px;
+}
+
+.mod-topic-editor-reply{
+    margin-top: 20px;
+}
+
+.mod-topic-editor-comment{
+    padding: 20px 45px 0;
+}
+
+.mod-topic-editor-comment .row{
+    margin-top: 20px;
+    text-align: right;
+}
+
+.mod-topic-editor-comment .row .btn{
+    margin-left: 20px;
+}
+
+.mod-topic-comments{
+    background-color: #f8fbfc;
+    border-radius: 3px;
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+}
+
+.mod-topic-comments .comment{
+    padding: 20px 20px 0 45px;
+}
+
+.mod-topic-comments .comment-actions{
+    float: right;
+}
+
+.mod-topic-fromboard{
+    background: #eaf5ea;
+    padding: 20px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.mod-topic-fromboard em{
+    text-align: center;
+    display: block;
+    font-size: 20px;
+    padding-bottom: 5px;
+}
+
+.page-topic .has-editor{
+    display: block;
+}

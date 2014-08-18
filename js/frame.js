@@ -1,12 +1,4 @@
-$MOD('console', function(){
-
-    if(typeof window.console == "undefined"){
-        window.console = {
-            log: function(){}
-        };
-    };
-    
-})
+NOCACHE = (location.toString().indexOf('__nocache__') > 0);
 
 $MOD('frame.load_lib', function(){
 
@@ -19,42 +11,14 @@ $MOD('frame.load_lib', function(){
       require_jslib(libname):
       Load '/js/lib/$libname.js' file if this lib has not been loaded.
 
-      drop_jslib(libname):
-      Drop a loaded lib. (so you can reload it.)
-
       --
 
       $G.load_lib : the lib that have been loaded.
       
     */
 
-    $G('loaded_lib', {});
-    function require_jslib(libname){
-        if(libname in $G.loaded_lib){
-            return false;
-        }
-        console.log('Load lib [' + libname + '] ... ');
-        $.ajax({
-            url : 'js/lib/'+ libname + '.js?_='+window.SIGNV,
-            dataType: "script",
-            async: false,
-            cache: false,
-            success: function(data){
-                $G.loaded_lib[libname] = true;
-                console.log('Load [' + libname + '] Done.\n');
-            },
-            error: function(jqXHR, textStatus, errorThrown){
-                throw errorThrown;
-            }
-        });
-        return true;
-    }
-    function drop_jslib(libname){
-        delete $G.loaded_lib[libname];
-    }
     return {
         "require_jslib": require_jslib,
-        "drop_jslib": drop_jslib
     }
 })
 using('frame.load_lib');
@@ -81,41 +45,7 @@ $MOD('frame.hook', function(){
 
     */
 
-    function seqcall(array){
-        var i=0, l=array.length, trigger;
-        trigger = function(){
-            if(i<l){
-                array[i](trigger);
-                ++ i;
-            }
-        }
-        trigger();
-    }
-
-    function new_seqcaller(array){
-        return function(f){            
-            seqcall(array.concat(f));
-        }
-    }
-
-    function parcall(array, finish){
-        var i=0, l=array.length, trigger, j;
-        trigger = function(){
-            ++i;
-            if(i==l) finish();
-        }
-        for(j=0; j<l; ++j){
-            array[j](trigger);
-        }
-    }
-
-    function new_parcaller(array){
-        return function(f){
-            parcall(array, f);
-        }
-    }
-
-    $G('hooks', {});
+    $G.hooks = {};
     function trigger_hooks(hookname, args){
         if(!(hookname in $G.hooks)){
             throw "No such hook";
@@ -129,10 +59,6 @@ $MOD('frame.hook', function(){
         }
     }
     return {
-        seqcall: seqcall,
-        new_seqcaller: new_seqcaller,
-        parcall: parcall,
-        new_parcaller: new_parcaller,
         trigger_hooks: trigger_hooks,
         register_hook: function(hookname){
             var funs = [];
@@ -211,7 +137,7 @@ $MOD('frame.func', {
         if(!pos.length) return;
         var buf='',
         html;
-        for_each_array(pos.slice(0,-1), function(element){
+        _.each(pos.slice(0,-1), function(element){
             buf += '<li><a href="' + element[1] + '">' + element[0] +
                 '</a><span class="divider">›</span></li>';
         });
@@ -263,7 +189,7 @@ $MOD('frame.func', {
 
     parts_div: function(parts){
         var buf;
-        for_each_array(parts, function(ele, index, self){
+        _.each(parts, function(ele, index, self){
             buf.push('<div id="part-' + ele + '"></div>');
         });
         return buf.join('\n');
@@ -351,8 +277,8 @@ using('frame.func');
 
 $MOD('frame.template', function(){
 
-    $MOD['frame.load_lib'].require_jslib('jquery.tmpl');
-    $G('template', $.template);    
+    $MOD['frame.load_lib'].require_jslib('template');
+    $G.template = $.template;    
     $MOD['frame.hook'].register_hook('after_render');    
     null_DATA = {}
 
@@ -470,9 +396,9 @@ $MOD('frame.frame', function(){
 
     $Type('FrameHash', ['hash', 'args']);
 
-    $G('frames', {});
-    $G('current', undefined);
-    $G('submit', {});
+    $G.frames = {};
+    $G.current = undefined;
+    $G.submit = {};
 
     MAIN_CONTAINER = '#main';
 
@@ -492,21 +418,87 @@ $MOD('frame.frame', function(){
         });
     }
 
-    function declare_frame(args){
-        if(!args.mark){
-            console.error('Frame must has a mark.');
+    var bp = {
+        parse_args : $MOD['frame.func'].parse_args,
+        tpl : function(){},
+        events : {
+        },
+        _listen_event : function(e){
+            e = e || this.events;
+            var self = this.el;
+            _.each(e, function(es, sel){
+                sel = (sel == '&') ? self : self.find(sel);
+                _.each(es, function(handler, event){
+                    sel.on(event, _.bind(handler, self));
+                });
+            });
+        },
+        exec : function(handler){
+            if(_.isFunction(handler)){
+                this.seq.push(handler);
+            }else if(handler === null){
+                this.seq.push(null);
+            }
+            var self = this;
+            var header = self.seq[0];
+            if(_.isFunction(header)){
+                ++ self.running;
+                self.seq.shift().apply(self, function(){
+                    --self.running;
+                    self.exec();
+                });
+            }else if(header == null){
+                if(self.running != 0){
+                    return;
+                }
+                self.seq.shift();
+                self.exec();
+            }
+            return this;
+        },
+        _loadData : function(args, callback){
+            
+        },
+        loadData : function(args){
+            return this.exec(function(callback){
+                this._loadData(args, callback);
+            });
+        },
+        buildElement : function(){
+            return this.exec(function(callback){
+                this.el = _.isFunction(this.tpl) ?
+                    this.tpl() : template(this.tpl, this.data);
+                this._listen_event();
+                this.el.trigger('init');
+                callback();
+            });
+        },
+        init : function(){},
+        bind : function(el){
+            return this.exec(function(callback){
+                this.el = el;
+                this.listen_event();
+                this.el.trigger('init');
+            });
         }
-        if(!args.submit)
-            args.submit = {};
-        if(!args.ajax)
-            args.ajax = {};
-        if(args.isnew != false)
-            args.isnew = true;
-        if(!args.local)
-            args.local = {};        
-        if(args.keep_widgets != true)
-            args.keep_widgets = false;
-        $G.frames[args.mark] = $Type.Frame(args);
+    }
+
+    var frames = {};
+    
+    function declare_frame(mixin){
+        function Frame(){
+            this.data = {};
+            this.el = null;
+            this.seq = [];
+            this.running = 0;
+        };
+        Frame.prototype = bp;
+        Frame.prototype.constructor = Frame;
+        _.extend(Frame, mixin);
+        if(mixin.name){
+            frames[name] = Frame;
+        }
+        return Frame;
     }
 
     function refresh_frame(){
@@ -569,12 +561,12 @@ $MOD('frame.frame', function(){
 
         if(frame.widgets_loader){
             if(typeof frame.widgets_loader == "function"){
-                for_each_array(frame.widgets_loader(curhash.args), function(v){
+                _.each(frame.widgets_loader(curhash.args), function(v){
                     render_template('widget/' + v.type, v, '#dy-widgets');
                 });
             }
             else{
-                for_each_array(frame.widgets_loader, function(ele){
+                _.each(frame.widgets_loader, function(ele){
                     var v = ele(curhash.args);
                     render_template('widget/' + v.type, v, '#dy-widgets');
                 });
@@ -658,8 +650,7 @@ $MOD('frame.frame', function(){
         return null;
     }
 
-    $G('refresh', true);  // auto refresh in hashchange
-
+    $G.refresh = true;  // auto refresh in hashchange
     function quite_set_hash(hash, kwargs){
         if($G.refresh && (location.hash != hash)){
             $G.refresh = false;
@@ -750,10 +741,6 @@ $MOD('frame.frame', function(){
         }
     });
 
-    $.fn.hempty = function(msg){
-        this.html('<div class="hint-loading"><i class="icon-refresh"></i> ' + msg + '</div>');
-    }
-
     return {
         declare_frame: declare_frame,
         refresh_frame: refresh_frame,
@@ -788,102 +775,6 @@ $MOD('frame.debug', function(){
 
 });
 using('frame.debug');
-
-$MOD('main', function(){
-
-})
-using('main');
-
-$MOD('prototype', function(){
-
-    // if(!Object.keys) Object.keys = function(o){
-    //     if (o !== Object(o))
-    //         throw new TypeError('Object.keys called on non-object');
-    //     var ret=[],p;
-    //     for(p in o) if(Object.prototype.hasOwnProperty.call(o,p)) ret.push(p);
-    //     return ret;
-    // }
-
-    for_each_array = function ( that, callback, thisArg ) {
-            
-            var T, k;
-            
-            if ( that == null ) {
-                throw new TypeError( "that is null or not defined" );
-            }
-            
-            // 1. Let O be the result of calling ToObject passing the |that| value as the argument.
-            var O = Object(that);
-            
-            // 2. Let lenValue be the result of calling the Get internal method of O with the argument "length".
-            // 3. Let len be ToUint32(lenValue).
-            var len = O.length >>> 0; // Hack to convert O.length to a UInt32
-            
-            // 4. If IsCallable(callback) is false, throw a TypeError exception.
-            // See: http://es5.github.com/#x9.11
-            if ( {}.toString.call(callback) !== "[object Function]" ) {
-                throw new TypeError( callback + " is not a function" );
-            }
-            
-            // 5. If thisArg was supplied, let T be thisArg; else let T be undefined.
-            if ( thisArg ) {
-                T = thisArg;
-            }
-            
-            // 6. Let k be 0
-            k = 0;
-            
-            // 7. Repeat, while k < len
-            while( k < len ) {
-                
-                var kValue;
-                
-                // a. Let Pk be ToString(k).
-                //   This is implicit for LHS operands of the in operator
-                // b. Let kPresent be the result of calling the HasProperty internal method of O with argument Pk.
-                //   This step can be combined with c
-                // c. If kPresent is true, then
-                if ( Object.prototype.hasOwnProperty.call(O, k) ) {
-                    
-                    // i. Let kValue be the result of calling the Get internal method of O with argument Pk.
-                    kValue = O[ k ];
-                    
-                    // ii. Call the Call internal method of callback with T as the this value and
-                    // argument list containing kValue, k, and O.
-                    callback.call( T, kValue, k, O );
-                }
-                // d. Increase k by 1.
-                k++;
-            }
-            // 8. return undefined
-    };
-});
-
-/* This MOD May be Remove */
-$MOD('range', function(){
-
-    var Range = $Type('Range', ['start', 'end', 'isnull']);
-
-    return {
-        'Range': Range,
-        'new_range': function(start, end){
-            if(start == null)
-                return Range({isnull: true});
-            return $Type.Range([start, end]);
-        },
-        'range_start': function(range){
-            return (range.isnull) ? 0 : (range.start);
-        },
-        'range_update': function(range, start, end){
-            if(range.isnull){
-                range.isnull = false;
-            }
-            range.start = start;
-            range.end = end;
-        }
-    }
-    
-})
 
 $MOD('temp', function(){
     $G.submit['load-gist'] = function(p, e){

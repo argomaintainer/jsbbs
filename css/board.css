@@ -1,0 +1,150 @@
+.page-boards .primary{
+    width: 756px;
+}
+
+.page-boards .aside{
+    width: 210px;
+    margin-left: 42px;
+}
+
+.page-boards .primary{
+    margin: -100px -19px 0 -19px;
+    background-color: #fff;
+    background-image: url('../img/boardshadow.png') no-repeat;
+    border-top: 4px solid #68b38c;
+}
+
+/* mod board header */
+
+.mod-board-header{
+    background-position: center 0;
+    height: 390px;
+    width: 100%;
+}
+    
+.mod-board-header .title{
+    height: 390px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    background: rgba(0,0,0,.2);
+}
+
+.mod-board-header h2{
+    padding-top: 120px;
+    color: #f0f0f0;
+    color: rgba(255, 255, 255, .8);
+    font-size: 30px;
+    text-shadow: 0 0 1px #aaa;
+}
+
+.mod-board-header small{
+    color: rgba(255, 255, 255, .5);
+    font-size: 20px;
+}
+
+/* mod board postlist */
+
+.mod-board-postlist .board-actions li{
+    margin-right : 15px;
+}
+
+.mod-board-postlist .tabs{
+    margin-left: 40px;
+}
+
+.mod-board-postlist .col-main{
+    margin-left: 100px;
+}
+    
+.mod-board-postlist .r1{
+    margin-top: 8px;
+    line-height: 32px;
+    position: relative;
+}
+
+.mod-board-postlist .r2 a{
+    line-height: 40px;
+}
+
+.mod-board-postlist .time{
+    right: 40px;
+}
+
+.mod-board-postlist hr{
+    background-image: url("../img/hr756.png");
+    background-color: transparent;
+}
+
+.mod-board-postlist .board-pager{
+    margin: 30px 40px 40px;
+}
+
+/* mod board info */
+
+.mod-board-info{
+    margin-bottom: 30px;
+}
+
+.mod-board-info img{
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+}
+
+.mod-board-info .col-main{
+    margin-left: 80px;
+}
+
+.mod-board-info .boardtxt{
+    font-size: 18px;
+}
+
+.mod-board-info .bm{
+    margin-top: 10px;
+}
+
+/* mod board note */
+
+.widgets .mod-board-note{
+    margin-bottom: 40px;;
+}
+
+/* mod board star-it */
+
+.widgets .mod-board-starit{
+    margin-bottom: 10px;
+}
+
+.mod-board-starit .btns{
+    text-align: center;
+    margin: 15px 0;;
+}
+
+/* mod board ann */
+
+.mod-board-ann{
+    background: #eaf5ea;
+    font-size: 13px;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.mod-board-ann em{
+    font-size: 18px;
+    margin: 0 5px;
+}
+    
+.mod-board-ann a{
+    color: #61af75;
+}
+
+/* hr */
+
+
+.page-boards .aside hr{
+    background-image: url("../img/hr210.png");
+    background-color: transparent;
+    margin: 30px 0;
+}    
+    

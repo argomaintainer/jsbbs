@@ -1,0 +1,201 @@
+.page-fresh .primary{
+    width: 714px;
+    margin-top: 40px;
+}
+
+.page-fresh .aside{
+    width: 210px;
+    margin-top: 40px;
+    margin-left: 84px;
+}
+
+.page-fresh .primary hr{
+    background: transparent url('../img/hr714.png') no-repeat bottom;
+}
+
+.page-fresh .aside hr{
+    background: transparent url("../img/hr210.png") no-repeat bottom;
+    margin: 30px 0;
+}    
+    
+
+/* mod fresh pageheader */
+
+.mod-fresh-pageheader{
+    max-height: 200px;
+    overflow: hidden;
+    margin-bottom: 35px;
+}
+
+.mod-fresh-pageheader img{
+    width: 714px;
+}
+
+.mod-fresh-pageheader a{
+    display: block;
+}    
+
+.mod-fresh-pageheader span{
+    bottom: 10px;
+    right: 10px;
+    color: #ccc;
+    text-shadow: 0 0 2px #333;
+}
+
+/* mod fresh goods */
+
+.mod-fresh-goods{
+    margin-bottom: 50px;
+}
+
+.mod-fresh-goods li{
+    width: 120px;
+}
+
+.mod-fresh-goods .list a{
+    color: #666;
+    display: inline-block;
+    line-height: 40px;
+}
+
+.mod-fresh-goods .more{
+    float: right;
+    color: #78d0b5;
+    line-height: 40px;
+}
+
+/* mod fresh freshlist */
+
+.mod-fresh-freshlist .boardname{
+    width: 80px;
+    text-align: right;
+    font-size: 14px;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.mod-fresh-freshlist .posts{
+    margin-left: 120px;
+}
+
+.mod-fresh-freshlist hr{
+    background: transparent url("../img/hr594.png") no-repeat bottom;
+    margin: 25px 0;
+}    
+
+.mod-fresh-freshlist .post{
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+
+.mod-fresh-freshlist .time{
+    margin-right: 10px;
+}
+
+.mod-fresh-freshlist .more{
+    text-align: center;
+    background: transparent url("../img/hr594.png") no-repeat center;
+    line-height: 1px;
+    margin: 40px 0;
+}
+
+.mod-fresh-freshlist .more a{
+    color: #78d0b5;
+    font-size: 12px;
+    background: #fff;
+    padding: 0 20px;
+}
+
+.mod-fresh-freshlist .loadmore{
+    text-align: center;
+    line-height: 40px;
+    color: #9fdca0;
+    border: 1px solid #9fdca0;
+    display: block;
+    margin-top: 20px;
+}
+
+.mod-fresh-freshlist .posts-more{
+    display: none;
+}
+
+/* mod fresh self */
+
+.mod-fresh-self{
+    margin-top: 0;
+}
+
+.mod-fresh-self .avatar{
+    width: 65px;
+    height: 65px;
+    border-radius: 100%;
+    margin-left: 0;
+    margin-top: 0;
+}
+
+.mod-fresh-self .col-main{
+    margin-left: 80px;
+}
+
+.mod-fresh-self .userid{
+    font-size: 18px;
+    padding-top: 20px;
+}    
+
+.mod-fresh-self .score{
+    font-size: 12px;
+}
+
+.mod-fresh-self .detail{
+    margin-top: 20px;
+}
+
+.mod-fresh-self .detail span{
+    font-size: 12px;
+    width: 60px;
+    display: inline-block;;
+    border-right: 1px solid #ccc;
+    margin-right: 8px;
+    text-align: center;
+}    
+
+.mod-fresh-self .detail em{
+    margin: 0 8px;
+}
+
+.mod-fresh-self .detail .last{
+    border-right: 0;
+    margin-right: -2px;
+}
+
+/* mod fresh topten */
+
+.mod-fresh-topten .outer{
+    margin-top: 25px;;
+    display: table;
+}
+
+.mod-fresh-topten .inner{
+    position: relative;
+    display: table-cell;
+    vertical-align: middle;
+    height: 32px;
+}
+
+.mod-fresh-topten img{
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+}
+
+.mod-fresh-topten a{
+    padding-left: 45px;
+    display: inline-block;
+    max-height : 30px;
+    overflow: hidden;
+    line-height: 15px;
+    word-break : break-all;
+}
+    
+    
+    

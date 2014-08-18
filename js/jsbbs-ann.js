@@ -11,14 +11,14 @@ $MOD('jsbbs.main', function(){
 
     console.log('dddddddddddd');
 
-    require_jslib('userbox');
+    loadjs('userbox');
     using('jsbbs.userbox');
 
-    require_jslib('argo_api');
+    loadjs('argo_api');
     import_module('argo_api', '$api');
 
-    require_jslib('handler-ann');
-    require_jslib('url');
+    loadjs('handler-ann');
+    loadjs('url');
     using('frame.url_for', 'url_for_');
 
     function raise_too_old_browser(){
@@ -28,7 +28,7 @@ $MOD('jsbbs.main', function(){
     function raise_may_no_good_browser(){
     }
     
-    do_while_load(function(){
+    $(function(){
 
         $G['simple-userbox'] = true;
 

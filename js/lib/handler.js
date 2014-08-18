@@ -51,137 +51,7 @@ $MOD('func', function(){
 });
 
 $MOD('frame.allp', function(){
-
-    var submit = {};
-
-    function cmp_boards(a, b){
-        return (b.unread - a.unread) || (a.secnum - b.secnum) ||
-            (b.lastpost - a.lastpost);
-    }
-
-    function close_activeboard(kwargs, e){
-        localStorage['f:home:activeboard'] = $('#activeboard').text();
-         $("#activeboard-wrapper").remove();
-    }
-    submit['close-activeboard'] = close_activeboard;
-
-    function format_number(x){
-        x = Number(x);
-        if(x < 10) return 'default';
-        else if(x < 20) return 'success';
-        else if(x < 50) return 'info';
-        else if(x < 80) return 'warning';
-        else return 'important';
-    }
-
-    function key_boardname(i){
-        return i.boardname;
-    }
-
-    function key_title(i){
-        return i.title;
-    }
-
-    function get_fresh_group(cursor, callback){
-        $api.get_fresh(cursor, function(data){
-            data.groups = group_by_lambda(
-                filter_by_lambda(array_values(data.items), key_title),
-                key_boardname);
-            callback(data);
-        });
-    }
-    window.get_fresh_group = get_fresh_group;
-
-    function load_cursor(kwargs, e){
-        var self = $(e.target);
-        var t = $('<div class="load-more-post loading">载入中...</div>');
-        self.replaceWith(t);
-        get_fresh_group(self.data('cursor'), function(data){
-            t.replaceWith(render_string('fresh-li', { data: data }));
-        });
-    }
-    submit['load-cursor'] = load_cursor;
-
-    function load_board_more(kwargs, e){
-        var self = $(e.target);
-        self.parent().addClass('open');
-        self.remove();
-    }
-    submit['load-board-more'] = load_board_more;
-
-    submit['close-home-post'] = function(){
-        localStorage['show-home-post'] = $('#show-home-post').data('label');
-        $('#show-home-post').hide();
-    }
-
-    function load_new(callback){            
-        get_fresh_group(null, function(data){
-            render_template('fresh-g', { data: data });
-            if(localStorage['show-home-post'] != $('#show-home-post').data('label')){
-                $('#show-home-post').show();
-            }
-            callback();
-        });
-        
-        // $api.get_goodboards('new', function(data){
-        //     var acb = data.activeboard;
-        //     if(data.success){
-        //         data = data.data;
-        //         boards = data.boards.sort(cmp_boards);
-        //     }
-        //     else{
-        //         boards = [];
-        //     }
-        //     if(acb && acb.length){
-        //         acb = acb[acb.length-1];
-        //         if(localStorage['f:home:activeboard'] == acb.title ){
-        //             acb = null;
-        //         }
-        //     }
-        //     render_template('allp', {
-        //         boards: boards,
-        //         www: data.www,
-        //         activeboard : acb
-        //     });
-        //     if(data.www && data.www.widget){
-        //         load_widgets(data.www.widgets);
-        //     }
-        //     callback();
-        // });
-    }
-
-    function load_focus(){
-        $.get('/ajax/comp/www_home',
-              function(data){
-                  if(data.success){
-                      // require_jslib('slides');
-                      var n = $(render_string('focus', data.data));
-                      $('#part-2').replaceWith(n);
-                      // $(function(){
-                      //     $("#slides").slides({
-                      //         start: Math.floor(
-                      //             Math.random() *
-                      //                 data.data.www.posts.length) + 1
-                      //     });
-                      // });
-                      load_widgets(data.data.www.widgets);
-                  }
-              });
-    }
-
-    declare_frame({
-        mark: 'home',
-        enter: function(kwargs){
-            if($G.authed && ((!$G.userfav_a)||($G.userfav_a.length < 5))
-               &&(!localStorage['bool::watched-tut'])){
-                location = '#!tut-2';
-            }
-            load_new(load_focus);
-        },
-        submit: submit,
-        marktop: 'home'
-    });
-
+    // Home Page
 });
 
 $MOD('frame::section', function(){
@@ -203,10 +73,9 @@ $MOD('frame::section', function(){
     }
 
     declare_frame({
-        mark: 'section',
+        name: 'section',
         submit: submit,
-        marktop: 'section',
-        enter: function(kwargs){
+        init: function(kwargs){
             $api.get_all_boards(function(data){
                 if(data.success){
                     render_template('section', {
@@ -264,8 +133,8 @@ $MOD('frame::user', function(){
     }                       
     
     declare_frame({
-        mark : 'user',
-        enter : function(args){
+        name: 'user',
+        init : function(args){
             $api.query_user(args.userid, function(data){
                 if(data.success){
                     local.userid = args.userid;
@@ -288,16 +157,18 @@ $MOD('frame::board', function(){
     var PAGE_LIMIT = 25;
     var last_pagenum = {};
 
-    require_jslib('jquery.jqpagination');
+    loadjs('jquery.jqpagination');
 
     // var Range = $MOD.range.Range,
-    BoardStatus = $Type('BoardStatus', ['boardname',
-                                        'loader',
-                                        'render',
-                                        'start',
-                                        'isnull']);
+    // ************************************************
+    // BoardStatus = $Type('BoardStatus', ['boardname',
+    //                                     'loader',
+    //                                     'render',
+    //                                     'start',
+    //                                     'isnull']);
     
-    var cur_board = BoardStatus({ isnull: true }),
+    // var cur_board = BoardStatus({ isnull: true }),
+    var cur_board = { isnull: true };
     ajax, local = {}, 
     submit = {};
 
@@ -490,9 +361,9 @@ $MOD('frame::board', function(){
     }
 
     declare_frame({
-        mark: 'quickpost',
+        name: 'quickpost',
         submit: submit,
-        enter : function(kwargs){
+        init : function(kwargs){
             render_template('quickpost');
         }
     });
@@ -725,10 +596,6 @@ $MOD('frame::board', function(){
     }
     submit['read_post'] = read_post;
 
-    // function get_default_range(){
-    //     return $Type.Range([0, NaN]);
-    // }
-
     submit['remove_notes'] = function(){
         $('.board-notes').remove();
         localStorage['notes::'+local.cur_board.boardname] =
@@ -774,7 +641,7 @@ $MOD('frame::board', function(){
 
     function enter_board(kwargs){
 
-        require_jslib('format');
+        loadjs('format');
 
         var boardname = kwargs.boardname, pagenum;
         
@@ -906,10 +773,10 @@ $MOD('frame::board', function(){
     submit['clear_unread'] = clear_board_unread;
 
     declare_frame({
-        mark: 'board',
+        name: 'board',
         isnew: true,
         keep_widgets: false,
-        enter : enter_board,
+        init : enter_board,
         ajax : ajax,
         submit: submit,
         local: local
@@ -919,7 +786,7 @@ $MOD('frame::board', function(){
 
 $MOD('frame::flow', function(){
 
-    require_jslib('format');
+    loadjs('format');
 
     var local = {},
     submit = {},
@@ -1044,7 +911,7 @@ $MOD('frame::flow', function(){
                       });
     }
 
-    require_jslib('format');
+    loadjs('format');
     var reply_post, publish_reply;
     submit['reply_post'] = reply_post = function(kwargs, e){
         if(!$G.authed){
@@ -1117,7 +984,7 @@ $MOD('frame::flow', function(){
     }
 
     submit['share-post'] = function(kwargs, e){
-        require_jslib('share_btn');
+        loadjs('share_btn');
         $MOD.share_btn.share_window(
             url_for_url(url_for_topic(kwargs.filename, cur_boardname)),
             $('#title-'+kwargs.index).text() + ' » '
@@ -1139,14 +1006,14 @@ $MOD('frame::flow', function(){
     }
     
     declare_frame({
-        mark : 'flow',
+        name: 'flow',
         basetpl : 'post-framework',
         submit : submit,
         prepare : function(kwargs){
             local.boardname = cur_boardname = kwargs.boardname;
             local.oldest_filename = local.last_filename = kwargs.filename;
         },
-        enter : function(kwargs){
+        init : function(kwargs){
             local.kwargs = kwargs;
             _load_post();
         },
@@ -1337,7 +1204,7 @@ $MOD('frame::topic', function(){
     }
 
     submit['share-post'] = function(kwargs, e){
-        require_jslib('share_btn');
+        loadjs('share_btn');
         $MOD.share_btn.share_window(
             url_for_url(url_for_topic(kwargs.filename, cur_boardname)),
             $('#title-'+kwargs.index).text() + ' » '
@@ -1380,9 +1247,9 @@ $MOD('frame::topic', function(){
     }
     
     declare_frame({
-        mark: 'topic',
+        name: 'topic',
         submit : submit,
-        enter : function(kwargs){
+        init : function(kwargs){
             get_filename(kwargs, function(kwargs){
                 local.first = null;
                 local.kwargs = kwargs;
@@ -1416,7 +1283,7 @@ $MOD('page_func', function(){
     function parse_kw(text){
         var s = text.split('\n'),
         kw = {};
-        for_each_array(s, function(ele){
+        _.each(s, function(ele){
             var t = ele.split(' : ');
             kw[t[0]] = t[1];
         });
@@ -1469,8 +1336,8 @@ $MOD('frame::setting', function(){
     }
 
     declare_frame({
-        mark: 'setting',
-        enter: function(){
+        name: 'setting',
+        init: function(){
             $api.get_self_setting(function(data){
                 render_template('setting',{ 'setting': data.data});
             })
@@ -1596,8 +1463,8 @@ $MOD('frame::profile', function(){
     }
 
     declare_frame({
-        mark: 'profile',
-        enter: function(){
+        name: 'profile',
+        init: function(){
             $api.get_self_info(function(data){
                 if(data.success){
                     render_template('profile', { self: data.data });
@@ -1673,9 +1540,8 @@ $MOD('frame::mail', function(){
     }
 
     declare_frame({
-        mark: 'mail',
-        marktop: 'mail',
-        enter : function(kwargs){
+        name: 'mail',
+        init : function(kwargs){
             $api.get_mailbox_info(function(data){
                 var index;
                 if(kwargs.index){
@@ -1795,8 +1661,8 @@ $MOD('frame::readmail', function(){
     }
 
     declare_frame({
-        mark: 'readmail',
-        enter: function(kwargs){
+        name: 'readmail',
+        init: function(kwargs){
             set_mail(kwargs.index);
         },
         local: local,
@@ -1807,8 +1673,8 @@ $MOD('frame::readmail', function(){
 
 $MOD('frame::page', function(){
     declare_frame({
-        mark: 'page',
-        enter: function(kwargs){
+        name: 'page',
+        init: function(kwargs){
             var path = kwargs.path;
             $.get('page/' + path,
                   function(data){
@@ -1821,8 +1687,8 @@ $MOD('frame::page', function(){
 
 $MOD('frame::anc', function(){
     declare_frame({
-        mark: 'anc',
-        enter: function(kwargs){
+        name: 'anc',
+        init: function(kwargs){
             $api.get_anc(kwargs.path, function(data){
                 if(data.success){
                     $('#main').html($MOD.format.format(data.data));
@@ -1838,7 +1704,7 @@ $MOD('frame::admin_board', function(){
 
     function links2str(links){
         var buf='';
-        for_each_array(links, function(element){
+        _.each(links, function(element){
             if(typeof element == "string"){
                 buf.concat(element +'\n');
                 return;
@@ -1874,7 +1740,7 @@ $MOD('frame::admin_board', function(){
     function parse_links(text){
         var a = text.split('\n');
         var links = [];
-        for_each_array(a, function(ele){
+        _.each(a, function(ele){
             if($.inArray(',', ele)!=-1){
                 links.push(ele.split(',').slice(0, 2));
             }
@@ -1922,8 +1788,8 @@ $MOD('frame::admin_board', function(){
     }
     
     declare_frame({
-        mark: 'admin_board',
-        enter: function(kwargs){
+        name: 'admin_board',
+        init: function(kwargs){
             $api.get_board_info(kwargs.boardname, function(data){
                 if(data.success && data.data.isadmin){
                     var args = {}, boardname=kwargs.boardname;
@@ -2011,9 +1877,9 @@ $MOD('frame::bm_selection', function(){
     }
 
     declare_frame({
-        mark: 'bm_selection',
+        name: 'bm_selection',
         submit: submit,
-        enter: function(kwargs){
+        init: function(kwargs){
             render_template('bm_selection');
         }
     });
@@ -2203,7 +2069,7 @@ $MOD('frame::tut', function(){
     submit['finish-tut-success'] = finish_tut_success;
 
     // declare_frame({
-    //     mark: 'tut-1',
+    //     name: 'tut-1',
     //     submit: submit,
     //     enter: function(kwargs){
     //         render_template('tut-1');
@@ -2212,9 +2078,9 @@ $MOD('frame::tut', function(){
     // });
 
     declare_frame({
-        mark: 'admin-fav',
+        name: 'admin-fav',
         submit: submit,
-        enter: function(kwargs){
+        init: function(kwargs){
             render_template('admin-fav');
             var d = coll_board();
             if(d.length) reset_board(d);
@@ -2233,9 +2099,9 @@ $MOD('frame::tut', function(){
     });
 
     declare_frame({
-        mark: 'tut-2',
+        name: 'tut-2',
         submit: submit,
-        enter: function(kwargs){
+        init: function(kwargs){
             render_template('tut-2');
             var d = coll_board();
             if(d.length) reset_board(d);
@@ -2254,17 +2120,17 @@ $MOD('frame::tut', function(){
     });
 
     declare_frame({
-        mark: 'tut-3',
+        name: 'tut-3',
         submit: submit,
-        enter: function(kwargs){
+        init: function(kwargs){
             render_template('tut-3');
         }
     });
 
     declare_frame({
-        mark: 'tut-4',
+        name: 'tut-4',
         submit: submit,
-        enter: function(kwargs){
+        init: function(kwargs){
             render_template('tut-4');
         }
     });
@@ -2340,9 +2206,9 @@ $MOD('frame::admin', function(){
     }
 
     declare_frame({
-        mark: 'admin',
+        name: 'admin',
         submit: submit,
-        enter: function(kwargs){
+        init: function(kwargs){
             $.get('/ajax/etc/alltarget', function(data){
                 if(data.success){
                     render_template('admin', {
@@ -2373,26 +2239,25 @@ $MOD('frame::admin', function(){
     }
 
     declare_frame({
-        mark : 'invcode',
+        name: 'invcode',
         submit : submit,
-        enter : function(){
+        init : function(){
             render_template('invcode');
         }
     });
 
     declare_frame({
-        mark : 'mine',
-        enter : function(){
+        name: 'mine',
+        init : function(){
             $api.get_my_part_topic(function(data){
                 render_template('mine', data);
             });
         },
-        marktop: 'mine'
     });
 
     declare_frame({
-        mark : 'myinv',
-        enter : function(){
+        name: 'myinv',
+        init : function(){
             $api.get_self_inv(function(data){
                 if(data.success){
                     render_template('myinv', data.data);
@@ -2401,10 +2266,11 @@ $MOD('frame::admin', function(){
         }
     });
 
+
     declare_frame({
-        mark: 'freshmen',
+        name: 'freshmen',
         submit: submit,
-        enter: function(kwargs){
+        init: function(kwargs){
             var type = (kwargs.type=='topic')?('topic'):('digest');
             $api.get_board_info('Freshmen', function(data){
                 var info = data.data;

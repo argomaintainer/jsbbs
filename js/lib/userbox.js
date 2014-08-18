@@ -2,8 +2,8 @@ $MOD('jsbbs.userbox', function(){
 
     require_jslib('cookie');
 
-    $G('lastsection', 0);
-    $G('last_seccode', 0);
+    $G.lastsection = 0;
+    $G.last_seccode = 0;
     
     $G.submit.logout = function(){
         modal_confirm('登出帐号', '你确认要取消登录？',
@@ -11,6 +11,7 @@ $MOD('jsbbs.userbox', function(){
                           $api.user_logout(refresh_userbox);
                       });
     }
+
     $G.submit.login = function(kwargs){
         $api.user_login(kwargs.userid, kwargs.password, function(data){
             if(data.success){
@@ -116,9 +117,9 @@ $MOD('jsbbs.userbox', function(){
         launch_mail_checker(data.success);
     });
     
-    $G('authed', false);
-    $G('userfav', {});
-    $G('simple-userbox', false);
+    $G.authed = false;
+    $G.userfav = {};
+    $G['simple-userbox'] = false;
 
     function refresh_userbox(){
         var data = $api.get_self_info_aync();
