@@ -100,6 +100,9 @@
                 case 'D':
                     args[pair] = target.data(pair);
                     break;
+                case 'T':
+                    args[pair] = target;
+                    break;
                 };
             });
             return args;
@@ -146,20 +149,16 @@
             });
         },
         buildElement : function(container){
-            console.log('ct1', this.seq);
             this.exec(null).exec(function(callback){
-                console.log('ct2', container);
                 this.el = $(_.isFunction(this.tpl) ?
                             this.tpl() :
                             templater[this.tpl](this.data));
                 this._listen_event();
-                console.log(container);
                 if(container){
                     $(container).html(this.el);
                 }
                 callback();
             });
-            console.log('ct3', this.seq);
             return this;
         },
         init : function(){},

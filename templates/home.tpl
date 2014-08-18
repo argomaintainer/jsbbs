@@ -32,27 +32,27 @@
       <div class="mod-title">
         <h3>阅读新鲜话题</h3>
       </div>
-      {{ each fresh as bs index }}
+      {{ each group as bs index }}
         <div class="fresh item">
           <div class="col-left">
-            <span class="boardname">{{bs.boardname}}</span>
+            <span class="boardname">{{bs[0].boardname}}</span>
           </div>
           <div class="col-main posts">
-            {{ each bs.posts as p }}
-              {{ if loop.index == 4 }}
+            {{ each bs as p index }}
+              {{ if index == 4 }}
                 <div class="more"><a href="#">查看被折叠的话题</a></div>
                 <div class="posts-more">
               {{ /if }}
               <div class="post item">
                 <div class="col-main">
                   <span></span>
-                  <a class="title text" href="{{url_for('topic', tid=p.tid)}}" title="{{p.title}}">{{p.title}}</a>
+                  <a class="title text" href="{{url_for('topic1', p.topicid)}}" title="{{p.title}}">{{p.title}}</a>
                 </div>
                 <span class="col-right text-alt time">{{p.lastupdate|nicetime}}</span>
               </div>
             {{ /each }}
             <hr/>
-            {{ if bs.posts|length > 3 }}
+            {{ if bs.length > 3 }}
                 </div>
             {{ /if }}
           </div>
@@ -68,9 +68,9 @@
 
       <div class="mod mod-fresh-self">
         <div class="col-left">
+          <img class="avatar" src="{{url_for('avatar', userid())}}" title="{{userid}}"/>
         </div>
         <div class="col-main">
-          <img class="avatar" src="{{url_for('avatar', userid())}}" title="{{userid}}"/>
           <a class="userid text" href=""{{url_for('user', userid())}}" title="{{userid}}">{{userid}}</a><br/>
           <span class="score text-alt">贡献值： <em>233</em> </span>
         </div>

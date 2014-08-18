@@ -5,9 +5,10 @@ function get_fresh_group(cursor, callback){
         if(data.items){
             _.each(data.items, function(item){
                 if(!group_index.hasOwnProperty(item.boardname)){
-                    group_index[item.boardname] = [];
+                    group_index[item.boardname] = group.length;
+                    group[group_index[item.boardname]] = [];
                 }
-                group_index[item.boardname].push(item);
+                group[group_index[item.boardname]].push(item);
             });
             callback(group);
         }else{
@@ -25,6 +26,7 @@ declare_frame({
         var self = this;
         get_fresh_group(null, function(data){
             self.data.group = data;
+            console.log(data);
             callback();
         });
     },            

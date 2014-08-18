@@ -1,19 +1,19 @@
-.page-fresh .primary{
+.page-home .primary{
     width: 714px;
     margin-top: 40px;
 }
 
-.page-fresh .aside{
+.page-home .aside{
     width: 210px;
     margin-top: 40px;
     margin-left: 84px;
 }
 
-.page-fresh .primary hr{
+.page-home .primary hr{
     background: transparent url('../img/hr714.png') no-repeat bottom;
 }
 
-.page-fresh .aside hr{
+.page-home .aside hr{
     background: transparent url("../img/hr210.png") no-repeat bottom;
     margin: 30px 0;
 }    
@@ -67,11 +67,12 @@
 /* mod fresh freshlist */
 
 .mod-fresh-freshlist .boardname{
-    width: 80px;
+    width: 180px;
     text-align: right;
     font-size: 14px;
     margin-top: 10px;
     display: inline-block;
+    margin-left: -100px;
 }
 
 .mod-fresh-freshlist .posts{

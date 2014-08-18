@@ -16,6 +16,9 @@
             return 'index.html#!flow?filename=' + filename + '&&boardname='
                 + boardname;
         },
+        'topic1' : function(tid){
+            return 'index.html#!topic?tid=' + tid;
+        },
         'topic' : function(filename, boardname){
             return 'index.html#!topic?boardname=' + boardname + '&&filename=' + filename;
         },

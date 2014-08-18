@@ -265,3 +265,8 @@ a.text-iter2, .text-iter2{
 .empty{
     display: none;
 }
+
+#nostart{
+    text-align: center;
+    margin: 200px 0 400px 0;
+}
