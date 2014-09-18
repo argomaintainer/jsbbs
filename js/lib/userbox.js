@@ -59,21 +59,11 @@ $MOD('jsbbs.userbox', function(){
             }
             $G.userfav = t;
             $G.userfav_a = data.data;
-            data.data.sort(sort_favitem);
-            render_template('widget/fav', { fav: data.data },
-                            '#favbox');
-            var height = 40 * data.data.length;
-            if(height > 240){
-                height = 240;
-            }
-            $('#favbox-outer').height(height);
-            $G.hooks.after_refresh_fav();
         }
     };
 
     register_hook('after_refresh_fav');
     function refresh_fav(){
-        $('#favbox').empty();
         $api.get_self_fav(handler_fav)
     }
     $G.submit.refresh_fav = refresh_fav;
