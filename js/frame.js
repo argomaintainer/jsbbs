@@ -770,6 +770,74 @@ $MOD('frame.frame', function(){
 });
 using('frame.frame');
 
+$MOD('frame.visible', function(){
+
+    var uuid=0;
+    function id(el){
+        if(!el.id){
+            el.id = '__v' + ++uuid;
+        }
+        return el.id;
+    }
+
+    function exists(el){
+        return document.getElementById(id(el)) === el;
+    }
+
+    function is_visible(el){
+        if (el instanceof jQuery) {
+            el = el[0];
+        }
+        var rect = el.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight ||
+                                document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth ||
+                               document.documentElement.clientWidth)
+        );
+    }
+
+    var checklist = [];
+
+    function on_visible(el, callback, not){
+        checklist.push([el, callback, Boolean(not), true]);
+    }
+
+    function checker(){
+        for(var i=0; i<checklist.length; ++i){
+            var el = checklist[i][0];
+            if(!exists(el)){
+                checklist.splice(i, 1);
+                --i;
+                continue;
+            }
+            if(is_visible(el) == !checklist[i][2]){
+                if(checklist[i][3]){
+                    if(checklist[i][1].call(null, checklist[i][2]) == false){
+                        checklist.splice(i, 1);
+                        --i;
+                        continue;
+                    }
+                    checklist[i][3] = false;
+                }
+            }else{
+                checklist[i][3] = true;
+            }
+        }
+    }
+
+    $(function(){$(window).on('DOMContentLoaded load resize scroll', checker)});
+
+    return {
+        is_visible : is_visible,
+        on_visible : on_visible,
+        on_novisiable : on_visible
+    }
+    
+});
+
 $MOD('frame.debug', function(){
 
     var _, _v, _h=[];
