@@ -1,7 +1,7 @@
 article, aside, dialog, figure, footer, header, hgroup, nav, section { display:block; zoom:1; }
 
 body{
-    background: url("../images/texture.png");
+    background: #f0f0f0;
 }
 
 #topbar .brand{
@@ -63,10 +63,6 @@ body{
     margin: 0 auto;
     padding: 54px 20px 0;
     min-height: 100%;
-    background-image: url("../images/cover.png");
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-    box-shadow: 0 2px 20px #999;
 }
 
 .simple body{
@@ -287,7 +283,6 @@ i.icon-nbrd:before{
     background-color: #f9f9f9;
     border: 1px solid #eee;
     border-bottom: 2px solid #eee;
-    box-shadow: 0 1px 3px #ccc;
     position: relative;
     margin-bottom: 20px;
     border-radius: 3px;
@@ -543,7 +538,6 @@ i.icon-nbrd:before{
     position: relative;
     margin-bottom: 20px;
     border-radius: 2px;
-    box-shadow: 0 1px 3px #ccc;
     padding: 12px;
 }
 
