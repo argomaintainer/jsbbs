@@ -1,4 +1,4 @@
-SIGNV = '2014-06-6-21:00';
+SIGNV = '2014-09-19-17:00';
 NOCACHE = (String(location).indexOf('__debug__') >= 0);
 if(NOCACHE){
     console.log('NOCACHE');

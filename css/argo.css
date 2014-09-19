@@ -1152,6 +1152,10 @@ i[class^="mark-"]{
     box-shadow: 0 0 1px #eee;
 }
 
+.topiclist{
+    min-height: 400px;
+}
+
 .board-header img{
     width: 50px;
     height: 50px;
@@ -1181,6 +1185,10 @@ i[class^="mark-"]{
 .newpostbox{
     margin-top: 80px;
     border-top: 2px solid #93a862;
+}
+
+.newpostbox .nologin{
+    padding: 20px;
 }
 
 .newpostbox form{
