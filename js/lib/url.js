@@ -37,6 +37,6 @@ $MOD('frame.url_for', {
         return 'index.html#!admin_board?boardname=' + boardname ;
     },
     'ann': function(reqpath){ return 'ann.html#!read?reqpath=' + reqpath; },
-    'index': function(type){ return 'index.html#!home?type=' + type }
+    'index': function(){ return 'index.html#!home' }
     
 })

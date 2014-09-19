@@ -33,6 +33,7 @@ $MOD('frame.load_lib', function(){
         if(libname in $G.loaded_lib){
             return false;
         }
+        
         console.log('Load lib [' + libname + '] ... ');
         $.ajax({
             url : 'js/lib/'+ libname + '.js?_='+window.SIGNV,

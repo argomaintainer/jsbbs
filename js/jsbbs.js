@@ -38,7 +38,6 @@ $MOD('jsbbs.main', function(){
 
     require_jslib('argo_api');
     import_module('argo_api', '$api');
-    require_jslib('scrollbar');
 
     require_jslib('handler');
     require_jslib('url');

@@ -122,7 +122,7 @@ $MOD('frame.allp', function(){
             }
             callback();
         });
-        
+    }        
 
     function load_focus(){
         $.get('/ajax/comp/www_home',
@@ -146,10 +146,10 @@ $MOD('frame.allp', function(){
     declare_frame({
         mark: 'home',
         enter: function(kwargs){
-            if($G.authed && ((!$G.userfav_a)||($G.userfav_a.length < 5))
-               &&(!localStorage['bool::watched-tut'])){
-                location = '#!tut-2';
-            }
+            // if($G.authed && ((!$G.userfav_a)||($G.userfav_a.length < 5))
+            //    &&(!localStorage['bool::watched-tut'])){
+            //     location = '#!tut-2';
+            // }
             load_new(load_focus);
         },
         submit: submit,
@@ -260,215 +260,10 @@ $MOD('frame::board', function(){
 
     var PAGE_LIMIT = 25;
     var last_pagenum = {};
-
-    require_jslib('jquery.jqpagination');
-
-    // var Range = $MOD.range.Range,
-    BoardStatus = $Type('BoardStatus', ['boardname',
-                                        'loader',
-                                        'render',
-                                        'start',
-                                        'isnull']);
-    
-    var cur_board = BoardStatus({ isnull: true }),
-    ajax, local = {}, 
-    submit = {};
-
+    var cur_board = {};
+    var local = {};
+    var submit = {};
     local.cur_board = cur_board;
-
-    // get_range_start = $MOD.range.range_start;
-    // range_update = $MOD.range.range_update;
-
-    function get_current_board(){
-        return cur_board;
-    }
-
-    // function get_first_unread_range(boardname){
-    //     return PostRange(0, 20);
-    // }
-
-    function new_api_loader(type){
-        return function(boardname, start, success, failed){
-            $api.get_postindex_limit(boardname, type, start, PAGE_LIMIT,
-                               function(data){
-                                   if(data.success){
-                                       success(data.data);
-                                   }
-                                   else{
-                                       failed();
-                                   }
-                               });
-        }
-    }
-
-    load_normal_post = new_api_loader('normal');
-    load_topic_post = function(boardname, start, success, failed){
-        $api.get_postindex_limit(
-            boardname, 'topic',
-            start,
-            PAGE_LIMIT,
-            function(data){
-                if(data.success){
-                    success(data.data);
-                }
-                else{
-                    failed();
-                }
-            });
-    }
-    load_digest_post = new_api_loader('digest');
-
-    submit['open-folding'] = function(kwargs, e){
-        $('.folding').removeClass('folding');
-        $('.folding-btn').remove();
-    }
-
-    function new_postlist_render(tpler){
-        return function(boardname, data, pagenum){
-            $('#postlist-content').remove();
-            var fold = 0, i;
-            for(i in data){
-                if(data[i].unread == 1){
-                    fold = i;
-                    break;
-                }
-            }
-            render_template(tpler, {
-                posts: data,
-                fold: fold,
-                boardname: boardname,
-                has_next_page: (pagenum < local.max_page),
-                has_prev_page: (pagenum > 1)
-            }, local.postlist_container);
-        }
-    }
-
-    render_normal_post = new_postlist_render('board-postlist-normal'); 
-    render_topic_post = new_postlist_render('board-postlist-topic'); 
-    render_digest_post = new_postlist_render('board-postlist-digest'); 
-
-    function trim_pagenum(number){
-        number = Number(number);
-        if(!(number >0))
-            number = 0;
-        return Math.ceil(number / PAGE_LIMIT);
-    }
-
-    function set_page(pagenum){
-        var start = pagenum * PAGE_LIMIT - PAGE_LIMIT + 1;
-        local.pagenum = pagenum;
-        cur_board.loader(cur_board.boardname, start, function(data){
-            last_pagenum[cur_board.boardname+':'+cur_board.view] = pagenum;
-            cur_board.render(cur_board.boardname, data, pagenum);
-            // range_update(cur_board.range, data[0].index,
-            //              data[data.length-1].index);
-        });
-    }
-
-    function new_wrapper_loader(loader, init, name){
-        return function(){
-            loader(cur_board.boardname, 0, function(data){
-                var total = data[data.length-1].index,
-                pagetotal = Math.ceil(total / PAGE_LIMIT),
-                curnum = (total % PAGE_LIMIT) || PAGE_LIMIT;
-                local.max_page = pagetotal;
-                data = data.slice(-curnum);
-                cur_board.loader = loader;
-                // ugly a lot.
-                var base = $('.bpagination').data('jqPagination');
-                base.options.current_page = pagetotal;
-                base.options.max_page = pagetotal;
-                base.updateInput(true);
-                init();
-                cur_board.view = name;
-                localStorage['lastview'] = name;
-                cur_board.render(cur_board.boardname, data, pagetotal);
-            });
-        }
-    }
-
-    submit['next_page'] = function(){
-        window.scrollTo(0,0);
-        $('.bpagination').jqPagination(
-            'option', 'current_page',
-            $('.bpagination').jqPagination('option', 'current_page') + 1);
-    }
-    submit['prev_page'] = function(){
-        window.scrollTo(0,0);
-        $('.bpagination').jqPagination(
-            'option', 'current_page',
-            $('.bpagination').jqPagination('option', 'current_page') - 1);
-    }
-    submit['set_normal_loader'] = set_normal_loader
-        = new_wrapper_loader(load_normal_post, function(){
-            local.kwargs.view = 'normal';
-            $.cookie('boardview', 'normal');
-            quite_set_hash('#!board', local.kwargs);
-            delete local.kwargs['index'];
-            cur_board.render = render_normal_post;
-            delete cur_board.hover;
-            $('#loader-wrapper .active').removeClass('active');
-            $('#normal-loader').addClass('active');
-        }, 'normal');
-    submit['set_digest_loader'] = set_digest_loader
-        = new_wrapper_loader(load_digest_post, function(){
-            local.kwargs.view = 'digest';
-            $.cookie('boardview', 'digest');
-            delete local.kwargs['index'];
-            quite_set_hash('#!board', local.kwargs);
-            cur_board.render = render_digest_post;
-            delete cur_board.hover;
-            $('#loader-wrapper .active').removeClass('active');
-            $('#digest-loader').addClass('active');
-        }, 'digest');
-    submit['set_topic_loader'] =  set_topic_loader
-        = new_wrapper_loader(load_topic_post, function(){
-            local.kwargs.view = 'topic';
-            $.cookie('boardview', 'topic');
-            delete local.kwargs['index'];
-            quite_set_hash('#!board', local.kwargs);
-            cur_board.render = render_topic_post;
-            delete cur_board.hover;
-            $('#loader-wrapper .active').removeClass('active');
-            $('#topic-loader').addClass('active');
-        }, 'topic');
-    
-    function set_page_anim(pagenum){
-        $('#postlist-content').fadeTo(200, 0.61, function(){
-            set_page(pagenum);
-        });
-    }
-
-    function refresh_current_page(){
-        // location.hash = url_for_board(cur_board.boardname);
-        refresh_frame();
-    }
-    submit['refresh_current_page'] = refresh_current_page;
-
-
-    submit['setb'] = function(kwargs, e){
-        var self = $(e.target);
-        var data = self.data('boardname');
-        if(data){
-            $('#qboardname').val(data);
-        }
-    }
-
-    submit['see-more'] = function(){
-        $('#see-more').text('加载中...');
-        $api.get_all_boards(function(data){
-            $('#allboards').html(render_string('qp-seemore', data.data));
-            $('#see-more').remove();
-        }, '#allboards');
-    }
-
-    declare_frame({
-        mark: 'quickpost',
-        submit: submit,
-        enter : function(kwargs){
-            render_template('quickpost');
-        }
-    });
 
     submit['newpost'] = function(){
         if(!$G.authed){
@@ -516,8 +311,10 @@ $MOD('frame::board', function(){
     function handler_submit(data){
         if(data.success){
             show_alert('发表成功！', 'success');
-            close_popwindow();
-            refresh_current_page();
+            setTimeout(function(){
+                location = url_for_topic(
+                    data.data, local.cur_board.boardname);
+            }, 1000);
         }
         else{
             show_alert(ERROR[data.code], 'danger');
@@ -532,6 +329,7 @@ $MOD('frame::board', function(){
         }
     }
 
+    // quickpost
     submit['publish_post2'] = function(kwargs, e){
         if(e.target.tagName == 'FORM'){
             if(!check_pushlish(kwargs, e))
@@ -577,174 +375,79 @@ $MOD('frame::board', function(){
         target.focus();
     }
 
-    function add_appender(name, text){
-        $('<a href="#" data-submit="append-text"></a>').attr('data-args', text).text(name).appendTo('#appender-container');
-    }
-
-    last = add_appender;
-
-    submit['submit-as-file'] = function(kwargs, e){
-        var filename = $('[type=file]').val().split('\\').pop(),
-        file = ($('[type=file]')[0].files[0]);
-        if(!check_pushlish(kwargs, e))
-            return false;
-        $api.new_post_form('#new-post-form',
-                           function(data){
-                               if(data.success){
-                                   show_alert('发表成功！', 'success');
-                                   if(filename){
-                                       var link = url_for_root(url_for_attach(
-                                           cur_board.boardname,
-                                           data.data.substring(2, 12)
-                                               + '.'+ filename.split('.').pop()));
-                                       $('[type=file]').val('')
-                                       add_appender(filename, link);
-                                   }
-                                   $('.editor [name=title]').val('').focus();
-                                   $('.editor textarea').val('');
-                               }
-                               else{
-                                   show_alert(ERROR[data.code], 'danger');
-                               }
-                           },
-                           function(e){
-                               show_alert('请确保文件小于1MB的后缀为png/pdf/jpg/gif/zip/txt/gz/bz2文件', 'danger')
-                           });
-        e.preventDefault();
-    }
-
-    var MAYBE_VIEW = { 'topic': true, 'digest': true, 'normal': true}
-
-    function set_default_loader(cur_board, kwargs){
-        var start_page, last, max_page;
-        if(typeof kwargs.view == "undefined"){
-            if(!localStorage['lastview']){
-                localStorage['lastview'] = 'topic';
-            }
-            kwargs.view = localStorage['lastview'];
+    function unbook_fav(kwargs, e){
+        var boardname;
+        if(!confirm('真的取消收藏改版?')){
+            return;
         }
-        if(!MAYBE_VIEW[kwargs.view]){
-            kwargs.view = 'topic';
-        }
-
-        if(kwargs.view != 'normal'){
-            delete kwargs.index;
-        }
-
-        if(kwargs.view == 'topic'){
-            cur_board.loader = load_topic_post;
-            cur_board.render = render_topic_post;
-            cur_board.view = 'topic';
-            $('#topic-loader').addClass('active');
-            start_page = last_pagenum[cur_board.boardname+':'+cur_board.view];
-            max_page = Math.ceil(cur_board.data.total_topic / PAGE_LIMIT);
-            if(!(start_page < max_page))
-                start_page = max_page;
-        }
-        else if(kwargs.view == 'digest'){
-            cur_board.loader = load_digest_post;
-            cur_board.render = render_digest_post;
-            cur_board.view = 'digest';
-            $('#digest-loader').addClass('active');
-            start_page = last_pagenum[cur_board.boardname+':'+cur_board.view];
-            max_page = Math.ceil(cur_board.data.total_digest / PAGE_LIMIT);
-            if(!(start_page < max_page))
-                start_page = max_page;
-        }
-        else{
-            cur_board.loader = load_normal_post;
-            cur_board.render = render_normal_post;
-            cur_board.view = 'normal';
-            $('#normal-loader').addClass('active');
-            var last;
-            last = cur_board.data.lastread + 1;
-            if((last==0) || (last > cur_board.data.total)){
-                last = cur_board.data.total;
-            }
-            if(local.hover = kwargs.index){
-                start_page = trim_pagenum(local.hover);
-            }
-            else{
-                start_page = last_pagenum[cur_board.boardname
-                                          +':'+cur_board.view];
-            }
-            max_page = Math.ceil(cur_board.data.total / PAGE_LIMIT);
-            if(!(start_page < max_page))
-                start_page = max_page;
-        }
-        cur_board.isnull = false;
-
-        local.max_page = max_page;
-        $('.bpagination').jqPagination({
-		    page_string	: '第 {current_page} 页 / 共 {max_page} 页',
-		    paged		: set_page_anim,
-            current_page: start_page,
-            max_page: local.max_page
-		});
-        set_page(start_page);
-        local.kwargs = kwargs;
-    }
-    
-    function read_post(kwargs, e){
-        var filename = $(e.target).attr('data-filename');
-        if(local.mode_title == '只显示主题第一贴'){
-            window.location = url_for_topic(filename,
-                                            cur_board.boardname);
-        }
-        else{
-            window.location = url_for_post(filename,
-                                           cur_board.boardname);
-        }
-    }
-    submit['read_post'] = read_post;
-
-    // function get_default_range(){
-    //     return $Type.Range([0, NaN]);
-    // }
-
-    submit['remove_notes'] = function(){
-        $('.board-notes').remove();
-        localStorage['notes::'+local.cur_board.boardname] =
-            Math.floor(Number(new Date()) / 1000);
-        window.scrollTo(0, 0);
-    }
-
-    function count_down_enter(f, s){
-        var cid = setInterval(function(){
-            var r = f.data('remain');
-            if(r <= 0){
-                clearInterval(cid);
-                $('.board-notes', s).remove();
-            }
-            else{
-                r--;
-                f.data('remain', r);
-                f.text(''+r+'秒钟后自动进入看版');
-            }
-        }, 1000);
-    }
-
-    function show_notes(boardname){
-        $('.board-notes').show();
-        $api.get_board_notes(boardname, function(data){
-            if(data.success){
-                data = data.data;
-                var t = $MOD.format.ascii(data.content), f=false;
-                if((!$G.userfav
-                    || !($G.local.cur_board.boardname in $G.userfav))
-                   || (localStorage['switch::say-hello'] &&
-                       (localStorage['switch::say-hello'] <
-                        (Number(new Date()) / 1000 + 2592000)))){
-                    t += '<div class="say-hello">欢迎来到 <strong>'+$G.local.cur_board.data.title+'</strong><br><a class="btn btn-large btn-success" href="#" data-submit="remove_notes">进入看版</a></div>';
+        if(cur_board && (boardname = cur_board.boardname)){
+            $api.remove_self_fav(boardname, function(data){
+                if(data.success){
+                    $(e.target).parent().html('<button class="btn btn-info btn-mini" data-submit="book_fav">收藏该版</button>');
                 }
                 else{
-                    t += '<div class="say-hello">欢迎回到 <strong>'+$G.local.cur_board.data.title+'</strong> , 呆会记得跟版友打个招呼哟。<br><a class="btn btn-large btn-success" href="#" data-submit="remove_notes">进入看版</a><div>';
+                    show_alert(ERROR[data.code]);
                 }
-                $('.board-notes').html(t);
-            }
-        });
+            });
+        };
     }
+    submit['unbook_fav'] = unbook_fav;
 
+    function book_fav(kwargs, e){
+        var boardname;
+        if(cur_board && (boardname = cur_board.boardname)){
+            $api.add_self_fav(boardname, function(data){
+                if(data.success){
+                    $(e.target).parent().html('我已收藏该版 > <a href="#" data-submit="unbook_fav">取消收藏改版</a>');
+                }
+                else{
+                    show_alert(ERROR[data.code]);
+                }
+            });
+        };
+    }
+    submit['book_fav'] = book_fav;
+
+    function clear_board_unread(){
+        if(!$G.authed){
+            show_alert('请先登录再执行此操作：-）');
+            return;
+        }
+        var boardname;
+        if(cur_board && (boardname = cur_board.boardname)){
+            $api.clear_board_unread(boardname, function(data){
+                refresh_frame();
+            });
+        };
+    }
+    submit['clear_unread'] = clear_board_unread;
+
+    local.cursor = 0;
+    function load_more(){
+        var container = $('#topiclist');
+        var cursor = local.cursor;
+        var limit = (cursor >0) && (cursor < PAGE_LIMIT) ?
+            cursor : PAGE_LIMIT;
+        $api.get_postindex_limit(
+            local.cur_board.boardname, 'topic',
+            (cursor == 0)? 0 : cursor - limit + 1,
+            limit,
+            function(data){
+                var list = data.data.reverse();
+                local.cursor = list[list.length-1].index - 1;
+                render_string(
+                    'topiclist-simple',
+                    { list : list,
+                      boardname : local.cur_board.boardname }).replaceAll(
+                          container.find('#loader'));
+                if(local.cursor == 0){
+                    container.find('#loader').remove();
+                }
+            }
+        );
+    }
+    submit['load-more'] = load_more;
+    
     function enter_board(kwargs){
 
         require_jslib('format');
@@ -756,44 +459,38 @@ $MOD('frame::board', function(){
             if(data.success){
                 cur_board.data = data.data;
                 cur_board.boardname = boardname = data.data.filename;
-                render_template('board-boardinfo',
+
+                console.log('board', data.data);
+                
+                render_template('board-simple',
                                 {
                                     board: data.data,
                                     PAGE_LIMIT: PAGE_LIMIT
                                 });
-                $('#fn-'+boardname).addClass('active disabled').find('a').addClass('onactive');
-                local.postlist_container = $('#postlist-container');
-                set_default_loader(cur_board, kwargs);
-                if(data.data.www.widgets){
-                    load_widgets(data.data.www.widgets);
-                }
+
+                $('.editor textarea').keypress(function(event){
+                    if(event.ctrlKey && (event.keyCode==10)){
+                        $('#new-post-form').submit();
+                    };
+                });
+
+
+                load_more();
+
+                /* board custom */
+
+                // board brand img
                 if(data.data.www.brand_url){
                     $('.board-header-img').addClass('hasimg').css(
                         'background-image', 'url("' +
                             data.data.www.brand_url + '")');
-                    
                 }
-                var sec_con = $('#near-board');
+
+                // section for userbox
                 $G.lastsection = cur_board.data.secnum;
                 $G.last_seccode = cur_board.data.seccode;
-                render_template(
-                    'widget/links',
-                    {
-                        links: [
-                            ['进入 ' + boardname + ' 版精华区',
-                             url_for_ann(':' + boardname + '/')],
-                            ['本版RSS文件',
-                             'http://bbs.sysu.edu.cn/rss/' +
-                             boardname + '.xml']
-                        ]
-                    }, '#dy-widgets');
-                render_template(
-                    'widget/text',
-                    {
-                        text: '收藏本版人数： ' + cur_board.data.favnum
-                            + '\n' + '累计发文篇数： ' + cur_board.data.total
-                    }, '#dy-widgets');
 
+                // near boards
                 $api.get_boards_by_section(
                     cur_board.data.seccode,
                     function(data){
@@ -818,24 +515,22 @@ $MOD('frame::board', function(){
                                             '#dy-widgets');
                         }
                     });
-                $api.get_last_postindex(boardname, 'digest', 5, function(data){
+
+                // digest
+                $api.get_last_postindex(
+                    boardname, 'digest', 5, function(data){
                     if(data.success){
                         var l = data.data.reverse();
                         render_template('widget/postlist', {
                             title: '最新文摘',
                             posts: l,
                             boardname: boardname,
-                            more: 'set_digest_loader'
+                            more : '',
+                            href: 'http://bbs.sysu.edu.cn/bbsgdoc?board=' + boardname,
                         }, '#dy-widgets');
                     }
                 });
-                if(data.data.lastnotes &&
-                   (localStorage['notes::'+boardname]
-                    < data.data.lastnotes)){
-                    localStorage['notes::'+boardname] =
-                        Math.floor((new Date())/1000);
-                    show_notes(boardname);
-                }
+                
             }
             else{
                 raise404(ERROR[data.code]);
@@ -846,44 +541,11 @@ $MOD('frame::board', function(){
 
     }
 
-    function book_fav(kwargs, e){
-        var boardname;
-        if(cur_board && (boardname = cur_board.boardname)){
-            $api.add_self_fav(boardname, function(data){
-                if(data.success){
-                    show_alert('收藏' + boardname + '版成功！', 'success');
-                    refresh_fav();
-                    $(e.target).parent().text(' - 已收藏该版');
-                }
-                else{
-                    show_alert(ERROR[data.code]);
-                }
-            });
-        };
-    }
-    submit['book_fav'] = book_fav;
-
-    function clear_board_unread(){
-        if(!$G.authed){
-            show_alert('请先登录再执行此操作：-）');
-            return;
-        }
-        var boardname;
-        if(cur_board && (boardname = cur_board.boardname)){
-            $api.clear_board_unread(boardname, function(data){
-                refresh_frame();
-                refresh_fav();
-            });
-        };
-    }
-    submit['clear_unread'] = clear_board_unread;
-
     declare_frame({
         mark: 'board',
         isnew: true,
         keep_widgets: false,
         enter : enter_board,
-        ajax : ajax,
         submit: submit,
         local: local
     });
@@ -1988,257 +1650,6 @@ $MOD('frame::bm_selection', function(){
         submit: submit,
         enter: function(kwargs){
             render_template('bm_selection');
-        }
-    });
-    
-});
-
-$MOD('frame::tut', function(){
-
-    var submit = {};
-    var selected = {};
-    var count = 0;
-
-    function add_board(boardname){
-        if(selected[boardname] || (count >= 50)) return;
-        $('#board-container').append('<a href="#" id="b-'+boardname+'" data-submit="remove-board">'+boardname+'</a>');
-        selected[boardname] = true;
-        ++count;
-    }
-
-    function remove_board(boardname){
-        if(selected[boardname]){
-            $('#b-'+boardname).remove();
-            delete selected[boardname];
-            --count;
-        }
-    }
-
-    function reset_board(collect){
-        var i;
-        selected = {};
-        count = 0;
-        $('#board-container').empty();        
-        for(i=0; i<collect.length; ++i)
-            add_board(collect[i]);
-        update_count();
-    }
-
-    function update_count(){
-        if(count<15){
-            $('#num-counter').text('您只关注了 '+count+' 个看版，好少哟～');
-        }
-        else if(count>30){
-            $('#num-counter').text('您已经关注了 '+count+' 个看版，太多啦！');
-        }
-        else{
-            $('#num-counter').text('您关注了 '+count+' 个看版。');
-        }
-        if(count<1){
-            $('#goto-tut3').removeClass('btn-success').addClass('disabled').text('要关注至少一个看版哟！');
-        }
-        else{
-            $('#goto-tut3').removeClass('disabled').addClass('btn-success').text('收藏这些看版，下一步');
-        }
-    }            
-
-    function coll_board(){
-        var coll = [], x;
-        for(x in selected)
-            if(selected[x] === true)
-                coll.push(x);
-        return coll;
-    }
-
-    function remove_board_iter(kwargs, e){
-        var text=$(e.target).text();
-        remove_board(text);
-        update_count();
-    }
-    submit['remove-board'] = remove_board_iter;
-
-    function select(kwargs, e){
-        var self = $(e.target), i, $e=$(e.target);
-        var para = self.attr('data-para').split(';');
-        if($e.hasClass('active')){
-            for(i=0; i<para.length; ++i) remove_board(para[i]);
-            $e.removeClass('active');
-        }
-        else{
-            for(i=0; i<para.length; ++i) add_board(para[i]);
-            $e.addClass('active');
-        }
-        update_count();
-    }
-    submit['select-tag'] = select;
-
-    function check_weibo_auth(){
-        $api.weibo_check_auth(function(data){
-            if(data.success && data.data){
-                $('#is_weibo_auth').removeClass('hidden');
-            }
-        });
-    }
-
-    function auth_weibo(){
-        var nw = window.open("/weibo/auth", 'auth',
-                             config='width=600,height=380,left=100,top=100');
-        $(nw).unload(check_weibo_auth);
-    }
-    submit['auth-weibo'] = auth_weibo;
-
-    function goto_tut2(kwargs, e){
-        if(!$('#is_weibo_auth').hasClass('hidden') &&
-           $('#use-weibo-avatar')[0].checked){
-            $api.weibo_use_weibo_avatar(function(){
-                $G.refresh = false;
-                location = '#!tut-2';
-                location.reload(true);
-            });
-        }
-        else if($('#use-weibo-avatar')[0].checked){
-            var nw = window.open(
-                "/weibo/auth", 'auth',
-                config='width=600,height=380,left=100,top=100');
-            $(nw).unload(function(){
-                $api.weibo_check_auth(function(data){
-                    if(data.success && data.data){
-                        $api.weibo_use_weibo_avatar(function(){
-                            $G.refresh = false;
-                            location = '#!tut-2';
-                            location.reload(true);
-                        });
-                    }
-                    else
-                        location = '#!tut-2';
-                });
-            });
-        }
-        else
-            location = '#!tut-2';
-    }
-    submit['goto-tut2'] = goto_tut2;
-
-    function _goto_tut3(){
-        var d = coll_board();
-        $api.set_self_fav(d, function(){
-            $G.submit.refresh_fav();
-            location = '#!tut-3';
-        });
-    }        
-
-    function goto_tut3(){
-        if(count < 6){
-            modal_confirm('你只关注了很少的看版',
-                          '你只关注了很少的看版，真的不想再多关注几个了？',
-                          _goto_tut3);
-        }
-        else{
-            _goto_tut3();
-        }
-    }
-    submit['goto-tut3'] = goto_tut3;
-
-    submit['submit-fav'] = function(){
-        var d = coll_board();
-        $api.set_self_fav(d, function(){
-            show_alert('更新收藏夹成功！', 'success');
-            $G.submit.refresh_fav();
-            refresh_frame();
-        });
-    }
-
-    function finish_tut_success(){
-        if($('#is-send-weibo input')[0].checked){
-            var nw = window.open(
-                "/weibo/auth", '_blank',
-                config='width=600,height=380,left=100,top=100');
-            $(nw).unload(function(e){
-                var cid = setInterval(function(){
-                    if(nw.closed){
-                        $api.weibo_check_auth(function(data){
-                            if(data.success && data.data){
-                                $api.weibo_update1();
-                            }
-                            clearInterval(cid);
-                            localStorage['bool::watched-tut'] = 1;
-                            window.location = url_for_board('Test');
-                        });
-                    }
-                }, 1000);
-            });
-        }
-        else{
-            localStorage['bool::watched-tut'] = 1;            
-            location = url_for_board('Test');
-        }
-    }
-    submit['finish-tut-success'] = finish_tut_success;
-
-    // declare_frame({
-    //     mark: 'tut-1',
-    //     submit: submit,
-    //     enter: function(kwargs){
-    //         render_template('tut-1');
-    //         check_weibo_auth();
-    //     }
-    // });
-
-    declare_frame({
-        mark: 'admin-fav',
-        submit: submit,
-        enter: function(kwargs){
-            render_template('admin-fav');
-            var d = coll_board();
-            if(d.length) reset_board(d);
-            $('.tag.default').each(function(){ $(this).click(); });
-            $api.get_self_fav(function(data){
-                if(data.success){
-                    var i;
-                    data = data.data;
-                    for(i=0; i<data.length; ++i)
-                        add_board(data[i].boardname);
-                }
-                update_count();
-            });
-            update_count();            
-        }
-    });
-
-    declare_frame({
-        mark: 'tut-2',
-        submit: submit,
-        enter: function(kwargs){
-            render_template('tut-2');
-            var d = coll_board();
-            if(d.length) reset_board(d);
-            $('.tag.default').each(function(){ $(this).click(); });
-            $api.get_self_fav(function(data){
-                if(data.success){
-                    var i;
-                    data = data.data;
-                    for(i=0; i<data.length; ++i)
-                        add_board(data[i].boardname);
-                }
-                update_count();
-            });
-            update_count();            
-        }
-    });
-
-    declare_frame({
-        mark: 'tut-3',
-        submit: submit,
-        enter: function(kwargs){
-            render_template('tut-3');
-        }
-    });
-
-    declare_frame({
-        mark: 'tut-4',
-        submit: submit,
-        enter: function(kwargs){
-            render_template('tut-4');
         }
     });
     

@@ -75,14 +75,6 @@ body{
 #main-wrapper{
 }
 
-.scrollbar{
-    /* overflow: auto; */
-}
-
-.scrollbaring{
-    /* overflow: auto; */
-}
-
 .text-center{
     text-align: center;
 }
@@ -97,6 +89,17 @@ body{
 
 .fix-margin-right{
     margin-right: -4px;
+}
+
+.inline-list{
+    margin: 0;
+    padding: 0;
+    color: #ccc;
+}
+
+.inline-list li{
+    display: inline-block;
+    margin-right: 10px;
 }
 
 #message{
@@ -888,29 +891,25 @@ input.btn-input{
 /*     border-radius: 0; */
 /* } */
 
-i[class^="icon-mark-"]:after,
-i[class*=" icon-mark-"]:after {
-    width: 10px;
-    line-height: 16px;
-    margin-top: -2px;
+i[class^="mark-"]{
+    margin-top: -6px;
     color: #fff;
     display: inline-block;
     text-align: center;
-    font-size: 10px;
+    font-size: 12px;
+    border-radius: 2px;
     border-bottom-right-radius: 5px;
-    box-shadow: 0 1px 2px #999;
     vertical-align: text-top;
     font-style: normal;
+    padding: 0 4px;
 }
 
-.icon-mark-g:after{
-    background: #b22;
-    content: "g";
+.mark-g{
+    background: #bb5f22;
 }
 
-.icon-mark-m:after{
-    background: #47a;
-    content: "m";
+.mark-m{
+    background: #2cbb22;
 }
 
 .inline{
@@ -1147,58 +1146,67 @@ i[class*=" icon-mark-"]:after {
     text-decoration: underline;
 }
 
-.board-notes{
-    position: absolute;
-    top: 0px;
-    bottom: 0px;
-    left: 0px;
-    right: 0px;
-    background: #000;
-    z-index: 5;
-    box-shadow: 0 0 5px #555;
-    display: none;
+.boardinfo{
+    background: #feffff;
+    border-color: #e0e0e0;
+    box-shadow: 0 0 1px #eee;
 }
 
-.board-notes .ascii-box{
-    max-width: 640px;
-    margin: 12px 36px;
-    overflow: auto;
-    max-height: 500px;
-}    
-
-.board-header{
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-    position: relative;
-    overflow: hidden;
+.board-header img{
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
 }
 
-.board-header-img{
-    padding: 10px 10px 0;
+.board-header h3{
+    display: inline;
+    vertical-align: bottom;
 }
 
-.hasimg.board-header-img{
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-    height: 120px;
-}    
-
-.hasimg .board-header-content{
-    padding-top: 32px;
-    padding-left: 20px;
+.board-misc{
+    display: inline-block;
+    line-height: 40px;
+    vertical-align: bottom;
+    margin-left: 30px;
 }
 
-.hasimg a{
-    color: rgb(67,67,67);
-    text-decoration: underline;
-}
-
-.hasimg a:hover{
-    color: #000;
+.board-misc .btn{
+    margin-bottom: 10px;
 }
 
 .board-header .alert{
     margin-top: 10px;
+}
+
+.newpostbox{
+    margin-top: 80px;
+    border-top: 2px solid #93a862;
+}
+
+.newpostbox form{
+    margin-left: 72px;
+}
+
+.newpostbox .avatar{
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    position: absolute;
+    left: 24px;
+    top: 20px;
+    border-radius: 3px;
+}
+
+.newpostbox .title{
+    padding: 20px 20px 0;
+    font-size: 16px;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #237812;
+}
+
+.newpostbox .editor{
+    margin: 12px;
 }
 
 .board-nav{
@@ -1465,7 +1473,7 @@ a[data-submit]:hover{
 }    
 
 .post-li-topic{
-    padding: 12px 12px 12px 70px;
+    padding: 12px 12px 12px 72px;
     position: relative;
     border-bottom: 1px solid #e8e8e8;
 }
@@ -1497,10 +1505,6 @@ a[data-submit]:hover{
     position: absolute;
     right: 12px;
     top: 25px;
-}
-
-.post-li-topic .mark{
-    margin-left: 10px;
 }
 
 .post-li-topic .index{
@@ -1708,13 +1712,32 @@ a[data-submit]:hover{
     margin-right: 5px;
 }
 
-.board-header h2{
-    margin-bottom: 0;
-    padding-bottom: 0;
+.board-intro{
+    padding: 1em 1em 0;
 }
 
+.board-intro .inline-list{
+    margin-top: 20px;
+}
+
+.board-intro .inline-list a{
+    color: #789;
+}
+
+.board-intro .inline-list em a{
+    font-style: normal;
+    color: #f74;
+}
+
+.board-meta span{
+    margin-left: 1em;
+    display: inline-block;
+    margin: 0 0 20px;
+}
+    
 .bmlist{
     list-style-type: none;
+    display: inline;
     margin: 0;
 }
 
@@ -2616,8 +2639,8 @@ a:hover .ftext{
     text-align: center;
 }
 
-.load-more-post.loading{
-    color: orange;
+.load-more-post:hover{
+    background: #f0f0f0;
 }
 
 .dowhat a{
