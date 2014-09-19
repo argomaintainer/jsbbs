@@ -55,13 +55,11 @@ body{
 
 #topbar .onactive{
     background: transparent;
-    box-shadow: none;
 }
 
 #container{
-    width:960px;
-    margin: 0 auto;
-    padding: 54px 20px 0;
+    width:1008px;
+    margin: 54px auto 20px;
     min-height: 100%;
 }
 
@@ -334,6 +332,40 @@ i.icon-nbrd:before{
 /*
   Section
   */
+
+.tab-sec-ul{
+    margin: 5px 0 15px;
+}
+
+.tab-sec{
+    width: 115px;
+    text-align: center;
+}
+
+.secfav-ul{
+    list-style-type: none;
+    text-indent: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.secfav-ul li{
+    margin: 20px 0 20px;
+}
+
+.secfav-ul img{
+    width: 40px;
+    height: 40px;
+    margin-right: 5px;
+}    
+
+.secfav-ul a{
+    color: #999;
+}
+
+.secfav-ul .unread a{
+    color: #355e86;
+}
 
 .board-group{
     position:relative;
@@ -800,6 +832,7 @@ button[data-submit]{
 
 .main-cell{
     background: rgb(250, 250, 250);
+    min-height: 600px;
 }    
 
 input.btn-input{
@@ -1829,12 +1862,23 @@ a[data-submit]:hover{
     float: left;
     width: 300px;
     margin-left: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 30px;
     position: relative;
 }
 
 .sec-boardlist .boardname{
     display: block;
+    padding: 20px 0 5px 0;
+    margin-left: 55px;
+    color: #333;
+}
+
+.sec-boardlist .avatar_b{
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+    margin-left: -5px;
+    position: absolute;
 }
 
 .boardname strong{
@@ -1915,7 +1959,6 @@ a[data-submit]:hover{
     border-radius: 1px;
     border: 1px solid #eee;
     border-bottom: 2px solid #eee;
-    box-shadow: 0 1px 3px #ccc;
 }
 
 .navlist{
@@ -2130,7 +2173,7 @@ input.file-selector{
 .slides-pagination li a:hover { background-position: 0 -26px }
 
 #container.container-solo{
-    width: 960px;
+    width: 1008px;
     background-image: none;
     margin-top: 60px;
     padding-top: 20px;

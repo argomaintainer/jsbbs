@@ -3,6 +3,7 @@ $MOD('frame.url_for', {
         return 'index.html#!topic?topicid=' + topicid;
     },
     'avatar': function(userid){ return 'http://argo.sysu.edu.cn/avatar/' + userid },
+    'avatar_b' : function(boardname){ return 'http://argo.sysu.edu.cn/avatar/b/' + boardname + '.jpg' },
     'board': function(boardname){ return 'index.html#!board?boardname=' + boardname},
     'board_it': function(index, boardname, topicid){
         return 'index.html#!board?boardname=' + boardname + '&&index=' + index

@@ -123,32 +123,6 @@ $MOD('frame.allp', function(){
             callback();
         });
         
-        // $api.get_goodboards('new', function(data){
-        //     var acb = data.activeboard;
-        //     if(data.success){
-        //         data = data.data;
-        //         boards = data.boards.sort(cmp_boards);
-        //     }
-        //     else{
-        //         boards = [];
-        //     }
-        //     if(acb && acb.length){
-        //         acb = acb[acb.length-1];
-        //         if(localStorage['f:home:activeboard'] == acb.title ){
-        //             acb = null;
-        //         }
-        //     }
-        //     render_template('allp', {
-        //         boards: boards,
-        //         www: data.www,
-        //         activeboard : acb
-        //     });
-        //     if(data.www && data.www.widget){
-        //         load_widgets(data.www.widgets);
-        //     }
-        //     callback();
-        // });
-    }
 
     function load_focus(){
         $.get('/ajax/comp/www_home',
@@ -188,20 +162,6 @@ $MOD('frame::section', function(){
 
     var submit = {};
 
-    submit['book_fav'] = function(kwargs, e){
-        var boardname = $(e.target).attr('data-args');
-        $api.add_self_fav(boardname, function(data){
-            if(data.success){
-                show_alert('收藏' + boardname + '版成功！', 'success');
-                refresh_fav();
-                $(e.target).removeClass('btn-info').addClass('disabled').text('取消收藏');
-            }
-            else{
-                show_alert(ERROR[data.code]);
-            }
-        });
-    }
-
     declare_frame({
         mark: 'section',
         submit: submit,
@@ -218,6 +178,10 @@ $MOD('frame::section', function(){
                         $G.lastsection = num;
                         quite_set_hash('#!section?secnum='
                                        + $(e.target).attr('data-args'));
+                        $('#pill-' + num +' .lazy').each(function(){
+                            this.src = $(this).attr('data-src');
+                            $(this).removeClass('.lazy');
+                        });
                     })
                     var num = Number(kwargs.secnum) || $G.lastsection ;
                     if(isNaN(num))
@@ -227,6 +191,15 @@ $MOD('frame::section', function(){
                     }
                 }
             });
+            if($G.authed){
+                $api.get_self_fav(function(data){
+                    if(data.success){
+                        render_template(
+                            'widget/secfav', { fav: data.data },
+                            '#dy-widgets');
+                    }
+                });
+            }
         }
     });
 

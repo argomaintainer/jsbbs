@@ -1,8 +1,8 @@
 <div class="cell main-cell">
   <div id="section-container">
-    <ul class="nav nav-pills">
+    <ul class="nav nav-pills tab-sec-ul">
       {{each(i, s) sections}}
-      <li><a data-args="${i}" id="a-pill-${i}" data-toggle="pill" href="#pill-${i}">${s.secname}</a></li>
+      <li><a class="tab-sec" data-args="${i}" id="a-pill-${i}" data-toggle="pill" href="#pill-${i}">${s.secname}</a></li>
       {{/each}}
     </ul>  
     <div class="pill-content">
@@ -15,26 +15,13 @@
         <ul class="sec-boardlist clearfix">
           {{each(j, b) s.boards}}
           <li>
-            <a class="boardname" target="_blank" href="${url_for_board(b.boardname)}">
+            <img class="avatar_b lazy" data-src="${url_for_avatar_b(b.boardname)}" />
+            <a class="boardname" target="_blank" href="${url_for_board(b.boardname)}">             
               <strong>${b.title}</strong>(${b.boardname})
               {{if good[b.boardname] }}
               <small class="recommend">推荐！</small>
               {{/if}}
             </a>
-            <ul class="bmlist">
-              版主：
-              {{each(i, u) b.BM.split(' ')}}
-              <li><a href="${url_for_user(u)}">${u}</a></li>
-              {{/each}}
-            </ul>
-            <span class="time">${tf_timestamp(b.lastpost)}</span>
-            {{if $G.authed }}
-            {{if !($G.userfav[b.boardname]) }}
-            <button class="btn btn-info btn-mini" data-submit="book_fav" data-args="${b.boardname}">收藏</button>
-            {{else}}
-            <button class="btn btn-mini disabled">已收藏</button>
-            {{/if}}
-            {{/if}}
           </li>
           {{/each}}
         </ul>

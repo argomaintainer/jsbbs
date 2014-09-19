@@ -1,5 +1,8 @@
 SIGNV = '2014-06-6-21:00';
-NOCACHE = false;
+NOCACHE = (String(location).indexOf('__debug__') >= 0);
+if(NOCACHE){
+    console.log('NOCACHE');
+}
 
 $MOD('jsbbs.main', function(){
 
