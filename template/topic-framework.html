@@ -1,13 +1,4 @@
-<div class="cell cell-loose main-cell">
-  {{if $G.local.topicinfo }}
-  <div class="vote-p">
-    收到 <span>${$G.local.topicinfo.vote}</span> 票
-    {{if !$G.local.topicinfo.hasvoted }}
-    <a data-topicid="${$G.local.topicinfo.topicid}" data-submit="vote">
-      加一票</a>
-    {{/if}}
-  </div>      
-  {{/if}}  
+<div class="cell cell-loose main-cell topic-read">
   <div class="cell-header">
     <a class="back-to-board"  href="#" data-submit="back-to-board">‹
       ${$G.local.boardname } 版</a>

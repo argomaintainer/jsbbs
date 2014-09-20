@@ -1217,6 +1217,11 @@ i[class^="mark-"]{
     margin: 12px;
 }
 
+.topic-read .cell-header{
+    background: #fff;
+    border-bottom: 2px solid #e8e8e8;
+}
+
 .board-nav{
     list-style-type: none;
     position: absolute;
@@ -1622,7 +1627,10 @@ a[data-submit]:hover{
 /* } */
 
 .topic-post.post-wrapper{
-    border-bottom: 1px solid #c2daed;
+    border-bottom: 12px solid #f0f0f0;
+    border-top: 10px solid #f0f0f0;
+    background: #fff;
+    padding-bottom: 50px;
 }
 
 .post-wrapper{
@@ -1710,7 +1718,7 @@ a[data-submit]:hover{
 .post-toolbar > ul{
     list-style-type: none;
     float: left;
-    margin: 0;
+    margin: 10px 0;
     padding: 0;
     color: #47a;
 }
@@ -2556,18 +2564,30 @@ a:hover .ftext{
     padding: 0 10px;
 }
 
+.post-toolbar .vote-btn{
+    margin-right: 40px;
+    padding: 4px 8px;
+    border-radius: 2px;
+    text-decoration: none;
+    border: 1px solid #edceba;
+    border-color: #f2ece7;
+    background-color: #fff6ee;
+    color: #99776b;
+}
+
+.post-toolbar .vote-btn:hover{
+    border: 1px solid #edceba;
+    color: #99776b;
+    background: #fff0e2;
+}
+
+.vote-span{
+    margin-right: 40px;
+    color: #999;
+}
+
 .vote-p{
-    position: fixed;
-    left: 50%;
-    padding: 12px 8px 5px;
-    margin-left: 260px;
-    margin-top: 1px;
-    width: 200px;
-    background: #fff;
-    text-align: center;
-    z-index: 1;
-    border: 1px solid #eee;
-    border-left: 1px solid #f0f0f0;
+    margin: 20px 0;
 }
 
 .vote-p a{

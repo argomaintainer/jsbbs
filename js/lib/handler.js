@@ -1007,9 +1007,9 @@ $MOD('frame::topic', function(){
         var topicid = self.data('topicid');
         $api.vote_topic(topicid, function(data){
             if(data.status){
-                var t = self.parent().find('span');
-                t.text(Number(t.text()) + 1);
-                self.remove();
+                self.parent().html(
+                    '<span class="vote-span">我认为值得一读 (共 ' +
+                        ($G.local.topicinfo.vote+1) + ' 人)</span>');
             }
         });
     }
@@ -1018,6 +1018,7 @@ $MOD('frame::topic', function(){
         mark: 'topic',
         submit : submit,
         enter : function(kwargs){
+            local.isfirst = true;
             get_filename(kwargs, function(kwargs){
                 local.first = null;
                 local.kwargs = kwargs;

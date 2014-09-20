@@ -38,6 +38,18 @@
     </div>
     <div class="post-toolbar clearfix">
       <ul class="hidden-ul">
+        {{if $G.local.isfirst }}
+        {{if $G.local.topicinfo }}
+        <li>
+          {{if !$G.local.topicinfo.hasvoted }}
+          <a class="vote-btn" data-topicid="${$G.local.topicinfo.topicid}" data-submit="vote">值得一读！</a>
+          {{else}}
+          <span class="vote-span">我认为值得一读 (共 ${$G.local.topicinfo.vote} 人)</span>
+          {{/if}}
+        </li>
+        {{/if}}
+        ${$G.local.isfirst=false,''}
+        {{/if}}
         <li class="display"><a data-group="post-${index}" data-submit="reply_post"> 回复 </a>
         </li>
         {{if perm_del==1 }}
