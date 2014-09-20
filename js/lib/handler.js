@@ -422,7 +422,6 @@ $MOD('frame::board', function(){
     }
     submit['clear_unread'] = clear_board_unread;
 
-    local.cursor = 0;
     function load_more(){
         var container = $('#topiclist');
         var cursor = local.cursor;
@@ -453,6 +452,8 @@ $MOD('frame::board', function(){
         require_jslib('format');
 
         var boardname = kwargs.boardname, pagenum;
+
+        local.cursor = 0;
         
         $api.get_board_info(boardname, function(data){
             var start_page, last;
