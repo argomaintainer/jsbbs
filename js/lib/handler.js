@@ -139,6 +139,12 @@ $MOD('frame.allp', function(){
                       //     });
                       // });
                       load_widgets(data.data.www.widgets);
+                      render_template(
+                          'widget/text',
+                          {
+                              text: ' Convergence 是波洛克 1952 年的作品。 杰克逊·波洛克是抽象表现主义运动的主要力量。 如果我们不懂波洛克画中的艺术， 那就让我们热爱丰富多彩的生活， 享受生活中的美。'
+                          }, '#dy-widgets'
+                      );
                   }
               });
     }
