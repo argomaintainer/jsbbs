@@ -1985,6 +1985,24 @@ a[data-submit]:hover{
     box-shadow: 0 0 2px #eee;
 }
 
+.reg-btn{
+    vertical-align: middle;
+    color: #333;
+    text-decoration: underline;
+}
+
+.login-nav{
+    margin-top: 10px;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.login-nav a{
+    color: #555;
+    text-decoration: underline;
+    margin-left: 1em;
+}
+
 #userbox .navbox{
 }
 

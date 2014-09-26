@@ -104,6 +104,11 @@ $MOD('jsbbs.userbox', function(){
     bind_hook('after_login_success', refresh_fav_sync);
     bind_hook('after_refresh_userbox', function(data){
         launch_mail_checker(data.success);
+        if(!$G.authed){
+            $(render_string(
+                'widget/login', {}
+            )).insertBefore('#dy-widgets');
+        }
     });
     
     $G('authed', false);
@@ -120,6 +125,7 @@ $MOD('jsbbs.userbox', function(){
         else{
             $G.authed = false;
             $G.userfav = {};
+
         }
         var simple = $G['simple-userbox'];
         console.log(['ud', udata]);
