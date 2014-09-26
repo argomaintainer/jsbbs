@@ -2671,12 +2671,52 @@ a:hover .ftext{
     background: #f0f0f0;
 }
 
+.dowhat .group{
+    float: left;
+    width: 20%;
+}
+
+.dowhat-grouplist{
+    margin: 0 12px;
+}
+
+.dowhat ul{
+    list-style-type: none;
+    margin: 0;
+}
+
+.dowhat li{
+    width: 100%;
+}
+
+.dowhat .group2{
+    width: 40%;
+    position: relative;
+}
+
+.dowhat h5{
+    padding-left: 3px;
+    margin: 5px 0 12px 0;
+    font-weight: normal;
+}
+
+.dowhat .group2 li{
+    float: left;
+    width: 40%;
+}    
+
+.dowhat .pull-right{
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    color: #999;
+}
+
 .dowhat a{
     display: inline-block;
     font-size: 14px;
-    padding: 2px 10px;
+    padding: 2px 10px 2px 0;
     margin: 3px 3px 5px 0;
-    width: 15%;
 }
 
 .second-opener{
@@ -2696,6 +2736,12 @@ a:hover .ftext{
     top: 5px;
     right: 8px;
     cursor: pointer;
+}
+
+@media (min-width: 1024px){
+    .frame-home{
+        background: #f0f0f0 url("../images/pollock.jpg") center top no-repeat;
+    }
 }
 
 @media (max-width: 1024px){

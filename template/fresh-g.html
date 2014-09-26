@@ -2,28 +2,46 @@
   <div class="close" data-submit="close-home-post" style="position: absolute; right: 5px;">&times;</div>
   <a target="_blank" href="#"><img src="http://argo.sysu.edu.cn/attach/Say/1391056994.jpg"/></a>
 </div>-->
-<div class="cell dowhat">
+<div class="cell dowhat clearfix">
   <div class="cell-header">
     <h3>干点啥...</h3>
   </div>
-  <div>
-    <a onclick="window.scrollTo(0, $('.main-cell').offset().top-45)"
-       href="#">看新帖</a>
-    <a target="_blank" href="${url_for_board('Say')}">吐槽</a>
-    <a target="_blank" href="${url_for_board('Joke')}">讲笑话</a>
-    <a target="_blank" href="${url_for_board('Love')}">感情问题求助</a>
-    <a target="_blank" href="${url_for_board('Poem')}">写首诗</a>
-    <a target="_blank" href="${url_for_board('Film')}">写影评</a>
-    <a target="_blank" href="${url_for_board('Reading')}">读书心得</a>
-    <a target="_blank" href="${url_for_board('Heart')}">心情随笔</a>
-    <a target="_blank" href="${url_for_board('Memory')}">回忆故事</a>
-    <a target="_blank" href="${url_for_board('Pop')}">好歌推荐</a>
-    <a target="_blank" href="${url_for_board('News')}">新闻讨论</a>
-    <a target="_blank" href="${url_for_board('Job')}">招聘</a>
-    <a target="_blank" href="${url_for_board('Parttime')}">兼职</a>
-    <a target="_blank" href="${url_for_board('Lecture')}">讲座信息</a>
-    <a target="_blank" href="${url_for_board('SYSU_Info')}">中大校园</a>
-    <a target="_blank" href="${url_for_board('Search')}">失物招领</a>
+  <div class="dowhat-grouplist">
+    <div class="group">
+      <h5>创作</h5>
+      <ul>
+        <li><a target="_blank" href="${url_for_board('Poem')}">写首诗</a></li>
+        <li><a target="_blank" href="${url_for_board('Film')}">写影评</a></li>
+        <li><a target="_blank" href="${url_for_board('Heart')}">心情随笔</a></li>
+
+      </ul>
+    </div>
+    <div class="group">
+      <h5>分享</h5>
+      <ul>
+        <li><a target="_blank" href="${url_for_board('Love')}">感情</a></li>
+        <li><a target="_blank" href="${url_for_board('Reading')}">读书</a></li>
+        <li><a target="_blank" href="${url_for_board('Memory')}">往事</a></li>
+      </ul>
+    </div>
+    <div class="group">
+      <h5>逗乐</h5>
+      <ul>
+        <li><a target="_blank" href="${url_for_board('Say')}">吐槽</a></li>
+        <li><a target="_blank" href="${url_for_board('Joke')}">讲笑话</a></li>
+        <li><a target="_blank" href="${url_for_board('News')}">新闻观点</a></li>
+      </ul>
+    </div>
+    <div class="group group2">
+      <h5>校园</h5>
+      <ul>
+        <li><a target="_blank" href="${url_for_board('Lecture')}">讲座信息</a></li>
+        <li><a target="_blank" href="${url_for_board('SYSU_Info')}">中大</a></li>
+        <li><a target="_blank" href="${url_for_board('Job')}">招聘</a></li>
+        <li><a target="_blank" href="${url_for_board('Parttime')}">兼职</a></li>
+        <li><a target="_blank" href="${url_for_board('Search')}">失物招领</a></li>
+      </ul>
+    </div>
     <a class="pull-right" data-submit="go-section" href="#"><small> › 查看全部看版</small></a>
   </div>
 </div>
