@@ -111,7 +111,7 @@ $MOD('jsbbs.userbox', function(){
         check_has_new_mail(function(){
             mail_checker = setTimeout(
                 launch_mail_checker,
-                15000 + 120 * Math.max(lastdelay, 3000));
+                15000 + 120 * Math.min(lastdelay, 3000));
         });
     }
 
