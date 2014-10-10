@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/bin/env python2.7
 import subprocess
 import re
 subprocess.check_output(['git', 'checkout', 'index.html'])
