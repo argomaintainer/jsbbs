@@ -1016,7 +1016,7 @@ $MOD('frame::topic', function(){
             if(data.status){
                 self.parent().html(
                     '<span class="vote-span">我认为值得一读 (共 ' +
-                        ($G.local.topicinfo.vote+1) + ' 人)</span>');
+                        (1+Number($G.local.topicinfo.vote)) + ' 人)</span>');
             }
         });
     }
