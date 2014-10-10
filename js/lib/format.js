@@ -126,6 +126,11 @@ $MOD('format', function(){
         text = format_linkify(text);
         return text;
     }
+
+    function format_md(s){
+        return '<div class="markdown">' + markdown.toHTML(s) + '</div>';
+    }
+    
     $.fn.format = function(){
         $(this).each(function(){
             var self=$(this);
@@ -279,7 +284,8 @@ $MOD('format', function(){
         gen_quote_mail: gen_quote_mail,
         ascii: ascii,
         format_simple : format_simple,
-        format_escape : format_escape
+        format_escape : format_escape,
+        format_md : format_md
     };
 
 })

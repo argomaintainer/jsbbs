@@ -493,6 +493,8 @@ $MOD('frame.frame', function(){
         });
     }
 
+    register_hook('frame_change');    
+    
     function declare_frame(args){
         if(!args.mark){
             console.error('Frame must has a mark.');
@@ -563,6 +565,8 @@ $MOD('frame.frame', function(){
         }
         
         frame.enter(curhash.args);
+
+        trigger_hooks('frame_change', curhash);
 
         window.scrollTo(0, 0);
 

@@ -47,6 +47,7 @@ $MOD('argo_api', function(){
     }
         
     return {
+        'get_tips' : ajax_getor_nopara('/ajax/comm/tips'),
         'get_topten': ajax_getor_nopara('/ajax/comm/topten'),
         'get_wish': ajax_getor_nopara('/ajax/comm/birthday'),
         'get_section': ajax_getor_nopara('/ajax/section'),
