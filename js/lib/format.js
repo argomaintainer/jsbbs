@@ -220,14 +220,14 @@ $MOD('format', function(){
     }
 
     function format_simple(s){
-        return '<pre>' + format_linkify(format_esc(format_escape(s)))
+        return '<pre class="asciibox">' + format_linkify(format_esc(format_escape(s)))
             + '</pre>';        
     }
     
     function ascii(s){
         var x = 0, i=0, j=0, ca = {}, c='', r=[], maxx=s.length,
         x2, x1, w, mi=0, mj=0;
-        var gw = 8;
+        var gw = 7;
         var gh = 20;
         while(x < maxx){
             if(s[x] == '\r'){
@@ -269,8 +269,8 @@ $MOD('format', function(){
                 x ++;
             }
         }
-        return '<div style="height:'+((i+1) * gh)+' ; width:'
-            +(mj * gw)+' ;" class="ascii-box">' + r.join(' ') + '</div>';
+        return '<div style="height:'+((i+1) * gh)+'px ; width:'
+            +(mj * gw)+'px ;" class="ascii-box">' + r.join(' ') + '</div>';
     }
     
     return {

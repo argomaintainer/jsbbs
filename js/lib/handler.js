@@ -474,7 +474,7 @@ $MOD('frame::board', function(){
                             $MOD.format.format(notes);
                     }else{
                         cur_board.data.htmlnotes =
-                            $MOD.format.format_simple(notes);
+                            $MOD.format.ascii(notes);
                     }
                 }
                 console.log('board', data.data);
