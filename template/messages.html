@@ -18,6 +18,17 @@
     <a href="${url_for_user(p.userid)}">${p.userid}</a> 在 <a target="_blank" href="${url_for_topic(p.filename, p.board)}">${p.board} 版 的一篇贴子</a>提到了你
   </p>
 </div>
+{{else}}
+{{if p.type == 'U' }}
+<div class="message">
+  <p>
+    <i class="fa fa fa-thumbs-o-up"></i>
+    <span class="time">(${tf_timestamp(p.when)}) : </span>
+    <img src="${url_for_avatar(p.userid)}"/>
+    <a href="${url_for_user(p.userid)}">${p.userid}</a> 认为你在 <a target="_blank" href="${url_for_topic(p.filename, p.board)}">${p.board} 版 的一篇贴子</a>值得一读
+  </p>
+</div>
+{{/if}}
 {{/if}}
 {{/if}}
 {{/each}}

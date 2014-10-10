@@ -8,15 +8,16 @@ $MOD('jsbbs.userbox', function(){
     $G.submit.logout = function(){
         modal_confirm('登出帐号', '你确认要取消登录？',
                       function(){
-                          $api.user_logout(refresh_userbox);
+                          $api.user_logout(function(){
+                              location.reload();
+                          });
                       });
     }
     $G.submit.login = function(kwargs){
         $api.user_login(kwargs.userid, kwargs.password, function(data){
             if(data.success){
                 $('#userbox').empty();
-                refresh_userbox();
-                show_alert('登录成功！', 'success');
+                location.reload();
             }
             else{
                 show_alert(data.error, 'danger');
