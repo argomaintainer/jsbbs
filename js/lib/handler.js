@@ -880,7 +880,7 @@ $MOD('frame::topic', function(){
         if($G.current.mark != 'topic' || lock || !local.topiclist){
             return;
         }
-        if($('body').height() - $(window).height() - $(window).scrollTop() < 100){
+        if($('body').height() - $(window).height() - $(window).scrollTop() < 1000){
             load_next();
         }
     });
