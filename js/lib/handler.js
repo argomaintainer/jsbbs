@@ -452,7 +452,15 @@ $MOD('frame::board', function(){
         );
     }
     submit['load-more'] = load_more;
-    
+
+    function remove_ascii(s){
+        var lastesc = s.lastIndexOf('\x1b');
+        if(lastesc >= 0){
+            s = s.slice(lastesc).replace(/\x1b(?:\[[\d;]*\w)?/gm, '');
+        }
+        return s;
+    }
+
     function enter_board(kwargs){
 
         require_jslib('format');
@@ -466,7 +474,9 @@ $MOD('frame::board', function(){
             if(data.success){
                 cur_board.data = data.data;
                 cur_board.boardname = boardname = data.data.filename;
-
+                if(data.data.notes){
+                    cur_board.data.htmlnotes = $MOD.format.format(remove_ascii(data.data.notes));
+                }
                 console.log('board', data.data);
                 
                 render_template('board-simple',
@@ -474,6 +484,7 @@ $MOD('frame::board', function(){
                                     board: data.data,
                                     PAGE_LIMIT: PAGE_LIMIT
                                 });
+
 
                 $('.editor textarea').keypress(function(event){
                     if(event.ctrlKey && (event.keyCode==10)){
@@ -483,15 +494,6 @@ $MOD('frame::board', function(){
 
 
                 load_more();
-
-                /* board custom */
-
-                // board brand img
-                if(data.data.www.brand_url){
-                    $('.board-header-img').addClass('hasimg').css(
-                        'background-image', 'url("' +
-                            data.data.www.brand_url + '")');
-                }
 
                 // section for userbox
                 $G.lastsection = cur_board.data.secnum;
@@ -1605,7 +1607,7 @@ $MOD('frame::admin_board', function(){
             $api.get_board_info(kwargs.boardname, function(data){
                 if(data.success && data.data.isadmin){
                     var args = {}, boardname=kwargs.boardname;
-                    args = get_simple_setting(data.data.www);
+                    // args = get_simple_setting(data.data.www);
                     render_template('admin_board', {
                         boardname: boardname,
                         args: args

@@ -35,8 +35,8 @@
       <span>收藏本版人数： ${board.favnum}</span>
       <span>累计发文篇数： ${board.total}</span>
     </div>
-    {{if board && board.www && board.www.boardinfo }}
-    {{html $MOD.format.format(board.www.boardinfo.intro)}}
+    {{if board && board.htmlnotes }}
+    <div class="notes">{{html board.htmlnotes}}</div>
     {{else}}
     <p>版主萌萌嗒～大家萌萌嗒～</p>
     {{/if}}

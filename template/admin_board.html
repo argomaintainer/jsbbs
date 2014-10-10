@@ -3,24 +3,9 @@
     <h3>${boardname} - 管理</h3>
     <small><a href="${url_for_board(boardname)}"> « 回到版块</a></small>
   </div>
-  <form action="javascript:void(0)" class="top2em">
-    <fieldset>
-      <label>版块logo</label>
-      <input data-group="boardwww" type="text" name="logo" placeholder="输入图片的地址..." value="${args.logo}"/>
-      <span class="help-block">建议为 <em>682x132</em> ，可先在版内发图</span>
-      <hr/>
-      <input data-group="boardwww" type="hidden" name="boardname" value="${boardname}"/>
-      <label>版主的话</label>
-      <textarea data-group="boardwww" rows="6" class="input-xlarge" name="intro">${args.intro}</textarea>
-      <span class="help-block">简洁有趣的介绍会让版友更好地了解你的版块！</span>
-      <hr/>
-      <label>推荐链接</label>
-      <textarea data-group="boardwww" rows="6" class="input-xlarge" name="links">${args.links}</textarea>
-      <span class="help-block">一行一项。说明文字在前，链接地址在后，逗号隔开。</span>
-      <div class="form-actions">
-        <button class="btn btn-success" data-group="boardwww" data-submit="update_board_setting">确认</button>
-        <a href="${url_for_board(boardname)}" class="btn">回到版块</a>
-      </div>
-    </fieldset>
-  </form>
+  <div>
+    <ul>
+      <li>要修改看版的介绍，请使用telnet编辑本版备忘录。(想保留telnet进版画面只需要在进版画面最后加一个<span>ESC [ m</span>)</li>
+    </ul>
+  </div>
 </div>

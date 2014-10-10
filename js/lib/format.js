@@ -59,22 +59,22 @@ $MOD('format', function(){
         });
     }
 
-    format_cr = function(s){
+    var format_cr = function(s){
         return s.replace(/\r\n/gm, '\n').replace(/\r/gm, '\n');
     } 
-    format_br = function(s){
+    var format_br = function(s){
         return s.replace(/\n/gm, '<br\>\n');
     }
-    format_quote = function(s){
+    var format_quote = function(s){
         return s.replace(/(\n*)^(【&nbsp;在.*的大作中提到:&nbsp;】\n)?\n*(([:：].*\n)+)(\n*)/gm, '<div class="postquote"><div class="postquote-header">$2</div><div data-submit="toggle-quote" class="toggle-quote"> : 显示引用文字 </div><div class="postquote-content">$3</div></div>')
     }
-    format_color = function(s){
+    var format_color = function(s){
         return s.replace(/\[%\d+(;\d+)*#\]/gm, function(s){
             return s.replace('[%', '<span class="ac').replace(/;/gm, ' ac').replace('#]', '">');
         }).replace(/\[#%\]/gm, '</span>');
     }
 
-    format_esc = function(s) {
+    var format_esc = function(s) {
         var segments = s.replace(/\x1b\[(?:\d{1,2};?)+m/gm, function(t) {
             //console.log(['zz', t.substring(2, t.length-1)]);
             var colors = t.substring(2, t.length-1).split(';');
@@ -97,7 +97,7 @@ $MOD('format', function(){
         return res;
     }
     
-    format_linkify = function(s) {
+    var format_linkify = function(s) {
         var before = s;
         for (u in urls)  {
             var s = s.replace(urls[u][0], urls[u][1]);
@@ -105,6 +105,7 @@ $MOD('format', function(){
         //console.log(["debug-linkify", before, s]);
         return s;
     }
+    
     require_jslib('markdown');
     function format(text){
 //        if(text && text.match && text.match('\x1b') && !text.match("※ 来源:．逸仙时空 Yat-Sen Channel") && !text.match("※ 来源:．Yat-sen Channel") && !text.match("※ 转载:.Yat-sen Channel") && !text.match("※ 来源:．Yat-sen Channel") && !text.match("【 以下文字转载自"))
