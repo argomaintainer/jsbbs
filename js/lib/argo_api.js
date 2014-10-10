@@ -271,6 +271,19 @@ $MOD('argo_api', function(){
             $.post('/ajax/user/update', newval, callback);
         },
 
+        'get_message' : function(index, callback){
+            get_nc('/ajax/message/list',
+                   {
+                       start: index,
+                   }, callback);
+        },
+        'mark_message_read' : function(index, callback){
+            $.post('/ajax/message/mark',
+                   {
+                       index: index,
+                   }, callback);
+        },
+        
         'get_my_part_topic':function(callback){
             get_nc('/ajax/v2/post/mine', function(data){
                 if(data.items){

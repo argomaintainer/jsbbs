@@ -1,0 +1,26 @@
+{{each(i, p) mlist}}
+{{if p.reply }}
+<div class="message">
+  <p>
+    <i class="fa fa-reply"></i>
+    <span class="time">(${tf_timestamp(p.when)})  : </span>
+    <img src="${url_for_avatar(p.userid)}"/>
+    <a href="${url_for_user(p.userid)}">${p.userid}</a> 在 <a target="_blank" href="${url_for_topic(p.filename, p.board)}">${p.board} 版 回复了你</a>
+  </p>
+</div>
+{{else}}
+{{if p.at }}
+<div class="message">
+  <p>
+    <i class="fa fa-at"></i>
+    <span class="time">(${tf_timestamp(p.when)}) : </span>
+    <img src="${url_for_avatar(p.userid)}"/>
+    <a href="${url_for_user(p.userid)}">${p.userid}</a> 在 <a target="_blank" href="${url_for_topic(p.filename, p.board)}">${p.board} 版 的一篇贴子</a>提到了你
+  </p>
+</div>
+{{/if}}
+{{/if}}
+{{/each}}
+<div id="loader">
+  <div data-submit="load-more" data-cursor="${prev}" class="load-more-post">更多...</div>
+</div>

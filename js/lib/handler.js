@@ -1078,6 +1078,41 @@ $MOD('page_func', function(){
     }
 });
 
+$MOD('frame::message', function(){
+
+    var submit = {};
+    function load_more(kwargs, e){
+        var cursor = kwargs && kwargs.cursor;
+        if(cursor === undefined){
+            cursor = $(e.target).data('cursor');
+        }
+        $api.get_message(cursor, function(data){
+            $api.mark_message_read(data.data.mlist[0].index);
+            render_string('messages', data.data).replaceAll('#loader');
+        });
+    }        
+        
+    submit = {
+        'load-more' : load_more
+    }
+
+    declare_frame({
+
+        mark: 'message',
+
+        enter: function(){
+            render_template('message_framework');
+            load_more({ cursor: 0 });
+        },
+
+        marktop: 'message',
+
+        submit: submit
+        
+    });
+
+});
+
 $MOD('frame::setting', function(){
 
     var submit = {};

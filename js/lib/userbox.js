@@ -72,14 +72,29 @@ $MOD('jsbbs.userbox', function(){
         handler_fav($api.get_self_fav_aync());
     }
 
+    var lastdelay = 0;
     function check_has_new_mail(callback){
+        var d = +new Date();
         $api.check_has_new_mail(function(data){
+            lastdelay = +new Date() - d;
             if(data.success){
-                if(data.data=='1'){
+                if(data.data[0]=='1'){
                     $('#userbox-nav').addClass('hasnewmail');
                 }
                 else{
                     $('#userbox-nav').removeClass('hasnewmail');
+                }
+                if(data.data[1]=='1'){
+                    $('#userbox-nav').addClass('hasmessage');
+                }
+                else{
+                    $('#userbox-nav').removeClass('hasmessage');
+                }
+                if(data.data[2]=='1'){
+                    $('#userbox-nav').addClass('hasfavupdate');
+                }
+                else{
+                    $('#userbox-nav').removeClass('hasfavupdate');
                 }
                 if(callback){
                     callback();
@@ -89,21 +104,24 @@ $MOD('jsbbs.userbox', function(){
     }
 
     var mail_checker;
-    function launch_mail_checker(enable){
+    function launch_mail_checker(){
         if(mail_checker){
             clearInterval(mail_checker);
         }
-        if(enable){
-            check_has_new_mail();
-            mail_checker = setInterval(check_has_new_mail, 30000);
-        }
+        check_has_new_mail(function(){
+            mail_checker = setTimeout(
+                launch_mail_checker,
+                15000 + 120 * Math.max(lastdelay, 3000));
+        });
     }
 
     register_hook('after_login_success');
     register_hook('after_refresh_userbox');
     bind_hook('after_login_success', refresh_fav_sync);
     bind_hook('after_refresh_userbox', function(data){
-        launch_mail_checker(data.success);
+        if(data.success){
+            launch_mail_checker();
+        }
         if(!$G.authed){
             $(render_string(
                 'widget/login', {}

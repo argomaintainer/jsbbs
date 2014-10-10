@@ -2756,6 +2756,35 @@ a:hover .ftext{
     cursor: pointer;
 }
 
+.message{
+    position: relative;
+}
+
+.message img{
+    width: 32px;
+    height: 32px;
+    display: inline-block;
+    border-radius: 3px;
+    margin-right: 8px;
+}
+
+.message p{
+    padding: 15px 0 20px 0;
+    border-bottom: 1px solid #f0f0f0;
+    margin: 0;
+}
+
+.message i{
+    vertical-align: baseline;
+    color: #ccc;
+}
+
+.message .time{
+    display: inline-block;
+    margin: 0 10px 0 10px;
+    min-width: 120px;
+}
+
 @media (min-width: 1024px){
     .frame-home{
         background: #f0f0f0 url("../images/pollock.jpg") center top no-repeat;
