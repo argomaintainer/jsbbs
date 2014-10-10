@@ -7,6 +7,12 @@ body{
 #topbar .brand{
     color: #f0f0f0;
     margin-left: 0;
+    letter-spacing: 7px;
+}
+
+#topbar .brand small{
+    color: #b0b0b0;
+    letter-spacing: 0;
 }
 
 #topbar .nav{
@@ -20,7 +26,7 @@ body{
 #topbar .navbar-inner{
     background-image: none;
     background-color: rgb(5,67,14);
-    background-color: rgba(5,67,14, 0.75);
+    background-color: rgba(5,67,14, 0.88);
     filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#BF05430E,endColorstr=#BF05430E);
     border-bottom: 1px solid #eee;
 }
@@ -39,6 +45,10 @@ body{
 #topbar .nav > li > a.onactive{
     background: rgba(140, 185, 157, .30);
     
+}
+
+#topbar .nav .dropdown{
+    margin-left: 95px;
 }
 
 #topbar .nav li.dropdown.open>.dropdown-toggle,
