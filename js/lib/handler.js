@@ -200,9 +200,8 @@ $MOD('frame::section', function(){
             if($G.authed){
                 $api.get_self_fav(function(data){
                     if(data.success){
-                        render_template(
-                            'widget/secfav', { fav: data.data },
-                            '#dy-widgets');
+                        render_string(
+                            'secfav', { fav: data.data }).replaceAll('#fav');
                     }
                 });
             }

@@ -13,6 +13,7 @@ body{
 #topbar .brand small{
     color: #b0b0b0;
     letter-spacing: 0;
+    line-height: 1;
 }
 
 #topbar .nav{
@@ -31,6 +32,10 @@ body{
     border-bottom: 1px solid #eee;
 }
 
+#topbar .nav > li{
+    position: relative;
+}
+
 #topbar .nav > li > a{
     color: rgb(163,183,151);
     text-shadow: rgba(0,0,0,.5);
@@ -45,10 +50,6 @@ body{
 #topbar .nav > li > a.onactive{
     background: rgba(140, 185, 157, .30);
     
-}
-
-#topbar .nav .dropdown{
-    margin-left: 95px;
 }
 
 #topbar .nav li.dropdown.open>.dropdown-toggle,
@@ -363,7 +364,9 @@ i.icon-nbrd:before{
 }
 
 .secfav-ul li{
-    margin: 20px 0 20px;
+    margin: 10px 0;
+    float: left;
+    width: 140px;
 }
 
 .secfav-ul img{
@@ -1272,10 +1275,6 @@ i[class^="mark-"]{
     border-top: 1px solid orange;
 }
 
-.hasnewmail #userbox-mail a{
-    color: red;
-}
-
 .fluid-table th{
     text-align: left;
     padding-left: 10px;
@@ -1288,15 +1287,19 @@ th.th-center{
     text-align: center;
 }
 
-.hasnewmail #userbox-mail a:hover{
-}
-
-.display-on-newmail{
-    display: none;
-}
-
-.hasnewmail .display-on-newmail{
-    display: inline;
+.hasnewmail .markhash-mail:after,
+.hasmessage .markhash-message:after,
+.hasfavupdate .markhash-section:after{
+    content: " ";
+    display: block;
+    width: 6px;
+    height: 6px;
+    background: red;
+    border-radius: 4px;
+    position: absolute;
+    top: 10px;
+    border: 2px solid #eee;
+    right: 10px;
 }
 
 .tbar{

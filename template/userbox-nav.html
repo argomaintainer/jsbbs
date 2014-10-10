@@ -1,6 +1,6 @@
 {{if $G.authed }}
-<div id="topbar-nav" class="pull-left">
-  <ul class="markhash nav">
+<div id="topbar-nav">
+  <ul class="markhash nav pull-left">
     {{if !$G['simple-userbox'] }}
     <li class="markhash-home">
       <a class="top-a" href="#!home">首页</a>
@@ -13,9 +13,11 @@
       <a class="top-a" href="#!message">消息</a>
     </li>
     <li class="markhash-mail" id="userbox-mail">
-      <a class="top-a" href="#!mail">信箱<span class="display-on-newmail">(新)</span></a>
+      <a class="top-a" href="#!mail">信箱</a>
     </li>
     {{/if}}
+  </ul>
+  <ul class="markhash nav pull-right">
     <li class="dropdown">
       <a href="#" class="top-u dropdown-toggle" data-toggle="dropdown">
         <div class="top-avatar">
@@ -28,8 +30,6 @@
       </a>
       <ul class="dropdown-menu">
         <li><a href="index.html#!profile">设置我的资料</a></li>
-        <li><a href="index.html#!setting">设置电子邮件提醒</a></li>
-        <li><a href="index.html#!admin-fav">管理收藏夹</a></li>
         <li><a href="http://bbs.sysu.edu.cn/n/ann.html#!read?reqpath=:BBS_Help/">帮助</a></li>
         <li><a href="#" data-submit="logout">退出登录</a></li>
       </ul>
