@@ -17,7 +17,7 @@ $MOD('format', function(){
 
 
         // 1. jpg|png|gif pic to <img> tag, class from link
-        [/(^|\n(&nbsp;)*)(http:&#x2F;&#x2F;.+?\.)(jpg|png|gif|jpeg)/ig, '$1<img src="$3$4" class="" alt="" />'],
+        [/(^|\n(&nbsp;|\s)*)(http:&#x2F;&#x2F;.+?\.)(jpg|png|gif|jpeg)/ig, '$1<img src="$3$4" class="" alt="" />'],
         [/(^|\s|<br>|&nbsp;|\n|>)(http:&#x2F;&#x2F;.+\.)(mp3)/g, 
          '<audio src="$2$3" controls="controls" />'],
 
@@ -45,10 +45,10 @@ $MOD('format', function(){
 	    [/(^|\s|<br>|&nbsp;|\n|>)(www\..+?\..+?)(\s|$|<br>|&nbsp;|<)/g,		'$1<a target="_blank" href="http://$2">$2</a>$3'],
 	    [/(^|\s|<br>|&nbsp;|\n|>)(((https?|ftp):&#x2F;&#x2F;).+?)(\s|$|<br>|&nbsp;|<)/g,	'$1<a target="_blank" href="$2">$2</a>$5'],
         //@gcc
-        [/(^|&nbsp;|<br>|\n)@([a-zA-Z]{2,12})/g,	'$1<a href="#!user?userid=$2">@$2</a>'],
+        [/(^|&nbsp;|<br>|\n\s)@([a-zA-Z]{2,12})/g,	'$1<a href="#!user?userid=$2">@$2</a>'],
 
         // xxx 讨论区
-        [/&nbsp;(<span class="c32">)?([a-zA-Z]{3,20})&nbsp;(<span class="c37">)?讨论区/g,
+        [/(?:&nbsp;|\s)(<span class="c32">)?([a-zA-Z]{3,20})&nbsp;(<span class="c37">)?讨论区/g,
          '&nbsp;$1<a href="#!board?boardname=$2">$2</a>&nbsp;$3讨论区']
         
     ];
@@ -213,7 +213,16 @@ $MOD('format', function(){
             }
         }
         return c.join(' ');
-    }            
+    }
+
+    function format_unesc(s){
+        return s.replace(/\x1b\[(?:[\d;]*)\w/gm, '');
+    }
+
+    function format_simple(s){
+        return '<pre>' + format_linkify(format_esc(format_escape(s)))
+            + '</pre>';        
+    }
     
     function ascii(s){
         var x = 0, i=0, j=0, ca = {}, c='', r=[], maxx=s.length,
@@ -269,6 +278,7 @@ $MOD('format', function(){
         gen_quote: gen_quote,
         gen_quote_mail: gen_quote_mail,
         ascii: ascii,
+        format_simple : format_simple,
         format_escape : format_escape
     };
 

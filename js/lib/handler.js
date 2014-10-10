@@ -453,14 +453,6 @@ $MOD('frame::board', function(){
     }
     submit['load-more'] = load_more;
 
-    function remove_ascii(s){
-        var lastesc = s.lastIndexOf('\x1b');
-        if(lastesc >= 0){
-            s = s.slice(lastesc).replace(/\x1b(?:\[[\d;]*\w)?/gm, '');
-        }
-        return s;
-    }
-
     function enter_board(kwargs){
 
         require_jslib('format');
@@ -475,7 +467,15 @@ $MOD('frame::board', function(){
                 cur_board.data = data.data;
                 cur_board.boardname = boardname = data.data.filename;
                 if(data.data.notes){
-                    cur_board.data.htmlnotes = $MOD.format.format(remove_ascii(data.data.notes));
+                    var notes = data.data.notes;
+                    if(notes.indexOf('\n----\n') >= 0){
+                        notes = notes.split('\n----\n').slice(-1)[0];
+                        cur_board.data.htmlnotes =
+                            $MOD.format.format(notes);
+                    }else{
+                        cur_board.data.htmlnotes =
+                            $MOD.format.format_simple(notes);
+                    }
                 }
                 console.log('board', data.data);
                 
