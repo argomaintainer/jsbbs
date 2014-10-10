@@ -807,7 +807,7 @@ $MOD('frame::flow', function(){
 
 $MOD('frame::topic', function(){
 
-    var PAGE_LIMIT = 5;
+    var PAGE_LIMIT = 40;
     
     var submit = {},
     local = {};

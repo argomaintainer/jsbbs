@@ -187,6 +187,10 @@ body{
   ~~~~~
   */
 
+.notes{
+    overflow: hidden;
+}
+
 .fluid-table{
     width:100%;
 }
