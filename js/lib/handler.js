@@ -142,7 +142,7 @@ $MOD('frame.allp', function(){
                       render_template(
                           'widget/text',
                           {
-                              text: ' Convergence 是波洛克 1952 年的作品。 杰克逊·波洛克是抽象表现主义运动的主要力量。 如果我们不懂波洛克画中的艺术， 那就让我们热爱丰富多彩的生活， 享受生活中的美。'
+                              text: ' <i>The Madonna in Majesty</i> 作于1302年，是意大利画家 Duccio 的代表作。他的画沿袭了拜占庭风格的大部分特点，且人物表现出更为真实的形态，开辟了一条拜占庭风格过渡到文艺复兴的道路。'
                           }, '#dy-widgets'
                       );
                   }
@@ -161,7 +161,6 @@ $MOD('frame.allp', function(){
         submit: submit,
         marktop: 'home'
     });
-
 });
 
 $MOD('frame::section', function(){

@@ -2804,7 +2804,7 @@ a:hover .ftext{
 
 @media (min-width: 1024px){
     .frame-home{
-        background: #f0f0f0 url("../images/pollock.jpg") center top no-repeat;
+        background: #f0f0f0 url("http://bbs.sysu.edu.cn/attach/Pictures/1414463505.jpg") center top no-repeat;
     }
     .frame-home .cell, .frame-home .widget{
         box-shadow: 0 0 8px #aaa;
