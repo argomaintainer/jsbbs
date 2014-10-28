@@ -142,7 +142,7 @@ $MOD('frame.allp', function(){
                       render_template(
                           'widget/text',
                           {
-                              text: ' <i>The Madonna in Majesty</i> 作于1302年，是意大利画家 Duccio 的代表作。他的画沿袭了拜占庭风格的大部分特点，且人物表现出更为真实的形态，开辟了一条拜占庭风格过渡到文艺复兴的道路。'
+                              text: ' The Madonna in Majesty 作于1302年，是意大利画家 Duccio 的代表作。他的画沿袭了拜占庭风格的大部分特点，且人物表现出更为真实的形态，开辟了一条拜占庭风格过渡到文艺复兴的道路。'
                           }, '#dy-widgets'
                       );
                   }
