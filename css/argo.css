@@ -1923,6 +1923,20 @@ a[data-submit]:hover{
     margin-top: 10px;
 }
 
+.dowhat .home_select_arrow {
+}
+
+.dowhat .home_input_search {
+    margin-bottom: 3.5px;
+    margin-right: 10px;
+    margin-left: 10px;
+    padding: 2px 6px;
+}
+
+.dowhat .home_search_btn {
+    margin-bottom:4px;
+    line-height:28px;
+}
 .part{
     display: inline-block;
     margin-right: 10px;
