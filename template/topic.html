@@ -1,4 +1,4 @@
-<div class="post-wrapper{{if !(title.substr(0, 3) == 'Re:')}} topic-post{{/if}}" data-index="${ index }" id="post-${filename}">
+<div class="post-wrapper{{if closed }} post-close{{/if}}{{if !(title.substr(0, 3) == 'Re:')}} topic-post{{else}} topic-reply{{/if}}" data-index="${ index }" id="post-${filename}">
   <div class="{{if !ismarkdown}}post-wrapper-inner{{else}}post-wrapper-markdown{{/if}}">
     <div class="typo post-content">
       {{if ismarkdown }}
@@ -13,7 +13,7 @@
       {{else}}
       <div class="post-header">
         <div class="post-info">
-          <div>
+          <div class="name">
             <a class="owner" href="${ url_for_user(userid) }"><strong class="userid">${userid}</strong><span class="username"> ${username} </span></a>
             <img class="user-avatar" src="${ url_for_avatar(userid) }"/>
             <span class="time">${tf_timestamp(post_time)}</span>
@@ -21,20 +21,22 @@
           <h3 id="title-${index}">${title}</h3>
         </div>
       </div>
-      {{html content}}
-      <div class="typo post-signature">{{html signature }}</div>
-      {{/if}}
-      {{if !$.isEmptyObject(ah) }}
-      <p>这篇帖子含附件：
-        <div>
-          {{if !ah.desc.indexOf("image") }}
-          <img src="${ah.link}"/>
-          {{else}}
-          <a href="${ah.link}" target="_blank">${ah.origname}</a>
-          {{/if}}
-        </div>
-      </p>
-      {{/if}}
+      <div class="content-wrapper">
+        {{html content}}
+        <div class="typo post-signature">{{html signature }}</div>
+        {{/if}}
+        {{if !$.isEmptyObject(ah) }}
+        <p>这篇帖子含附件：
+          <div>
+            {{if !ah.desc.indexOf("image") }}
+            <img src="${ah.link}"/>
+            {{else}}
+            <a href="${ah.link}" target="_blank">${ah.origname}</a>
+            {{/if}}
+          </div>
+        </p>
+        {{/if}}
+      </div>
     </div>
     <div class="post-toolbar clearfix">
       <ul class="hidden-ul">

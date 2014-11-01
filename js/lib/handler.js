@@ -568,7 +568,9 @@ $MOD('frame::flow', function(){
     cur_boardname = null;
     
     function handler_post(post){
+        console.log(++$G.local.loaded);
 	    post.ismarkdown = ((post.rawcontent[0] == '#')||(post.rawcontent[1] == '#'));
+        post.closed = !!(post.title.substr(0,3) == 'Re:')&&($G.local.loaded > 10)&&(post.rawcontent.indexOf('\n')<=20)&&(post.rawcontent.indexOf('【 在 ')<=140);
         post.content = $MOD.format.format(post.rawcontent);
         post.signature = $MOD.format.format(post.rawsignature);
         return post;
@@ -1020,12 +1022,26 @@ $MOD('frame::topic', function(){
             }
         });
     }
+
+    function open_post(e){
+        console.log(e.target);
+        var target = $(e.target);
+        if(!target.hasClass('post-wrapper')){
+            target = target.parents('.post-wrapper');
+        }
+        if(target.hasClass('post-close')){
+            target.removeClass('post-close');
+            target.find('div.toggle-quote').click();
+            return false;
+        }
+    }
     
     declare_frame({
         mark: 'topic',
         submit : submit,
         enter : function(kwargs){
             local.isfirst = true;
+            local.loaded = 0;
             get_filename(kwargs, function(kwargs){
                 local.first = null;
                 local.kwargs = kwargs;
@@ -1039,6 +1055,7 @@ $MOD('frame::topic', function(){
                                 local.oldest_index = 
                                 $.inArray(kwargs.filename, local.topiclist);
                             render_template('topic-framework');
+                            $('#post-container').click(open_post);
                             local.target = $($('#post-container')[0]);
                             submit.load_next();
                         }
