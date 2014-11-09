@@ -7,5 +7,13 @@
     <ul>
       <li>要修改看版的介绍，请使用telnet编辑本版备忘录(进看版，按shift+w，然后编译一般备忘录。显示效果参考BBS_Help版)。</li>
     </ul>
+    <form action="/ajax/update_bavatar" method="POST" enctype="multipart/form-data">
+    <h3>更新看板头像</h3>
+    <div>
+       <input class="file-selector" name="attach" type="file">
+       <input type="hidden" name="boardname" value="${boardname}">
+       <input type="submit" value="submit">
+    </div>
+    </form>
   </div>
 </div>
