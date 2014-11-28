@@ -1182,6 +1182,10 @@ i[class^="mark-"]{
     max-width: 62%;
 }
 
+.summary a{
+    display: inline-block;
+}
+
 .board-header img{
     width: 50px;
     height: 50px;

@@ -1,0 +1,45 @@
+{{if $G.userfav }}
+<div class="cell">
+  <div class="cell-header">
+    <h3>我的收藏夹</h3>
+  </div>
+  <ul class="secfav-ul clearfix">
+    {{each(i, b) $G.userfav_a}}
+    <li>
+      <div{{if b.unread}} class="unread"{{/if}}>
+        <img class="avatar_b lazy" src="${url_for_avatar_b(b.boardname)}" />
+        <a href="${url_for_board(b.boardname)}">${b.title}</a>
+      </div>
+    </li>
+    {{/each}}
+  </ul>
+</div>
+{{/if}}
+<div class="cell">
+  <div class="cell-header">
+    <h3>不吐不快</h3>
+  </div>
+  <div>
+    {{each(i, p) data.items}}
+    <div data-index="topic-${p.topicid}" class="post-li-topic">
+      <img src="${url_for_avatar(p.author)}">
+      <a class="title" href="${url_for_topic(p.filename, 'Say')}">
+        <strong>${p.title}</strong>
+      </a>
+      <div>
+        ${p.summary}
+      </div>
+      <div>
+        <a class="owner" href="${url_for_user(p.author)}">${p.author}</a>
+        <span class="time"> • ${ tf_timestamp(p.lastupdate) }</span>
+      </div>
+      <span class="replynum">
+        <span class="badge">
+          ${p.replynum}
+        </span>
+      </span>
+    </div>
+    {{/each}}
+  </div>
+</div>
+`
