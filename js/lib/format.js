@@ -228,6 +228,12 @@ $MOD('format', function(){
         return '<pre class="asciibox">' + format_linkify(format_esc(format_escape(s)))
             + '</pre>';        
     }
+
+    function format_summary(s){
+        s = format_escape(s);
+        s = format_linkify(s);
+        return s;
+    }
     
     function ascii(s){
         var x = 0, i=0, j=0, ca = {}, c='', r=[], maxx=s.length,
@@ -285,7 +291,8 @@ $MOD('format', function(){
         ascii: ascii,
         format_simple : format_simple,
         format_escape : format_escape,
-        format_md : format_md
+        format_md : format_md,
+        format_summary : format_summary
     };
 
 })

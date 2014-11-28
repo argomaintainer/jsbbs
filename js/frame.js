@@ -358,6 +358,7 @@ $MOD('frame.template', function(){
     null_DATA = {}
 
     require_jslib('timeformat');
+    require_jslib('format');
 
     function loading_template(tplname){
         if(tplname in $G.template){
@@ -446,6 +447,7 @@ $MOD('frame.template', function(){
         'load_widgets': load_widgets,
         'json_encode': json_encode,
         'tf_timestamp': $MOD.timeformat.nice_timestamp,
+        'format_summary' : $MOD.format.format_summary,
         'tf_after_yesterday': $MOD.timeformat.afterYesterdayTS,
         'tf_too_old': $MOD.timeformat.tooOldTS,
         'raise404': raise404

@@ -11,6 +11,9 @@
   <a class="title" href="${url_for_topic(p.filename, boardname)}">
     <strong>${p.title}</strong>
   </a>
+  <div class="summary">
+    {{html format_summary(p.summary) }}
+  </div>
   <div>
     <a class="owner" href="${url_for_user(p.owner)}">${p.owner}</a>
     <span class="time"> • ${ tf_timestamp(p.update) }</span>

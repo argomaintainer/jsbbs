@@ -284,6 +284,17 @@ $MOD('argo_api', function(){
                        index: index,
                    }, callback);
         },
+
+        'get_topic_summary_by_board' : function(
+            boardname, cursor, limit, callback){
+            $.get('/ajax/v2/post/byboard',
+                  {
+                      boardname : boardname,
+                      cursor : cursor,
+                      limit : limit,
+                  },
+                  callback);
+        },
         
         'get_my_part_topic':function(callback){
             get_nc('/ajax/v2/post/mine', function(data){

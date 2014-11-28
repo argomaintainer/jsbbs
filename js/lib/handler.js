@@ -178,14 +178,6 @@ $MOD('frame::section', function(){
                         sections: data.data.all,
                         good: array_to_dict(data.data.good)
                     });
-                    if($G.authed){
-                        $api.get_self_fav(function(data){
-                            if(data.success){
-                                render_string(
-                                    'secfav', { fav: data.data }).replaceAll('#fav');
-                            }
-                        });
-                    }
                     $('a[data-toggle="pill"]').on('shown', function (e) {
                         var num = $(e.target).attr('data-args');
                         $G.lastsection = num;

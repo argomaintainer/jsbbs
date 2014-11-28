@@ -2,6 +2,63 @@
   <div class="close" data-submit="close-home-post" style="position: absolute; right: 5px;">&times;</div>
   <a target="_blank" href="#"><img src="http://argo.sysu.edu.cn/attach/Say/1391056994.jpg"/></a>
 </div>-->
+{{if $G.userfav }}
+<div class="cell">
+  <div class="cell-header">
+    <h3>我的收藏夹</h3>
+  </div>
+  <ul class="secfav-ul clearfix">
+    {{each(i, b) $G.userfav_a}}
+    <li>
+      <div{{if b.unread}} class="unread"{{/if}}>
+        <img class="avatar_b lazy" src="${url_for_avatar_b(b.boardname)}" />
+        <a href="${url_for_board(b.boardname)}">${b.title}</a>
+      </div>
+    </li>
+    {{/each}}
+  </ul>
+</div>
+{{/if}}
+<div class="cell main-cell">
+  <div class="cell-header">
+    <h3>新鲜发言</h3>
+  </div>
+  <div id="postlist-content" class="postlist-topic">
+    <div id="postlist-content-inner">
+      {{each(j, ps) data.groups}}
+      <div class="postlist-group">
+        {{each(i, p) ps}}
+        <div class="post-li-topic {{if i>0 && !($G.userfav[p.boardname]) }}post-li-second{{/if}}">
+          <img src="${url_for_avatar(p.author)}">
+            <a target="_blank" class="title" href="${url_for_topic2(p.topicid)}">
+              <strong>${p.title}</strong>
+            </a>
+            <div class="summary">
+              {{html format_summary(p.summary) }}
+            </div>
+            <div>
+              <span class="time">发起 : </span>
+              <a class="owner" href="${url_for_user(p.author)}">${p.author}</a>
+              <span class="time"> / 来自 : </span>
+              <a class="owner" href="${url_for_board(p.boardname)}">${p.boardname}</a>
+              <span class="time"> / 最后更新 :  ${ tf_timestamp(p.lastupdate) }</span>
+            </div>
+            <span class="replynum">
+              <span class="badge{{if check_isnew(p.boardname, p.topicid, p.lastupdate) }} badge-success{{/if}}">
+                ${p.replynum}
+              </span>
+            </span>
+        </div>
+        {{/each}}
+        {{if (ps.length > 1) && !($G.userfav[ps[0].boardname]) }}
+        <p data-submit="load-board-more" class="post-li-loadmore">看 ${ps[0].boardname} 版更多话题...</p>
+        {{/if}}        
+      </div>
+      {{/each}}
+      <div data-cursor="${data.cursor+data.count}" data-submit="load-cursor" class="load-more-post">抓取更多数据...</div>
+    </div>
+  </div>
+</div>
 <div class="cell dowhat clearfix">
   <div class="cell-header">
     <h3 title="我们是中大的小伙伴！">干点啥...</h3>
@@ -43,43 +100,6 @@
       </ul>
     </div>
     <a class="pull-right" data-submit="go-section" href="#"><small> › 查看全部看版</small></a>
-  </div>
-</div>
-<div class="cell main-cell">
-  <div class="cell-header">
-    <h3>新鲜发言</h3>
-  </div>
-  <div id="postlist-content" class="postlist-topic">
-    <div id="postlist-content-inner">
-      {{each(j, ps) data.groups}}
-      <div class="postlist-group">
-        {{each(i, p) ps}}
-        <div class="post-li-topic {{if i>0 && !($G.userfav[p.boardname]) }}post-li-second{{/if}}">
-          <img src="${url_for_avatar(p.author)}">
-            <a target="_blank" class="title" href="${url_for_topic2(p.topicid)}">
-              <strong>${p.title}</strong>
-            </a>
-            <div>
-              <span class="time">发起 : </span>
-              <a class="owner" href="${url_for_user(p.author)}">${p.author}</a>
-              <span class="time"> / 来自 : </span>
-              <a class="owner" href="${url_for_board(p.boardname)}">${p.boardname}</a>
-              <span class="time"> / 最后更新 :  ${ tf_timestamp(p.lastupdate) }</span>
-            </div>
-            <span class="replynum">
-              <span class="badge{{if check_isnew(p.boardname, p.topicid, p.lastupdate) }} badge-success{{/if}}">
-                ${p.replynum}
-              </span>
-            </span>
-        </div>
-        {{/each}}
-        {{if (ps.length > 1) && !($G.userfav[ps[0].boardname]) }}
-        <p data-submit="load-board-more" class="post-li-loadmore">看 ${ps[0].boardname} 版更多话题...</p>
-        {{/if}}        
-      </div>
-      {{/each}}
-      <div data-cursor="${data.cursor+data.count}" data-submit="load-cursor" class="load-more-post">抓取更多数据...</div>
-    </div>
   </div>
 </div>
 <div>

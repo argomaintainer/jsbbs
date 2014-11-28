@@ -91,12 +91,6 @@ $MOD('jsbbs.userbox', function(){
                 else{
                     $('#userbox-nav').removeClass('hasmessage');
                 }
-                if(data.data[2]=='1'){
-                    $('#userbox-nav').addClass('hasfavupdate');
-                }
-                else{
-                    $('#userbox-nav').removeClass('hasfavupdate');
-                }
                 if(callback){
                     callback();
                 }
