@@ -2,6 +2,43 @@
   <div class="close" data-submit="close-home-post" style="position: absolute; right: 5px;">&times;</div>
   <a target="_blank" href="#"><img src="http://argo.sysu.edu.cn/attach/Say/1391056994.jpg"/></a>
 </div>-->
+<script src="js/lib/jquery.achieve.js?tt=%%%%"></script>
+<script src="js/lib/action.js?tt=%%%%"></script>
+<script src="js/lib/bmselect.js?tt=%%%%"></script>
+<link href="css/jquery.achieve.css" rel="stylesheet">
+
+<div class="cell dowhat clearfix">
+  <div class="cell-header">
+    <form class="home_search_form" action="/ajax/board/get" method="get" enctype="multipart/form-data">
+      <input name="boardname"  type="text" class="home_input_search" id="home_input_search1" index="1" />
+      <button type="submit" id="home_search_btn" class="btn btn-default btn-sm">进入</button>
+      <span class="help-inline">输入版块名（中文、英文、拼音首字母皆可）</span>
+    </form>
+  </div>
+  <form name="submit-bm-group" action="/ajax/post/add" method="post" enctype="multipart/form-data">
+    <div class="editor-group">
+      <input name="title" class="input-block-level" placeholder="标题 ..." type="text">
+    </div>
+    <div class="editor-group">
+      <textarea name="content" rows="4" placeholder="好心情 :-)" class="input-block-level"></textarea>
+    </div>
+    <span>Ctrl+Enter快速发表，一文最多发四版，贴图片直接贴链接</span>
+    <hr/>
+    <div>
+      <button data-group="newpost" class="btn btn-success">发表文章</button>
+      <select class="bm-select" id="bmClass" name="bmClass">
+        <option value="版面分类" selected="selected">版面分类</option>
+      </select>
+      <select class="bm-select" id="bmPage" name="bmPage">
+        <option name="boardname" value="版面" selected="selected">版面</option>
+      </select>
+      <div class="file-uploader pull-right" id="bm-file">
+        <input class="file-selector" name="attach" type="file">
+      </div>
+    </div>
+    <div id="appender-container"></div>
+  </form>
+</div>
 {{if $G.userfav }}
 <div class="cell">
   <div class="cell-header">
@@ -12,7 +49,7 @@
     <li>
       <div{{if b.unread}} class="unread"{{/if}}>
         <img class="avatar_b lazy" src="${url_for_avatar_b(b.boardname)}" />
-        <a href="${url_for_board(b.boardname)}">${b.title}</a>
+        <a href="${url_for_board(b.boardname)}"a>${b.title}</a>
       </div>
     </li>
     {{/each}}
