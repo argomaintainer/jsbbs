@@ -145,6 +145,10 @@ template文件默认放置在 `template/` 下面，目前使用了 `bootstrap` �
 访问 `http://localhost:5000/n/index.html#!hello` 即可访问到。
 可以通过  `http://localhost:5000/n/index.html#!hello?userid=youid` 来显示 `youid` 哟。
 
+由于会自动做cache，需要访问 `__debug__` 来开启调试模式，也即是
+
+`http://localhost:5000/n/index.html?__deubg__#!hello`
+
 如何贡献？
 ----------
 
