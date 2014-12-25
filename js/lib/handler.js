@@ -214,6 +214,11 @@ $MOD('frame::user', function(){
             return;
         }
         init_popwindow('popwindow/newmail', {touserid: local.userid });
+		$('.editor textarea').keypress(function(event){
+			if(event.ctrlKey && (event.keyCode==13)){
+				$('#pop-bar button').click();
+			}
+		});
     }
     submit.pop_new_mail = pop_new_mail;
 
@@ -694,6 +699,11 @@ $MOD('frame::flow', function(){
                           if(data.success){
                               var quote = $MOD.format.gen_quote(data.data);
                               init_popwindow('popwindow/replypost', quote);
+							  $('.editor textarea').keypress(function(event){
+							   	if(event.ctrlKey && (event.keyCode==13)){
+							   		$('#pop-bar button').click();
+							   	}
+							  });
                           }
                           else{
                               show_alert(ERROR[data.code], 'danger');
@@ -731,6 +741,11 @@ $MOD('frame::flow', function(){
                                                 content: post.rawcontent,
                                                 filename: post.filename
                                             });
+							  $('.editor textarea').keypress(function(event){
+							   	if(event.ctrlKey && (event.keyCode==13)){
+							   		$('#pop-bar button').click();
+							   	}
+							  });
                           }
                           else{
                               show_alert(ERROR[data.code], 'danger');
@@ -899,6 +914,11 @@ $MOD('frame::topic', function(){
                           if(data.success){
                               var quote = $MOD.format.gen_quote(data.data);
                               init_popwindow('popwindow/replypost', quote);
+							  $('.editor textarea').keypress(function(event){
+							   	if(event.ctrlKey && (event.keyCode==13)){
+							   		$('#pop-bar button').click();
+							   	}
+							  });
                           }
                           else{
                               show_alert(ERROR[data.code], 'danger');
@@ -951,6 +971,11 @@ $MOD('frame::topic', function(){
                                                 content: post.rawcontent,
                                                 filename: post.filename
                                             });
+							  $('.editor textarea').keypress(function(event){
+							   	if(event.ctrlKey && (event.keyCode==13)){
+							   		$('#pop-bar button').click();
+							   	}
+							  });
                           }
                           else{
                               show_alert(ERROR[data.code], 'danger');
