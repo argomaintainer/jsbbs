@@ -23,6 +23,7 @@ $MOD('func', function(){
                 localStorage[key] = $.toJSON(d);
             }
             else{
+				// topic <= ?
                 if(topic <= d.$min)
                     return;
                 if(d.$size > maxkey){
@@ -31,6 +32,7 @@ $MOD('func', function(){
                 }
                 else{
                     d.$size ++;
+					// title?
                     d[topic] = title;
                 }
                 localStorage[key] = $.toJSON(d);
@@ -273,7 +275,7 @@ $MOD('frame::board', function(){
             init_popwindow('popwindow/newpost',
                            { boardname: cur_board.boardname});
             $('.editor textarea').keypress(function(event){
-                if(event.ctrlKey && (event.keyCode==10)){
+                if(event.ctrlKey && (event.keyCode==13)){
                     $('#new-post-form').submit();
                 };
             });
@@ -477,7 +479,7 @@ $MOD('frame::board', function(){
 
 
                 $('.editor textarea').keypress(function(event){
-                    if(event.ctrlKey && (event.keyCode==10)){
+                    if(event.ctrlKey && (event.keyCode==13)){
                         $('#new-post-form').submit();
                     };
                 });
@@ -1094,7 +1096,9 @@ $MOD('frame::message', function(){
         var cursor = kwargs && kwargs.cursor;
         if(cursor === undefined){
             cursor = $(e.target).data('cursor');
+			console.log($(e.target).data());
         }
+		console.log(cursor);
         $api.get_message(cursor, function(data){
             $api.mark_message_read(data.data.mlist[0].index);
             render_string('messages', data.data).replaceAll('#loader');
@@ -1307,6 +1311,7 @@ $MOD('frame::profile', function(){
 $MOD('frame::mail', function(){
 
     var PAGE_LIMIT = 20;
+	var TMailNum;
 
     var submit = {},
     local = {};
@@ -1317,6 +1322,11 @@ $MOD('frame::mail', function(){
             return;
         }
         init_popwindow('popwindow/newmail');
+		$('.editor textarea').keypress(function(event){
+			if(event.ctrlKey && (event.keyCode==13)){
+				$('#pop-bar button').click();
+			}
+		});
     }
     submit.pop_new_mail = pop_new_mail;
 
@@ -1338,13 +1348,20 @@ $MOD('frame::mail', function(){
     }                       
 
     function set_page(pagenum){
-        var start = pagenum * PAGE_LIMIT - PAGE_LIMIT;
+        // var start = pagenum * PAGE_LIMIT - PAGE_LIMIT + 1;
+		var start = TMailNum - PAGE_LIMIT * pagenum + 1;
+		
+		start = (start > 0) ? start : 1;
+		var end = TMailNum % PAGE_LIMIT;
+		end = (start > 1) ? PAGE_LIMIT : end;
+
         var target = $($('#maillist-container')[0]);
         $api.get_maillist(start, function(data){
             if(data.success){
                 $('#maillist-content').remove();
-                render_template('mail-li', { mails: data.data},
+                render_template('mail-li', { mails: data.data.slice(0, end).reverse() },
                                 target);
+				console.log(data.data);
                 local.start = data.data[0].index + 1;
             }
             else{
@@ -1371,6 +1388,7 @@ $MOD('frame::mail', function(){
                 else{
                     index = data.data.total;
                 }
+				TMailNum = index;
                 if(data.success){
                     render_template('mail-framework', { mailbox: data.data });
                     local.index = index;
@@ -1378,9 +1396,9 @@ $MOD('frame::mail', function(){
                     $('.bpagination').jqPagination({
 		                page_string	: '第 {current_page} 页 / 共 {max_page} 页',
 		                paged		: set_page_anim,
-                        current_page: pagenum
+                        current_page: 1
 		            });
-                    set_page(pagenum);
+                    set_page(1);
                 }
                 else{
                     raise404(ERROR[data.code]);
@@ -1413,6 +1431,11 @@ $MOD('frame::readmail', function(){
         }
         var quote = $MOD.format.gen_quote_mail(local.mail);
         init_popwindow('popwindow/replymail', quote);
+		$('.editor textarea').keypress(function(event){
+			if(event.ctrlKey && (event.keyCode==13)){
+				$('#pop-bar button').click();
+			}
+		});
     }
     submit.pop_reply_mail = pop_reply_mail;
 
