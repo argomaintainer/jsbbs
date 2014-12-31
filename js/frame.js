@@ -570,8 +570,6 @@ $MOD('frame.frame', function(){
 
         trigger_hooks('frame_change', curhash);
 
-        window.scrollTo(0, 0);
-
         $('body').attr('class', 'frame-' + curhash.hash);
 
         if(frame.widgets_loader){
@@ -703,6 +701,7 @@ $MOD('frame.frame', function(){
         href=target.attr('href');
 
 		localStorage['LastPos::'+$G.current.mark]=$(window).scrollTop();
+		console.log('LastPos::'+$G.current.mark,localStorage['LastPos::'+$G.current.mark]);
 
         if(target.hasClass('onactive')){
             e.preventDefault();
