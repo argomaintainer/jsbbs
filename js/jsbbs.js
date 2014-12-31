@@ -16,6 +16,9 @@ $MOD('jsbbs.main', function(){
         return tf > localStorage[key];
     }
 
+	if(window.localStorage)
+		localStorage.clear();
+
     if(window.NOCACHE || SIGNV != localStorage['site:$version']){
 	    if(window.localStorage)
 		    localStorage.clear();

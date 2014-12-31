@@ -485,6 +485,10 @@ $MOD('frame::board', function(){
 
                 load_more();
 
+				var LastPos=(localStorage['LastPos::'+$G.current.mark])?localStorage['LastPos::'+$G.current.mark]:0;
+				console.log('LastPos',LastPos);
+				window.scrollTo(0,LastPos);
+
                 // section for userbox
                 $G.lastsection = cur_board.data.secnum;
                 $G.last_seccode = cur_board.data.seccode;

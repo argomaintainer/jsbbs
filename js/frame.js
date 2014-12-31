@@ -701,6 +701,9 @@ $MOD('frame.frame', function(){
         var target=$(e.target), 
         group, args, parent,
         href=target.attr('href');
+
+		localStorage['LastPos::'+$G.current.mark]=$(window).scrollTop();
+
         if(target.hasClass('onactive')){
             e.preventDefault();
             return;
