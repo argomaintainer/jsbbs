@@ -12,7 +12,7 @@
     <strong>${p.title}</strong>
   </a>
   <div class="summary">
-    {{if format_summary(p.summary) != "null"}} 
+    {{if p.summary != null}} 
       {{html format_summary(p.summary) }}
     {{/if}}
   </div>
