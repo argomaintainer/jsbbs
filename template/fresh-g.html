@@ -34,7 +34,9 @@
               <strong>${p.title}</strong>
             </a>
             <div class="summary">
-              {{html format_summary(p.summary) }}
+              {{if format_summary(p.summary) != "null"}} 
+                {{html format_summary(p.summary) }}
+              {{/if}}            
             </div>
             <div>
               <span class="time">发起 : </span>

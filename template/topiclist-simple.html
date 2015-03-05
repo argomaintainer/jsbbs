@@ -12,7 +12,9 @@
     <strong>${p.title}</strong>
   </a>
   <div class="summary">
-    {{html format_summary(p.summary) }}
+    {{if format_summary(p.summary) != "null"}} 
+      {{html format_summary(p.summary) }}
+    {{/if}}
   </div>
   <div>
     <a class="owner" href="${url_for_user(p.owner)}">${p.owner}</a>
