@@ -4,7 +4,7 @@
   <div class="post-li-topic {{if i>0 && !($G.userfav[p.boardname]) }}post-li-second{{/if}}">
     <img src="${url_for_avatar(p.author)}">
       <a target="_blank" class="title" href="${url_for_topic2(p.topicid)}">
-        <strong>${p.title}</strong>
+        <strong>${format_title(p.title)}</strong>
       </a>
       <div>
         <span class="time">发起 : </span>

@@ -59,6 +59,41 @@ $MOD('format', function(){
         });
     }
 
+    var title_map = {
+        '闲聊' : 'chat',
+        '提问' : 'ask',
+        '中大讲座' : 'lecture',
+        '招聘' : 'job',
+        '兼职' : 'parttime',
+        '求购' : 'forbuy',
+        '出售' : 'forsale',
+        '吐槽' : 'fxxk',
+        '转载' : 'outside',
+        '影评' : 'filmcomment',
+        '活动公告' : 'notice',
+        '推荐' : 'recommend',
+        '原创/请版友指教' : 'forcomment', 
+        '原创/欢迎版友阅读' : 'forread', 
+        '原创/分享' : 'forshare', 
+        '签到' : 'sign',
+    }
+
+    function format_title(string){
+        var has_start = false;
+        string = format_escape(string).replace(
+                /^[\[\【]([^\]]+)[\]\】]/,
+            function(s,a){
+                has_start = true;
+                return '<span class="title-label title-label-'+
+                    (title_map[a] || 'chat')+'">['
+                    +a+']</span>';
+            });
+        if(!has_start){
+            string = '<span class="title-label title-label-chat">[闲聊]</span>' + string;
+        }
+        return string;
+    }
+    
     var format_cr = function(s){
         return s.replace(/\r\n/gm, '\n').replace(/\r/gm, '\n');
     } 
@@ -291,6 +326,7 @@ $MOD('format', function(){
         ascii: ascii,
         format_simple : format_simple,
         format_escape : format_escape,
+        format_title : format_title,
         format_md : format_md,
         format_summary : format_summary
     };

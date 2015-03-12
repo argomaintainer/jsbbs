@@ -317,6 +317,13 @@ $MOD('frame::board', function(){
         }
     }
 
+    local['update_title_tag'] = function(target){
+        var t = target.value;
+        var dt = $(target).parents('form').find('[name=title]');
+        dt.val('[' + t + ']' + dt.val().replace(/^[\[\【]([^\]]+)[\]\】]/, ''));
+        dt.focus();
+    }
+
     submit['publish_post'] = function(kwargs, e){
         if(e.target.tagName == 'FORM'){
             if(!check_pushlish(kwargs, e))

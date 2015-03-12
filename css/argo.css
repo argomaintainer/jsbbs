@@ -2902,6 +2902,44 @@ a:hover .ftext{
     min-width: 120px;
 }
 
+.title-label{
+    display: inline;
+    margin-right: 10px;
+    font-size: 0.75em;
+}
+
+.title-label-lecture,
+.title-lable-notice,
+.title-label-recommend{
+    background: green;
+    color: #fff;
+}
+
+.title-label-ask,
+.title-label-fxxk,
+.title-label-forcomment,
+.title-label-filmcomment,
+.title-label-forread,
+.title-label-forshare{
+.title-label-outside{
+    background: orange;
+    color: #fff;
+}
+
+.title-label-forbuy{
+    background: #f5619c;
+    color: #fff;
+}
+
+.title-label-forsale{
+    background: #79f561;
+    color: #fff;
+}
+
+.select_tag{
+    color: #333;
+}
+
 @media (min-width: 1024px){
     .frame-home{
         background: #f0f0f0 url("http://bbs.sysu.edu.cn/attach/Pictures/1414463505.jpg") center top no-repeat;

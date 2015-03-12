@@ -448,6 +448,7 @@ $MOD('frame.template', function(){
         'json_encode': json_encode,
         'tf_timestamp': $MOD.timeformat.nice_timestamp,
         'format_summary' : $MOD.format.format_summary,
+        'format_title' : $MOD.format.format_title,
         'tf_after_yesterday': $MOD.timeformat.afterYesterdayTS,
         'tf_too_old': $MOD.timeformat.tooOldTS,
         'raise404': raise404
