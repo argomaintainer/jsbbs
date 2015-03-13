@@ -48,6 +48,50 @@ ERROR = {
 DATA_ROOT = 'http://argo.sysu.edu.cn';
 DATA_ADMIN = 'jmf';
 
+DOWHAT = [
+    {
+        name : '推荐看版',
+        list :
+        [
+            ["BBS_Test", "BBS测试"],
+            ["BBS_Help", "BBS使用帮助"],
+            ["Travel", "大江南北"],
+            ["ACMICPC", "程序设计竞赛"],
+            ["Job", "人才竞赛"],
+            ["Lecture", "讲座专栏"],
+            ["Personal_corpus", "个人文摘区"],
+            ["ArgoBridge", "相聚逸仙"],
+            ["Memory", "时光流转"]
+        ]        
+    },
+    {
+        name : '休闲与娱乐',
+        list : [
+            ['Say','吐槽'],
+            ['Joke','讲笑话'],
+            ['News','新闻观点'],
+            ['Friend','交友'],
+            ['Love','情感'],
+            ['Memory','记忆'],
+            ['Reading','读书'],
+            ['Poem','写诗'],
+            ['Film','影评'],
+            ['Heart','心情随笔']
+        ]
+    },
+    {
+        name : '信息发布',
+        list : [
+            ['Lecture','讲座信息'],
+            ['SYSU_Info','中大'],
+            ['Job','招聘'],
+            ['Parttime','兼职'],
+            ['Search','失物招领'],
+            ['Sale','跳蚤市场']
+        ]
+    }
+]
+
 SECNAME = {
     0 : "BBS 系统",
     1 : "校园社团",

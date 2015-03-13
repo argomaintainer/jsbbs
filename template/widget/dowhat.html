@@ -1,0 +1,18 @@
+<div class="widget">
+  <div class="widget-header">
+    <h4 title="我们是中大的小伙伴！">干点啥...</h4>
+  </div>
+  <div class="dowhat-grouplist">
+    {{each(i,g) group}}
+    <div class="group">
+      <h5>${g.name}</h5>
+      <ul>
+        {{each(j,b) g.list}}
+        <li><a target="_blank" href="${url_for_board(b[0])}">${b[1]}</a></li>
+        {{/each}}
+      </ul>
+    </div>
+    {{/each}}
+  </div>
+  <a class="pull-right" data-submit="go-section" href="#"><small> › 查看全部看版</small></a>
+</div>

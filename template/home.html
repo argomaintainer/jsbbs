@@ -1,69 +1,24 @@
-{{if $G.authed && $G.authed.u.notauth }}
-<div id="activeboard-wrapper" class="alert">
-  <span id="activeboard">激活你的帐号以获得全部看版发文权限</span>
-  <a href="http://argo.sysu.edu.cn/n/index.html#!topic?boardname=BBS_Help&&filename=M.1372610827.A">查看详情</a>
+<!--<div id="show-home-post" data-label="manew" class="cell cell-loose" style="display: none">
+<div class="close" data-submit="close-home-post" style="position: absolute; right: 5px;">&times;</div>
+<a target="_blank" href="#"><img src="http://argo.sysu.edu.cn/attach/Say/1391056994.jpg"/></a>
+</div>-->
+{{if $G.userfav }}
+<div class="cell">
+  <div class="cell-header">
+    <h3>我的收藏夹 {{if $G.userfavunread }}<small>(共 <strong>${$G.userfavunread}</strong> 个看版有更新)</small>{{/if}}</h3>
   </div>
-</div>
-{{/if}}  
-{{if activeboard }}
-<div id="activeboard-wrapper" class="alert alert-success">
-  <span id="activeboard">${activeboard.title}</span>
-  <a href="${activeboard.href}">查看详情</a>
-  <div class="pull-right">
-    <a href="${url_for_board('posterwall')}">全部广播</a>&nbsp; &nbsp; &nbsp; 
-    <a data-submit="close-activeboard" href="#">关闭</a>
-  </div>
+  <ul class="secfav-ul clearfix">
+    {{each(i, b) $G.userfav_a}}
+    <li>
+      <div{{if b.unread}} class="unread"{{/if}}>
+        <img class="avatar_b lazy" src="${url_for_avatar_b(b.boardname)}" />
+        <a href="${url_for_board(b.boardname)}">${b.title}</a>
+      </div>
+    </li>
+    {{/each}}
+  </ul>
 </div>
 {{/if}}
-{{if status.noupdate }}{{/if}}
-{{if status.noupdate || status.tooold }}{{/if}}
-<div class="cell main-cell">
-  <div class="page-btn-group">
-    <div class="btn-group">
-      {{each(i, b) map_name}}
-      {{if !b[2] || $G.authed}}
-      <a class="btn {{if b[0]==type }}active{{/if}}" href="${url_for_index(b[0])}">${b[1]}</a>
-      {{/if}}
-      {{/each}}
-    </div>
-  </div>
-  {{each(i, b) boards}}
-  <div class="boards-pill">
-    {{if $G.authed }}
-    <div class="bp-unreadnum-wrapper {{if b.unreadn==-1}}bp-allread{{else}}bp-c-${b.secnum}{{/if}}">
-      {{if b.unreadn==-1}}
-      <span class="bp-unreadnum-0">=</span>
-      {{else}}
-      <span class="bp-unreadnum">${Math.min(20, Number(b.unreadn)+1)}+<br/><small>新发言</small></span>      
-      {{/if}}
-    </div>
-    {{else}}
-    <div class="bp-unreadnum-wrapper bp-c-${b.secnum}"><span class="bp-unreadnum-0">?</span></div>
-    {{/if}}
-    <div class="bp-boards-pill-mid">
-      <div class="bp-title">
-        <span class="bp-boardname"><a href="${url_for_board(b.boardname)}">${b.title}(${b.boardname})</a></span>
-        &nbsp;- 版主: 
-        <ul class="bp-bm">
-          {{each(i, p) b.BM}}
-          <li><a href="${url_for_user(p)}">${p}</a></li>
-          {{/each}}
-        </ul>
-      </div>
-      <div class="bp-postinfo">
-        &nbsp; - <span class="bp-lastpostfile"><a href="${url_for_topic(b.lastfilename, b.boardname)}">${b.lastpostfile}</a></span>
-      </div>
-    </div>
-    <div class="bp-lastupdatetime">
-      ${tf_timestamp(b.lastpost)}
-    </div>
-  </div>
-  {{/each}}
-  {{if status.findmore }}
-  <div class="well text-center">
-    <h3>您可以在逸仙时空发现更多有趣的东西</h3>
-    <p> <strong>收藏</strong> 您感兴趣的看版，参与有趣的版友生活</p>
-    <a class="btn btn-success" href="#!admin-fav">开始探索看板</a>
-  </div>
-  {{/if}}
+<div>
+  <div id="part-2"></div>
 </div>

@@ -4,45 +4,13 @@ $MOD('func', function(){
     var maxkey = 100;
 
     function check_isnew(boardname, topic, time){
-        var d = localStorage['unread::'+boardname];
-        if(d){
-            d = $.parseJSON(d);
-            return !d[topic] || d[topic] < time;
-        }
-        return true;
+        console.log('new::', localStorage['read::'+boardname+'//'+topic], time);
+        return !(localStorage['read::'+boardname+'//'+topic] > time);
     }
 
-    function set_read(boardname, topic, time){
-        var key = 'unread::'+boardname;
-        var d = localStorage[key];
-        if(d){
-            d = $.parseJSON(d);
-            if(topic in d){
-                if(time > d[topic])
-                    d[topic] = time;
-                localStorage[key] = $.toJSON(d);
-            }
-            else{
-                if(topic <= d.$min)
-                    return;
-                if(d.$size > maxkey){
-                    d = { $min: time, $size : 1};
-                    d[topic] = time;
-                }
-                else{
-                    d.$size ++;
-                    d[topic] = title;
-                }
-                localStorage[key] = $.toJSON(d);
-                return;
-            }
-        }                    
-        if(!d){
-            d = { $min : time, $size: 1};
-            d[topic] = time;
-            localStorage[key] = $.toJSON(d);
-        }
-        return;
+    function set_read(boardname, topic){
+        localStorage['read::' + boardname + '//' + topic] =
+            Math.floor(+(new Date()) / 1000);
     }
 
     window.check_isnew = check_isnew;
@@ -53,6 +21,7 @@ $MOD('func', function(){
 $MOD('frame.allp', function(){
 
     var submit = {};
+    var local = {};
 
     function cmp_boards(a, b){
         return (b.unread - a.unread) || (a.secnum - b.secnum) ||
@@ -96,8 +65,15 @@ $MOD('frame.allp', function(){
         var self = $(e.target);
         var t = $('<div class="load-more-post loading">载入中...</div>');
         self.replaceWith(t);
+        var time = +(new Date);
         get_fresh_group(self.data('cursor'), function(data){
-            t.replaceWith(render_string('fresh-li', { data: data }));
+            var gap = 1000 - (+(new Date) - time);
+            if(gap < 0){
+                gap = 0;
+            }
+            setTimeout(function(){
+                t.replaceWith(render_string('fresh-li', { data: data }));
+            }, gap);
         });
     }
     submit['load-cursor'] = load_cursor;
@@ -117,9 +93,6 @@ $MOD('frame.allp', function(){
     function load_new(callback){            
         get_fresh_group(null, function(data){
             render_template('fresh-g', { data: data });
-            if(localStorage['show-home-post'] != $('#show-home-post').data('label')){
-                $('#show-home-post').show();
-            }
             callback();
         });
     }        
@@ -156,11 +129,55 @@ $MOD('frame.allp', function(){
             //    &&(!localStorage['bool::watched-tut'])){
             //     location = '#!tut-2';
             // }
-            load_new(load_focus);
+            render_template('home');
+            if(localStorage['show-home-post']
+               != $('#show-home-post').data('label')){
+                $('#show-home-post').show();
+            }
+            load_focus();
         },
         submit: submit,
         marktop: 'home'
     });
+
+    local.newrank = function(){
+        return ++local.rank;
+    }
+
+    // auto load when #autoload is in viewport,
+    //  WARNING: will just unbind window.onscroll
+    // when #autoload is unexists now
+    function autoload(){
+        var t_body = $('body');
+        var t_window = $(window);
+        if(!$G.current.mark=='fresh'){
+            $(window).off('scroll', autoload);
+        }            
+        if(t_body.height() - t_window.height() -
+           t_window.scrollTop() < 300){
+            var al = $('#autoload');
+            if(al.data('lock')){
+                return;
+            }
+            al.data('lock', 'loading');
+            al.click();
+        }
+    }
+
+    declare_frame({
+        marktop: 'fresh',
+        mark: 'fresh',
+        submit: submit,
+        local : local,
+        enter: function(){
+            local.rank = 0;
+            local.time = (new Date()).toLocaleString();
+            $(window).on('scroll', autoload);
+            load_new(function(){});
+            load_widgets([{type:'dowhat', group: DOWHAT}]);
+        },
+    })
+    
 });
 
 $MOD('frame::section', function(){
@@ -178,6 +195,7 @@ $MOD('frame::section', function(){
                         sections: data.data.all,
                         good: array_to_dict(data.data.good)
                     });
+                    load_widgets([{type:'dowhat', group: DOWHAT}]);
                     $('a[data-toggle="pill"]').on('shown', function (e) {
                         var num = $(e.target).attr('data-args');
                         $G.lastsection = num;
@@ -997,8 +1015,7 @@ $MOD('frame::topic', function(){
                                if(topicinfo){
                                    local.topicinfo = topicinfo;
                                    set_read(topicinfo.boardname,
-                                            topicinfo.topicid,
-                                            Math.floor((new Date()) / 1000));
+                                            topicinfo.topicid);
                                    if(!kwargs.boardname){
                                        kwargs.boardname = topicinfo.boardname;
                                    }

@@ -27,6 +27,7 @@ $MOD('jsbbs.main', function(){
                 localStorage.removeItem('tpl:'+arr[x]);
         }
         localStorage['site:$version'] = SIGNV;
+        location.reload(true);
     }        
     
     $MOD['frame.hook'].register_hook('before_boot');

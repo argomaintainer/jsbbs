@@ -1,27 +1,7 @@
-<!--<div id="show-home-post" data-label="manew" class="cell cell-loose" style="display: none">
-<div class="close" data-submit="close-home-post" style="position: absolute; right: 5px;">&times;</div>
-<a target="_blank" href="#"><img src="http://argo.sysu.edu.cn/attach/Say/1391056994.jpg"/></a>
-</div>-->
-{{if $G.userfav }}
-<div class="cell">
-  <div class="cell-header">
-    <h3>我的收藏夹 {{if $G.userfavunread }}<small>(共 <strong>${$G.userfavunread}</strong> 个看版有更新)</small>{{/if}}</h3>
-  </div>
-  <ul class="secfav-ul clearfix">
-    {{each(i, b) $G.userfav_a}}
-    <li>
-      <div{{if b.unread}} class="unread"{{/if}}>
-        <img class="avatar_b lazy" src="${url_for_avatar_b(b.boardname)}" />
-        <a href="${url_for_board(b.boardname)}">${b.title}</a>
-      </div>
-    </li>
-    {{/each}}
-  </ul>
-</div>
-{{/if}}
 <div class="cell main-cell">
-  <div class="cell-header">
+  <div class="cell-header header-center">
     <h3>新鲜发言</h3>
+    <small class="freshtime">(在 <em>${$G.local.time}</em> )</small>
   </div>
   <div id="postlist-content" class="postlist-topic">
     <div id="postlist-content-inner">
@@ -29,7 +9,8 @@
       <div class="postlist-group">
         {{each(i, p) ps}}
         <div class="post-li-topic {{if i>0 && !($G.userfav[p.boardname]) }}post-li-second{{/if}}">
-          <a target="_blank" class="title" href="${url_for_topic2(p.topicid)}">
+          <span class="postrank">${$G.local.newrank()}.</span>
+          <a target="_blank" class="title{{if ($G.userfav[p.boardname])}} infav{{/if}}" href="${url_for_topic2(p.topicid)}">
             <strong>{{html format_title(p.title)}}</strong>
           </a>
           {{if p.summary != null}}
@@ -42,7 +23,7 @@
             <span class="time">发起 : </span>
             <a class="owner" href="${url_for_user(p.author)}">${p.author}</a>
             <span class="time"> / 来自 : </span>
-            <a class="owner" href="${url_for_board(p.boardname)}">${p.boardname}</a>
+            <a class="owner" href="${url_for_board(p.boardname)}">${p.boardname}{{if ($G.userfav[p.boardname])}}(我收藏的看版){{/if}}</a>
             <span class="time"> / 最后更新 :  ${ tf_timestamp(p.lastupdate) }</span>
           </div>
           <span class="replynum">
@@ -57,54 +38,8 @@
         {{/if}}        
       </div>
       {{/each}}
-      <div data-cursor="${data.cursor+data.count}" data-submit="load-cursor" class="load-more-post">抓取更多数据...</div>
+      <div id="autoload" data-cursor="${data.cursor+data.count}" data-submit="load-cursor" class="load-more-post">抓取更多数据...</div>
     </div>
   </div>
 </div>
-<div class="cell dowhat clearfix">
-  <div class="cell-header">
-    <h3 title="我们是中大的小伙伴！">干点啥...</h3>
-  </div>
-  <div class="dowhat-grouplist">
-    <div class="group">
-      <h5>创作</h5>
-      <ul>
-        <li><a target="_blank" href="${url_for_board('Poem')}">写诗</a></li>
-        <li><a target="_blank" href="${url_for_board('Film')}">影评</a></li>
-        <li><a target="_blank" href="${url_for_board('Heart')}">心情随笔</a></li>
-
-      </ul>
-    </div>
-    <div class="group">
-      <h5>分享</h5>
-      <ul>
-        <li><a target="_blank" href="${url_for_board('Love')}">感情</a></li>
-        <li><a target="_blank" href="${url_for_board('Reading')}">读书</a></li>
-        <li><a target="_blank" href="${url_for_board('Memory')}">往事</a></li>
-      </ul>
-    </div>
-    <div class="group">
-      <h5>逗乐</h5>
-      <ul>
-        <li><a target="_blank" href="${url_for_board('Say')}">吐槽</a></li>
-        <li><a target="_blank" href="${url_for_board('Joke')}">讲笑话</a></li>
-        <li><a target="_blank" href="${url_for_board('News')}">新闻观点</a></li>
-      </ul>
-    </div>
-    <div class="group group2">
-      <h5>信息</h5>
-      <ul>
-        <li><a target="_blank" href="${url_for_board('Lecture')}">讲座信息</a></li>
-        <li><a target="_blank" href="${url_for_board('SYSU_Info')}">中大</a></li>
-        <li><a target="_blank" href="${url_for_board('Job')}">招聘</a></li>
-        <li><a target="_blank" href="${url_for_board('Parttime')}">兼职</a></li>
-        <li><a target="_blank" href="${url_for_board('Search')}">失物招领</a></li>
-        <li><a target="_blank" href="${url_for_board('Sale')}">跳蚤市场</a></li>
-      </ul>
-    </div>
-    <a class="pull-right" data-submit="go-section" href="#"><small> › 查看全部看版</small></a>
-  </div>
-</div>
-<div>
-  <div id="part-2"></div>
 </div>

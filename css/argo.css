@@ -1347,6 +1347,25 @@ th.th-center{
     right: 10px;
 }
 
+.markhash-fresh a{
+    color: #ffba3c !important;
+}
+
+.markhash-fresh a:hover{
+    color: #ffe2ae !important;
+}
+
+.markhash-fresh .onactive{
+    color: #fff !important;
+}
+
+.freshtime{
+    position: absolute;
+    right: 12px;
+    color: #999;
+    font-size: 14px;
+}
+
 .tbar{
     height: 100px;
 }
@@ -1556,12 +1575,24 @@ a[data-submit]:hover{
     margin: 0 16px 0 6px;
 }
 
+.post-li-topic .title{
+    color: #555;
+}
+
+.post-li-topic .title:hover{
+    color: #222;
+}
+
+.post-li-topic .infav{
+    color: green !important;
+}
+
 .post-li-topic .title strong{
-    line-height: 2.3;
+    line-height: 2;
     display: inline-block;
     margin-bottom: 5px;
     font-weight: normal;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .post-li-topic .owner{
@@ -1963,20 +1994,6 @@ a[data-submit]:hover{
     margin-top: 10px;
 }
 
-.dowhat .home_select_arrow {
-}
-
-.dowhat .home_input_search {
-    margin-bottom: 3.5px;
-    margin-right: 10px;
-    margin-left: 10px;
-    padding: 2px 6px;
-}
-
-.dowhat .home_search_btn {
-    margin-bottom:4px;
-    line-height:28px;
-}
 .part{
     display: inline-block;
     margin-right: 10px;
@@ -2832,52 +2849,27 @@ a:hover .ftext{
     background: #f0f0f0;
 }
 
-.dowhat .group{
-    float: left;
-    width: 20%;
-}
-
 .dowhat-grouplist{
-    margin: 0 12px;
+    margin-top: 34px;
 }
 
-.dowhat ul{
-    list-style-type: none;
-    margin: 0;
-}
-
-.dowhat li{
-    width: 100%;
-}
-
-.dowhat .group2{
-    width: 40%;
-    position: relative;
-}
-
-.dowhat h5{
-    padding-left: 3px;
-    margin: 5px 0 12px 0;
-    font-weight: normal;
-}
-
-.dowhat .group2 li{
-    float: left;
-    width: 40%;
-}    
-
-.dowhat .pull-right{
-    position: absolute;
-    right: 12px;
-    bottom: 12px;
-    color: #999;
-}
-
-.dowhat a{
+.dowhat-grouplist a{
     display: inline-block;
-    font-size: 14px;
-    padding: 2px 10px 2px 0;
-    margin: 3px 3px 5px 0;
+}
+
+.dowhat-grouplist li{
+    display: inline-block;
+    margin: 3px 5px;
+}
+
+.dowhat-grouplist ul{
+    margin: 0;
+    margin-bottom: 20px;
+}
+
+.dowhat-grouplist h5{
+    font-weight: normal;
+    color: #aaa;
 }
 
 .userinfo-header{
@@ -2902,6 +2894,16 @@ a:hover .ftext{
     top: 5px;
     right: 8px;
     cursor: pointer;
+}
+
+.postrank{
+    display: inline-block;
+    margin-right: 10px;
+    color: #999;
+}
+
+.header-center{
+    text-align: center;
 }
 
 .message{
