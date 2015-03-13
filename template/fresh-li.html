@@ -2,22 +2,27 @@
 <div class="postlist-group">
   {{each(i, p) ps}}
   <div class="post-li-topic {{if i>0 && !($G.userfav[p.boardname]) }}post-li-second{{/if}}">
-    <img src="${url_for_avatar(p.author)}">
-      <a target="_blank" class="title" href="${url_for_topic2(p.topicid)}">
-        <strong>{{html format_title(p.title)}}</strong>
-      </a>
-      <div>
-        <span class="time">发起 : </span>
-        <a class="owner" href="${url_for_user(p.author)}">${p.author}</a>
-        <span class="time"> / 来自 : </span>
-        <a class="owner" href="${url_for_board(p.boardname)}">${p.boardname}</a>
-        <span class="time"> / 最后更新 :  ${ tf_timestamp(p.lastupdate) }</span>
-      </div>
-      <span class="replynum">
-        <span class="badge{{if check_isnew(p.boardname, p.topicid, p.lastupdate) }} badge-success{{/if}}">
-          ${p.replynum}
-        </span>
+    <a target="_blank" class="title" href="${url_for_topic2(p.topicid)}">
+      <strong>{{html format_title(p.title)}}</strong>
+    </a>
+    {{if p.summary != null}}
+    <div class="summary">
+      {{html format_summary(p.summary) }}            
+    </div>
+    {{/if}}            
+    <div class="post-li-meta">
+      <img src="${url_for_avatar(p.author)}">
+      <span class="time">发起 : </span>
+      <a class="owner" href="${url_for_user(p.author)}">${p.author}</a>
+      <span class="time"> / 来自 : </span>
+      <a class="owner" href="${url_for_board(p.boardname)}">${p.boardname}</a>
+      <span class="time"> / 最后更新 :  ${ tf_timestamp(p.lastupdate) }</span>
+    </div>
+    <span class="replynum">
+      <span class="badge{{if check_isnew(p.boardname, p.topicid, p.lastupdate) }} badge-success{{/if}}">
+        ${p.replynum}
       </span>
+    </span>
   </div>
   {{/each}}
   {{if (ps.length > 1) && !($G.userfav[ps[0].boardname]) }}

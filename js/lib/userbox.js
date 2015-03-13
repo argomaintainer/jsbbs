@@ -54,12 +54,16 @@ $MOD('jsbbs.userbox', function(){
 
     function handler_fav(data){
         if(data.success){
-            var myfav = data.data, t={};
+            var myfav = data.data, t={}, unread=0;
             for(x in myfav){
                 t[myfav[x].boardname] = true;
+                if(myfav[x].unread){
+                    unread++;
+                }
             }
             $G.userfav = t;
             $G.userfav_a = data.data;
+            $G.userfavunread = unread;
         }
     };
 

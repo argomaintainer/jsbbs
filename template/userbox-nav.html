@@ -9,12 +9,6 @@
       <a id="go-section" class="top-a"
          data-submit="go-section" href="#">全部看版</a>
     </li>
-    <li class="markhash-message" id="userbox-message">
-      <a class="top-a" href="#!message">消息</a>
-    </li>
-    <li class="markhash-mail" id="userbox-mail">
-      <a class="top-a" href="#!mail">信箱</a>
-    </li>
     {{/if}}
   </ul>
   <ul class="markhash nav pull-right">
@@ -22,10 +16,8 @@
       <a href="#" class="top-u dropdown-toggle" data-toggle="dropdown">
         <div class="top-avatar">
           <img src="${url_for_avatar(u.userid)}"/>
-          <div class="avatar-content">
-            ${u.userid}
-            <span class="caret"></span>
-          </div>
+          ${u.userid}
+          <span class="caret"></span>
         </div>
       </a>
       <ul class="dropdown-menu">
@@ -34,6 +26,13 @@
         <li><a href="#" data-submit="logout">退出登录</a></li>
       </ul>
     </li>
+    <li class="markhash-message" id="userbox-message">
+      <a class="top-a" href="#!message">消息</a>
+    </li>
+    <li class="markhash-mail" id="userbox-mail">
+      <a class="top-a" href="#!mail">信箱</a>
+    </li>
+
   </ul>
 </div>
 {{else}}

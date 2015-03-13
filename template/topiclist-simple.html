@@ -1,6 +1,5 @@
 {{each(i, p) list}}
 <div data-index="topic-${p.index}" class="post-li-topic{{if index == $G.local.hover }} hover-li{{/if}}">
-  <img src="${url_for_avatar(p.owner)}">
   {{if p.mark }}
   <span class="mark">
     {{if p.mark.indexOf('g') != -1 }}<i title="加g表示入选为文摘" class="mark-g">文摘</i>{{/if}}
@@ -16,9 +15,11 @@
       {{html format_summary(p.summary) }}
   </div>
   {{/if}}  
-  <div>
+  <div class="post-li-meta">
+    <img src="${url_for_avatar(p.owner)}">
+    <span class="time">发起 : </span>
     <a class="owner" href="${url_for_user(p.owner)}">${p.owner}</a>
-    <span class="time"> • ${ tf_timestamp(p.update) }</span>
+    <span class="time"> / 最后更新 :  ${ tf_timestamp(p.update) }</span>
   </div>
   <span class="replynum">
     <span class="badge{{if p.unread == 1}} badge-success{{/if}}">
