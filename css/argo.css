@@ -1856,21 +1856,6 @@ a[data-submit]:hover{
     display: none;
 }
 
-@media (hover) {
-
-    .hidden-ul > li{
-        visibility: hidden;
-    }
-
-    .post-wrapper:hover .hidden-ul > li{
-        visibility: visible;
-    }
-
-    .hidden-ul .display{
-        visibility: visible;
-    }
-}
-
 .post-toolbar{
     margin: 4px 0;
 }
