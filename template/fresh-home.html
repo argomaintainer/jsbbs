@@ -1,0 +1,42 @@
+<div class="cell main-cell">
+  <div class="cell-header header-center">
+    <h3>新鲜发言</h3>
+  </div>
+  <div id="postlist-content" class="postlist-topic">
+    <div id="postlist-content-inner">
+      {{each(j, ps) data.groups}}
+      <div class="postlist-group">
+        <h4 class="home-boardgroup">
+          <a class="owner" href="${url_for_board(ps[0].boardname)}">${ps[0].boardname} 版{{if ($G.userfav[ps[0].boardname])}}(我收藏的看版){{/if}}  » </a>
+        </h4>
+        {{each(i, p) ps}}
+        <div class="post-li-topic">
+          <span class="postrank">${$G.local.newrank()}.</span>
+          <a target="_blank" class="title{{if ($G.userfav[p.boardname])}} infav{{/if}}" href="${url_for_topic2(p.topicid)}">
+            <strong>{{html format_title(p.title)}}</strong>
+          </a>
+          {{if p.summary != null}}
+          <div class="summary">
+            {{html format_summary(p.summary) }}            
+          </div>
+          {{/if}}            
+          <div class="post-li-meta">
+            <img src="${url_for_avatar(p.author)}">
+            <span class="time">发起 : </span>
+            <a class="owner" href="${url_for_user(p.author)}">${p.author}</a>
+            <span class="time"> / 最后更新 :  ${ tf_timestamp(p.lastupdate) }</span>
+          </div>
+          <span class="replynum">
+            <span class="badge{{if check_isnew(p.boardname, p.topicid, p.lastupdate) }} badge-success{{/if}}">
+              ${p.replynum}
+            </span>
+          </span>
+        </div>
+        {{/each}}
+      </div>
+      {{/each}}
+      <div class="load-more-post"><a href="#!fresh">查看更多新鲜发言...</a></div>
+    </div>
+  </div>
+</div>
+</div>

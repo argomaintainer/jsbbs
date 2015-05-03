@@ -4,7 +4,6 @@ $MOD('func', function(){
     var maxkey = 100;
 
     function check_isnew(boardname, topic, time){
-        console.log('new::', localStorage['read::'+boardname+'//'+topic], time);
         return !(localStorage['read::'+boardname+'//'+topic] > time);
     }
 
@@ -111,13 +110,21 @@ $MOD('frame.allp', function(){
                       //                 data.data.www.posts.length) + 1
                       //     });
                       // });
-                      load_widgets(data.data.www.widgets);
-                      render_template(
-                          'widget/text',
-                          {
-                              text: '   The Madonna in Majesty    作于1302年，是意大利画家 Duccio 的代表作。他的画沿袭了拜占庭风格的大部分特点，且人物表现出更为真实的形态，开辟了一条拜占庭风格过渡到文艺复兴的道路。'
-                          }, '#dy-widgets'
-                      );
+                      local.rank = 0;
+                      local.time = (new Date()).toLocaleString();
+                      get_fresh_group(null, function(data){
+                          data.groups = data.groups.sort(function(a, b){
+                              var va = BOARD_VH[a[0].boardname] || 0;
+                              var vb = BOARD_VH[b[0].boardname] || 0;
+                              if(va == vb){
+                                  return b[0].lastupdate - a[0].lastupdate;
+                              }
+                              return vb - va;
+                          });
+                          var n = render_string('fresh-home', { data: data });
+                          $('#part-3').replaceWith(n);
+                      });
+                      load_widgets(data.data.www.widgets.concat([{type:'dowhat', group: DOWHAT}]));
                   }
               });
     }
@@ -130,12 +137,22 @@ $MOD('frame.allp', function(){
             //     location = '#!tut-2';
             // }
             render_template('home');
+            $api.get_fresh(0, function(data){
+                var items = data.items.slice(0, 5);
+                var buf = [];
+                for(var i=0; i<items.length; ++i){
+                    buf.push([items[i].title + ' » ' + items[i].boardname,
+                              url_for_topic2(items[i].topicid)]);
+                }
+                load_widgets([{ type: 'links', links : buf, title : '新鲜贴子' }]);
+            });
             if(localStorage['show-home-post']
                != $('#show-home-post').data('label')){
                 $('#show-home-post').show();
             }
             load_focus();
         },
+        local : local,
         submit: submit,
         marktop: 'home'
     });
@@ -185,6 +202,14 @@ $MOD('frame::section', function(){
     var submit = {};
 
     declare_frame({
+        mark : 'fav',
+        marktop : 'fav',
+        enter : function(kwargs){
+            render_template('fav');
+        }
+    });
+
+    declare_frame({
         mark: 'section',
         submit: submit,
         marktop: 'section',
@@ -195,7 +220,6 @@ $MOD('frame::section', function(){
                         sections: data.data.all,
                         good: array_to_dict(data.data.good)
                     });
-                    load_widgets([{type:'dowhat', group: DOWHAT}]);
                     $('a[data-toggle="pill"]').on('shown', function (e) {
                         var num = $(e.target).attr('data-args');
                         $G.lastsection = num;
@@ -1040,7 +1064,6 @@ $MOD('frame::topic', function(){
     }
 
     function open_post(e){
-        console.log(e.target);
         var target = $(e.target);
         if(!target.hasClass('post-wrapper')){
             target = target.parents('.post-wrapper');

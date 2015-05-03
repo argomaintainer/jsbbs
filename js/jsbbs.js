@@ -4,6 +4,44 @@ if(NOCACHE){
     console.log('NOCACHE');
 }
 
+function jump_board(t){
+    setTimeout(
+        function(){
+            var href = $(t).find('a:first').attr('href');
+            if(href){
+                location = href;
+            }
+        }, 100);
+    return false;
+}
+
+function filter_board(t){
+    if(!$api._cache["/ajax/board/alls"]){
+        $api.get_all_boards(function(){});
+        return;
+    }
+    var all=$api._cache['/ajax/board/alls'].data.all;
+    var ret = [];
+    var pat = $(t).val();
+    for(var i=0; i<all.length; ++i)
+        for(var j=0; j<all[i].boards.length; ++j){
+            var ss = all[i].seccode + ' ' + all[i].secname + ' '
+                + all[i].boards[j].boardname + ' '
+                + all[i].boards[j].title;
+            if(ss.toLocaleLowerCase().indexOf(pat.toLocaleLowerCase()) >= 0){
+                ret.push('<li><img class="avatar_b" src="' +
+                         url_for_avatar_b(all[i].boards[j].boardname) +
+                         ' "/>' +
+                         '<a target="_blank" href="' +
+                         url_for_board(all[i].boards[j].boardname) +
+                         '">' + 
+                         all[i].boards[j].title + '</a></li>');
+            }
+        }
+    $(t).parents('.boardsearch').find('.secfav-ul').html(ret.join(''))[ret.length?'removeClass':'addClass']('empty');        
+    return ret;
+}
+
 $MOD('jsbbs.main', function(){
 
     var localStorage = window.localStorage;
@@ -26,8 +64,10 @@ $MOD('jsbbs.main', function(){
             if(x)
                 localStorage.removeItem('tpl:'+arr[x]);
         }
-        localStorage['site:$version'] = SIGNV;
-        location.reload(true);
+        if(!window.NOCACHE){
+            localStorage['site:$version'] = SIGNV;
+            location.reload(true);
+        }
     }        
     
     $MOD['frame.hook'].register_hook('before_boot');

@@ -26,9 +26,7 @@ body{
 
 #topbar .navbar-inner{
     background-image: none;
-    background-color: rgb(5,67,14);
-    background-color: rgba(5,67,14, 0.88);
-    filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#BF05430E,endColorstr=#BF05430E);
+    background-color: #05430e;
     border-bottom: 1px solid #eee;
 }
 
@@ -330,7 +328,7 @@ i.icon-nbrd:before{
     border-bottom: 1px solid #eee;
     margin: -12px -12px 10px;
     padding: 12px;
-    color: #237812;
+    color: #6cba5c;
 }    
 
 .cell-header h3{
@@ -1573,14 +1571,6 @@ a[data-submit]:hover{
     height: 24px;
     border-radius: 50%;
     margin: 0 16px 0 6px;
-}
-
-.post-li-topic .title{
-    color: #555;
-}
-
-.post-li-topic .title:hover{
-    color: #222;
 }
 
 .post-li-topic .infav{
@@ -2958,9 +2948,29 @@ a:hover .ftext{
     color: #333;
 }
 
+.boardsearch{
+    margin: 20px 0;
+}
+
+.boardsearch .secfav-ul.empty{
+    margin-top: 0;
+}
+
+.home-boardgroup{
+    margin: 35px 0 0 0;
+}
+
+.home-boardgroup a{
+    color: #777;
+}
+
+.home-boardgroup a:hover{
+    color: #222;
+}
+
 @media (min-width: 1024px){
     .frame-home{
-        background: #f0f0f0 url("http://bbs.sysu.edu.cn/attach/Pictures/1414463505.jpg") center top no-repeat;
+        /* background: #f0f0f0 url("http://bbs.sysu.edu.cn/attach/Pictures/1414463505.jpg") center top no-repeat; */
     }
 }
 

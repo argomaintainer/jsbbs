@@ -40,13 +40,19 @@ $MOD('argo_api', function(){
         return coll;
 	}
 
+    var cache = {};
+
     function ajax_getor_nopara(url){
         return function(callback){
-            get_nc(url, callback);
+            get_nc(url, function(data){
+                cache[url] = data;
+                callback(data);
+            });
         }
     }
         
     return {
+        '_cache' : cache,
         'get_tips' : ajax_getor_nopara('/ajax/comm/tips'),
         'get_topten': ajax_getor_nopara('/ajax/comm/topten'),
         'get_wish': ajax_getor_nopara('/ajax/comm/birthday'),

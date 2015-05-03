@@ -163,16 +163,6 @@ $MOD('jsbbs.userbox', function(){
     
     bind_hook('before_boot', refresh_userbox);
 
-    function update_tips(){
-        if(Math.random() * 3 > 2){
-            $api.get_tips(function(data){
-                console.log('tips', data);
-                render_string('tips', { htmltips : $MOD.format.format_md(data.data) }).replaceAll('#tips');
-            });
-        }
-    }
-    bind_hook('frame_change', update_tips);        
-
     function go_next_board(){
         var boardname;
         try{

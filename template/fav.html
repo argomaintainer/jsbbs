@@ -1,0 +1,21 @@
+{{if $G.userfav }}
+<div class="cell">
+  <p>
+    <a class="pull-right" data-submit="go-section" href="#">› 查看全部看版</a>
+    <br>    
+  </p>
+  <div class="cell-header">
+    <h3>我的收藏夹 {{if $G.userfavunread }}<small>(共 <strong>${$G.userfavunread}</strong> 个看版有更新)</small>{{/if}}</h3>
+  </div>
+  <ul class="secfav-ul clearfix">
+    {{each(i, b) $G.userfav_a}}
+    <li>
+      <div{{if b.unread}} class="unread"{{/if}}>
+        <img class="avatar_b lazy" src="${url_for_avatar_b(b.boardname)}" />
+        <a href="${url_for_board(b.boardname)}">${b.title}</a>
+      </div>
+    </li>
+    {{/each}}
+  </ul>
+</div>
+{{/if}}
