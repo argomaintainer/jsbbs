@@ -54,16 +54,6 @@
     </ul>
   </div>
 </div>
-
-<div class="cell cell-main">
-  <div class="cell-header">
-    <h3>最新发言</h3>
-  </div>
-  <div id="topiclist" class="topiclist">
-    <div id="loader">加载中。。。  </div>
-  </div>
-</div>
-
 <div class="cell cell-loose newpostbox">
   {{if $G.authed }}
   <img class="avatar" src="${url_for_avatar($G.authed.u.userid)}" />
@@ -106,3 +96,13 @@
   <p class="nologin">登录后才可以发帖哟！</p>
   {{/if}}
 </div>
+<div class="cell cell-main">
+  <div class="cell-header">
+    <h3>最新发言</h3>
+  </div>
+  <div id="topiclist" class="topiclist">
+    <div id="loader">加载中。。。  </div>
+  </div>
+</div>
+
+

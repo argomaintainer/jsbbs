@@ -1239,8 +1239,9 @@ i[class^="mark-"]{
 }
 
 .newpostbox{
-    margin-top: 80px;
+    margin-top: 0px;
     border-top: 2px solid #93a862;
+    border-bottom: 2px solid #93a862;
 }
 
 .newpostbox .nologin{
