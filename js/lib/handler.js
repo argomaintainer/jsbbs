@@ -11,7 +11,7 @@ $MOD('func', function(){
         localStorage['read::' + boardname + '//' + topic] =
             Math.floor(+(new Date()) / 1000);
     }
-
+    
     window.check_isnew = check_isnew;
     window.set_read = set_read;
 

@@ -15,6 +15,10 @@ function jump_board(t){
     return false;
 }
 
+function extend_rows() {
+        var textarea = document.getElementById('newpost_textarea').rows = "18";
+}
+
 function filter_board(t){
     if(!$api._cache["/ajax/board/alls"]){
         $api.get_all_boards(function(){});
