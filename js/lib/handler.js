@@ -1142,10 +1142,12 @@ $MOD('frame::message', function(){
         if(cursor === undefined){
             cursor = $(e.target).data('cursor');
         }
-        $api.get_message(cursor, function(data){
-            $api.mark_message_read(data.data.mlist[0].index);
-            render_string('messages', data.data).replaceAll('#loader');
-        });
+        if (cursor != 1) {
+            $api.get_message(cursor, function(data){
+                $api.mark_message_read(data.data.mlist[0].index);
+                render_string('messages', data.data).replaceAll('#loader');
+            });
+        }
     }        
         
     submit = {
