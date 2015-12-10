@@ -7,7 +7,7 @@
   <div class="cell-header">
     <h3>我的收藏夹 {{if $G.userfavunread }}<small>(共 <strong>${$G.userfavunread}</strong> 个看版有更新)</small>{{/if}}</h3>
   </div>
-  <ul class="secfav-ul clearfix">
+  <ul class="secfavo-ul clearfix">
     {{each(i, b) $G.userfav_a}}
     <li>
       <div{{if b.unread}} class="unread"{{/if}}>
