@@ -372,44 +372,10 @@ i.icon-nbrd:before{
 
 .secfav-ul{
     list-style-type: none;
-    text-indent: 0;
-    margin: 0;
-    padding: 0;
-    margin-top: 34px;
+    margin-top: 20px;
+    margin-left: 0px;
 }
 
-.secfav-ul li{
-    margin: 0 0 20px 20px;
-    width: 215px;
-    float: left;
-}
-
-.secfav-ul img{
-    width: 40px;
-    height: 40px;
-    margin: 5px;
-    border-radius: 50%;
-    position: absolute;
-}    
-
-.secfav-ul a{
-    color: #999;
-    line-height: 50px;
-    height: 50px;
-    overflow: hidden;
-    display: block;
-    border: 1px solid #eee;
-    padding-left: 54px;
-}
-
-.secfav-ul a:hover{
-    text-decoration: none;
-    border: 1px solid orange;
-}
-
-.secfav-ul .unread a{
-    color: #355e86;
-}
 
 .board-group{
     position:relative;

@@ -8,30 +8,4 @@
 <br>
 <br>
 <br>
-<div class="cell">
-  <div class="cell-header">
-    <h3>干点啥...</h3>
-  </div>
-  <div class="boardsearch">
-    <form class="form-inline" onsubmit="return jump_board(this);">
-      输入中文或看版英文搜索看版: <br>
-      <input type="text" class="input-medium search-query" onkeyup="filter_board(this);" onchange="filter_board(this);">
-      <ul class="secfav-ul clearfix empty">
-        <div class="text-center">
-        </div>
-      </ul>
-    </form>
-    <hr>
-  </div>
-  <ul class="secfav-ul clearfix">
-    {{each(i,g) DOWHAT2}}
-    <div class="clearfix">
-      {{each(j,b) g.list}}
-      <li><img class="avatar_b" src="${url_for_avatar_b(b[0])}" />
-        <a target="_blank" href="${url_for_board(b[0])}">${b[1]}</a></li>
-      {{/each}}
-    </div>
-    <br>
-    {{/each}}
-  </ul>
-</div>
+

@@ -101,6 +101,7 @@ $MOD('frame.allp', function(){
               function(data){
                   if(data.success){
                       // require_jslib('slides');
+                      load_widgets(data.data.www.widgets.concat([{type:'dowhat', group: DOWHAT}]));
                       var n = $(render_string('focus', data.data));
                       $('#part-2').replaceWith(n);
                       // $(function(){
@@ -124,7 +125,6 @@ $MOD('frame.allp', function(){
                           var n = render_string('fresh-home', { data: data });
                           $('#part-3').replaceWith(n);
                       });
-                      load_widgets(data.data.www.widgets.concat([{type:'dowhat', group: DOWHAT}]));
                   }
               });
     }
@@ -144,7 +144,7 @@ $MOD('frame.allp', function(){
                     buf.push([items[i].title + ' » ' + items[i].boardname,
                               url_for_topic2(items[i].topicid)]);
                 }
-                load_widgets([{ type: 'links', links : buf, title : '新鲜贴子' }]);
+                //load_widgets([{ type: 'links', links : buf, title : '新鲜贴子' }]);
             });
             if(localStorage['show-home-post']
                != $('#show-home-post').data('label')){

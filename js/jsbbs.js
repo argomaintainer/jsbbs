@@ -32,10 +32,8 @@ function filter_board(t){
             var ss = all[i].seccode + ' ' + all[i].secname + ' '
                 + all[i].boards[j].boardname + ' '
                 + all[i].boards[j].title;
-            if(ss.toLocaleLowerCase().indexOf(pat.toLocaleLowerCase()) >= 0){
-                ret.push('<li><img class="avatar_b" src="' +
-                         url_for_avatar_b(all[i].boards[j].boardname) +
-                         ' "/>' +
+            if(ss.toLocaleLowerCase().indexOf(pat.toLocaleLowerCase()) > 0){
+                ret.push('<li>' +
                          '<a target="_blank" href="' +
                          url_for_board(all[i].boards[j].boardname) +
                          '">' + 
@@ -43,6 +41,7 @@ function filter_board(t){
             }
         }
     $(t).parents('.boardsearch').find('.secfav-ul').html(ret.join(''))[ret.length?'removeClass':'addClass']('empty');        
+    
     return ret;
 }
 
