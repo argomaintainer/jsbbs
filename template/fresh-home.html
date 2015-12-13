@@ -1,42 +1,118 @@
 <div class="cell main-cell">
-  <div class="cell-header header-center">
-    <h3>最新贴子</h3>
+  <div>
+    <h4><span class="glyphicon glyphicon-align-left" aria-hidden="true"></span> 新鲜事</h4>
   </div>
-  <div id="postlist-content" class="postlist-topic">
-    <div id="postlist-content-inner">
-      {{each(j, ps) data.groups}}
-      <div class="postlist-group">
-        <h4 class="home-boardgroup">
-          <a class="owner" href="${url_for_board(ps[0].boardname)}">${ps[0].boardname} 版{{if ($G.userfav[ps[0].boardname])}}(我收藏的看版){{/if}}  » </a>
-        </h4>
-        {{each(i, p) ps}}
-        <div class="post-li-topic">
-          <span class="postrank">${$G.local.newrank()}.</span>
-          <a target="_blank" class="title{{if ($G.userfav[p.boardname])}} infav{{/if}}" href="${url_for_topic2(p.topicid)}">
-            <strong>{{html format_title(p.title)}}</strong>
-          </a>
-          {{if p.summary != null}}
-          <div class="summary">
-            {{html format_summary(p.summary) }}            
-          </div>
-          {{/if}}            
-          <div class="post-li-meta">
-            <img src="${url_for_avatar(p.author)}">
-            <span class="time">发起 : </span>
-            <a class="owner" href="${url_for_user(p.author)}">${p.author}</a>
-            <span class="time"> / 最后更新 :  ${ tf_timestamp(p.lastupdate) }</span>
-          </div>
-          <span class="replynum">
-            <span class="badge{{if check_isnew(p.boardname, p.topicid, p.lastupdate) }} badge-success{{/if}}">
-              ${p.replynum}
-            </span>
-          </span>
-        </div>
+  <div id="">
+  <ul class="nav nav-tabs nav-justified">
+    <li class="active"><a data-toggle="tab" href="#tab-new">最新帖子</a></li>
+    <li ><a data-toggle="tab" href="#tab-say">不吐不快</a></li>
+    <li ><a data-toggle="tab" href="#tab-sale">跳蚤市场</a></li>
+    <li ><a data-toggle="tab" href="#tab-part">兼职信息</a></li>
+    <li ><a data-toggle="tab" href="#tab-job">人才市场</a></li>
+    <li ><a data-toggle="tab" href="#tab-employee">上班一族</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab-new">
+        {{each(i, pp) fresh}}
+          {{if (pp[0].boardname != 'Job' && pp[0].boardname != 'PartTime')}}
+          {{each(j, p) pp}}
+          <li>
+            <span><a href="${url_for_topic2(p.topicid)}">${p.title}</a></span>
+            <div class="tab-right">
+            <span class="label label-warning">
+              ${p.replynum} 
+                  &nbsp » 
+                  <a href="#!board?boardname=${p.boardname}">
+                    ${p.boardname} 
+                  </a>
+              </span>
+            </div>
+          </li>
+          {{/each}}
+          {{/if}}
         {{/each}}
-      </div>
-      {{/each}}
-      <div class="load-more-post"><a href="#!fresh">查看更多新贴子...</a></div>
+    </div>
+    <div class="tab-pane" id="tab-say">
+        {{each(i, p) says}}
+          <li>
+            <span><a href="${url_for_topic(p.filename,'Say')}">${p.title}</a></span>
+            <div class="tab-right">
+            <span class="label label-warning">
+              ${p.total_reply} 
+                  &nbsp » 
+                  <a href="#!board?boardname=Say">
+                    Say
+                  </a>
+              </span>
+            </div>
+          </li>
+        {{/each}}
+    </div>
+    <div class="tab-pane" id="tab-sale">
+        {{each(i, p) sales}}
+          <li>
+            <span><a href="${url_for_topic(p.filename,'Sale')}">${p.title}</a></span>
+            <div class="tab-right">
+            <span class="label label-warning">
+              ${p.total_reply} 
+                  &nbsp » 
+                  <a href="#!board?boardname=Sale">
+                    Sale
+                  </a>
+              </span>
+            </div>
+          </li>
+        {{/each}}
+    </div>
+    <div class="tab-pane" id="tab-part">
+        {{each(i, p) pars}}
+          <li>
+            <span><a href="${url_for_topic(p.filename,'PartTime')}">${p.title}</a></span>
+            <div class="tab-right">
+            <span class="label label-warning">
+              ${p.total_reply} 
+                  &nbsp » 
+                  <a href="#!board?boardname=PartTime">
+                    PartTime
+                  </a>
+              </span>
+            </div>
+
+          </li>
+        {{/each}}
+    </div>
+    <div class="tab-pane" id="tab-job">
+        {{each(i, p) jobs}}
+          <li>
+            <span><a href="${url_for_topic(p.filename,'Job')}">${p.title}</a></span>
+            <div class="tab-right">
+            <span class="label label-warning">
+              ${p.total_reply} 
+                  &nbsp » 
+                  <a href="#!board?boardname=Job">
+                    Job
+                  </a>
+              </span>
+            </div>
+          </li>
+        {{/each}}
+    </div>
+    <div class="tab-pane" id="tab-employee">
+        {{each(i, p) emps}}
+          <li>
+            <span><a href="${url_for_topic(p.filename,'Employee')}">${p.title}</a></span>
+            <div class="tab-right">
+            <span class="label label-warning">
+              ${p.total_reply} 
+                  &nbsp » 
+                  <a href="#!board?boardname=Employee">
+                    Employee
+                  </a>
+              </span>
+            </div>
+          </li>
+        {{/each}}
     </div>
   </div>
-</div>
+  </div>
 </div>

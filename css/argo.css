@@ -4,10 +4,48 @@ body{
     background: #f0f0f0;
 }
 
-#topbar .brand{
+.fix-btns{
+    position:fixed;
+    bottom:20px;
+    left: 50%;
+    z-index: 19;
+    margin-left: 465px;
+    opacity: 1;
+}
+.totop {
+    display:block;
+    width:38px;
+    height:38px;
+    background-color:#ddd;
+    border-radius:3px;
+    border:0;
+    cursor:pointer;
+    position:relative;
+}
+
+.totop .arrow {
+    width:0;
+    height:0;
+    top:-1px;
+    border:9px solid transparent;
+    border-bottom-color:#aaa;
+    margin: auto;
+}
+
+.totop .stick {
+    width:8px;
+    height:14px;
+    top:15px;
+    border-radius:1px;
+    background-color:#aaa;
+    margin: auto;
+}
+
+#topbar .brand {
     color: #f0f0f0;
     margin-left: 0;
-    letter-spacing: 7px;
+    font-family: "Microsoft JhengHei";
+    letter-spacing: 10px;
 }
 
 #topbar .brand small{
@@ -64,6 +102,57 @@ body{
 
 #topbar .onactive{
     background: transparent;
+}
+
+.tab-pane li {
+    list-style-type: none;
+    padding: 0;
+    line-height: 2em;
+    font-family: inherit;
+    font-size: 1.15em;
+    margin: 10px;
+}
+
+.tab-pane a {
+    -webkit-transition: all 0.55s;
+    text-decoration: none;
+    color: rgb(0, 67, 67);
+}
+
+.tab-pane a.onactive {
+    color: rgb(67, 0, 67);
+}
+.tab-pane a:hover {
+    color: rgb(67, 67, 0);
+    font-size: 1em;
+    -webkit-transition: all 0.7s; 
+    margin-left: 15px;
+}
+.tab-pane a:active {
+    color: rgb(67, 67, 67);
+}
+
+.tab-pane a:after {
+    color: rgb(67, 67, 67);
+}
+
+
+.tab-right {
+    float: right;
+}
+
+.tab-left {
+    float: left;
+}
+
+.tab-right a {
+    color: rgb(255,255,255);
+}
+.tab-right a:hover {
+    color: rgb(200,200,200);
+}
+.tab-left a {
+    color: rgb(67,67,0);
 }
 
 #container{
@@ -386,7 +475,7 @@ i.icon-nbrd:before{
 
 .secfavo-ul li{
     margin: 0 0 20px 20px;
-    width: 215px;
+    width: 200px;
     float: left;
 }
 
@@ -466,6 +555,11 @@ i.icon-nbrd:before{
     text-align: right;
 }
 
+.toptenToday {
+    font-family: inherit;
+    margin-left: 12px;
+}
+
 .topten-title{
     font-size: 14px;
     line-height: 30px;
@@ -473,7 +567,23 @@ i.icon-nbrd:before{
 }
 
 .topten-title a{
-    color: rgb(67,67,67);
+    color: rgb(0,67,67);
+}
+
+.topten-right {
+    float: right;
+}
+
+.topten-left {
+    float: left;
+}
+
+.topten-right a {
+    color: rgb(67,67,0);
+}
+
+.topten-left a {
+    color: rgb(67,67,0);
 }
 
 .topten-replynum{
@@ -569,26 +679,6 @@ i.icon-nbrd:before{
 
 .frame-header-inner{
     padding-bottom: 10px;
-}
-
-#fix-btns{
-    position:fixed;
-    bottom:20px;
-    left: 50%;
-    margin-left: 505px;
-}
-
-#fix-btns a{
-    display: block;
-    font-size: 11px;
-    width: 18px;
-    background-image: url("../images/alpha45.png");
-    text-align: center;
-    text-decoration: none;
-    margin-bottom: 3px;
-    line-height: 1.2;
-    color: #666;
-    padding: 5px 0;
 }
 
 .btn-posts-table{
@@ -1045,6 +1135,11 @@ i[class^="mark-"]{
 
 .close.pull-right{
     margin-right: 10px;
+    margin-top: 10px;
+}
+
+.pull-right-all {
+    margin-left: 20px;
     margin-top: 10px;
 }
 
@@ -2091,7 +2186,7 @@ a[data-submit]:hover{
 }
 
 .top-a{
-    width: 60px;
+    width: 100px;
     text-align: center;
 }
 

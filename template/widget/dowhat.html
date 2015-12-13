@@ -1,11 +1,12 @@
 <div class="widget">
   <div class="widget-header">
     <h4 title="我们是中大的小伙伴！">版块搜索</h4>
+    <a class="pull-right-all" data-submit="go-section" href="#"><small>›› 查看全部看版</small></a>
   </div>
   
     <div class="boardsearch">
     <form class="form-inline" onsubmit="return jump_board(this);">
-      输入中文或看版英文搜索看版: <br>
+      输入中文或看版英文搜索: <br>
       <input type="text" class="input-medium search-query" onkeyup="filter_board(this);" onchange="filter_board(this);">
       <div class="group">
       <ul class="secfav-ul clearfix empty">
@@ -16,6 +17,7 @@
     </form>
   </div>
   <div class="dowhat-grouplist">
+
     {{each(i,g) group}}
     <div class="group">
       <h5>${g.name}</h5>
@@ -27,5 +29,5 @@
     </div>
     {{/each}}
   </div>
-  <a class="pull-right" data-submit="go-section" href="#"><small> › 查看全部看版</small></a>
+  
 </div>

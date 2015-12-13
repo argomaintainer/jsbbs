@@ -196,7 +196,7 @@ $MOD('frame.func', {
         var hash = location.hash, t;
         if(hash && (hash.length>2)){
             if(hash.substr(0,2)!='#!'){
-                return;
+                return hash.substr(1);
             }
             hash = hash.substr(2);
         }
@@ -518,7 +518,7 @@ $MOD('frame.frame', function(){
     function refresh_frame(){
         var curhash = get_current_hash(),
         frame;
-
+        console.log("refresh_frame: "+curhash);
         if(!curhash){
             console.warn('Refresh an illegal frame.');
             return;
@@ -690,6 +690,7 @@ $MOD('frame.frame', function(){
     }
 
     function onhashchange(){
+        console.log($G.refresh);
         if($G.refresh){
             refresh_frame();
         }

@@ -96,6 +96,38 @@ $MOD('frame.allp', function(){
         });
     }        
 
+    function load_newtab(){
+            get_fresh_group(null, function(data){
+                var fresh_data = data.groups;
+                console.log(fresh_data);
+                $api.get_postindex_limit('Say', 'topic', 0, 20, function(say){
+                    var say_data = say.data.reverse();
+                    console.log(say_data);
+                    $api.get_postindex_limit('Sale', 'topic', 0, 20, function(sal){
+                        var sal_data = sal.data.reverse();
+                        console.log(sal_data);
+                        $api.get_postindex_limit('PartTime', 'topic', 0, 20, function(par){
+                            var par_data = par.data.reverse();
+                            console.log(par_data);
+                            $api.get_postindex_limit('Job', 'topic', 0, 20, function(job){
+                                var job_data = job.data.reverse();
+                                console.log(job_data);
+                                $api.get_postindex_limit('Employee', 'topic', 0, 20, function(emp){
+                                    var emp_data = emp.data.reverse();
+                                    console.log(emp_data);
+                                    var n = render_string('fresh-home', {fresh:fresh_data, says:say_data, sales:sal_data, pars:par_data, jobs:job_data, emps:emp_data});
+                                    $('#part-3').replaceWith(n);
+                                    $('a[data-toggle="tab"]').click(function (e) {
+                                    e.preventDefault();
+                                    $(this).tab('show');
+                                });
+                            });
+                        });
+                    });
+                });
+            });
+        });
+    }
     function load_focus(){
         $.get('/ajax/comp/www_home',
               function(data){
@@ -111,7 +143,7 @@ $MOD('frame.allp', function(){
                       //                 data.data.www.posts.length) + 1
                       //     });
                       // });
-                      local.rank = 0;
+                      /*local.rank = 0;
                       local.time = (new Date()).toLocaleString();
                       get_fresh_group(null, function(data){
                           data.groups = data.groups.sort(function(a, b){
@@ -122,11 +154,13 @@ $MOD('frame.allp', function(){
                               }
                               return vb - va;
                           });
-                          var n = render_string('fresh-home', { data: data });
-                          $('#part-3').replaceWith(n);
-                      });
+                          
+                      });*/
                   }
+                  load_newtab();
               });
+        
+        
     }
 
     declare_frame({
@@ -150,6 +184,7 @@ $MOD('frame.allp', function(){
                != $('#show-home-post').data('label')){
                 $('#show-home-post').show();
             }
+            
             load_focus();
         },
         local : local,
@@ -192,9 +227,9 @@ $MOD('frame.allp', function(){
             $(window).on('scroll', autoload);
             load_new(function(){});
             load_widgets([{type:'dowhat', group: DOWHAT}]);
-        },
+        }
     })
-    
+
 });
 
 $MOD('frame::section', function(){
