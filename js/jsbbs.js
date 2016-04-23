@@ -80,7 +80,7 @@ $MOD('jsbbs.main', function(){
     require_jslib('userbox');
     using('jsbbs.userbox');
 
-    require_jslib('argo_api');
+    require_jslib('argo_api_v2');
     import_module('argo_api', '$api');
 
     require_jslib('handler');

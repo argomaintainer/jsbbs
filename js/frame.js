@@ -567,6 +567,11 @@ $MOD('frame.frame', function(){
             $('[data-ajax]').ajax_data();
         }
         
+        // add cross view counter
+        var cc = + localStorage['counter::cross'];
+        if(isNaN(cc)){ cc = 0 };
+        localStorage['counter::cross'] = cc + 1;
+        
         frame.enter(curhash.args);
 
         trigger_hooks('frame_change', curhash);

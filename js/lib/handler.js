@@ -170,6 +170,12 @@ $MOD('frame.allp', function(){
             //    &&(!localStorage['bool::watched-tut'])){
             //     location = '#!tut-2';
             // }
+
+            // add home view counter
+            var hc = + localStorage['counter::home'];
+            if(isNaN(hc)){ hc = 0 };
+            localStorage['counter::home'] = hc + 1;
+            
             render_template('home');
             $api.get_fresh(0, function(data){
                 var items = data.items.slice(0, 5);

@@ -86,17 +86,25 @@ $MOD('argo_api', function(){
             }
         }
         if(canUse && localStorage[key]){
-            console.log('from cache...');
             callback(JSON.parse(localStorage[key]));
             return;
         }
+
+        var bgRet = Configor.bg && localStorage[key];
+        if(bgRet && Configor.bgi){
+            var nc = Math.floor(+ new Date / 1000);
+            if(nc > (get_local_num('tc_' + key) + Configor.bgi)){
+                bgRet = false;
+            }
+        }
+            
         jQuery.ajax({
             method : ajax.method,
             url : ajax.url,
             data : ajax.data,
+            dataType : ajax.dataType,
             success : function(data){
-                console.log('from hot...');
-                var cahceit= false;
+                var cacheit= false;
                 if(Configor.tc){
                     localStorage['tc_' + key] = Math.floor(+ new Date / 1000);
                     cacheit = true;
@@ -116,28 +124,49 @@ $MOD('argo_api', function(){
                 if(cacheit){
                     localStorage[key] = JSON.stringify(data);
                 }
-                callback(data);
+                if(!bgRet){
+                    callback(data);
+                }
             }
         });
+        if(bgRet){
+            callback(JSON.parse(localStorage[key]));
+        }
         return;
     }            
 
-    
-        
     return {
-        'get_tips' : ajax_getor_nopara('/ajax/comm/tips'),
-        'get_topten': ajax_getor_nopara('/ajax/comm/topten'),
-        'get_wish': ajax_getor_nopara('/ajax/comm/birthday'),
-        'get_section': ajax_getor_nopara('/ajax/section'),
-        'get_all_boardsname': ajax_getor_nopara('/ajax/board/all'),
-        'get_all_boards': ajax_getor_nopara('/ajax/board/alls'),
-        'get_random_boardname': ajax_getor_nopara('/ajax/board/random'),
-        'tac' : function(boardname, callback){
+
+        //'get_wish': ajax_getor_nopara('/ajax/comm/birthday'),
+        //'get_section': ajax_getor_nopara('/ajax/section'),
+        //'get_all_boardsname': ajax_getor_nopara('/ajax/board/all'),
+        //'get_random_boardname': ajax_getor_nopara('/ajax/board/random'),
+        //'get_readmark': '/ajax/board/readmark',
+
+        'get_topten': function(callback){
             cache_ajax(
+                { tc: 60, kc: 3, hc: 3 },
+                '/ajax/comm/topten',
                 {
-                    hc : 3,
+                    url: '/ajax/comm/topten',
                 },
-                '/ajax/board/next:'+boardname+':',
+                callback);
+        },
+        
+        'get_all_boards': function(callback){
+            cache_ajax(
+                { tc: 3600, kc: 30, bg : true, bgi: 36000 },
+                '/ajax/board/alls',
+                {
+                    url: '/ajax/board/alls',
+                },
+                callback);
+        },
+
+        'get_next_boardname': function(boardname, callback){
+            cache_ajax(
+                { tc: 3600, kc: 30, bg : true, bgi: 36000 },
+                '/ajax/board/next:'+boardname,
                 {
                     url : '/ajax/board/next',
                     data : {
@@ -145,42 +174,61 @@ $MOD('argo_api', function(){
                     }
                 },
                 callback);
-        },                       
-        'get_next_boardname': function(boardname, callback){
-            get_nc('/ajax/board/next',
-                   {
-                       boardname: boardname || '',
-                   },
-                   callback);
         },
+
         'get_board_info': function(boardname, callback){
-            get_nc('/ajax/board/get',
-                  {
-                      boardname: boardname,
-                      www: true
-                  },
-                  callback);
+            cache_ajax(
+                { tc: 3600, bg : true, bgi: 36000 },
+                '/ajax/board/get:'+boardname,
+                {
+                    url : '/ajax/board/get',
+                    data : {
+                        boardname: boardname,
+                        www: true
+                    }
+                },
+                callback);
         },
+        
         'get_board_notes': function(boardname, callback){
-            get_nc('/ajax/board/notes',
-                  {
-                      boardname: boardname,
-                  },
-                  callback);
+            cache_ajax(
+                { tc: 60, bg : true, bgi : 3600 },
+                '/ajax/board/notes:'+boardname,
+                {
+                    url : '/ajax/board/notes',
+                    data : {
+                        boardname: boardname,
+                    }
+                },
+                callback);
         },
+
         "get_boards_by_section": function(sec_code, callback){
-            get_nc('/ajax/board/getbysec',
-                  {
-                      sec_code: sec_code
-                  },
-                  callback);
+            cache_ajax(
+                { tc: 3600, bg : true },
+                '/ajax/board/getbysec:'+sec_code,
+                {
+                    url : '/ajax/board/getbysec',
+                    data : {
+                        sec_code: sec_code
+                    }
+                },
+                callback);
         },
+
         'get_goodboards': function(type, callback){
-            get_nc('/ajax/board/good',
-                   {
-                       type: type
-                   }, callback);
-        },            
+            cache_ajax(
+                { tc: 3600, bg : true },
+                '/ajax/board/good:'+type,
+                {
+                    url : '/ajax/board/good',
+                    data: {
+                        type: type
+                    }
+                },
+                callback);
+        },      
+      
         'set_board_www_etc': function(boardname, data, callback){
             $.post('/ajax/board/setwww',
                    {
@@ -189,6 +237,7 @@ $MOD('argo_api', function(){
                    },
                    callback);
         },
+
         'clear_board_unread': function(boardname, callback){
             $.post('/ajax/board/clear',
                    {
@@ -196,45 +245,58 @@ $MOD('argo_api', function(){
                    },
                    callback);
         },
-        'get_readmark': function(boardname, callback){
-            get_nc('/ajax/board/readmark',
-                   {
-                       boardname: boardname
-                   },
-                   callback);
-        },
+
         'get_postindex': function(boardname, type, start, callback){
-            // type = normal | digest | topic
-            get_nc('/ajax/post/list',
-                  {
-                      boardname: boardname,
-                      type: type,
-                      start: start
-                  },
-                  callback);
+            cache_ajax(
+                { tc: 10, kc: 3, bg: true, bgi: 3 },
+                '/ajax/post/list:'+boardname+':'+type+':'+start+':20',
+                {
+                    // type = normal | digest | topic
+                    url : '/ajax/post/list',
+                    data : {
+                        boardname: boardname,
+                        type: type,
+                        start: start,
+                        limit: 20
+                    }
+                },
+                callback);
         },
+        
         'get_postindex_limit': function(boardname, type, start,
                                         limit, callback){
-            // type = normal | digest | topic
-            get_nc('/ajax/post/list',
-                  {
-                      boardname: boardname,
-                      type: type,
-                      start: start,
-                      limit: limit
-                  },
-                  callback);
+            cache_ajax(
+                { tc: 10, kc: 3, bg: true, bgi: 3 },
+                '/ajax/post/list:'+boardname+':'+type+':'+start+':'+limit,
+                {
+                    // type = normal | digest | topic
+                    url : '/ajax/post/list',
+                    data : {
+                        boardname: boardname,
+                        type: type,
+                        start: start,
+                        limit: limit
+                    }
+                },
+                callback);
         },
+        
         'get_last_postindex': function(boardname, type, limit, callback){
-            // type = normal | digest | topic
-            get_nc('/ajax/post/list',
-                   {
-                       boardname: boardname,
-                       type: type,
-                       limit: limit
-                   },
-                   callback);
-        },                
+            cache_ajax(
+                { tc: 10, kc: 3, bg: true, bgi: 3 },
+                '/ajax/post/list:'+boardname+':'+type+':0:'+limit,
+                {
+                    // type = normal | digest | topic
+                    url : '/ajax/post/list',
+                    data : {
+                        boardname: boardname,
+                        type: type,
+                        limit: limit
+                    }
+                },
+                callback);
+        },
+        
         'new_post': function(boardname, title, content,  callback){
             // type = new | reply | update
             $.post('/ajax/post/add',
@@ -246,6 +308,7 @@ $MOD('argo_api', function(){
                    },
                    callback);
         },
+
         'new_post_form': function(selector, argocc){
             $(selector).ajaxSubmit({
                 url: '/ajax/post/add',
@@ -255,6 +318,7 @@ $MOD('argo_api', function(){
                 dataType: 'json'
             });
         },                   
+
         'reply_post': function(boardname, title, content, refname, callback){
             $.post('/ajax/post/add',
                    {
@@ -266,6 +330,7 @@ $MOD('argo_api', function(){
                    },
                    callback);
         },
+
         'update_post': function(boardname, title, content, upfname, callback){
             $.post('/ajax/post/add',
                    {
@@ -277,6 +342,7 @@ $MOD('argo_api', function(){
                    },
                    callback);
         },            
+
         'delete_post': function(boardname, filename, callback){
             $.post('/ajax/post/del',
                    {
@@ -285,43 +351,63 @@ $MOD('argo_api', function(){
                    },
                    callback);
         },
+
         'get_post': function(boardname, filename, callback){
-            get_nc('/ajax/post/get',
-                   {
-                       boardname: boardname,
-                       filename: filename
-                   },
-                   function(data){
-                       if(data.success){
-                           var rd = data.data;
-                           if(!$.isEmptyObject(rd['ah'])){
-                               console.log(['ll', last = rd['ah'].link]);
-                               rd['ah'].link = rd['ah'].link.replace('/A.', '/').replace('.A', '');
-                               console.log(['d', rd]);
-                               data.data = rd;
-                           }
-                       }
-                       callback(data);
-                   });
+
+            var real_callback = function(data){
+                if(data.success){
+                    var rd = data.data;
+                    if(!$.isEmptyObject(rd['ah'])){
+                        rd['ah'].link = rd['ah'].link.replace('/A.', '/').replace('.A', '');
+                        data.data = rd;
+                    }
+                }
+                callback(data);
+            }
+
+            cache_ajax(
+                { tc: 60, bg: true },
+                '/ajax/post/get:'+boardname+':'+filename,
+                {
+                    url : '/ajax/post/get',
+                    data: {
+                        boardname: boardname,
+                        filename: filename
+                    }
+                },
+                real_callback);
         },
+        
         'get_near_postname': function(boardname, filename, direction, callback){
-            // direction = prev | next
-            get_nc('/ajax/post/nearname',
-                  {
-                      boardname: boardname,
-                      filename: filename,
-                      direction: direction
-                  },
-                  callback);
+            cache_ajax(
+                { tc: 60, bg: true },
+                '/ajax/post/nearname:'+boardname+':'+filename+':'+direction,
+                {
+                    // direction = prev | next
+                    url : '/ajax/post/nearname',
+                    data : {
+                        boardname: boardname,
+                        filename: filename,
+                        direction: direction
+                    }
+                },
+                callback);
         },
+        
         'get_post_topiclist': function(boardname, filename, callback){
-            get_nc('/ajax/post/topiclist',
-                  {
-                      boardname: boardname,
-                      filename: filename
-                  },
-                  callback);
+            cache_ajax(
+                { tc: 10, bg: true, bgi: 3 },
+                '/ajax/post/topiclist:'+boardname+':'+filename,
+                {
+                    url : '/ajax/post/topiclist',
+                    data : {
+                        boardname: boardname,
+                        filename: filename
+                    }
+                },
+                callback);
         },
+        
         'user_login': function(userid, password, callback){
             $.post('/ajax/login',
                   {
@@ -336,11 +422,16 @@ $MOD('argo_api', function(){
         },
 
         'query_user': function(userid, callback){
-            get_nc('/ajax/user/query',
-                  {
-                      userid: userid
-                  },
-                  callback);
+            cache_ajax(
+                { tc: 3, bg: true, bgi: 60 },
+                '/ajax/user/query:' + userid,
+                {
+                    url : '/ajax/user/query',
+                    data: {
+                        userid: userid
+                    },
+                },
+                callback);
         },
 
         'update_user_info': function(newval, callback){
@@ -365,38 +456,56 @@ $MOD('argo_api', function(){
         },
 
         'get_message' : function(index, callback){
-            get_nc('/ajax/message/list',
-                   {
-                       start: index,
-                   }, callback);
+            cache_ajax(
+                { tc: 60, cc: 10, kc: 3 },
+                '/ajax/message/list:' + index,
+                {
+                    url : '/ajax/message/list',
+                    data : {
+                        start: index
+                    }
+                },
+                callback);
         },
+
         'mark_message_read' : function(index, callback){
             $.post('/ajax/message/mark',
                    {
-                       index: index,
+                       index: index
                    }, callback);
         },
 
         'get_topic_summary_by_board' : function(
             boardname, cursor, limit, callback){
-            $.get('/ajax/v2/post/byboard',
-                  {
-                      boardname : boardname,
-                      cursor : cursor,
-                      limit : limit,
-                  },
-                  callback);
+            cache_ajax(
+                { tc: 60, cc: 10, kc: 3, bgi: 60 },
+                '/ajax/v2/post/byboard:' + boardname + ':' + cursor + ':' + limit,
+                {
+                    url: '/ajax/v2/post/byboard',
+                    data : {
+                        boardname : boardname,
+                        cursor : cursor,
+                        limit : limit
+                    }
+                },
+                callback);
         },
         
         'get_my_part_topic':function(callback){
-            get_nc('/ajax/v2/post/mine', function(data){
-                if(data.items){
-                    data.items = data.items.sort(function(a, b){
-                        return b.lastupdate-a.lastupdate;
-                    });
-                }
-                callback(data);
-            });                
+            cache_ajax(
+                { tc: 60, cc: 10, kc: 3, bgi: 60 },
+                '/ajax/v2/post/mine',
+                {
+                    url : '/ajax/v2/post/mine'
+                },
+                function(data){
+                    if(data.items){
+                        data.items = data.items.sort(function(a, b){
+                            return b.lastupdate-a.lastupdate;
+                        });
+                    }
+                    callback(data);
+                });
         },
 
         'vote_topic':function(topicid, callback){
@@ -408,14 +517,19 @@ $MOD('argo_api', function(){
         },
 
         'get_topicinfo':function(boardname, filename, topicid, callback){
-            $.get('/ajax/v2/post/topicinfo',
-                  {
-                      filename: filename || '',
-                      boardname: boardname || '',
-                      topicid : topicid || ''
-                  },
-                  callback);
-        },        
+            cache_ajax(
+                { tc: 60, cc: 10, kc: 3, bg: true, bgi: 60 },
+                '/ajax/v2/post/topicinfo:' + boardname + ':' + filename + ':' + topicid,
+                {
+                    url: '/ajax/v2/post/topicinfo',
+                    data : {
+                        filename: filename || '',
+                        boardname: boardname || '',
+                        topicid : topicid || ''
+                    }
+                },
+                callback);
+        },
 
         'update_user_avatar': function(selector, callback){
             $(selector).ajaxSubmit({
@@ -428,15 +542,32 @@ $MOD('argo_api', function(){
         },
 
         'get_self_info': function(callback){
-            get_nc('/ajax/user/info', callback);
+            cache_ajax(
+                { tc: 60, cc: 10, kc: 3, bg: true, bgi: 60 },
+                '/ajax/user/info',
+                {
+                    url : '/ajax/user/info'
+                },
+                callback);
         },
 
         'get_self_setting': function(callback){
-            get_nc('/ajax/user/setting/get', callback);
+            cache_ajax(
+                { tc: 60, cc: 10, kc: 3, bg: true, bgi: 60 },
+                '/ajax/user/setting/get',
+                {
+                    url : '/ajax/user/setting/get'
+                },
+                callback);
         },
 
         'get_self_inv': function(callback){
-            get_nc('/ajax/user/myinv', callback);
+            cache_ajax(
+                { tc: 60, cc: 10, kc: 3, bg: true, bgi: 60 },
+                '/ajax/user/myinv',
+                {
+                    url : '/ajax/user/myinv'
+                }, callback);
         },
 
         'update_self_setting': function(values, callback){
@@ -452,7 +583,13 @@ $MOD('argo_api', function(){
         },
 
         'get_self_fav': function(callback){
-            get_nc('/ajax/user/fav', callback);
+            cache_ajax(
+                { tc: 60, cc: 10, kc: 3, bg: true, bgi: 60 },
+                '/ajax/user/fav',
+                {
+                    url : '/ajax/user/fav'
+                },
+                callback);
         },
 
         'get_self_fav_aync' : function(){
@@ -484,36 +621,63 @@ $MOD('argo_api', function(){
         },
 
         'get_mailbox_info': function(callback){
-            get_nc('/ajax/mail/mailbox', callback);
+            cache_ajax(
+                { tc: 60, cc: 10, kc: 3, bgi: 60 },
+                '/ajax/mail/mailbox',
+                {
+                    url : '/ajax/mail/mailbox'
+                },
+                callback);
         },
 
         'check_has_new_mail': function(callback){
-            get_nc('/ajax/mail/check', callback);
+            cache_ajax(
+                { },
+                '/ajax/mail/check',
+                {
+                    url : '/ajax/mail/check'
+                },
+                callback);
         },
 
         'get_maillist': function(start, callback){
-            get_nc('/ajax/mail/list',
-                  {
-                      start: start
-                  },
-                  callback);
+            cache_ajax(
+                { },
+                '/ajax/mail/list:' + start,
+                {
+                    url : '/ajax/mail/list',
+                    data : {
+                        start: start
+                    }
+                },
+                callback);
         },
 
         'get_maillist_limit': function(start, limit, callback){
-            get_nc('/ajax/mail/list',
-                  {
-                      start: start,
-                      limit: limit
-                  },
-                  callback);
+            cache_ajax(
+                { },
+                '/ajax/mail/list:' + start + ':' + limit,
+                {
+                    url : '/ajax/mail/list',
+                    data : {
+                        start: start,
+                        limit: limit
+                    }
+                },
+                callback);
         },
 
         'get_mail': function(index, callback){
-            get_nc('/ajax/mail/get',
-                  {
-                      index: index
-                  },
-                  callback);
+            cache_ajax(
+                { tc: 60 },
+                '/ajax/mail/get:' + index,
+                {
+                    url : '/ajax/mail/get',
+                    data : {
+                        index: index
+                    }
+                },
+                callback);
         },
 
         'send_mail': function(title, content, receiver, callback){
@@ -559,11 +723,16 @@ $MOD('argo_api', function(){
         },
 
         'get_ann_content': function(reqpath, callback){
-            get_nc('/ajax/ann/content/',
-                   {
-                       reqpath: reqpath
-                   },
-                   callback);
+            cache_ajax(
+                { tc: 60, bg: true, bgi: 1200 },
+                '/ajax/ann/content/:' + reqpath ,
+                {
+                    url : '/ajax/ann/content/',
+                    data:{
+                        reqpath: reqpath
+                    }
+                },
+                callback);
         },
 
         '!update_user_title': function(userid, content, callback){
@@ -576,6 +745,7 @@ $MOD('argo_api', function(){
         },
 
         'weibo_check_auth': ajax_getor_nopara('/ajax/weibo/check_auth'),
+
         'weibo_use_weibo_avatar': function(callback){
             $.post('/ajax/weibo/use_avatar',
                    callback);
@@ -584,11 +754,16 @@ $MOD('argo_api', function(){
             $.post('/ajax/weibo/update1', callback);
         },
         'get_fresh' : function(cursor, callback){
-            $.get('/ajax/v2/top/topic',
-                  {
-                      cursor: cursor,
-                  },
-                  callback);
+            cache_ajax(
+                { tc: 60, bg: true, bgi: 60 },
+                '/ajax/v2/top/topic:' + cursor,
+                {
+                    url : '/ajax/v2/top/topic',
+                    data : {
+                        cursor: cursor,
+                    }
+                },
+                callback);
         }
     }
 })
