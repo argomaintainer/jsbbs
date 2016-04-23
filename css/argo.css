@@ -12,6 +12,7 @@ body{
     margin-left: 465px;
     opacity: 1;
 }
+
 .totop {
     display:block;
     width:38px;
@@ -2964,6 +2965,17 @@ a:hover .ftext{
 
 .dowhat-grouplist a{
     display: inline-block;
+    color: #fff;
+    border-radius: 6px;
+    padding: 8px 10px;
+    line-height: 1;
+    font-size: 12px;
+    background: green;
+    text-decoration: none;
+}
+
+.dowhat-grouplist a:hover{
+    background: #468847;
 }
 
 .dowhat-grouplist li{
