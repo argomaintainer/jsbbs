@@ -550,7 +550,7 @@ $MOD('frame::board', function(){
                     var notes = data.data.notes;
                     if(notes.indexOf('\n----\n') >= 0){
                         notes = notes.split('\n----\n').slice(-1)[0];
-                        cur_board.data.htmlnotes =
+                        cur_board.data.htmlnotes = 
                             $MOD.format.format(notes);
                     }else{
                         cur_board.data.htmlnotes =

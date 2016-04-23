@@ -297,6 +297,11 @@ body{
     overflow: hidden;
 }
 
+.notes .markdown{
+    background: #f8f8f8;
+    padding: 20px;
+}
+
 .fluid-table{
     width:100%;
 }
