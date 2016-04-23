@@ -272,8 +272,8 @@ $MOD('format', function(){
     
     function ascii(s){
         var x = 0, i=0, j=0, ca = {}, c='', r=[], maxx=s.length,
-        x2, x1, w, mi=0, mj=0;
-        var gw = 7;
+        x2, x1, w, mi=0;
+        var gw = 8.3;
         var gh = 20;
         while(x < maxx){
             if(s[x] == '\r'){
@@ -311,12 +311,12 @@ $MOD('format', function(){
                        +'left:'+(j*gw)+'px;"'+'>'+format_escape(s[x])
                        +'</span>');
                 j += w;
-                if(j > mj) mj = j;
                 x ++;
             }
         }
-        return '<div style="height:'+((i+1) * gh)+'px ; width:'
-            +(mj * gw)+'px ;" class="ascii-box">' + r.join(' ') + '</div>';
+        var str = '<div><div style="height:'+((i+1) * gh)+'px ; width:'
+            +(80 * gw)+'px ;" class="ascii-box">' + r.join(' ') + '</div></div>';
+        return $(str).html();
     }
     
     return {

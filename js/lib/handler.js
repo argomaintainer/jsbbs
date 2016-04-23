@@ -133,7 +133,7 @@ $MOD('frame.allp', function(){
               function(data){
                   if(data.success){
                       // require_jslib('slides');
-                      load_widgets(data.data.www.widgets.concat([{type:'dowhat', group: DOWHAT}]));
+                      load_widgets([{type:'dowhat', group: DOWHAT}].concat(data.data.www.widgets));
                       var n = $(render_string('focus', data.data));
                       $('#part-2').replaceWith(n);
                       // $(function(){

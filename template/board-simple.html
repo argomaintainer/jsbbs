@@ -1,57 +1,45 @@
-<div>
-  <ul class="breadcrumb">
-    <li><a href="${url_for_index()}">逸仙时空</a> <span class="divider"> / </span></li>
-    <li><a href="#" data-submit="go-section">[${board.secnum} 区] ${SECNAME[board.secnum]}</a> <span class="divider">/</span></li>
-    <li class="active">${board.title} (${board.filename}) 版</li>
-  </ul>
+{{if board && board.htmlnotes }}
+<div class="notes">{{html board.htmlnotes}}</div>
+{{else}}
+<div class="notes">
+  <p>版主萌萌嗒～大家萌萌嗒～</p>
 </div>
+{{/if}}
+<ul class="breadcrumb">
+  <li><a href="${url_for_index()}">逸仙时空</a> <span class="divider"> / </span></li>
+  <li><a href="#" data-submit="go-section">[${board.secnum} 区] ${SECNAME[board.secnum]}</a> <span class="divider">/</span></li>
+  <li class="active">${board.title} (${board.filename}) 版</li>
+</ul>
 
 <div class="cell boardinfo">
-  <div class="board-header">
-    <img src="${url_for_avatar_b(board.filename)}" />
-    <h3>${board.title}</h3>
-    <span class="board-misc">
-      {{if $G.authed }}
-      {{if !($G.userfav[board.filename]) }}
-      <button class="btn btn-info btn-mini" data-submit="book_fav">收藏该版</button>
-      {{else}}
-      已收藏该版 > <a href="#" data-submit="unbook_fav">取消收藏</a>
-      {{/if}}
-      {{else}}
-      登录后可收藏该版
-      {{/if}}
-    </span>
-  </div>
-  <div class="board-intro">
-    <div class="board-meta">
-      <ul class="bmlist">
-        {{if board.BM.length}}
-        <li>版主：</li>
-        {{each(i, v) board.BM}}
-        <li><a href="${ url_for_user(v) }">${v}</a></li>
-        {{/each}}
+  <div class="row-fluid">
+    <div class="span8 board-header">
+      <img src="${url_for_avatar_b(board.filename)}" />
+      <h3>${board.title}</h3>
+      <span class="board-misc">
+        {{if $G.authed }}
+        {{if !($G.userfav[board.filename]) }}
+        <button class="btn btn-info btn-mini" data-submit="book_fav">收藏该版</button>
+        {{else}}
+        已收藏该版 > <a href="#" data-submit="unbook_fav">取消收藏</a>
         {{/if}}
-      </ul>
-      <span>收藏本版人数： ${board.favnum}</span>
-      <span>累计发文篇数： ${board.total}</span>
+        {{else}}
+        登录后可收藏该版
+        {{/if}}
+      </span>
     </div>
-    {{if board && board.htmlnotes }}
-    <div class="notes">{{html board.htmlnotes}}</div>
-    {{else}}
-    <p>版主萌萌嗒～大家萌萌嗒～</p>
-    {{/if}}
-    <ul class="inline-list">
-      <li> > </li>
-      <li><a target="_blank" href="http://bbs.sysu.edu.cn/bbsdoc?board=${board.filename}">进入旧版</a></li>
-      <li> | </li>
-      <li><a target="_blank" href="http://bbs.sysu.edu.cn/bbs0an?path=boards/${board.filename}">精华区</a></li>
-      {{if board.isadmin }}
-      <li> | </li>
-      <li>
-        <em><a href="${url_for_admin_board(board.filename)}">版主管理</a></em>
-      </li>
-      {{/if}}
-    </ul>
+    <div class="span4 board-intro">
+      <div class="board-meta">
+        <ul class="bmlist">
+          {{if board.BM.length}}
+          <li>版主：</li>
+          {{each(i, v) board.BM}}
+          <li><a href="${ url_for_user(v) }">${v}</a></li>
+          {{/each}}
+          {{/if}}
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
 <div class="cell cell-loose newpostbox">
@@ -96,9 +84,9 @@
   <p class="nologin">登录后才可以发帖哟！</p>
   {{/if}}
 </div>
-<div class="cell cell-main">
+<div class="cell cell-loose boardposts">
   <div class="cell-header">
-    <h3>最新发言</h3>
+    <h3>帖子一览</h3>
   </div>
   <div id="topiclist" class="topiclist">
     <div id="loader">加载中。。。  </div>
@@ -106,3 +94,15 @@
 </div>
 
 
+  <ul class="inline-list">
+    <li> > </li>
+    <li><a target="_blank" href="http://bbs.sysu.edu.cn/bbsdoc?board=${board.filename}">进入旧版</a></li>
+    <li> | </li>
+    <li><a target="_blank" href="http://bbs.sysu.edu.cn/bbs0an?path=boards/${board.filename}">精华区</a></li>
+      {{if board.isadmin }}
+    <li> | </li>
+    <li>
+      <em><a href="${url_for_admin_board(board.filename)}">版主管理</a></em>
+    </li>
+    {{/if}}
+  </ul>

@@ -12,13 +12,12 @@
       </div>
       {{else}}
       <div class="post-header">
+        <h3 class="title" id="title-${index}">标题：${title}</h3>
+        <span class="time">${tf_timestamp(post_time)}</span>
         <div class="post-info">
-          <div class="name">
-            <a class="owner" href="${ url_for_user(userid) }"><strong class="userid">${userid}</strong><span class="username"> ${username} </span></a>
-            <img class="user-avatar" src="${ url_for_avatar(userid) }"/>
-            <span class="time">${tf_timestamp(post_time)}</span>
+          <img class="user-avatar" src="${ url_for_avatar(userid) }"/>
+          <a class="owner" href="${ url_for_user(userid) }"><strong class="userid">${userid}</strong><span class="username"> ${username} </span></a>
           </div>
-          <h3 id="title-${index}">${title}</h3>
         </div>
       </div>
       <div class="content-wrapper">
@@ -39,42 +38,40 @@
       </div>
     </div>
     <div class="post-toolbar clearfix">
-      <ul class="hidden-ul">
-        {{if $G.local.isfirst }}
-        {{if $G.local.topicinfo }}
-        <li>
-          {{if !$G.local.topicinfo.hasvoted }}
-          <a class="vote-btn" data-topicid="${$G.local.topicinfo.topicid}" data-submit="vote">值得一读！</a>
-          {{else}}
-          <span class="vote-span">我认为值得一读 (共 ${$G.local.topicinfo.vote} 人)</span>
-          {{/if}}
-        </li>
-        {{/if}}
-        ${$G.local.isfirst=false,''}
-        {{/if}}
-        <li class="display"><a data-group="post-${index}" data-submit="reply_post"> 回复 </a>
-        </li>
-        {{if perm_del==1 }}
-        <li> • <a data-group="post-${index}" data-submit="delete_post">删除</a></li>
-        <li> • <a data-group="post-${index}" data-submit="editpost">修改</a></li>
-        {{/if}}
-        <li>
-          <div class="dropdown">
-             • 
-            <a href="#" data-toggle="dropdown">分享</a>
-            <ul class="dropdown-menu">
-              <li><a data-args="sina" data-group="post-${index}" href="#"
-                     data-submit="share-post">分享到微博</a></li>
-              <li><a data-args="renren" data-group="post-${index}" href="#"
-                     data-submit="share-post">分享到人人</a></li>
-              <li><a data-args="qq" data-group="post-${index}" href="#"
-                     data-submit="share-post">分享到QQ</a></li>
-              <li><a data-args="douban" data-group="post-${index}" href="#"
-                     data-submit="share-post">分享到豆瓣</a></li>
-            </ul>
-          </div>
-        </li>
-      </ul>
+      {{if $G.local.isfirst }}
+      {{if $G.local.topicinfo }}
+      {{if !$G.local.topicinfo.hasvoted }}
+      <a class="vote-btn" data-topicid="${$G.local.topicinfo.topicid}" data-submit="vote">值得一读！</a>
+      {{else}}
+      <span class="vote-span">我认为值得一读 (共 ${$G.local.topicinfo.vote} 人)</span>
+      {{/if}}
+      {{/if}}
+      ${$G.local.isfirst=false,''}
+      {{/if}}
+      <a class="tbtn" data-group="post-${index}" data-submit="reply_post">回复</a>
+      {{if perm_del==1 }}
+       <a data-group="post-${index}" data-submit="delete_post">删除</a>
+       <a data-group="post-${index}" data-submit="editpost">修改</a>
+      {{/if}}
+
+      <div class="pull-right">
+        <div class="dropdown">
+          <a class="share-btn" href="#" data-toggle="dropdown">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+            分享</a>
+          <ul class="dropdown-menu">
+            <li><a data-args="sina" data-group="post-${index}" href="#"
+                   data-submit="share-post">分享到微博</a></li>
+            <li><a data-args="renren" data-group="post-${index}" href="#"
+                   data-submit="share-post">分享到人人</a></li>
+            <li><a data-args="qq" data-group="post-${index}" href="#"
+                   data-submit="share-post">分享到QQ</a></li>
+            <li><a data-args="douban" data-group="post-${index}" href="#"
+                   data-submit="share-post">分享到豆瓣</a></li>
+          </ul>
+        </div>
+      </div>
+
     </div>
     <input type="hidden" name="filename" data-group="post-${index}"
            value="${filename}"/>
