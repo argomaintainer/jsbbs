@@ -50,7 +50,7 @@
       我也来说点啥？
       <br>
       <div class="select_tag">
-        {{each(key, name) '闲聊 提问 中大讲座 招聘 兼职 求购 出售 吐槽 转载 活动公告 原创/请版友指教 原创/请版友阅读 原创/分享 签到'.split(' ')}}
+        {{each(key, name) taglist.split(' ')}}
         <label class="radio inline">
           <input type="radio" name="cls" onclick="$G.local.update_title_tag(this)" value="${name}">
           ${name}

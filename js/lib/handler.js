@@ -556,6 +556,7 @@ $MOD('frame::board', function(){
                 render_template('board-simple',
                                 {
                                     board: data.data,
+                                    taglist: TAGLIST[data.data.filename] || TAGLIST['_default'],
                                     PAGE_LIMIT: PAGE_LIMIT
                                 });
 

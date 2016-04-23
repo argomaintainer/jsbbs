@@ -3077,6 +3077,10 @@ a:hover .ftext{
     color: #333;
 }
 
+.select_tag .radio{
+    vertical-align: bottom;
+}
+
 .boardsearch{
     margin: 20px 0;
 }
