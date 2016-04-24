@@ -4,6 +4,14 @@ body{
     background: #f0f0f0;
 }
 
+a{
+    color: #64a86d;
+}
+
+a:hover{
+    color: #378e44;
+}
+
 .fix-btns{
     position:fixed;
     bottom:20px;
