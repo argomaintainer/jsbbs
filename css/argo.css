@@ -1,7 +1,14 @@
 article, aside, dialog, figure, footer, header, hgroup, nav, section { display:block; zoom:1; }
 
+html{
+    background: #333;
+    min-height: 100%;
+}
+
 body{
     background: #f0f0f0;
+    margin: 10px 20px;
+    padding-bottom: 20px
 }
 
 a{
@@ -51,8 +58,11 @@ a:hover{
 }
 
 #topbar{
-    background-color: transparent;
+    margin: -1px;
+    box-shadow: none;
+    border: 0;
     border-color: transparent;
+    background: transparent;
 }
 
 #topbar .brand {
@@ -81,6 +91,7 @@ a:hover{
     background-image: none;
     background-color: #1f732b;
     border-bottom: none;
+    border-radius: 0;
 }
 
 #topbar .nav > li{
@@ -173,10 +184,8 @@ a:hover{
 }
 
 #container{
-    width:1008px;
-    margin: 80px auto;
+    margin: 10px 20px;
     min-height: 100%;
-    border-right: 1px dotted #e0e0e0;
 }
 
 .simple body{
@@ -186,19 +195,6 @@ a:hover{
 #topbar-container{
     width: 1000px;
     margin: 0 auto;
-}
-
-#main-wrapper{
-    background: #fff;
-    padding: 20px;
-    box-shadow: 0 0 2px #eee;
-    border-radius: 4px;
-}
-
-.frame-board #main-wrapper,
-.frame-topic #main-wrapper{
-    padding: 0;
-    background: transparent;
 }
 
 .text-center{
@@ -304,6 +300,7 @@ a:hover{
 
 .notes{
     overflow: hidden;
+    background: #000;
 }
 
 .notes .markdown{
@@ -418,8 +415,13 @@ i.icon-nbrd:before{
 .cell{
     position:relative;
     position: relative;
-    padding: 12px;
-    margin-bottom: 12px;    
+    padding: 12px 12px 30px;
+    margin-bottom: 24px;
+    background: #fff;
+    border-radius: 4px;
+}
+
+.cell h4{
 }
 
 .cell.cell-loose{
@@ -432,31 +434,18 @@ i.icon-nbrd:before{
     border: none;
 }
 
-.cell ul:first-child li:first-child .list-link,
-.cell:first-child{
-    border-top-left-radius: 3px;
-    border-top-right-radius: 3px;
-}
-
-.cell ul:last-child li:last-child .list-link,
-.cell:last-child {
-    border-bottom-right-radius: 3px;
-    border-bottom-left-radius: 3px;
-}
-
 .cell-header{
     line-height: 16px;
-    border-bottom: 1px solid #eee;
-    margin: -12px -12px 10px;
-    padding: 12px;
-    color: #6cba5c;
+    padding: 0 12px 10px 12px;
 }    
 
 .cell-header h3{
-    display: inline;
-    font-size: 22px;
+    font-size: 16px;
+    line-height: 2.6;
+    text-align: center;
     font-weight: normal;
     line-height: 14px;
+    margin-bottom: 21px;
 }
 
 .cell-header strong{
@@ -482,7 +471,6 @@ i.icon-nbrd:before{
 
 .tab-sec-ul{
     margin: 0 0 25px;
-    border-top: 1px solid #e0e0e0;
     padding-top: 10px;
 }
 
@@ -587,12 +575,13 @@ i.icon-nbrd:before{
     text-align: right;
 }
 
-.toptenToday {
-    font-family: inherit;
-    margin-left: 12px;
-    font-size: 22px;
-    text-align: center;
-    margin-bottom: 32px;
+#topten{
+    border-bottom: 1px solid #eee;
+    padding-bottom: 39px;
+}
+
+.topten-table{
+    width: 100%;
 }
 
 .topten-title{
@@ -1215,6 +1204,7 @@ i[class^="mark-"]{
     line-height: 22px;
     font-family: monospace;
     overflow: hidden;
+    margin: 0 auto;
 }
 .w0, .w1, .w2{
     position: absolute;
@@ -2961,6 +2951,7 @@ a:hover .ftext{
     color: #c21;
     text-align: center;
     background: #f9f9f9;
+    margin-top: -15px;
 }
 
 .load-more-post:hover{
@@ -3002,8 +2993,7 @@ a:hover .ftext{
 }
 
 .userinfo-header{
-    border-top: 1px solid #eee;
-    padding-top: 20px;
+    padding-top: 10px;
 }
 
 .second-opener{
@@ -3126,70 +3116,24 @@ a:hover .ftext{
     color: #222;
 }
 
-@media (min-width: 1024px){
-    .frame-home{
-        /* background: #f0f0f0 url("http://bbs.sysu.edu.cn/attach/Pictures/1414463505.jpg") center top no-repeat; */
-    }
+.bheader a{
+    line-height: 2;
 }
 
-@media (max-width: 1024px){
-    #topbar-container{
-        width: 100%;
-        min-width: 765px;
-    }
-    .second-opener,
-    .second-closer{
-        display: block;
-    }
-    #second{
-        display: none;
-        position: fixed;
-        top: 45px;
-        z-index: 10000;
-        width: 285px;
-        padding: 30px 0 20px 20px;
-        left: 0;
-        top: 0;
-        height: 100%;
-        overflow-y: auto;
-        overflow-x: hidden;
-        background: #fbfbfb;
-        border-right-radius: 5px;
-        box-shadow: 0 0 5px #333;
-    }
-    #second.show{
-        display: block;
-    }
-    #widgets-container{
-        width: 224px;
-    }
-    .navlist > li{
-        border-bottom: 0;
-    }
-    .favbox li > a {
-        background: none;
-    }
-    .navlist li.active > a{
-        background: #f0f0f0;
-    }
-    .navlist > li > a:hover,
-    .favbox li > a:hover{
-        background: #eee;
-    }
-    .navbox{
-        box-shadow: none;
-        border:none;
-    }
-    .widget{
-        box-shadow: none;
-        border: none;
-    }
-    #container{
-        width: auto;
-        min-width: 715px;
-    }
-    #primary{
-        width: 100%;
-        margin-left: 0;
-    }
+.bheader .bpart1,
+.bheader .bpart2{
+    float: left;
+    width: 50%;
+}
+
+.bheader h2{
+    font-size: 16px;
+    font-weight: normal;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.gg{
+    font-size: 13px;
+    margin-right: 3px;
 }

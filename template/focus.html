@@ -1,52 +1,49 @@
-<div class="cell cell-loose">
-
-  <div id="topten">
-    <h4 class="toptenToday"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> 今日十大</h4>
-    <table>
-      <tbody>
-        {{each(i, p) topten}}
-        {{if p.board != 'Job' && p.board != 'PartTime' }}
-        <tr>
-          <td class="">
-            <div class="topten-title">
-              <a href="${ url_for_topic(p.filename, p.board) }" data-ismain>
-                ${p.title}
-              </a>
-            </div>
-          </td>
-          <td>
-            &nbsp&nbsp&nbsp
-            <span class="label label-success">
-              ${p.num} 
-            </span>
-          </td>
-          <td class="topten-title">
-            <span class="topten-left">
-                <span class="">
-                  &nbsp » 
-                  <a href="#!board?boardname=${p.board}">
-                    ${p.board} 
-                  </a>
-                </span>
-              </span>
-          </td>
-          <td>
-            <span class="topten-left">
-            &nbsp • &nbsp
-                <span class="meta-time">
-                  <time>${tf_timestamp(p.time)}</time>
-                </span>
-              </span>
-          </td>
-        </tr>
-        {{/if}}
-        {{/each}}
-      </tbody>
-    </table>
+<div class="cell topten">
+  <div class="cell-header">
+    <h3><span class="glyphicon glyphicon-th-list gg" aria-hidden="true"></span> 今日十大</h3>
   </div>
+  <table class="topten-table">
+    <tbody>
+      {{each(i, p) topten}}
+      {{if p.board != 'Job' && p.board != 'PartTime' }}
+      <tr>
+        <td class="">
+          <div class="topten-title">
+            <a href="${ url_for_topic(p.filename, p.board) }" data-ismain>
+              ${p.title}
+            </a>
+          </div>
+        </td>
+        <td>
+          &nbsp&nbsp&nbsp
+          <span class="label label-success">
+            ${p.num} 
+          </span>
+        </td>
+        <td class="topten-title">
+          <span class="topten-left">
+            <span class="">
+              &nbsp » 
+              <a href="#!board?boardname=${p.board}">
+                ${p.board} 
+              </a>
+            </span>
+          </span>
+        </td>
+        <td>
+          <span class="topten-left">
+            &nbsp • &nbsp
+            <span class="meta-time">
+              <time>${tf_timestamp(p.time)}</time>
+            </span>
+          </span>
+        </td>
+      </tr>
+      {{/if}}
+      {{/each}}
+    </tbody>
+  </table>
 </div>
-<br>
-<br>
 <div id="part-3"></div>
 <br>
 <div class="cell cell-loose">
