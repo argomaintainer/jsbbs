@@ -19,12 +19,15 @@ function extend_rows() {
         var textarea = document.getElementById('newpost_textarea').rows = "18";
 }
 
+var cache_boards = null;
 function filter_board(t){
-    if(!$api._cache["/ajax/board/alls"]){
-        $api.get_all_boards(function(){});
+    if(!cache_boards){
+        $api.get_all_boards(function(data){
+            cache_boards = data.data.all;
+        });
         return;
     }
-    var all=$api._cache['/ajax/board/alls'].data.all;
+    var all=cache_boards;
     var ret = [];
     var pat = $(t).val();
     for(var i=0; i<all.length; ++i)
@@ -40,6 +43,7 @@ function filter_board(t){
                          all[i].boards[j].title + '</a></li>');
             }
         }
+    console.log(ret);
     $(t).parents('.boardsearch').find('.secfav-ul').html(ret.join(''))[ret.length?'removeClass':'addClass']('empty');        
     
     return ret;

@@ -1,5 +1,7 @@
 $MOD('argo_api', function(){
 
+    var cache = {};
+
     function get_nc( url, data, callback, type ) {
         // ajax get no cache
 		if ( jQuery.isFunction( data ) ) {
@@ -125,6 +127,7 @@ $MOD('argo_api', function(){
     
         
     return {
+        '_cache' : cache,
         'get_tips' : ajax_getor_nopara('/ajax/comm/tips'),
         'get_topten': ajax_getor_nopara('/ajax/comm/topten'),
         'get_wish': ajax_getor_nopara('/ajax/comm/birthday'),
