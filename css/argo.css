@@ -1,5 +1,10 @@
 article, aside, dialog, figure, footer, header, hgroup, nav, section { display:block; zoom:1; }
 
+html {
+    filter:progid:DXImageTransform.Microsoft.BasicImage(grayscale=1);
+    /* -webkit-filter: grayscale(100%); */
+}
+
 html{
     background: #333;
     min-height: 100%;
@@ -7,12 +12,12 @@ html{
 
 body{
     background: #f0f0f0;
-    margin: 10px 20px;
+    margin: 0 20px;
     padding-bottom: 20px
 }
 
 a{
-    color: #64a86d;
+    color: #179115;
 }
 
 a:hover{
@@ -130,6 +135,28 @@ a:hover{
     background: transparent;
 }
 
+.nav-tabs.nav-justified>.active>a,
+.nav-tabs.nav-justified>.active>a:focus,
+.nav-tabs.nav-justified>.active>a:hover{
+    border-color: #999;
+    border-bottom-color: #fff;
+}
+
+.nav-tabs.nav-justified>li>a{
+    border-bottom-color: #999;
+}
+
+.nav-justified>li{
+    float: none;
+}
+
+.nav-pills>li.active>a,
+.nav-pills>li.active>a:focus,
+.nav-pills>li.active>a:hover{
+    background-color: #1b8128;
+}
+    
+
 .tab-pane li {
     list-style-type: none;
     padding: 0;
@@ -143,7 +170,6 @@ a:hover{
     -webkit-transition: all 0.55s;
     -moz-transition: all 0.55s; 
     text-decoration: none;
-    color: rgb(0, 67, 67);
 }
 
 .tab-pane a.onactive {
@@ -444,13 +470,11 @@ i.icon-nbrd:before{
     line-height: 2.6;
     text-align: center;
     font-weight: normal;
-    line-height: 14px;
     margin-bottom: 21px;
 }
 
-.cell-header strong{
-    color: #333;
-    font-size: 1.2em;
+.cell-header .gray{
+    color: #666;
 }
 
 .cell-loose .cell-header{
@@ -591,7 +615,8 @@ i.icon-nbrd:before{
 }
 
 .topten-title a{
-    color: rgb(0,67,67);
+    font-size: 14px;
+    line-height: 3;
 }
 
 .topten-right {
@@ -602,12 +627,8 @@ i.icon-nbrd:before{
     float: left;
 }
 
-.topten-right a {
-    color: rgb(67,67,0);
-}
-
-.topten-left a {
-    color: rgb(67,67,0);
+.topten-left .meta-time{
+    color: #666;
 }
 
 .topten-replynum{
@@ -1631,11 +1652,6 @@ a[data-submit]:hover{
 .btn-book{
 }
 
-.nav-tabs small{
-    color: #999;
-    font-size: 10px;
-}
-
 .board-toolbar{
     border-bottom: 1px solid #e8e8e8;
     padding: 0 14px 8px;
@@ -1876,7 +1892,7 @@ a[data-submit]:hover{
     font-weight: normal;
     line-height: 30px;
     margin: 0;
-    background: #67200e;
+    background: #673528;
     color: #f1f1f1;
     padding: 12px;
 }
@@ -2109,7 +2125,7 @@ a[data-submit]:hover{
 }
 
 .home-post-recom .userid{
-    color: rgb(67,67,67);
+    color: #666
 }
 
 .home-post-recom .time{
@@ -3116,8 +3132,12 @@ a:hover .ftext{
     color: #222;
 }
 
+.bheader{
+    padding: 12px 24px 24px;
+}
+
 .bheader a{
-    line-height: 2;
+    line-height: 2.4;
 }
 
 .bheader .bpart1,
@@ -3129,8 +3149,14 @@ a:hover .ftext{
 .bheader h2{
     font-size: 16px;
     font-weight: normal;
-    line-height: 1.5;
-    margin-bottom: 10px;
+    line-height: 2;
+    margin-bottom: 9px;
+}
+
+.bheader a{
+    line-height: 3;
+    font-size: 14px;
+    color: #36aa46;
 }
 
 .gg{
