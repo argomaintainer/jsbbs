@@ -17,7 +17,7 @@
           {{if (pp[0].boardname != 'Job' && pp[0].boardname != 'PartTime')}}
           {{each(j, p) pp}}
           <li>
-            <span><a href="${url_for_topic2(p.topicid)}">${p.title}</a></span>
+            <span><a target="_blank" href="${url_for_topic2(p.topicid)}">${p.title}</a></span>
             <div class="tab-right">
             <span class="label label-warning">
               ${p.replynum} 
@@ -27,6 +27,10 @@
                   </a>
               </span>
             </div>
+            <div class="summary">
+              ${p.summary}
+              <div class="time">时间：${tf_timestamp(p.lastupdate)}</div>
+            </div>
           </li>
           {{/each}}
           {{/if}}
@@ -35,7 +39,7 @@
     <div class="tab-pane" id="tab-say">
         {{each(i, p) says}}
           <li>
-            <span><a href="${url_for_topic(p.filename,'Say')}">${p.title}</a></span>
+            <span><a target="_blank" href="${url_for_topic(p.filename,'Say')}">${p.title}</a></span>
             <div class="tab-right">
             <span class="label label-warning">
               ${p.total_reply} 
@@ -45,13 +49,17 @@
                   </a>
               </span>
             </div>
+            <div class="summary">
+              ${p.summary}
+              <div class="time">时间：${tf_timestamp(p.update)}</div>
+            </div>
           </li>
         {{/each}}
     </div>
     <div class="tab-pane" id="tab-sale">
         {{each(i, p) sales}}
           <li>
-            <span><a href="${url_for_topic(p.filename,'Sale')}">${p.title}</a></span>
+            <span><a target="_blank" href="${url_for_topic(p.filename,'Sale')}">${p.title}</a></span>
             <div class="tab-right">
             <span class="label label-warning">
               ${p.total_reply} 
@@ -61,13 +69,17 @@
                   </a>
               </span>
             </div>
+            <div class="summary">
+              ${p.summary}
+              <div class="time">时间：${tf_timestamp(p.update)}</div>
+            </div>
           </li>
         {{/each}}
     </div>
     <div class="tab-pane" id="tab-part">
         {{each(i, p) pars}}
           <li>
-            <span><a href="${url_for_topic(p.filename,'PartTime')}">${p.title}</a></span>
+            <span><a target="_blank" href="${url_for_topic(p.filename,'PartTime')}">${p.title}</a></span>
             <div class="tab-right">
             <span class="label label-warning">
               ${p.total_reply} 
@@ -77,14 +89,17 @@
                   </a>
               </span>
             </div>
-
+            <div class="summary">
+              ${p.summary}
+              <div class="time">时间：${tf_timestamp(p.update)}</div>
+            </div>
           </li>
         {{/each}}
     </div>
     <div class="tab-pane" id="tab-job">
         {{each(i, p) jobs}}
           <li>
-            <span><a href="${url_for_topic(p.filename,'Job')}">${p.title}</a></span>
+            <span><a target="_blank" href="${url_for_topic(p.filename,'Job')}">${p.title}</a></span>
             <div class="tab-right">
             <span class="label label-warning">
               ${p.total_reply} 
@@ -94,13 +109,17 @@
                   </a>
               </span>
             </div>
+            <div class="summary">
+              ${p.summary}
+              <div class="time">时间：${tf_timestamp(p.update)}</div>
+            </div>
           </li>
         {{/each}}
     </div>
     <div class="tab-pane" id="tab-employee">
         {{each(i, p) emps}}
           <li>
-            <span><a href="${url_for_topic(p.filename,'Employee')}">${p.title}</a></span>
+            <span><a target="_blank" href="${url_for_topic(p.filename,'Employee')}">${p.title}</a></span>
             <div class="tab-right">
             <span class="label label-warning">
               ${p.total_reply} 
@@ -109,6 +128,10 @@
                     Employee
                   </a>
               </span>
+            </div>
+            <div class="summary">
+              ${p.summary}
+              <div class="time">时间：${tf_timestamp(p.update)}</div>
             </div>
           </li>
         {{/each}}

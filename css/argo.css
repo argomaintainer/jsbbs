@@ -5,14 +5,8 @@ html {
     /* -webkit-filter: grayscale(100%); */
 }
 
-html{
-    background: #333;
-    min-height: 100%;
-}
-
 body{
     background: #f0f0f0;
-    margin: 0 20px;
     padding-bottom: 20px
 }
 
@@ -63,7 +57,6 @@ a:hover{
 }
 
 #topbar{
-    margin: -1px;
     box-shadow: none;
     border: 0;
     border-color: transparent;
@@ -170,6 +163,15 @@ a:hover{
     -webkit-transition: all 0.55s;
     -moz-transition: all 0.55s; 
     text-decoration: none;
+}
+
+.tab-pane .summary{
+    margin-bottom: 40px;
+    color: #666;
+}
+
+.tab-pane .time{
+    color: #999;
 }
 
 .tab-pane a.onactive {
@@ -327,6 +329,7 @@ a:hover{
 .notes{
     overflow: hidden;
     background: #000;
+    padding: 20px 0;
 }
 
 .notes .markdown{
@@ -1348,11 +1351,16 @@ i[class^="mark-"]{
 .boardposts .cell-header{
     color: #666;
     border: none;
-    margin-bottom: 4px;
+}
+
+.boardposts .cell-header h3{
+    margin: 10px ;
+    line-height: 1;
 }
 
 .topiclist{
     min-height: 400px;
+    border-top: 2px solid #e8e8e8;
 }
 
 .summary{
@@ -1710,7 +1718,6 @@ a[data-submit]:hover{
     padding: 3px 3px 3px 70px;
     color: #999;
     position: relative;
-    border-bottom: 1px solid #e8e8e8;
     cursor: pointer;
 }    
 
@@ -1764,6 +1771,74 @@ a[data-submit]:hover{
     padding: 5px;
     font-size: 10px;
     color: #999;
+}
+
+.fresh-cell-title{
+    margin-bottom: 0 !important;
+}
+
+.freshlist .title{
+    margin-left: 50px;
+}
+
+.freshlist .summary{
+    margin-left: 50px;
+    margin-right: 11px;
+    background: #eee;
+    padding: 5px
+}
+
+.freshlist .time{
+    color: #666;
+}
+
+.freshlist .post-li-topic{
+    padding: 0 10px 5px;
+    margin: 20px;
+    border: none;
+    border-left: 1px solid #ccc;
+}
+
+.freshlist-open{
+    padding: 10px;
+    color: #666;
+    border: 1px solid #aaa;
+    margin: 20px;
+    cursor: pointer;
+    position: relative;
+}
+
+.freshlist-open .avatar_b{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    position: absolute;
+    right: 10px;
+    top: 7px;
+}
+
+.fresh-bbox{
+    line-height: 3;
+    margin-left: 5px;
+}
+
+.freshlist .title strong{
+    line-height: 3 !important;
+}
+
+.freshlist .fresh-owner{
+    color: #fff !important;
+    background: #333;
+    padding: 3px 5px;
+}
+
+.freshlist .title{
+    color: #76bf75;
+}
+
+.freshlist .fresh-board{
+    color: #333;
+    text-decoration: underline;
 }
 
 .inner-scroll-top{
@@ -2795,7 +2870,6 @@ a:hover .ftext{
 }
 
 .freshlist{
-    border-top: 1px solid #eee;
     margin-bottom: 10px;
 }
 
@@ -3162,4 +3236,9 @@ a:hover .ftext{
 .gg{
     font-size: 13px;
     margin-right: 3px;
+}
+
+.toptentitle{
+    font-size: 22px !important;
+    margin-bottom: 0;
 }
