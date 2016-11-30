@@ -345,6 +345,45 @@ $MOD('frame.func', {
             throw TypeError("Only string and number types are supported");
         }
         return range;
+    },
+
+    /* 函数节流 实现限制触发频率，来优化性能
+     fun 要执行的函数
+     delay 延迟
+     time  在time时间内必须执行一次
+    */
+    throttle: function(fun, delay, time) {
+        var timeout,
+            startTime = new Date();
+
+        return function() {
+            var context = this,
+                args = arguments,
+                curTime = new Date();
+
+            clearTimeout(timeout);
+            // 如果达到了规定的触发时间间隔，触发 handler
+            if (curTime - startTime >= time) {
+                fun.apply(context, args);
+                startTime = curTime;
+                // 没达到触发间隔，重新设定定时器
+            } else {
+                timeout = setTimeout(fun, delay);
+            }
+        };
+    },
+    /* 懒加载
+     @params: 
+     @fun 为获取数据和操作dom的函数
+     @target 为被点击的对象 即jquery对象
+    */
+    lazyload: function(event) {
+        var target = $('#loader .load-more-post');
+        // scroll to bottom - 100px
+        if (target.offset().top < $(window).height() + $(window).scrollTop() + 3000) {
+            // 这里点击之后使用绑定在document上面的回调函数来处理
+            target.click();
+        }
     }
 
 })
@@ -763,6 +802,9 @@ $MOD('frame.frame', function(){
             return false;
         }
     });
+
+    // 监听滚动事件
+    window.addEventListener('scroll', throttle(lazyload, 500, 1000));
 
     $.fn.hempty = function(msg){
         this.html('<div class="hint-loading"><i class="icon-refresh"></i> ' + msg + '</div>');
